@@ -1,0 +1,453 @@
+[0.00s -> 5.20s]  .
+[5.20s -> 6.72s]  Hey, folks. Welcome back to
+[6.72s -> 9.96s]  Generative AI for Beginners here at Microsoft Learn.
+[9.96s -> 11.20s]  I am Pablo Lopez,
+[11.20s -> 13.84s]  Cloud Advocate in .NET in Artificial Intelligence,
+[13.84s -> 16.40s]  and I'm here with Carlota. Say hi, Carlota.
+[16.40s -> 19.04s]  Hi. Hi, everyone. I'm Carlota Castelluccio.
+[19.04s -> 22.92s]  I'm a Cloud Advocate focused on artificial intelligence.
+[22.92s -> 25.76s]  That's incredible. Today,
+[25.76s -> 28.28s]  let's talk about a little bit on the basics.
+[28.28s -> 30.96s]  We started in the production.
+[30.96s -> 32.08s]  Now, let's go deeper.
+[32.08s -> 35.28s]  Let's see how can we explore and compare different LLMs.
+[35.28s -> 39.00s]  Of course, know that we have on Azure AI are LLMs,
+[39.00s -> 40.58s]  but if you want to take a look at that,
+[40.58s -> 42.78s]  we can talk a lot later.
+[42.78s -> 44.18s]  But we're going to talk a little bit about
+[44.18s -> 46.38s]  comparisons on language models.
+[46.38s -> 48.74s]  Going from here, you're going to see a little bit of
+[48.74s -> 51.56s]  foundation models, language models, and later, Carlota,
+[51.56s -> 54.58s]  you show a little bit on Azure AI.
+[54.58s -> 56.38s]  What are you going to learn today?
+[56.38s -> 58.26s]  You may have heard of foundation models,
+[58.26s -> 61.26s]  so let's understand foundation models versus LLMs and
+[61.26s -> 63.86s]  language models, how to classify a language model,
+[63.86s -> 66.26s]  because you have a lot of classifications for them,
+[66.26s -> 72.26s]  and then, Carlota, you show a little bit of Azure AI.
+[72.26s -> 76.26s]  Let's go with foundation models versus LLMs,
+[76.26s -> 78.06s]  but to understand this,
+[78.06s -> 81.26s]  let's start with foundation models themselves.
+[81.26s -> 84.86s]  Why? Because you may have seen a lot of,
+[84.86s -> 87.98s]  a little bit heard about foundation models, LLMs,
+[87.98s -> 91.78s]  et cetera, you may have been confused on how those work.
+[91.78s -> 94.08s]  Let's think about it a little bit.
+[94.08s -> 97.08s]  The foundation models, they do the following.
+[97.08s -> 101.32s]  So usually it's the base is the basis of
+[101.32s -> 103.18s]  you're deploying something new.
+[103.18s -> 105.68s]  So what does it mean about it, Pablo?
+[105.68s -> 108.20s]  Okay, let's think about like this.
+[108.20s -> 110.22s]  Imagine that I have a foundation model
+[110.22s -> 111.98s]  that I want to do multiple tasks.
+[111.98s -> 113.84s]  So here I have a teaching one.
+[113.84s -> 117.98s]  So you can put like a multi-modal data source,
+[117.98s -> 121.08s]  to train it, so it can have teaching materials,
+[121.08s -> 124.58s]  videos, interaction, and the subject matters.
+[124.58s -> 125.88s]  And then we have like our task goals.
+[125.88s -> 128.68s]  So it can have multiple, assist students, educators,
+[128.68s -> 130.48s]  facilitate learning, teaching,
+[130.48s -> 132.38s]  and there's a subject matter.
+[132.38s -> 133.98s]  So you can see that we have a lot of them,
+[133.98s -> 136.88s]  but here we have a bunch of things we are training with,
+[136.88s -> 139.58s]  and we can have a lot of tasks and goals.
+[139.58s -> 143.68s]  But you see that it does a lot of things, right?
+[143.68s -> 146.68s]  But it may not do them perfectly.
+[146.68s -> 147.78s]  We may need to, you know,
+[147.98s -> 150.24s]  guide them in how to do X or Y.
+[150.24s -> 153.18s]  So assist educators, how to assist them, right?
+[153.18s -> 155.88s]  Because you don't have like instructions to, you know,
+[155.88s -> 157.74s]  understand how is helping it.
+[157.74s -> 159.88s]  Then it's foundation, why?
+[159.88s -> 163.28s]  Because it's the basis of auto-constructing new solutions.
+[163.28s -> 165.82s]  So that's why you're calling it foundation models.
+[165.82s -> 167.84s]  And let's bring this graph as well.
+[167.84s -> 169.54s]  So let's think about this.
+[169.54s -> 173.88s]  And foundation models were brought by Stanford researchers.
+[173.88s -> 176.18s]  So that's why you're using like that.
+[176.18s -> 177.88s]  So the foundation models here,
+[177.88s -> 178.98s]  are very simple.
+[178.98s -> 181.02s]  They have some prerequisites.
+[181.02s -> 183.74s]  You need to be pre-trained, generalized,
+[183.74s -> 186.52s]  adaptable, large, and self-supervised.
+[186.52s -> 189.08s]  So you may see right here that foundation models
+[189.08s -> 191.02s]  can cover a lot of things.
+[191.02s -> 193.22s]  And you might may note as well,
+[193.22s -> 195.42s]  if you know a little bit about LLMs,
+[195.42s -> 197.68s]  that they fulfill all those five.
+[197.68s -> 201.48s]  So yes, LLMs are foundation models
+[201.48s -> 203.64s]  because they fulfill all those five.
+[203.64s -> 207.64s]  However, not all foundation models are LLMs.
+[207.88s -> 211.68s]  Because they don't use language sometimes.
+[211.68s -> 215.02s]  As I said, they use a multi-modal way to learn.
+[215.02s -> 219.08s]  So they have a multi-modal way to answer or to interpret.
+[219.08s -> 221.42s]  They don't use a tokenizer sometimes.
+[221.42s -> 223.14s]  So that's the difference.
+[223.14s -> 226.34s]  So yes, foundation models are very important
+[226.34s -> 229.74s]  because our LLMs are foundation models,
+[229.74s -> 233.88s]  but not all foundation models are LLMs.
+[233.88s -> 235.44s]  That's incredible.
+[235.44s -> 236.98s]  But now that we understood that,
+[236.98s -> 238.58s]  we're going to start talking a little bit
+[238.58s -> 240.94s]  about our language models themselves, right?
+[240.94s -> 244.62s]  So then it brings the classic, right?
+[244.62s -> 247.72s]  Open source versus proprietary.
+[247.72s -> 250.62s]  So let's think about open source a little.
+[250.62s -> 252.58s]  So when you have open source,
+[252.58s -> 255.58s]  nowadays we had like a big expansion, right?
+[255.58s -> 258.68s]  A lot of companies are doing open source language models,
+[258.68s -> 260.48s]  which are incredible.
+[260.48s -> 262.52s]  But let's think about it a little bit.
+[262.52s -> 264.94s]  So what are those means, right?
+[264.94s -> 266.22s]  So open source, right?
+[266.98s -> 269.78s]  Usually they are open sourcing some of the parts
+[269.78s -> 272.88s]  that they use to, you know, or train the LLM.
+[272.88s -> 275.88s]  So imagine that they have like the code that they use to train.
+[275.88s -> 277.84s]  Some provides the weights.
+[277.84s -> 280.84s]  If you don't know, the weights are basically the fine tuning
+[280.84s -> 282.38s]  of the language model.
+[282.38s -> 286.04s]  So it can like go inside and try to investigate.
+[286.04s -> 288.48s]  Or even some provide like the full model
+[288.48s -> 290.92s]  that you can just download and go and, you know,
+[290.92s -> 292.28s]  start having fun with.
+[292.28s -> 293.58s]  And you can tweak and do everything.
+[293.58s -> 295.88s]  So these are incredible.
+[295.88s -> 296.82s]  But here's the thing.
+[296.82s -> 300.12s]  A lot of them are provided by, you know,
+[300.12s -> 302.76s]  research groups or NGOs.
+[302.76s -> 306.16s]  So those usually, what they have,
+[306.16s -> 308.02s]  they don't can have a lot of, you know,
+[308.02s -> 311.76s]  resources to be supported and to be updated with new features
+[311.76s -> 315.02s]  or, you know, new updates and security on,
+[315.02s -> 317.78s]  especially if you think about prompt injection, et cetera.
+[317.78s -> 321.86s]  So you may see here that yes, open source is incredible,
+[321.86s -> 324.36s]  but they can have some faults here and there,
+[324.36s -> 326.66s]  or maybe their licenses aren't permissive.
+[326.82s -> 328.86s]  But what do you want to do?
+[328.86s -> 333.12s]  So open source opens a lot of small issues here and there
+[333.12s -> 335.58s]  that you need to think about if you want to solve.
+[335.58s -> 338.78s]  Proprietary, usually they are much easier.
+[338.78s -> 340.38s]  They are already provided.
+[340.38s -> 343.42s]  A lot of those, of course, they are provided by APIs
+[343.42s -> 345.12s]  if you go to cloud services.
+[345.12s -> 348.48s]  But what is good about proprietary is that, you know,
+[348.48s -> 352.16s]  you're going to get, you know, a lot of things done correctly.
+[352.16s -> 354.12s]  So you're going to have like updates,
+[354.12s -> 355.62s]  counseling with the models.
+[355.62s -> 356.82s]  Of course, it limits you.
+[356.82s -> 359.58s]  They have the opportunity to fine-tune the model,
+[359.58s -> 362.28s]  but usually it means that you're going to have a lot of things
+[362.28s -> 363.92s]  that you can already use.
+[363.92s -> 367.32s]  It's a ready-made solution that you can go and grab and go.
+[367.32s -> 371.76s]  Okay, so you'll learn a little bit of the open source models
+[371.76s -> 373.76s]  and about the proprietary.
+[373.76s -> 376.42s]  If you ask open source, you have a bunch of them, right?
+[376.42s -> 377.78s]  We have Falcon.
+[377.78s -> 380.32s]  We have a Lama.
+[380.32s -> 382.06s]  We have O-Lama as well.
+[382.06s -> 383.76s]  So we have a lot here.
+[383.76s -> 386.82s]  And a proprietary can ask about, you know, GIGBT.
+[386.82s -> 388.52s]  So why I'm saying this?
+[388.52s -> 391.88s]  Because you notice that I didn't talk about embeddings, right?
+[391.88s -> 393.92s]  So what are we embedding on?
+[393.92s -> 396.58s]  So let's pick an OpenAI adder.
+[396.58s -> 399.56s]  So let's talk about here about their categorizations.
+[399.56s -> 403.38s]  You're noticing that they have like very strict categorizations here.
+[403.38s -> 407.76s]  So let's go to a language model that converts everything to embedding.
+[407.76s -> 409.46s]  So we have a string.
+[409.46s -> 411.06s]  We have a prompt.
+[411.06s -> 412.76s]  You need somebody to communicate.
+[412.76s -> 416.62s]  Imagine that, you know, I have a format that, you know,
+[416.62s -> 419.18s]  I can communicate with different models, right?
+[419.18s -> 422.28s]  So getting it to convert to embeddings are great
+[422.28s -> 428.26s]  because then I can easily imagine that I can use it for systems like rock,
+[428.26s -> 433.86s]  that I can store all the embeddings, and I can search,
+[433.86s -> 435.26s]  and I got my information back.
+[435.26s -> 439.96s]  So embeddings are very important for systems today on generative AI.
+[439.96s -> 441.18s]  And it's not only that.
+[441.18s -> 446.62s]  They are used to communicate multiple types of language systems and language models.
+[446.62s -> 448.62s]  So it's just very simple.
+[448.62s -> 453.56s]  Compute a string, convert to embedding that everyone can understand.
+[453.56s -> 456.42s]  Then we have language models to image generation.
+[456.42s -> 459.48s]  That's everyone knows, DALL-E, everyone already played.
+[459.48s -> 461.68s]  And you have as well on-web copilot.
+[461.68s -> 463.08s]  So I have a prompt here.
+[463.08s -> 465.88s]  So I have like in quotes, and then you're going to put in your
+[465.88s -> 469.76s]  generative AI neural network, and then boom, you're going to have an image.
+[469.76s -> 475.26s]  So here you have a painting of a flying dog, and here you have this incredible image.
+[475.26s -> 476.22s]  Then the classics.
+[476.22s -> 479.92s]  Who didn't already use sex generation, right?
+[479.92s -> 482.16s]  Everyone here already had some fun with it.
+[482.16s -> 487.48s]  So you go to your class, a copilot web as well, chat GPT.
+[487.48s -> 490.38s]  You can go as if you even go to Hugging Face, right?
+[490.38s -> 491.82s]  You can access on Hugging Face.
+[491.82s -> 496.88s]  A lot of the other mobs that have Falcon or Llama, we have Straw.
+[496.88s -> 498.18s]  And those are incredible.
+[498.18s -> 501.28s]  So basically, put a prompt, and then you have prompt engineer
+[501.28s -> 503.22s]  that you're going to see later in this course.
+[503.22s -> 506.12s]  And then the generative AI, you start to write it.
+[506.12s -> 507.48s]  And then it generates a text.
+[507.48s -> 508.76s]  And it can be text.
+[508.76s -> 509.68s]  It can be code.
+[509.68s -> 512.22s]  We have, of course, some that are optimized for code.
+[512.22s -> 514.32s]  But you can see here that is how it works.
+[514.32s -> 518.16s]  So we have usually those are the three more defined ones.
+[518.16s -> 521.88s]  Well, of course, if you want to break it down, you can do like specialize.
+[521.88s -> 524.76s]  You can do a lot of extra things here and there.
+[524.76s -> 528.96s]  Remember, you can always interact with those language models
+[528.96s -> 534.42s]  and do what you need for your business, your hobby, or anything you want to.
+[534.42s -> 535.62s]  Great.
+[536.12s -> 538.56s]  Let's talk about service versus model.
+[538.56s -> 543.92s]  Remember what I talked before, that you can easily access some of those incredible models
+[543.92s -> 544.92s]  in the cloud?
+[544.92s -> 545.92s]  Exactly.
+[545.92s -> 547.42s]  Why I said it?
+[547.42s -> 549.22s]  Because those are in the service.
+[549.22s -> 550.36s]  What it means?
+[550.36s -> 552.20s]  Those are already stored in the cloud.
+[552.20s -> 560.28s]  You cannot change yourself without going more inside and try to do some fine-tuning.
+[560.28s -> 562.48s]  But basically, those are stored, and they're easy.
+[562.48s -> 565.48s]  Usually, API calls, you just send it.
+[565.48s -> 567.98s]  Send your prompt, and then again, we add an answer.
+[567.98s -> 569.98s]  You need to deal with scalability.
+[569.98s -> 572.98s]  The scalability of the cloud already gives you a few.
+[572.98s -> 576.98s]  Your security is defined on how you use your security on the cloud as well.
+[576.98s -> 578.98s]  So everything is tight and niche.
+[578.98s -> 583.98s]  And not only that, you can actually integrate all your other services.
+[583.98s -> 586.98s]  So that's the good part about having the service, right?
+[586.98s -> 592.98s]  It's easier to manipulate and do sometimes if you want to change a little bit.
+[592.98s -> 594.98s]  But of course, we're all fine-tuning a bunch of those services.
+[594.98s -> 595.48s]  So that's the good part about having the service, right? It's easier to manipulate and do sometimes if you want to change a little bit. But of course, we're all fine-tuning a bunch of those services.
+[595.48s -> 595.98s]  So that's the good part about having the service, right? It's easier to manipulate and do sometimes if you want to change a bunch of those services.
+[595.98s -> 598.48s]  But that's important for you to know.
+[598.48s -> 602.48s]  But after this, you can have an easy way to interact with this.
+[602.48s -> 607.48s]  The model is a little bit harder because you need to download the model and you need to set up.
+[607.48s -> 609.48s]  Imagine that you have a server, right?
+[609.48s -> 611.48s]  So you need to take care of the server.
+[611.48s -> 613.48s]  Take care of scalability.
+[613.48s -> 615.48s]  Imagine that you have multiple clients coming in.
+[615.48s -> 618.48s]  So the model is for you to interact directly.
+[618.48s -> 620.48s]  It makes easy interaction directly.
+[620.48s -> 624.98s]  It goes much easier to try to understand how this is working.
+[624.98s -> 629.98s]  and the pipeline, but imagine that you need to interact with your cloud service
+[629.98s -> 633.98s]  and need to try something. It makes much harder without the ecosystem.
+[633.98s -> 638.98s]  But you have more full control, but you need to deal with infrastructure costs, etc.
+[638.98s -> 645.98s]  So now I'm very interested. Carlota, can you tell me how Azure AI Studio,
+[645.98s -> 647.98s]  you know, how it works? I actually don't know.
+[647.98s -> 652.98s]  Of course. Thanks, Pablo. Yeah, I'm happy to walk you through,
+[652.98s -> 656.98s]  you know, how to use foundation models in Azure and specifically in Azure AI Studio.
+[656.98s -> 661.98s]  And the first question I want to cover here is why Azure?
+[661.98s -> 665.98s]  Right. So in the ever evolving landscape of foundation models,
+[665.98s -> 670.98s]  selecting the right candidate for your specific scenario is just the beginning of the journey.
+[670.98s -> 677.98s]  So once you have identified your top choices, it's time to put them to test on your use case.
+[677.98s -> 681.98s]  So Azure AI Studio is your one stop platform for developing,
+[681.98s -> 682.98s]  testing,
+[682.98s -> 686.98s]  and managing the entire lifecycle of your AI applications.
+[686.98s -> 693.98s]  In fact, this platform integrates Microsoft data technologies for optimized storage and search in databases,
+[693.98s -> 700.98s]  a wide range of proprietary and open source large language models that Pablo just presented,
+[700.98s -> 707.98s]  for example, from the OpenAI family, but also from partners like Meta, HubInFace, or Mistral.
+[707.98s -> 711.98s]  Tools that enable ensuring responsible and secure development of AI applications,
+[711.98s -> 716.98s]  but also prompt engineering and evaluation facilities,
+[716.98s -> 720.98s]  as well as monitoring assets for generative applications.
+[720.98s -> 723.98s]  Now, recalling our educational startup scenario,
+[723.98s -> 727.98s]  let's imagine that after extensive research,
+[727.98s -> 736.98s]  our startup has explored the current large language models landscape and have pinpointed some strong contenders for the unique scenario.
+[736.98s -> 740.98s]  Now, the real fun begins because testing these models involves an iterative process,
+[740.98s -> 746.98s]  using experiments and precise measures to ensure they meet the mark.
+[746.98s -> 752.98s]  And where they can test these models?
+[752.98s -> 757.98s]  They can do that using the model catalog in Azure AI Studio.
+[757.98s -> 763.98s]  Azure AI Studio provides a seamless experience with a user-friendly interface.
+[763.98s -> 765.98s]  So here's what you can do in the model catalog.
+[765.98s -> 769.98s]  You can easily find a condition model of your interest by using different filters,
+[769.98s -> 776.98s]  such as you can search for the model provider that can be Azure OpenAI,
+[776.98s -> 780.98s]  can be Meta, can be HubInFace, and so on and so forth.
+[780.98s -> 783.98s]  You can search for inference or fine-tuning tasks.
+[783.98s -> 788.98s]  For example, you can search for Q&A or summarization tasks,
+[788.98s -> 792.98s]  or object detection for computer vision kind of scenarios.
+[792.98s -> 795.98s]  And also you can filter by license, for example.
+[795.98s -> 798.98s]  And you can even look for a specific model, of course,
+[798.98s -> 801.98s]  by searching its name in the search box.
+[801.98s -> 810.98s]  Now, once you select a model before you proceed with the deployment of the model itself,
+[810.98s -> 814.98s]  it's always a good idea to get to know your model a bit.
+[814.98s -> 820.98s]  So the model card in the model catalog provides a comprehensive view,
+[820.98s -> 826.98s]  complete with detailed description of use cases and training data of the model you selected.
+[826.98s -> 827.98s]  And for some models,
+[827.98s -> 829.98s]  you can also find some code samples,
+[829.98s -> 838.98s]  providing us with a sense of how inputs and outputs look like for real-time inference.
+[838.98s -> 841.98s]  Also, sometimes a bit of fine-tuning is necessary,
+[841.98s -> 845.98s]  and Azure AI Studio empowers you to improve your model's performance
+[845.98s -> 851.98s]  with custom training data for a selected subset of models in the model catalog,
+[851.98s -> 856.98s]  like LAMA 270B that you see here in this slide.
+[856.98s -> 859.98s]  Once your model is primed and ready,
+[859.98s -> 861.98s]  it's time to deploy it.
+[861.98s -> 867.98s]  Whether it's the original pre-trained model or your fine-tuned version,
+[867.98s -> 869.98s]  Azure AI Studio has you covered.
+[869.98s -> 871.98s]  In terms of deployments,
+[871.98s -> 874.98s]  for a few models like LAMA2 here,
+[874.98s -> 878.98s]  or the ones of the Meta collection in general,
+[878.98s -> 880.98s]  you have a couple of options.
+[880.98s -> 884.98s]  You can go with the standard deployment approach,
+[884.98s -> 885.98s]  which is real-time endpoint.
+[885.98s -> 889.98s]  So you deploy your model in your Azure subscription,
+[889.98s -> 893.98s]  and you manage the infrastructure used for inference.
+[893.98s -> 898.98s]  Or you can use the recent pay-as-you-go type of deployment
+[898.98s -> 900.98s]  that has been introduced.
+[900.98s -> 903.98s]  And this means that you can consume,
+[903.98s -> 905.98s]  in this case LAMA2,
+[905.98s -> 907.98s]  model as a REST API
+[907.98s -> 910.98s]  without caring about the underlying infrastructure
+[910.98s -> 914.98s]  with an experience similar to using Azure API Service API.
+[914.98s -> 921.98s]  So just consuming it as through a REST API.
+[921.98s -> 925.98s]  And this is what we call model as a service.
+[925.98s -> 928.98s]  Now, another interesting feature of Azure AI Studio
+[928.98s -> 930.98s]  is the model benchmark.
+[930.98s -> 934.98s]  Here, you can basically compare different models in the catalog
+[934.98s -> 937.98s]  using filters to determine the specific subset
+[937.98s -> 940.98s]  against some predefined performance metrics
+[940.98s -> 943.98s]  such as accuracy, fluency, coherence, and so on.
+[944.98s -> 948.98s]  And there are several test data sets
+[948.98s -> 952.98s]  you can choose to use for the comparison.
+[954.98s -> 958.98s]  When it comes to deploying large language models into production,
+[958.98s -> 961.98s]  businesses have a world of options,
+[961.98s -> 964.98s]  each with its own set of complexities,
+[964.98s -> 967.98s]  of course, cost, but also quality levels.
+[967.98s -> 969.98s]  Let's dive into these approaches
+[969.98s -> 973.98s]  and see which one suites different requirements.
+[974.98s -> 978.98s]  The first approach is leveraging prompt engineering with context.
+[978.98s -> 981.98s]  Now, pre-trained large language models excel
+[981.98s -> 983.98s]  in handling general language tasks,
+[983.98s -> 986.98s]  and you can simply feed them a short prompt
+[986.98s -> 989.98s]  like a question or an incomplete sentence,
+[989.98s -> 991.98s]  and they work like a charm, right?
+[991.98s -> 994.98s]  And we call this zero-shot learning.
+[994.98s -> 996.98s]  But here's the catch.
+[996.98s -> 998.98s]  The more context you provide,
+[998.98s -> 1001.98s]  the better the large language model understands your request.
+[1001.98s -> 1004.98s]  And when you include detailed examples,
+[1004.98s -> 1006.98s]  and requests,
+[1006.98s -> 1009.98s]  this approach is called one-shot learning
+[1009.98s -> 1011.98s]  if you're using a single example,
+[1011.98s -> 1014.98s]  or few-shot learning if you're using multiple examples.
+[1014.98s -> 1016.98s]  In the case of a conversation,
+[1016.98s -> 1018.98s]  you can even use the prompt
+[1018.98s -> 1021.98s]  to describe the personality of the assistant, for example,
+[1021.98s -> 1024.98s]  the style and the tone of the responses,
+[1024.98s -> 1027.98s]  or pass the conversation history into the prompt.
+[1027.98s -> 1029.98s]  This approach is cost effective
+[1029.98s -> 1032.98s]  and a great starting point.
+[1032.98s -> 1034.98s]  Then, approach two,
+[1034.98s -> 1037.98s]  is using retrieval augmented generation,
+[1037.98s -> 1039.98s]  which is a pattern,
+[1039.98s -> 1041.98s]  I would say,
+[1041.98s -> 1043.98s]  a specific technique,
+[1043.98s -> 1045.98s]  prompt engineering technique.
+[1045.98s -> 1048.98s]  In fact, large language models have their limitations,
+[1048.98s -> 1051.98s]  because they only know what they were trained on
+[1051.98s -> 1054.98s]  and can't access post-training information
+[1054.98s -> 1057.98s]  or private company data, for example.
+[1057.98s -> 1059.98s]  And to bridge this gap,
+[1059.98s -> 1060.98s]  we use this pattern,
+[1060.98s -> 1062.98s]  retrieval augmented generation,
+[1062.98s -> 1064.98s]  that adds external data
+[1064.98s -> 1066.98s]  in the form of documents chance
+[1066.98s -> 1067.98s]  to your prompt,
+[1067.98s -> 1069.98s]  effectively expanding its knowledge.
+[1069.98s -> 1071.98s]  So, we are passing data through the prompt,
+[1071.98s -> 1072.98s]  but before doing that,
+[1072.98s -> 1076.98s]  we are going to use some search pipeline
+[1076.98s -> 1078.98s]  to look for the data
+[1078.98s -> 1081.98s]  to add to our context.
+[1081.98s -> 1083.98s]  In Azure AI Platform,
+[1083.98s -> 1085.98s]  this is powered by vector database tools
+[1085.98s -> 1087.98s]  like Azure AI Search.
+[1087.98s -> 1089.98s]  RUG is a valuable approach
+[1089.98s -> 1091.98s]  when you lack the data,
+[1091.98s -> 1092.98s]  the time,
+[1092.98s -> 1093.98s]  or the resources
+[1093.98s -> 1095.98s]  to fine-tune your large language model,
+[1095.98s -> 1097.98s]  but you want to boost its performance
+[1097.98s -> 1098.98s]  and minimize the risk
+[1098.98s -> 1100.98s]  of incorrect information
+[1100.98s -> 1102.98s]  or harmful content.
+[1103.98s -> 1104.98s]  The third approach
+[1104.98s -> 1105.98s]  I would like to cover here
+[1105.98s -> 1107.98s]  is fine-tuning.
+[1107.98s -> 1108.98s]  Fine-tuning is a process
+[1108.98s -> 1110.98s]  to customize an LLM
+[1110.98s -> 1112.98s]  for a specific task.
+[1112.98s -> 1114.98s]  So, it generates a new model
+[1114.98s -> 1116.98s]  with updated weights and biases,
+[1116.98s -> 1118.98s]  making it ideal
+[1118.98s -> 1120.98s]  if you have strict latency requirements,
+[1120.98s -> 1122.98s]  so you cannot really have
+[1122.98s -> 1124.98s]  a huge context in the prompt,
+[1124.98s -> 1126.98s]  or you possess high-quality data
+[1126.98s -> 1127.98s]  and ground-truth labels,
+[1127.98s -> 1130.98s]  and you can maintain them over time.
+[1130.98s -> 1132.98s]  So, fine-tuning with respect to RUG
+[1132.98s -> 1135.98s]  requires additional computational resources
+[1135.98s -> 1139.98s]  to adjust the weights of the model.
+[1139.98s -> 1141.98s]  Now, I want to say that
+[1141.98s -> 1144.98s]  these techniques I have presented here,
+[1144.98s -> 1145.98s]  so prompt engineering,
+[1145.98s -> 1147.98s]  retrieval augmented generation,
+[1147.98s -> 1148.98s]  and fine-tuning
+[1148.98s -> 1150.98s]  are not mutually exclusive.
+[1150.98s -> 1152.98s]  They are complementary.
+[1152.98s -> 1153.98s]  So, there are cases
+[1153.98s -> 1155.98s]  in which you are going to use,
+[1155.98s -> 1156.98s]  for example, prompt engineering
+[1156.98s -> 1157.98s]  and fine-tuning,
+[1157.98s -> 1158.98s]  other cases in which
+[1158.98s -> 1159.98s]  you are going to use
+[1159.98s -> 1160.98s]  the three of them.
+[1162.98s -> 1163.98s]  The last approach
+[1163.98s -> 1165.98s]  I want to cover
+[1165.98s -> 1167.98s]  is training your own
+[1167.98s -> 1168.98s]  large language model.
+[1168.98s -> 1171.98s]  Now, training an LLM from scratch
+[1171.98s -> 1173.98s]  is a huge undertaking,
+[1173.98s -> 1175.98s]  demanding vast amounts of data,
+[1175.98s -> 1176.98s]  of high-quality data,
+[1176.98s -> 1177.98s]  skilled professionals,
+[1177.98s -> 1179.98s]  and serious competition of power.
+[1179.98s -> 1181.98s]  You'd consider this option
+[1181.98s -> 1182.98s]  only if you have
+[1182.98s -> 1184.98s]  a very domain-specific use case
+[1184.98s -> 1185.98s]  and also an abundance
+[1185.98s -> 1187.98s]  of domain-centric data.
+[1187.98s -> 1188.98s]  In the world of
+[1188.98s -> 1189.98s]  large language employment,
+[1189.98s -> 1192.98s]  there's no one-size-fits-all solution.
+[1192.98s -> 1194.98s]  So, the right approach depends
+[1194.98s -> 1196.98s]  on your unique requirements,
+[1196.98s -> 1198.98s]  resources, and goals.
+[1198.98s -> 1201.98s]  Also, the techniques we explored,
+[1201.98s -> 1202.98s]  as I said,
+[1202.98s -> 1204.98s]  are not always mutually exclusive.
+[1204.98s -> 1205.98s]  So, there are cases
+[1205.98s -> 1207.98s]  in which you need to evaluate
+[1207.98s -> 1211.98s]  if you need to combine a few of them.
+[1211.98s -> 1213.98s]  Also, any choice we take
+[1213.98s -> 1215.98s]  in terms of training and deployment,
+[1215.98s -> 1217.98s]  we should be conscious and transparent
+[1217.98s -> 1220.98s]  about the technology limitations
+[1220.98s -> 1223.98s]  and use responsible practices and tools.
+[1223.98s -> 1225.98s]  In the next episode,
+[1225.98s -> 1227.98s]  you'll discover what this means.
+[1227.98s -> 1229.98s]  But for now, I would like to wrap up.
+[1229.98s -> 1230.98s]  And Pablo, hey,
+[1230.98s -> 1232.98s]  I want to bring you back
+[1232.98s -> 1234.98s]  just to say goodbye, everyone.
+[1234.98s -> 1236.98s]  Folks, it was a pleasure
+[1236.98s -> 1238.98s]  to talk more about Genitive AI.
+[1238.98s -> 1240.98s]  Carlotta is incredible as well
+[1240.98s -> 1241.98s]  to learn more,
+[1241.98s -> 1243.98s]  and I'm really excited to, you know,
+[1243.98s -> 1244.98s]  talk more with you folks.
+[1244.98s -> 1246.98s]  I'm going to come back soon as well
+[1246.98s -> 1247.98s]  for more lessons on Genitive AI
+[1247.98s -> 1248.98s]  for beginners.
+[1248.98s -> 1249.98s]  Thank you so much.
+[1249.98s -> 1253.98s]  And learn more with Microsoft Learn.
+[1253.98s -> 1254.98s]  Awesome.
+[1254.98s -> 1256.98s]  Thanks, everyone.

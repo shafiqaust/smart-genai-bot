@@ -1,0 +1,447 @@
+[0.00s -> 11.30s]  I will do it during the weekend and possibly and for today as well so I
+[11.30s -> 22.60s]  wanted to start this lecture with with something like I hope that you already
+[22.60s -> 41.88s]  have the how many of you have tried to run I see I see ah that's one thing how
+[41.88s -> 49.28s]  did you try on the on on on our machine now would you try that because you think
+[49.28s -> 52.38s]  it would be useful for me to know because I can
+[52.38s -> 52.58s]  drive on the computer.
+[52.60s -> 64.38s]  I don't know whether you can run on the on the last machine so I note for today
+[64.38s -> 71.58s]  in today classes that if you have not looking into one of the lab machine and
+[71.58s -> 80.78s]  you probably need to talk to the guy in Ivan or Mike to get to get the CS user
+[80.78s -> 82.58s]  account because this much.
+[82.60s -> 94.38s]  In can be used only with CS user account right so let me
+[94.38s -> 112.38s]  here it's a web page.
+[112.60s -> 115.22s]  I'm going to show you what the web page is it's a web run on the web wall so
+[115.22s -> 118.28s]  you will need toty try and run the convention functional on the other side
+[118.28s -> 119.46s]  that off course I didn't mean to move this.
+[119.46s -> 124.26s]  For thehan encourage most of you so it because it will allow me afford assist
+[124.26s -> 128.36s]  or support you can use a software so finally we're going to wave this speed
+[128.36s -> 129.68s]  for a quick怎 edge very nice.
+[129.68s -> 132.40s]  It's going to give us the right time to start so I'm going to change the
+[132.40s -> 134.32s] hai power of olması here so we're going to wait a minute for time so it this
+[134.32s -> 136.10s]  and it's just waiting else you are before quality.
+[136.10s -> 137.70s]  You're going to find you are either shorter or bigger.
+[137.70s -> 139.24s]  Yeah I'm going to change it right now.
+[139.24s -> 140.64s] ficely.
+[140.64s -> 142.48s]  So keep using and I'm going to knit it and it's going to work.
+[142.60s -> 152.04s]  So I note that in the web page for today, let's see.
+[165.32s -> 169.14s]  There's an activity that I wish you would do with that.
+[169.14s -> 179.68s]  So you probably take the code base already, but if you kind of run that on your computer
+[179.68s -> 191.16s]  for some reason, then you want to try out with the departmental machine.
+[192.36s -> 198.60s]  And then, so if you use Mac,
+[198.94s -> 199.12s]  you have to use the code base.
+[199.12s -> 199.14s]  You have to use the code base.
+[199.14s -> 205.02s]  You have to run this command before you use the command that this one.
+[207.60s -> 214.72s]  Maybe I can check your machine, like how it fits in your machine after the class, too.
+[215.66s -> 216.98s]  Yeah, you are right.
+[217.56s -> 228.34s]  So the next thing is that, so for today's classes, I,
+[228.34s -> 232.80s]  so this is something that I just copied from the last, from the last class.
+[232.98s -> 238.76s]  So I note the terminology that we need to do is like what is the neural network,
+[239.08s -> 242.88s]  what are the components of the neural network, right?
+[243.30s -> 248.92s]  And then different stuff that you can do it.
+[251.24s -> 258.30s]  Now here, for example, you can see that we have seen the code of last time.
+[258.30s -> 258.32s]  So we have seen the code of last time.
+[258.32s -> 258.52s]  Right?
+[259.32s -> 264.00s]  That is something that, let me bring it up where that is.
+[276.50s -> 277.14s]  Yeah.
+[277.96s -> 279.32s]  So here it's.
+[279.32s -> 280.32s]  Yeah.
+[280.32s -> 282.32s]  Yeah.
+[282.32s -> 283.32s]  Yeah.
+[283.32s -> 288.30s]  Yeah.
+[288.56s -> 291.46s]  The code of the last, last week.
+[291.76s -> 291.82s]  Right.
+[292.48s -> 297.26s]  So we talk about this one, but now for today's classes,
+[297.26s -> 300.50s]  we'll talk about the second example in the book.
+[301.86s -> 308.10s]  They call that like a convolutional neural network.
+[313.00s -> 317.36s]  In convolutional network, so this is something that we saw the last time, right?
+[317.36s -> 335.36s]  different layers, and we'll talk about two additional types of layers today. One is
+[335.36s -> 344.96s]  the convolutional layer, the other one is the top-up layer. Why do we have this kind of information? Or why
+[344.96s -> 356.48s]  do people think of this new thing? This one is more like a cheat sheet
+[356.48s -> 365.20s]  for all of us. We'll talk about that when we come to there. Last time, I did not
+[366.96s -> 373.76s]  focus on this one, up here.
+[375.36s -> 377.84s]  Up here.
+[380.48s -> 384.24s]  There is, okay. That is here. This one.
+[388.48s -> 392.40s]  I was not able to, I did not have time to go over.
+[394.24s -> 400.56s]  So up to this point, we basically set up the network.
+[402.48s -> 404.80s]  We say, okay, I have, I want to
+[404.96s -> 413.60s]  have that many layers and they are dense layers. And then now we wanted to train the model,
+[414.80s -> 422.88s]  so when we train that, we have two things. They say that optimizer adapts,
+[424.32s -> 434.48s]  and then model compiles, this is lost. So these two things are the two other stats
+[434.48s -> 440.24s]  that we need to add a component of a neural network or of any machine
+[440.24s -> 448.08s]  learning algorithm that we need to. So the first one they call that the
+[448.08s -> 457.22s]  optimizer. It is basically an algorithm on computing the minimum value of the
+[457.22s -> 467.90s]  loss function and this one specifies one type of loss function that is predefined.
+[467.90s -> 478.58s]  So all these are predefined in the Keras API. So here in the
+[478.58s -> 485.96s]  presentation I have here there are many optimizer
+[487.22s -> 495.36s]  and the basic idea of the optimizer is like this. You have a loss function
+[495.36s -> 504.52s]  value and you want to minimize it, right? So for example and usually in most of the
+[504.52s -> 512.66s]  in most of the algorithm you try to find the optimized
+[512.66s -> 517.00s]  value of the function kind of like this.
+[517.22s -> 527.08s]  Using the method that is based on this top has described present. So basically we
+[527.08s -> 537.22s]  know that give us if a if a graph of the loss function look like this, how
+[537.22s -> 541.58s]  can we find the minimal value of that
+[544.50s -> 547.14s]  Because we don't really know. We don't
+[547.14s -> 547.20s]  know if it's a loss function or it's a quantum loss function. We just don't know.
+[547.22s -> 556.32s]  have like an analytic equation. For example, if we know that if the value is
+[556.32s -> 567.80s]  something like loss equal or X equal like X square for example, then we can
+[567.80s -> 577.52s]  know we can use all kind of analytic method to find the solution. But the
+[577.52s -> 586.52s]  fact of the matter is that we don't know this. So it's kind of like try to
+[586.52s -> 594.14s]  approximate it. The one thing though that most of the time the loss function is
+[594.14s -> 597.50s]  kind of like
+[597.80s -> 606.52s]  positive. They wanted to define this loss function in a way so its value is
+[606.52s -> 617.88s]  positive and therefore if you know that a function, this function is positive, then
+[617.88s -> 625.56s]  how do you find the minimal value of that? You take the derivation and then
+[625.56s -> 627.56s]  basically
+[627.80s -> 638.52s]  try to move that, right? So in some sense it kind of like this. You try to move
+[638.52s -> 643.64s]  with this one, like you kind of like go on the tongue
+[643.64s -> 653.72s]  end of that and then go back, right? Now the thing is
+[653.72s -> 656.72s]  like if there is no real final value, okay, then we can name it as this one, right? If
+[656.72s -> 657.72s]  it's not aetta, and again we can use this formula. And this formula can be given
+[657.72s -> 667.76s]  this path, then take this code, right? But we want this one, but this may hopefully
+[667.76s -> 677.48s]  very likely stop there because that is where the differential e-value equals zero.
+[677.48s -> 690.68s]  With me? So that's why people invented many ways to avoid that. So this one, they call
+[690.68s -> 702.18s]  that the local move, local minimum. So sometimes they kind of like, okay, I'm doing this, and
+[702.18s -> 706.88s]  this Adam function is like, it takes the momentum of this one, and it takes the momentum of
+[706.88s -> 707.46s]  this one, and it takes the momentum of this one, and it takes the momentum of this one,
+[707.46s -> 714.54s]  and then adds something to that so that it kind of like turns over over here, which is
+[714.54s -> 724.04s]  a vast scenario, right? But sometimes we cannot, but that's kind of the idea. If you study
+[724.04s -> 730.16s]  the AI1 courses, then there is a method called the local shows algorithm that talk a lot
+[730.16s -> 736.90s]  about these things, but that gives you an idea that there's all this. So basically,
+[737.46s -> 743.94s]  the optimizer, there are many methods, there are many methods that are implemented in the
+[743.94s -> 761.28s]  Kera API that allow you to just use it and read it how you use it. You specify the name
+[761.28s -> 767.34s]  of that. It's already implemented for you, okay? But I just wanted to give you some kind
+[767.34s -> 782.54s]  of like, intuition of that. Next is the loss function. So here, you can see that they say the
+[782.54s -> 797.24s]  categorical growth and fail is one type of loss function. The loss function, there are at least that
+[797.34s -> 803.62s]  one type of loss function, right? So there's binary, there's multi-class, there's also
+[803.62s -> 814.30s]  multi-class, but there's also regression. So you can also view them, and here it says
+[814.30s -> 826.62s]  that when you are dealing with this kind of problem, then this kind of loss function is
+[826.62s -> 827.12s]  appropriate.
+[827.34s -> 837.10s]  Okay. So binary, then we can use the sigmoid function. There are multi-classes, but they
+[837.10s -> 845.40s]  call that one-hop label. That means that usually they divide from like, from zero to one, and
+[845.40s -> 851.24s]  then divide by 10 of that, or from zero to 10, but this one is like the integer label,
+[851.24s -> 852.52s]  and that is sometimes.
+[857.34s -> 865.20s]  Okay. So this is the kind of thing that you can take advantage of, and then that, now.
+[865.20s -> 877.10s]  I will, and here are the, basically, you can see that the activation function, the activation
+[877.10s -> 887.14s]  function is a function that we put on each of the nodes, right? Each of the nodes, and
+[887.34s -> 895.20s]  then we have the output, and then the output, and then the output, and then the output.
+[895.20s -> 901.18s]  From the second layer on, we need the activation function. That will, let me, how to calculate
+[901.18s -> 914.42s]  the output of a node given the input. So here, for example, the result function, it
+[914.42s -> 915.42s]  behaves like this.
+[915.42s -> 916.42s]  It basically like this.
+[916.42s -> 917.12s]  Here, for example, the result function, it behaves like this. It basically like this.
+[917.34s -> 925.10s]  Everything before, everything negative, set to zero, and then just equal that, like, y
+[925.10s -> 926.72s]  equals x.
+[926.72s -> 934.26s]  The sigmoid functions behave like this, here, but they're different, they are different
+[934.26s -> 945.20s]  because of the one, this one, for example, they say that it's more smooth, right?
+[945.20s -> 948.20s]  So those kind of things that we can look at.
+[948.20s -> 954.26s]  And then the somag function is calculated using form, this form.
+[954.26s -> 962.54s]  But so what we really need to understand is when to use what, right?
+[962.54s -> 969.30s]  So and if you don't know, really know what in the application, which one is best, then
+[969.30s -> 973.80s]  what you do, you test it out.
+[973.80s -> 975.12s]  And how does it do?
+[975.20s -> 980.60s]  It basically, you do it here.
+[980.60s -> 993.18s]  And then in defining the layer, you are defining, like, okay, the activation is this one, right?
+[993.18s -> 996.82s]  But how do you define them?
+[996.82s -> 1004.94s]  Now as we have seen the last time,
+[1004.94s -> 1005.18s]  the
+[1005.20s -> 1015.06s]  multi-layer perceptron, I showed you how it did, and it wasn't doing very well, like,
+[1015.06s -> 1019.42s]  mostly like 50%, right?
+[1019.42s -> 1027.82s]  And I come back, and I thought that, oh, if I, if I increase the number of airpods, maybe
+[1027.82s -> 1029.58s]  it's better.
+[1029.58s -> 1034.70s]  But then I read from other sources.
+[1034.70s -> 1043.88s]  Even from the book, it says that you cannot get more than 50%.
+[1043.88s -> 1050.76s]  And the reason being is that an image, when you do image recognition, there are many features
+[1050.76s -> 1064.56s]  that are kind of like distinctive between different classes of images, but the multi-layer
+[1064.56s -> 1071.88s]  perceptron, for example, it doesn't do very well with that.
+[1071.88s -> 1079.24s]  And that is one of the reasons that convolutional neural network was invented.
+[1079.24s -> 1086.62s]  So the basic idea of, of that is a swallowing.
+[1086.62s -> 1089.64s]  So.
+[1089.64s -> 1093.64s]  So convolutional neural network.
+[1093.64s -> 1093.94s]  Yes.
+[1093.94s -> 1102.18s]  neural network is introduced basically to work with images and the idea is that
+[1102.94s -> 1110.14s]  they recognize that an image usually has features that are connected with each other
+[1110.14s -> 1119.70s]  so for example if you see here for example there is a circle here so the
+[1119.70s -> 1126.74s]  node this node and this node is related to each other so multi-layer perceptron basically
+[1126.74s -> 1138.98s]  make every node every pixel equal though there is something like that and that connects right
+[1138.98s -> 1146.58s]  so that is something that and so they go they come up with the notion called filter
+[1148.90s -> 1149.62s]  so a filter
+[1149.70s -> 1159.70s]  look like this a filter look like a two-dimensional right with some number set to that
+[1162.18s -> 1169.62s]  and then when they when they apply this filter to the image they get some value
+[1172.10s -> 1178.74s]  and here's the example of if i have an image with this value here and this value
+[1178.74s -> 1179.62s]  this value is
+[1179.70s -> 1188.82s]  indicated like how gray it is the big stuff so if i have these filters so basically it's
+[1188.82s -> 1194.18s]  very simple that's just multiplication matrix multiplication and then edit
+[1196.10s -> 1204.82s]  get another filter to get something else right so it's interesting that
+[1207.70s -> 1208.82s]  with this idea
+[1209.70s -> 1214.90s]  they manage to figure out the relationship between the pixel in the images
+[1216.74s -> 1220.58s]  now provide you need to get the right filter
+[1223.22s -> 1223.70s]  and
+[1226.34s -> 1234.98s]  this is an example so usually the filter is very small comparing to the picture itself comparing to
+[1234.98s -> 1238.34s]  the image itself right and so
+[1238.34s -> 1239.06s]  so let me show you another example i can
+[1239.06s -> 1241.78s]  go to f必讓 you go and convert the model to a background lens as a Nuon
+[1241.78s -> 1252.02s]  so this one out here
+[1252.10s -> 1258.90s]  is one of my favorite means because it is Silicone
+[1259.62s -> 1263.86s]  okay i good
+[1263.86s -> 1264.26s]  so now you can see now an image and these are never too many
+[1264.26s -> 1266.66s]  the moment you can actually do anything for yourself
+[1266.66s -> 1267.54s]  and it was easy to absorb difference between your child andYou've got to write too slowly
+[1267.54s -> 1279.54s]  and I get another value and so on and so forth. So basically, I create a new image, but this image is specific to that filter, okay?
+[1279.54s -> 1292.54s]  So, and then, in the implementation, there is something called patting, it's one of the parameters when you call it, how to apply this, right?
+[1292.54s -> 1305.54s]  So, when this is, when patting is the same meaning that I wanted to have the output, it's the same type as the input.
+[1305.54s -> 1321.54s]  And then, how fast do I move? Like, on this one, right, I get this value. If I move one, then I get this thing here, right?
+[1321.54s -> 1322.54s]  Okay.
+[1322.54s -> 1328.54s]  So, I get, so that is what they call the strength. They could play it, right?
+[1328.54s -> 1345.54s]  So, here, it's, on this one, you can see that if you have, if you apply this, like here, 64, 64, what, right?
+[1345.54s -> 1351.54s]  64, 64 is like the size. One is the number of players that you have.
+[1351.54s -> 1352.54s]  So, this one is the grade score.
+[1352.54s -> 1355.54s]  So, that you have only one layer, right?
+[1355.54s -> 1369.54s]  And then, this one, so you have one filter up there, it gives you this one, and this filter gives you this one.
+[1369.54s -> 1378.54s]  So, that's something that the, one of the things that convolutional neural network, it's developed and work with that.
+[1378.54s -> 1379.54s]  So, that.
+[1379.54s -> 1381.54s]  Now, in this one.
+[1381.54s -> 1404.54s]  They have here, in this, they demonstrate that, okay, I have here, an image, right?
+[1404.54s -> 1410.54s]  This is 64 by 64, and it is grade scale, so it's only one.
+[1410.54s -> 1419.54s]  And then, it's like, I have a filter, like this.
+[1419.54s -> 1426.54s]  Now, I get a new image, and then I have this, right?
+[1426.54s -> 1428.54s]  And then, it, what does it do?
+[1428.54s -> 1434.54s]  It basically, gives you this one.
+[1434.54s -> 1439.54s]  Different.
+[1439.54s -> 1448.54s]  Notice that, of course, if you, if you compare on this one with the other one, what do you see?
+[1448.54s -> 1458.54s]  This one has less feature than the other one, right?
+[1458.54s -> 1466.54s]  It, it, it kind of, a little bit more blur than the other one, is it?
+[1466.54s -> 1468.54s]  This one is much more better.
+[1468.54s -> 1470.54s]  But this one is like this.
+[1470.54s -> 1476.54s]  And then, they have another filter that you kept there, right?
+[1476.54s -> 1479.54s]  You can look at the code and see how does it do.
+[1479.54s -> 1482.54s]  And then, another filter, right?
+[1482.54s -> 1484.54s]  Oh, I can run it.
+[1484.54s -> 1485.54s]  Maybe I can run it.
+[1485.54s -> 1487.54s]  Let's see, we can see.
+[1496.54s -> 1497.54s]  Okay.
+[1497.54s -> 1500.54s]  So, where's the error?
+[1500.54s -> 1508.54s]  Oh, I have to run from here.
+[1508.54s -> 1509.54s]  Right?
+[1509.54s -> 1512.54s]  And then, here.
+[1512.54s -> 1514.54s]  Then, I get this one.
+[1514.54s -> 1519.54s]  And then, here.
+[1519.54s -> 1523.54s]  I get that, yeah.
+[1523.54s -> 1525.54s]  You can see that, right?
+[1525.54s -> 1528.54s]  So, I'm applying the filter.
+[1528.54s -> 1533.54s]  Basically, you, you, you, you use this thing.
+[1533.54s -> 1548.54s]  And what is, what is notable here is that the operation that you do is just matrix, matrix, matrix.
+[1548.54s -> 1553.54s]  Which is, nowadays, we know that with GPUs, you can do it.
+[1553.54s -> 1554.54s]  Parallel.
+[1554.54s -> 1556.54s]  Parallel on all these panels.
+[1556.54s -> 1559.54s]  And process very fast.
+[1559.54s -> 1575.54s]  So, now, then, in this one, so I think that I should move on to this one.
+[1575.54s -> 1582.54s]  So, here, they develop a convolutional neural network.
+[1582.54s -> 1583.54s]  Okay.
+[1584.54s -> 1586.54s]  For the same data.
+[1586.54s -> 1588.54s]  For the CIFAR-10.
+[1588.54s -> 1591.54s]  Okay.
+[1591.54s -> 1596.54s]  And...
+[1596.54s -> 1599.54s]  So, the first thing is that, like, importing all the libraries, right?
+[1599.54s -> 1602.54s]  We need to do that.
+[1602.54s -> 1611.54s]  And then, we need to specify that our application has 10 classes that need to be classified.
+[1611.54s -> 1612.54s]  Same thing as before.
+[1612.54s -> 1613.54s]  Like, we need to prepare the data.
+[1613.54s -> 1625.54s]  And you can see that they kind of, like, random...
+[1625.54s -> 1629.54s]  Like, the first 10 of them are still the same, right?
+[1629.54s -> 1631.54s]  That, that we...
+[1631.54s -> 1639.54s]  Now, but let's look at the, at the...
+[1639.54s -> 1641.54s]  At the code that...
+[1641.54s -> 1642.54s]  Now, you have CIF.
+[1642.54s -> 1646.54s]  So, the first one, the input layer is the same.
+[1646.54s -> 1650.54s]  33, 32, 32, 3, right?
+[1650.54s -> 1656.54s]  Because we have images with red, blue, and green.
+[1656.54s -> 1668.54s]  Then, here, the first layer is a convolutional two-dimensional.
+[1668.54s -> 1670.54s]  And what are the...
+[1670.54s -> 1674.54s]  What are the parameters?
+[1674.54s -> 1680.54s]  The filter, the camera size, that is the small size of this...
+[1680.54s -> 1683.54s]  Of this small thing, right?
+[1683.54s -> 1692.54s]  And then, the stripe and the pattern, meaning that after that, I wanted to get the same...
+[1692.54s -> 1694.54s]  The same type of...
+[1694.54s -> 1698.54s]  Like, the same size of the image, okay?
+[1698.54s -> 1699.54s]  And then...
+[1699.54s -> 1702.54s]  And then, here...
+[1702.54s -> 1704.54s]  Now, it is, like, they have...
+[1704.54s -> 1707.54s]  They have something called batch normalization.
+[1707.54s -> 1709.54s]  We'll talk about that a little bit later.
+[1709.54s -> 1713.54s]  But then, here, like, the...
+[1713.54s -> 1721.54s]  Liquid RU, RU, which is the same as, like, the activation function.
+[1721.54s -> 1725.54s]  It's just a modification of the RU.
+[1725.54s -> 1727.54s]  And then, they have another one.
+[1727.54s -> 1729.54s]  And then, they have another one.
+[1729.54s -> 1731.54s]  The size is different now.
+[1731.54s -> 1732.54s]  Right?
+[1732.54s -> 1734.54s]  The size is different.
+[1734.54s -> 1737.54s]  So, here, you can see that they...
+[1737.54s -> 1739.54s]  One, two, three.
+[1739.54s -> 1744.54s]  They stack three convolutional layers on top of each other.
+[1744.54s -> 1748.54s]  So, they do one, they do next, and they do next, right?
+[1748.54s -> 1758.54s]  And then, this thing is kind of similar to the part, like, of the multilayer perceptron laptop, right?
+[1758.54s -> 1763.54s]  I flatten it, and then I have a dense layer.
+[1763.54s -> 1765.54s]  And then, I have a...
+[1765.54s -> 1769.54s]  Now, there is something here, like, dropout thing, if we have not seen before.
+[1769.54s -> 1771.54s]  We'll talk about that.
+[1771.54s -> 1773.54s]  And then, we have another dense layer.
+[1773.54s -> 1775.54s]  And then, we have the model.
+[1775.54s -> 1777.54s]  Right?
+[1777.54s -> 1779.54s]  And then, here, we have the...
+[1779.54s -> 1781.54s]  So, that was running.
+[1788.54s -> 1793.54s]  So, it's basically...
+[1793.54s -> 1795.54s]  It's built.
+[1795.54s -> 1796.54s]  It's built.
+[1796.54s -> 1803.54s]  So, basically, we define the architecture of the network that we want to train, right?
+[1803.54s -> 1810.54s]  And now, we are ready for it to train the model.
+[1810.54s -> 1811.54s]  Right?
+[1811.54s -> 1814.54s]  So, I will run this.
+[1814.54s -> 1816.54s]  I will run this.
+[1816.54s -> 1817.54s]  So, it will work.
+[1817.54s -> 1818.54s]  So, it will work.
+[1818.54s -> 1821.54s]  We talked little bit about thing on the other side.
+[1821.54s -> 1826.54s]  So, here, you can see here is the input.
+[1826.54s -> 1829.54s]  32, 32, 23.
+[1829.54s -> 1831.54s]  The question marks we talk about that like...
+[1831.54s -> 1836.54s]  And that we have likeCs, the filter, right?
+[1836.54s -> 1839.54s]  And then, we have likeC channel.
+[1839.54s -> 1843.54s]  So, here we have this.
+[1843.54s -> 1845.54s]  And then, we have likeC.
+[1845.54s -> 1847.54s]  So, basically, they struct the convolution of this thing here.
+[1847.54s -> 1854.50s]  of channel on top of each other and then they output and then they flatten it so that because
+[1854.50s -> 1861.86s]  of the dense layer doesn't accept multi-dimensional and then they have another dense layer
+[1861.86s -> 1868.66s]  with some drop out and then output notice though that
+[1868.66s -> 1882.02s]  for this this look more complicated than the last uh that last neural network right but
+[1888.66s -> 1893.06s]  the number of parameter or the the number of the parameter is
+[1897.14s -> 1897.70s]  this much
+[1898.66s -> 1908.34s]  remember what what we have for the last time uh
+[1914.50s -> 1920.58s]  six four six thousand right but this one is less than six hundred thousand
+[1922.42s -> 1928.58s]  right so uh it's still working we'll see now let me talk a little bit about
+[1929.06s -> 1929.78s]  other things
+[1932.90s -> 1940.10s]  as you see that the batch normalization right the idea is that the idea is that
+[1941.78s -> 1950.10s]  when we start when we start the training all the weight all the weight all the parameters are
+[1950.10s -> 1958.42s]  random and usually they set to be something small but because they're random then they
+[1958.66s -> 1968.98s]  basically when you do the training after some iteration this weight could become too large
+[1971.06s -> 1973.54s]  and when it is too large it basically
+[1973.54s -> 1986.38s]  the training would just not working anymore and so and why they can't be too less so one of them
+[1986.38s -> 1991.52s]  one of the way that they they think they address it that they call that mass normalization
+[1991.52s -> 2001.18s]  meaning that at each layer they force the value to be reasonably small and in this case
+[2001.18s -> 2012.16s]  like they are they are doing that like basically the value which is between zero and one and
+[2012.16s -> 2017.14s]  during that time what they do is that they learn two parameters they call lambda and
+[2017.14s -> 2027.72s]  beta so this lambda and beta is used to basically normalize the value so that the input value
+[2027.72s -> 2031.16s]  at each of the layers is going to be less than the value of the input value of the input
+[2031.16s -> 2041.84s]  value like small enough not too large and what does it mean that it means that we also
+[2041.84s -> 2051.66s]  need to learn two extra two extra parameters for each of the layers and those are the parameters
+[2051.66s -> 2060.60s]  that is going to be used in the later there so and then that's what it's called a drop
+[2060.60s -> 2060.96s]  out
+[2061.16s -> 2073.72s]  drop out means that basically normally if it is a dense layer right everybody is connected
+[2073.72s -> 2085.34s]  to everybody but a drop out layer meaning that oh i don't take some of the input basically
+[2085.34s -> 2090.66s]  i drop out some of the information from the previous layer
+[2091.16s -> 2099.08s]  and that's like ready like that so it would be randomly doing that and basically
+[2100.68s -> 2113.00s]  this also in addressing the problem of like the way that you learn it becomes too large to
+[2113.64s -> 2120.84s]  for the training okay so this is the thing that's the two things and to be honest i also
+[2120.84s -> 2129.40s]  don't know, I don't have a good idea when to apply this. That means that you can test it,
+[2129.40s -> 2138.12s]  you can play with it, and then see. And let's see how it works. Oh yeah, it's almost done.
+[2150.84s -> 2163.96s]  So, and then I think that's all that I have for the kind of like,
+[2165.08s -> 2170.60s]  recharge. It is very good that I finish this chapter today.
+[2176.20s -> 2177.00s]  Wait a little bit.
+[2180.84s -> 2194.84s]  Okay.
+[2194.84s -> 2203.00s]  It is said that if we use CNN, we can reach like 80, 90% accuracy in the predictions.
+[2205.88s -> 2210.20s]  Yes Yes, yes.
+[2210.84s -> 2214.22s]  I do it tonight
+[2214.22s -> 2224.82s]  okay I think it's done right
+[2224.82s -> 2229.36s]  yes I think it's done
+[2229.36s -> 2230.66s]  now
+[2230.66s -> 2232.66s]  we want to
+[2232.66s -> 2234.28s]  continue running
+[2234.28s -> 2235.50s]  an evaluation
+[2235.50s -> 2238.66s]  so
+[2238.66s -> 2240.56s]  I think
+[2240.56s -> 2242.20s]  it's like this
+[2242.20s -> 2244.50s]  it's a thing that we can get
+[2244.50s -> 2246.42s]  and now we can
+[2246.42s -> 2247.70s]  display it
+[2247.70s -> 2256.26s]  so
+[2256.26s -> 2257.82s]  how many of them are correct
+[2257.82s -> 2260.38s]  one two
+[2260.38s -> 2262.70s]  three four five
+[2262.70s -> 2264.42s]  six seven
+[2264.42s -> 2265.54s]  eight nine
+[2265.54s -> 2267.04s]  ninety percent
+[2267.04s -> 2270.54s]  okay
+[2270.56s -> 2271.78s]  not bad huh
+[2271.78s -> 2275.14s]  so
+[2275.14s -> 2277.56s]  I think that we
+[2277.56s -> 2280.16s]  finished at the right time
+[2280.16s -> 2284.10s]  do you have any questions
+[2284.10s -> 2291.70s]  I thought that you may have some questions
+[2291.70s -> 2293.98s]  you may ask me
+[2293.98s -> 2295.78s]  why are we talking about
+[2295.78s -> 2296.42s]  these things
+[2296.42s -> 2299.30s]  I thought that I'm learning generative AI
+[2299.30s -> 2300.30s]  I don't see any generative
+[2300.56s -> 2302.26s]  AI in the last two days
+[2302.26s -> 2305.14s]  because this is
+[2305.14s -> 2307.10s]  this is just simply
+[2307.10s -> 2308.20s]  machine learning model
+[2308.20s -> 2308.70s]  right
+[2308.70s -> 2310.22s]  but this is a
+[2310.22s -> 2312.94s]  this is just to introduce us
+[2312.94s -> 2313.26s]  to
+[2313.26s -> 2315.88s]  deep neural network
+[2315.88s -> 2317.14s]  that's how
+[2317.14s -> 2318.72s]  neural network
+[2318.72s -> 2319.36s]  like
+[2319.36s -> 2320.96s]  you can imagine that
+[2320.96s -> 2322.92s]  you can stack many many layers
+[2322.92s -> 2324.06s]  together right
+[2324.06s -> 2325.80s]  and then you can do that
+[2325.80s -> 2326.62s]  but
+[2326.62s -> 2327.52s]  see
+[2327.52s -> 2329.16s]  there are only a few layers
+[2329.16s -> 2330.34s]  and it only has a
+[2330.34s -> 2332.22s]  million parameters to be said
+[2332.22s -> 2335.32s]  it's a lot
+[2335.32s -> 2337.86s]  but starting next week
+[2337.86s -> 2339.30s]  we'll talk about
+[2339.30s -> 2340.50s]  like generating things
+[2340.50s -> 2341.64s]  that is going to be
+[2341.64s -> 2343.08s]  hopefully it will
+[2343.08s -> 2344.88s]  speak up your interest
+[2344.88s -> 2345.92s]  a little bit more
+[2345.92s -> 2348.48s]  okay
+[2348.48s -> 2350.30s]  I will
+[2350.30s -> 2353.04s]  if there's no question
+[2353.04s -> 2354.28s]  we can stop for today
+[2354.28s -> 2356.34s]  when you have question
+[2356.34s -> 2357.24s]  no
+[2357.24s -> 2358.84s]  it's not about this
+[2358.84s -> 2360.04s]  it's about the project
+[2360.04s -> 2361.30s]  so is the project
+[2361.30s -> 2362.16s]  going to be the thing
+[2362.16s -> 2363.04s]  for whole of the mission
+[2363.04s -> 2365.26s]  I
+[2365.26s -> 2366.12s]  initially
+[2366.12s -> 2367.54s]  I think that we could do
+[2367.54s -> 2368.48s]  three projects
+[2368.48s -> 2369.46s]  but I don't know whether
+[2369.46s -> 2370.22s]  it is a
+[2370.22s -> 2371.42s]  too ambitious
+[2371.42s -> 2372.94s]  goal
+[2372.94s -> 2374.84s]  I
+[2374.84s -> 2375.52s]  I hope
+[2375.52s -> 2377.18s]  because I think that
+[2377.18s -> 2378.26s]  if we can do that
+[2378.26s -> 2379.08s]  in one month
+[2379.08s -> 2381.50s]  then we will have
+[2381.50s -> 2382.38s]  another project
+[2382.38s -> 2383.24s]  right
+[2383.24s -> 2390.02s]  thank you
+[2390.04s -> 2391.04s]  what do you think
+[2391.04s -> 2392.04s]  you think
+[2392.04s -> 2393.04s]  do you like more project
+[2393.04s -> 2394.04s]  or like less project
+[2394.04s -> 2399.04s]  huh
+[2399.04s -> 2400.04s]  more
+[2400.04s -> 2401.04s]  good

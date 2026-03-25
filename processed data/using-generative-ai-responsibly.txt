@@ -1,0 +1,156 @@
+[0.00s -> 5.32s]  .
+[5.32s -> 7.72s]  Hi, I'm Corey Steggerud-Pace,
+[7.72s -> 10.96s]  part of the AI Cloud Advocacy team here at Microsoft.
+[10.96s -> 14.32s]  I have the pleasure of delivering lesson number three,
+[14.32s -> 18.76s]  using generative AI responsibly to you today.
+[18.76s -> 22.84s]  Using generative AI responsibly is important.
+[22.84s -> 27.08s]  Whether you have one user or 1,000 users or a million users,
+[27.08s -> 29.36s]  it should be really at the cornerstone of everything you
+[29.36s -> 31.92s]  build with generative AI applications.
+[31.92s -> 35.08s]  Let's dive deep into this concept and actually look at how we can
+[35.08s -> 39.16s]  apply it when we're building applications for users.
+[39.56s -> 42.60s]  As an introduction of this lesson,
+[42.60s -> 46.62s]  we're going to look at why we should really prioritize responsible AI.
+[46.62s -> 49.96s]  We put this lesson up early in this course,
+[49.96s -> 51.76s]  but we want to make sure that everything we
+[51.76s -> 55.20s]  do is wrapped around responsible AI.
+[55.20s -> 57.42s]  Then we're going to look at the core principles of
+[57.42s -> 59.34s]  responsible AI and how they relate
+[59.34s -> 61.36s]  to generative AI in particular.
+[61.36s -> 64.72s]  Then lastly, we're going to put these principles into practice.
+[64.72s -> 66.70s]  It's great to have some principles,
+[66.70s -> 68.42s]  but how do they actually apply to
+[68.42s -> 72.02s]  building generative AI applications is important to talk about.
+[72.02s -> 74.02s]  Our goals for this lesson are,
+[74.02s -> 75.42s]  we're going to see the importance of
+[75.42s -> 79.18s]  responsible AI when building generative AI applications.
+[79.18s -> 80.70s]  We're going to learn how to apply
+[80.70s -> 83.30s]  those core principles of responsible AI.
+[83.30s -> 85.34s]  Then lastly, we're going to leave with some tools and
+[85.34s -> 89.34s]  strategies that you can use today to put these principles into practice.
+[89.34s -> 92.66s]  Why should you prioritize responsible AI?
+[92.66s -> 95.22s]  Here at Microsoft and in this course,
+[95.22s -> 96.90s]  we want to focus on taking
+[96.90s -> 100.16s]  a human-centric approach to application development.
+[100.16s -> 104.08s]  What that really boils down to is the user's best interest
+[104.08s -> 106.90s]  equals the best results for your application.
+[106.90s -> 112.00s]  Generative AI, we realize can create tons of value for your users,
+[112.00s -> 115.50s]  but that value can be lost in an instant in
+[115.50s -> 118.46s]  terms of what you're doing with your application.
+[118.46s -> 119.18s]  Let's take a look.
+[119.18s -> 121.54s]  Let's look at the potential harms that we might have
+[121.54s -> 125.94s]  in terms of when responsible AI is also not maintained.
+[125.94s -> 128.30s]  We need to make sure that impact requires
+[128.30s -> 130.94s]  monitoring and that intent is not enough.
+[130.94s -> 133.58s]  We don't think people go into all the time saying they're going to
+[133.58s -> 136.34s]  build an irresponsible generative AI application,
+[136.34s -> 140.18s]  but we do think that if you're monitoring it and making sure,
+[140.18s -> 143.30s]  even if you don't expect these things to come about,
+[143.30s -> 145.46s]  is that you have the right necessarily systems in
+[145.46s -> 148.50s]  place to deliver a responsible experience.
+[148.50s -> 151.06s]  So we want to look at the most common things that we might
+[151.06s -> 153.86s]  have with working with generative AI applications.
+[153.86s -> 156.90s]  The first one is ungrounded outputs or errors.
+[156.90s -> 158.74s]  These are most commonly known things like
+[158.74s -> 161.70s]  hallucinations or fabrications and they can be
+[161.70s -> 165.18s]  sometimes funny in terms of nonsensical responses,
+[165.18s -> 168.30s]  or they could be harmful like factual errors that might be used in
+[168.30s -> 171.78s]  other systems or even contradictions in responses,
+[171.78s -> 173.78s]  whether it's stating a claim in
+[173.78s -> 176.34s]  one sentence and then contradicting in the other,
+[176.34s -> 177.90s]  or just even presenting completely irrelevant information to the user.
+[178.50s -> 182.62s]  The next one, it's not so funny and it's harmful content.
+[182.62s -> 188.26s]  Large language models can produce instructions and whether it's encouraging things like
+[188.26s -> 191.38s]  self-harm, hateful or demeaning content,
+[191.38s -> 194.94s]  or providing instructions maybe for either finding
+[194.94s -> 198.38s]  illegal content or even acts of illegal content.
+[198.38s -> 202.22s]  So we need to make sure we keep an eye on that as well.
+[202.22s -> 205.22s]  Then lastly is the lack of fairness.
+[205.22s -> 208.10s]  I tell my kids all the time, life isn't fair,
+[208.10s -> 211.14s]  but generative AI systems should definitely be.
+[211.14s -> 216.66s]  Fairness really equals being free from bias and discrimination.
+[216.66s -> 220.02s]  This is making sure that the output is not producing anything that has
+[220.02s -> 225.02s]  exclusionary worldviews or has any bias towards any particular groups.
+[225.02s -> 227.66s]  This is a particularly important especially when we're talking about
+[227.66s -> 231.22s]  generating images or text and this aligns well
+[231.22s -> 234.46s]  with Microsoft's own responsible AI practices,
+[234.46s -> 238.06s]  whether that's being fairness, reliability and safety, privacy,
+[238.10s -> 242.34s]  and security, inclusiveness, transparency, and accountability.
+[242.34s -> 245.74s]  So how to actually use generative AI responsibly?
+[245.74s -> 248.90s]  Now that we understand the potential harms that could come about,
+[248.90s -> 251.74s]  the first thing is to measure these potential harms.
+[251.74s -> 256.50s]  We've encouraged taking a similar idea to software testing,
+[256.50s -> 260.14s]  but also making sure that you're doing things like prompt testing.
+[260.14s -> 267.98s]  This means you're actually aiming for a diversity of prompts that might be potentially used
+[268.10s -> 269.14s]  from your user.
+[269.14s -> 271.06s]  And these aren't the ideal prompts.
+[271.06s -> 275.58s]  These aren't things that always let you expect the happy path for your users,
+[275.58s -> 280.82s]  but making sure that anything that might come about when you're deploying your applications
+[280.82s -> 287.82s]  to users or them using your application that you encompass that in your prompt testing.
+[287.82s -> 290.26s]  I would like to say you should start manual.
+[290.26s -> 293.54s]  So you're getting, you know, sending a prompt to the large language model
+[293.54s -> 297.02s]  and receiving and evaluating that response.
+[297.02s -> 297.98s]  But you can also scale
+[297.98s -> 301.74s]  this to automation as well by batching these prompts
+[301.74s -> 304.26s]  and then also seeing the results there.
+[304.26s -> 308.82s]  The starting manual gives you a high touch and very clear understanding
+[308.82s -> 314.22s]  of how the large language model is responding to your use case.
+[314.22s -> 318.34s]  And there's four layers of mitigation that we're going to discover today as well.
+[318.34s -> 323.06s]  One is on the model level, building a safety system, using correct meta prompts.
+[323.06s -> 326.50s]  And then lastly, on the user experience side.
+[326.50s -> 327.98s]  So let's look at how this actually
+[327.98s -> 329.90s]  plays out in practice.
+[329.90s -> 331.58s]  First is the model side.
+[331.58s -> 335.22s]  I like to say really easily, right model, right use case.
+[335.22s -> 338.98s]  Well, large language models can do many things,
+[338.98s -> 342.02s]  but some of them are more specialized than others.
+[342.02s -> 346.58s]  And, you know, using the most powerful model is not always better.
+[346.58s -> 352.02s]  Or you can maybe use things like a specialized model that maybe is more attaining to your use case
+[352.02s -> 357.86s]  or even knowing the sort of parameters, things like model temperature and how that affects responses.
+[357.98s -> 362.62s]  And even the option of fine tuning or using a fine tuned model that may be even more geared
+[362.62s -> 367.58s]  to your use case or what your users will be using your application for are all great ways
+[367.58s -> 370.26s]  to mitigate on the model side.
+[370.26s -> 373.58s]  Also in safety system, things like content filtering.
+[373.58s -> 378.26s]  So making sure that the responses from the model goes through a filter and does not present
+[378.26s -> 380.36s]  any harmful content.
+[380.36s -> 385.90s]  Also using things like responsible AI and building out scoring and metrics on responses.
+[385.90s -> 387.82s]  And then lastly, monitoring.
+[387.82s -> 395.06s]  Monitoring the model and its responses are all great ways to build a good pillar of safety systems.
+[395.06s -> 396.62s]  Next is meta prompt.
+[396.62s -> 402.62s]  And this is really how we sort of define the behavior or rules for the model in terms of how it engages with users.
+[402.62s -> 409.90s]  We can ground the model in context or even using trusted data by using techniques like retrieval augmented generation,
+[409.90s -> 412.86s]  which is actually covered in this course as well.
+[412.86s -> 416.42s]  And then lastly, and most importantly, is on the user experience side.
+[416.42s -> 417.66s]  Building transparency to users.
+[417.66s -> 423.90s]  In terms of that there are engaging a generative AI application or a model is very important,
+[423.90s -> 428.90s]  as well as even putting things like constraints with inputs from the user side so that you
+[428.90s -> 433.14s]  limit and mitigate the harms that they could bring about with their prompts.
+[433.14s -> 438.18s]  And then even doing some input or output validation on the responses are also great ways to deliver
+[438.18s -> 443.62s]  a great user experience and a responsible one.
+[443.62s -> 446.42s]  And now let's say putting this responsible AI into practice.
+[446.42s -> 447.42s]  We've looked at the concepts.
+[447.42s -> 447.46s]  We've looked at the concepts.
+[447.66s -> 449.38s]  We've looked at the mitigating harms.
+[449.38s -> 451.90s]  But how do we actually get started?
+[451.90s -> 455.98s]  Well, within Microsoft, we have things like the Azure AI content safety.
+[455.98s -> 462.82s]  These are API endpoints and tools that allow for this information to,
+[462.82s -> 469.94s]  information in your responses to be presented in a way that gets scanned before being delivered to your users.
+[469.94s -> 477.66s]  Whether that's analyzing the text, building things like prompt shields to scan text before for any user input attacks,
+[477.66s -> 483.22s]  as well as groundness detection, making sure the model is grounded in the source materials
+[483.22s -> 485.74s]  that have been provided by users.
+[485.74s -> 491.14s]  We also have the responsible AI dashboard, which allows us to keep score essentially
+[491.14s -> 496.34s]  on how the model is being responded and being interacted with with our users and gives you
+[496.34s -> 501.78s]  a good understanding and overlook of how the model performs over time, which is very important
+[501.78s -> 505.90s]  in terms of not only when we deliver this generative AI application to production the
+[505.90s -> 506.90s]  first time.
+[506.90s -> 511.26s]  But the sixth time, the 10th time or the 100th time.
+[511.26s -> 515.14s]  And then lastly, we can do great things with monitoring via prompt flow.
+[515.14s -> 517.34s]  Prompt flow is an open source tool.
+[517.34s -> 524.86s]  We can also use it to find out and understand the type of responses that are being delivered to users.
+[524.86s -> 530.22s]  And we have metrics around this, whether it's coherence, the type of responses, if it's coherent,
+[530.22s -> 536.66s]  if it's fluent, the groundedness, as I mentioned earlier, is it relevant to the actual prompt and how similar is
+[536.66s -> 538.90s]  it to other prompts that we have seen before.
+[538.90s -> 545.66s]  These are all great things to give you an oversight and put those responsible AI practices
+[545.66s -> 548.42s]  principles into practice.
+[548.42s -> 552.20s]  And that covers this responsible AI lesson.
+[552.20s -> 558.58s]  You can check out more information and the full course at aka.ms.genai.beginners.

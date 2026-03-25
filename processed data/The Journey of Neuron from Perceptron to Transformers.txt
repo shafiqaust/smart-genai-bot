@@ -1,0 +1,330 @@
+[0.72s -> 5.68s]  The history of artificial intelligence isn't a straight line of progress.
+[6.12s -> 12.34s]  It is a story of cycles, seasons of immense hype, followed by freezing winters of doubt.
+[13.30s -> 18.10s]  Looking at this timeline, we see a journey that spans over 70 years.
+[18.64s -> 23.60s]  It begins in the 1950s with a simple question, can machines think?
+[23.60s -> 30.16s]  It travels through the dark ages of the 70s and 80s, where funding dried up and hope vanished.
+[30.56s -> 36.82s]  And it explodes in the 2010s with the deep learning revolution that powers the world today.
+[37.64s -> 43.66s]  But to understand how we got to chat GPT and Gemini, we have to go back to the very beginning.
+[44.22s -> 48.58s]  We have to follow the humble journey of a single artificial neuron.
+[48.58s -> 51.22s]  The year is 1958.
+[51.88s -> 53.58s]  Frank Rosenblatt introduces...
+[53.60s -> 59.24s]  Look at this mechanism. It's elegant in its simplicity.
+[59.90s -> 64.50s]  You have inputs, like pixels in an image, flowing into a central neuron.
+[65.22s -> 69.56s]  Each input is multiplied by a weight, W1, W2.
+[70.24s -> 74.30s]  If the weighted sum exceeds a threshold, the neuron fires.
+[74.72s -> 75.96s]  It outputs a 1.
+[75.96s -> 79.38s]  If not, silence. It outputs a 0.
+[80.16s -> 82.98s]  This was biological mimicry at its finest.
+[82.98s -> 93.54s]  The New York Times famously reported that the Navy expected this machine to eventually walk, talk, see, write, and reproduce itself.
+[93.54s -> 96.04s]  The optimism was intoxicating.
+[96.04s -> 99.10s]  We thought we had solved the code of intelligence.
+[99.10s -> 101.80s]  But the optimism was premature.
+[101.80s -> 108.60s]  In 1969, Marvin Minsky and Seymour Papert published a book that stopped the field in its tracks.
+[108.60s -> 111.28s]  They exposed a fatal flaw known as the XOR problem.
+[111.28s -> 112.28s]  They exposed a fatal flaw known as the XOR problem.
+[112.28s -> 112.78s]  They exposed a fatal flaw known as the XOR problem.
+[112.78s -> 113.28s]  They exposed a fatal flaw known as the XOR problem.
+[113.28s -> 113.78s]  They exposed a fatal flaw known as the XOR problem.
+[113.78s -> 114.78s]  Here is the issue.
+[114.78s -> 119.78s]  A single perceptron works by drawing a straight line to separate data.
+[119.78s -> 121.78s]  But look at the XOR plot.
+[121.78s -> 125.78s]  The red dots and blue dots are arranged diagonally.
+[125.78s -> 129.78s]  No matter how you angle a single straight line, you cannot separate them.
+[129.78s -> 134.78s]  It seems trivial to us, but this mathematical proof crushed the industry.
+[134.78s -> 141.78s]  If a neuron couldn't even solve this simple logic puzzle, how could it ever recognize a face or drive a car?
+[141.78s -> 142.08s]  If a neuron couldn't even solve this simple logic puzzle, how could it ever recognize a face or drive a car?
+[142.08s -> 143.08s]  If a neuron couldn't even solve this simple logic puzzle, how could it ever recognize a face or drive a car?
+[143.08s -> 144.08s]  If a neuron couldn't even solve this simple logic puzzle, how could it ever recognize a face or drive a car?
+[144.08s -> 145.08s]  Funding evaporated.
+[145.08s -> 147.08s]  The first AI winter had begun.
+[147.08s -> 151.08s]  For nearly two decades, neural networks were ignored.
+[151.08s -> 156.08s]  But in the shadows, a few researchers kept the flame alive.
+[156.08s -> 163.08s]  In 1986, Rumelhart, Hinton, and Williams popularized the solution, backpropagation.
+[163.08s -> 171.08s]  They realized that if you stack layers of neurons, creating a multilayer network, you could solve XOR.
+[171.08s -> 174.08s]  But the magic wasn't just in the layers.
+[174.08s -> 176.08s]  It was in how they learned.
+[176.08s -> 179.08s]  Watch the backward pass, the red flow.
+[179.08s -> 193.08s]  The network compares its output to the correct answer, calculates the error, and uses calculus, the chain rule, to send that error backwards through the network, adjusting the weights layer by layer.
+[193.08s -> 195.08s]  The math finally worked.
+[195.08s -> 197.08s]  The theory was sound.
+[197.08s -> 199.08s]  But the world didn't care.
+[199.08s -> 200.08s]  Computers were too slow.
+[200.08s -> 202.08s]  And data sets were too tiny.
+[202.08s -> 205.08s]  The revolution was paused.
+[205.08s -> 210.08s]  While neural networks sat on the shelf, the world turned to a different approach.
+[210.08s -> 212.08s]  Expert systems.
+[212.08s -> 216.08s]  Throughout the 70s and 80s, we tried to hard-code intelligence.
+[216.08s -> 219.08s]  We built massive lists of if-then rules.
+[219.08s -> 223.08s]  If the patient has a fever, then check for infection.
+[223.08s -> 227.08s]  Systems like Mycin outperformed junior doctors.
+[227.08s -> 229.08s]  But look at the visualization.
+[229.08s -> 233.08s]  As you add more rules, the system doesn't get smarter.
+[233.08s -> 235.08s]  It gets fragile.
+[235.08s -> 238.08s]  The web of logic becomes a tangled nightmare.
+[238.08s -> 242.08s]  You can't write a rule for every possible edge case in reality.
+[242.08s -> 248.08s]  By the late 80s, these systems became too expensive to maintain, and they crumbled.
+[248.08s -> 251.08s]  This led to AI winter number two.
+[251.08s -> 253.08s]  Fast forward to the mid-2000s.
+[253.08s -> 257.08s]  Neural networks are still theoretically sound, but practically useless because they take weeks.
+[257.08s -> 260.08s]  They are practically useless because they take weeks to train.
+[260.08s -> 263.08s]  Enter the GPU revolution.
+[263.08s -> 268.08s]  Originally designed for video games to render millions of pixels for gamers,
+[268.08s -> 272.08s]  researchers realized these chips were perfect for AI.
+[272.08s -> 276.08s]  A CPU on the left processes tasks one by one,
+[276.08s -> 283.08s]  but a GPU on the right can process thousands of tiny math problems simultaneously.
+[283.08s -> 286.08s]  Around 2007, thanks to NVIDIA's CUDA,
+[286.08s -> 289.08s]  we finally matched the algorithm to the hardware.
+[289.08s -> 292.08s]  Training speeds jumped 50 to 100 times.
+[292.08s -> 294.08s]  The engine was ready.
+[294.08s -> 298.08s]  We had the engine, the GPU, and the blueprint, backprop.
+[298.08s -> 300.08s]  But we were missing the fuel.
+[300.08s -> 305.08s]  Professor Fei-Fie Li realized that the bottleneck wasn't just the algorithm,
+[305.08s -> 307.08s]  it was the data.
+[307.08s -> 311.08s]  In 2009, she unleashed ImageNet.
+[311.08s -> 314.08s]  This wasn't just a data set, it was a beast.
+[314.08s -> 316.08s]  14 million images.
+[316.08s -> 318.08s]  20,000 categories.
+[318.08s -> 322.08s]  Hand-labeled by an army of people over the internet.
+[322.08s -> 325.08s]  In 2010, they launched a challenge.
+[325.08s -> 329.08s]  Build a computer vision system that can classify these images.
+[329.08s -> 333.08s]  The best classical methods, the old school techniques, struggled,
+[333.08s -> 336.08s]  hitting an error rate of 28%.
+[336.08s -> 339.08s]  The stage was set for a showdown.
+[339.08s -> 340.08s]  2012.
+[340.08s -> 343.08s]  This is the moment everything changed.
+[343.08s -> 345.08s]  The big bang of deep learning.
+[345.08s -> 348.08s]  A team from the University of Toronto,
+[348.08s -> 352.08s]  Alex Krajewski, Ilya Sutskever, and Jeffrey Hinton,
+[352.08s -> 355.08s]  submitted a deep neural network called AlexNet.
+[355.08s -> 357.08s]  Look at that graph.
+[357.08s -> 362.08s]  The second best team used traditional methods and got 26% error.
+[362.08s -> 366.08s]  AlexNet smashed it down to 16%.
+[366.08s -> 369.08s]  A 10% gap in one year is unheard of.
+[369.08s -> 371.08s]  They used everything.
+[371.08s -> 374.08s]  The GPUs, the ImageNet data,
+[374.08s -> 377.08s]  RELU activations, and Dropout.
+[377.08s -> 380.08s]  The scientific community was stunned.
+[380.08s -> 383.08s]  In that single moment, the debate ended.
+[383.08s -> 385.08s]  Deep learning had won.
+[385.08s -> 387.08s]  After AlexNet, the race was on.
+[387.08s -> 389.08s]  The philosophy became simple.
+[389.08s -> 391.08s]  Go deeper.
+[391.08s -> 396.08s]  In 2014, the Oxford Visual Geometry Group released VGGNet.
+[396.08s -> 398.08s]  They didn't just add random layers.
+[398.08s -> 400.08s]  They standardized the design.
+[400.08s -> 403.08s]  They used small, uniform 3x3 filters,
+[403.08s -> 405.08s]  stacking them like Lego bricks.
+[405.08s -> 407.08s]  We moved from 8 layers in AlexNet
+[407.08s -> 410.08s]  to 16 and 19 layers in VGG.
+[410.08s -> 414.08s]  With 138 million parameters, it was a monster.
+[414.08s -> 417.08s]  The error rate dropped again, down to 7.3%.
+[417.08s -> 420.08s]  But as we pushed deeper, we hit a wall.
+[420.08s -> 423.08s]  Training these massive towers became unstable.
+[423.08s -> 427.08s]  By 2015, we discovered a paradox.
+[427.08s -> 430.08s]  Theoretically, deeper networks should be better.
+[430.08s -> 432.08s]  But in practice, adding more layers
+[432.08s -> 434.08s]  made the error rate worse.
+[434.08s -> 438.08s]  Signals were vanishing before they could travel through the network.
+[438.08s -> 443.08s]  Enter Kai-Ming He and Microsoft Research with ResNet.
+[443.08s -> 446.08s]  Their innovation was the skip connection,
+[446.08s -> 449.08s]  a literal shortcut that allows data to bypass layers
+[449.08s -> 452.08s]  and flow through the network unimpeded.
+[452.08s -> 455.08s]  This simple trick allowed them to train networks
+[455.08s -> 460.08s]  not with 19 layers, but with 152 layers.
+[460.08s -> 462.08s]  ResNet achieved an excellent result.
+[462.08s -> 465.08s]  The error rate of 3.57%.
+[465.08s -> 467.08s]  For the first time in history,
+[467.08s -> 470.08s]  a machine had beaten the average human benchmark
+[470.08s -> 472.08s]  on image recognition.
+[472.08s -> 475.08s]  From the single perceptron that couldn't draw a curved line
+[475.08s -> 479.08s]  to a 152-layer giant that sees better than we do,
+[479.08s -> 482.08s]  this was the journey that laid the foundation
+[482.08s -> 485.08s]  for the transformers and LLMs we use today.
+[485.08s -> 488.08s]  We had depth thanks to ResNet.
+[488.08s -> 490.08s]  But we had another problem.
+[490.08s -> 493.08s]  Our deep networks was notoriously unstable.
+[493.08s -> 496.08s]  Imagine trying to hit a moving target.
+[496.08s -> 498.08s]  As data flows through the layers,
+[498.08s -> 501.08s]  the distribution of inputs keeps shifting around.
+[501.08s -> 505.08s]  This is called internal covariate shift.
+[505.08s -> 508.08s]  It forced engineers to use tiny learning rates
+[508.08s -> 510.08s]  and wait forever for convergence.
+[510.08s -> 514.08s]  In 2015, Ioffe and Szegedi at Google
+[514.08s -> 517.08s]  introduced batch normalization.
+[517.08s -> 519.08s]  The idea was audacious.
+[519.08s -> 521.08s]  It forced the data to be stable.
+[521.08s -> 524.08s]  Inside the network, they normalized the inputs
+[524.08s -> 528.08s]  of every layer to have a mean of zero and unit variance.
+[528.08s -> 531.08s]  It acted like a relentless stabilizer.
+[531.08s -> 534.08s]  Suddenly, we could train networks 10 times faster.
+[534.08s -> 536.08s]  We could use higher learning rates.
+[536.08s -> 538.08s]  It became the standard component
+[538.08s -> 540.08s]  that made deep learning tractable.
+[540.08s -> 543.08s]  While computer vision was exploding,
+[543.08s -> 546.08s]  another field was struggling, language.
+[546.08s -> 548.08s]  Images are static snapshots,
+[548.08s -> 551.08s]  but language, language is a sequence.
+[551.08s -> 553.08s]  To understand a sentence,
+[553.08s -> 555.08s]  you need to remember the beginning
+[555.08s -> 557.08s]  while reading the end.
+[557.08s -> 559.08s]  Standard networks couldn't do this.
+[559.08s -> 562.08s]  Enter the Recurrent Neural Network, or RNN.
+[562.08s -> 564.08s]  Look at the loop.
+[564.08s -> 567.08s]  An RNN feeds its output back into itself.
+[567.08s -> 570.08s]  When we unroll it through time,
+[570.08s -> 572.08s]  we see that it passes a hidden state,
+[572.08s -> 575.08s]  a memory, from one step to the next.
+[575.08s -> 577.08s]  It worked for short sentences,
+[577.08s -> 579.08s]  but for long paragraphs, it failed.
+[579.08s -> 581.08s]  As the chain got longer,
+[581.08s -> 583.08s]  the gradients vanished.
+[583.08s -> 585.08s]  The network would simply forget
+[585.08s -> 587.08s]  what happened at the start.
+[587.08s -> 589.08s]  It had amnesia.
+[589.08s -> 591.08s]  To cure this amnesia,
+[591.08s -> 593.08s]  we needed a better brain.
+[593.08s -> 595.08s]  We needed the LSTM,
+[595.08s -> 597.08s]  Long Short Term Memory.
+[597.08s -> 600.08s]  Invented back in 1997,
+[600.08s -> 603.08s]  but popularized in the deep learning era,
+[603.08s -> 606.08s]  the LSTM is a masterpiece of engineering.
+[606.08s -> 608.08s]  Look at the complexity
+[608.08s -> 610.08s]  compared to a simple neuron.
+[610.08s -> 612.08s]  It introduces a cell state,
+[612.08s -> 614.08s]  a superhighway for information.
+[614.08s -> 616.08s]  Along this highway,
+[616.08s -> 618.08s]  it uses gates,
+[618.08s -> 620.08s]  the forget gate,
+[620.08s -> 622.08s]  input gate,
+[622.08s -> 624.08s]  and output gate,
+[624.08s -> 626.08s]  to act like valves.
+[626.08s -> 628.08s]  It learns exactly what to remember
+[628.08s -> 630.08s]  and what to forget.
+[630.08s -> 632.08s]  If you're reading a book
+[632.08s -> 634.08s]  and a new chapter starts,
+[634.08s -> 636.08s]  you'll be able to understand
+[636.08s -> 638.08s]  what's going on in the context.
+[638.08s -> 640.08s]  This architecture dominated
+[640.08s -> 642.08s]  speech recognition and translation
+[642.08s -> 643.08s]  for over a decade.
+[643.08s -> 645.08s]  But how does a computer
+[645.08s -> 647.08s]  actually understand a word like king?
+[647.08s -> 648.08s]  For decades,
+[648.08s -> 650.08s]  we used one hot encoding,
+[650.08s -> 652.08s]  giant lists of zeros.
+[652.08s -> 653.08s]  It was inefficient
+[653.08s -> 655.08s]  and carried no meaning.
+[655.08s -> 657.08s]  Cat was just as mathematically distant
+[657.08s -> 659.08s]  from dog as it was from car.
+[659.08s -> 662.08s]  Then came Word2Vec in 2013.
+[662.08s -> 664.08s]  We learned to compress words
+[664.08s -> 666.08s]  into dense vectors.
+[666.08s -> 667.08s]  Suddenly,
+[667.08s -> 669.08s]  the geometry of the math
+[669.08s -> 671.08s]  matched the geometry of the meaning.
+[671.08s -> 673.08s]  Look at this famous equation.
+[673.08s -> 675.08s]  If you take the vector for king,
+[675.08s -> 676.08s]  subtract man,
+[676.08s -> 677.08s]  and add woman,
+[677.08s -> 679.08s]  the result lands almost perfectly
+[679.08s -> 681.08s]  on the vector for queen.
+[681.08s -> 683.08s]  Words weren't just symbols anymore.
+[683.08s -> 685.08s]  They were coordinates
+[685.08s -> 687.08s]  in a universe of meaning.
+[687.08s -> 689.08s]  With LSTMs and word embeddings,
+[689.08s -> 692.08s]  we built the encoder-decoder architecture.
+[692.08s -> 694.08s]  This gave us Google Translate.
+[694.08s -> 697.08s]  The encoder reads the English sentence
+[697.08s -> 700.08s]  and compresses it into a single context vector.
+[700.08s -> 703.08s]  The decoder takes that vector
+[703.08s -> 705.08s]  and unpacks it into French.
+[705.08s -> 707.08s]  But there was a flaw.
+[707.08s -> 709.08s]  Imagine reading a whole book
+[709.08s -> 711.08s]  and trying to summarize it
+[711.08s -> 713.08s]  into a single index card.
+[713.08s -> 715.08s]  That's what the context vector was.
+[715.08s -> 716.08s]  A bottleneck.
+[716.08s -> 718.08s]  If the sentence was too long,
+[718.08s -> 720.08s]  the information got crushed.
+[720.08s -> 723.08s]  We needed a way to break the bottleneck.
+[723.08s -> 726.08s]  The breakthrough came in 2015
+[726.08s -> 728.08s]  with attention.
+[728.08s -> 730.08s]  Badenao and colleagues asked,
+[730.08s -> 732.08s]  why force the network to rely
+[732.08s -> 735.08s]  on one static memory vector?
+[735.08s -> 737.08s]  Instead, they let the decoder
+[737.08s -> 740.08s]  look back at the entire input sentence.
+[740.08s -> 742.08s]  Watch the gold lines.
+[742.08s -> 744.08s]  When the model is trying to translate
+[744.08s -> 746.08s]  the word chat, cat,
+[746.08s -> 749.08s]  it pays high attention to the word cat
+[749.08s -> 750.08s]  in the input
+[750.08s -> 752.08s]  and ignores the or sat.
+[752.08s -> 754.08s]  It mimicked human focus.
+[754.08s -> 756.08s]  It allowed us to handle long sequences
+[756.08s -> 758.08s]  without losing context.
+[758.08s -> 760.08s]  But we were still using
+[760.08s -> 764.08s]  those slow, sequential RNNs underneath.
+[764.08s -> 766.08s]  Then, in 2017,
+[766.08s -> 768.08s]  a team at Google Brain
+[768.08s -> 770.08s]  published a paper with a cheeky title,
+[770.08s -> 772.08s]  Attention is All You Need.
+[772.08s -> 775.08s]  They proposed the transformer.
+[775.08s -> 777.08s]  They threw away the RNNs.
+[777.08s -> 779.08s]  They threw away the recurrence.
+[779.08s -> 781.08s]  They proved that if you use enough
+[781.08s -> 783.08s]  attention mechanisms in parallel,
+[783.08s -> 785.08s]  called multi-head attention,
+[785.08s -> 788.08s]  you can process the entire sentence at once.
+[788.08s -> 790.08s]  This was the key.
+[790.08s -> 792.08s]  Because it processed data in parallel,
+[792.08s -> 794.08s]  it could run on massive clusters
+[794.08s -> 796.08s]  of GPUs efficiently.
+[796.08s -> 798.08s]  It allowed us to scale up,
+[798.08s -> 799.08s]  not just a little bit,
+[799.08s -> 801.08s]  but exponentially.
+[801.08s -> 804.08s]  The transformer split the timeline in two,
+[804.08s -> 808.08s]  birthing the modern era of generative AI.
+[808.08s -> 810.08s]  On one side, we had BERT.
+[810.08s -> 813.08s]  It looked at text bidirectionally,
+[813.08s -> 815.08s]  left and right,
+[815.08s -> 817.08s]  to deeply understand context.
+[817.08s -> 819.08s]  It became the standard
+[819.08s -> 821.08s]  for search engines and classification.
+[821.08s -> 823.08s]  On the other side,
+[823.08s -> 825.08s]  we had GPT,
+[825.08s -> 828.08s]  the Generative Pre-trained Transformer.
+[828.08s -> 830.08s]  It focused on one thing,
+[830.08s -> 832.08s]  predicting the next token.
+[832.08s -> 836.08s]  At first, GPT-1 was a curiosity.
+[836.08s -> 838.08s]  But as OpenAI scaled it up,
+[838.08s -> 840.08s]  from 117 million,
+[840.08s -> 844.08s]  to 175 billion in GPT-3,
+[844.08s -> 846.08s]  something magical happened.
+[846.08s -> 848.08s]  We scaled it further,
+[848.08s -> 852.08s]  to 1 trillion plus parameter in GPT-4,
+[852.08s -> 855.08s]  and we all experienced the magic intelligence.
+[855.08s -> 858.08s]  Intelligence emerged from scale.
+[858.08s -> 860.08s]  I will make a separate video
+[860.08s -> 863.08s]  on the jagged intelligence of these models.
+[863.08s -> 866.08s]  It has been a 65-year journey.
+[866.08s -> 869.08s]  We started with the Perceptron in 1955.
+[869.08s -> 871.08s]  In 1958,
+[871.08s -> 873.08s]  a single mathematical neuron
+[873.08s -> 875.08s]  that couldn't even solve a logic puzzle.
+[875.08s -> 878.08s]  We walked through the winter of the 70s,
+[878.08s -> 880.08s]  the handcrafted rules of the 80s,
+[880.08s -> 883.08s]  and the quiet revolution of backpropagation.
+[883.08s -> 886.08s]  We gave it vision with AlexNet.
+[886.08s -> 888.08s]  We gave it memory with LSTMs.
+[888.08s -> 890.08s]  And finally, with the Transformer,
+[890.08s -> 893.08s]  we taught it to understand.
+[893.08s -> 896.08s]  We have moved from a single unit of computation
+[896.08s -> 898.08s]  to models with trillions of connections,
+[898.08s -> 901.08s]  rivaling the complexity of the biological brain.
+[901.08s -> 903.08s]  The question is no longer,
+[903.08s -> 905.08s]  can machines think?
+[905.08s -> 907.08s]  The question now is,
+[907.08s -> 909.08s]  where does this journey take us next?
+[909.08s -> 911.08s]  Hope you enjoyed the video,
+[911.08s -> 913.08s]  and I will see you in the next one.

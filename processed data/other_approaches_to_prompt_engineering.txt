@@ -1,0 +1,472 @@
+[0.00s -> 5.20s]  Good afternoon, everyone.
+[5.76s -> 14.84s]  We'll continue with the discussion on approaches to prompt engineering or prompting.
+[14.84s -> 30.02s]  So, I copy here the list of methods or approaches to prompting engineering.
+[30.24s -> 32.14s]  So, I divide it into two lists.
+[34.02s -> 40.58s]  This is the approaches that deal with reasoning and logic.
+[43.34s -> 44.82s]  The reasoning.
+[44.84s -> 49.74s]  And there are so many of them here.
+[50.32s -> 55.74s]  It's because of the early generation of AIM.
+[56.42s -> 65.58s]  They are known for not being able to do any of the reasoning tasks.
+[65.58s -> 72.92s]  So, as a result, so many approaches have been developed.
+[73.70s -> 74.58s]  So, that's...
+[74.84s -> 81.24s]  And for now, so in this class, I do not intend to...
+[81.24s -> 84.18s]  That we are going over all of them.
+[85.06s -> 88.70s]  We'll select a few more to discuss.
+[88.70s -> 99.32s]  And you are welcome to follow the survey and study about the rest.
+[99.80s -> 103.70s]  And then the other type of prompting...
+[104.84s -> 118.90s]  We have to deal with, like, reduce hallucination or creating, like, active prompt or fine-tuning and knowledge-based reasoning and so on and so forth.
+[118.90s -> 128.96s]  So, we'll go over only a few of them, but discuss more about the code generation and execution, for example.
+[131.38s -> 134.76s]  And then, so we'll have that.
+[134.84s -> 135.32s]  For today.
+[135.66s -> 135.84s]  Okay?
+[136.64s -> 148.10s]  So, let us hear a quick preview of the two things that I think that will be quite important for us to understand.
+[148.10s -> 149.06s]  Yeah.
+[149.68s -> 152.10s]  I observed that the current...
+[153.62s -> 163.96s]  Last language model, such as Germanic, it already embedded a chain of thought as a default mode.
+[163.96s -> 164.38s]  Okay.
+[164.38s -> 169.82s]  So, we'll see here in this demonstration.
+[170.34s -> 176.38s]  So, let's hear.
+[183.10s -> 191.02s]  So, in the previous classes, we say that we need to provide the step-by-step.
+[191.02s -> 194.02s]  But when I ask this question...
+[194.38s -> 204.10s]  How many apples are left if I had 10 and gave two to Bob and both gave one back, right?
+[204.10s -> 217.36s]  So, I did not ask for, like, the model, not the AI, to do any analysis or something like that.
+[217.44s -> 224.34s]  But it basically thinks exactly the way that the chain of thought prompting.
+[224.34s -> 224.50s]  Go.
+[224.50s -> 228.30s]  I would ask to go step-by-step, right?
+[228.36s -> 231.34s]  So, here's the breakdown.
+[232.00s -> 233.74s]  So, here's the first answer.
+[234.06s -> 236.92s]  And it comes with this breakdown.
+[238.58s -> 239.50s]  You start.
+[239.62s -> 241.30s]  So, I start with 10 apples.
+[241.56s -> 242.32s]  I gave it two.
+[242.64s -> 243.64s]  I had two to Bob.
+[243.92s -> 246.78s]  So, there is n minus two equals eight.
+[247.10s -> 249.22s]  And then Bob keeps one back.
+[249.44s -> 250.80s]  So, eight plus one is nine.
+[250.98s -> 252.16s]  This is perfect, right?
+[252.92s -> 253.26s]  So.
+[254.34s -> 261.54s]  so it seems that chain of thought now it's a default reasoning mode of at least germany and
+[261.54s -> 273.62s]  i believe chachi pt and others also now i try to break it with a little bit of like with
+[274.26s -> 280.98s]  something simple to see whether it would it would be it would break but it doesn't as you can see
+[280.98s -> 289.70s]  here i have started the same thing as before right i just added then both pretend to take another one
+[290.42s -> 300.18s]  so and the answer is social mona does a pretty good job on people only pretend to take another
+[300.18s -> 309.78s]  one so you still have nine up which is correct right now i add a little bit more but pretend
+[309.78s -> 310.90s]  to take another one
+[310.98s -> 320.02s]  and keep one to change and then the answer is also still correct it practically right so it's
+[320.02s -> 328.58s]  because bob's doesn't take away from me so it's still here uh i still have nine but bob will have
+[328.58s -> 335.94s]  zero upper because even though we do not ask for it but it's still provide so and the remark is
+[335.94s -> 340.02s]  also quite interesting say that unless box somehow
+[340.98s -> 349.70s]  swipe one of yours why he was pretending uh you're still sitting uh petty with nine right which is
+[349.70s -> 357.86s]  so and so on and so forth to that it and uh i i think i do the same thing here
+[360.42s -> 369.94s]  now so as you can see the chain of thought here i didn't know i didn't even write the instruction
+[370.98s -> 380.10s]  like like as we would probably but uh if the other like metals that say that automatic
+[380.10s -> 386.58s]  chain of thought like when you when we when you don't want to write a instruction but we want to
+[386.58s -> 395.54s]  ask it to do step by step and it will do that thing we just need to add this as instruction let
+[397.30s -> 400.82s]  let things step by step to it and then it will do right so that's where uh you're gonna put it okay
+[400.98s -> 408.34s]  And here, I have it, and then it will do exactly what we like, okay?
+[408.62s -> 410.18s]  This is my first step.
+[410.92s -> 412.14s]  This is the first step.
+[412.30s -> 413.92s]  This is the second step.
+[414.38s -> 416.26s]  And then it is the third step.
+[416.54s -> 422.14s]  And so, like, all this, like, it basically considers each of that.
+[422.86s -> 426.34s]  And in a cow, we still have that, okay?
+[426.34s -> 431.12s]  So that is something that we have.
+[435.42s -> 439.94s]  And here, for example, that.
+[444.22s -> 453.00s]  So in the method, one of the, also one of the logical chain of thought is that,
+[453.62s -> 456.02s]  so here we ask,
+[456.34s -> 460.62s]  so I am to do each of the steps,
+[461.02s -> 464.24s]  but we also propose the thing, like,
+[465.02s -> 467.90s]  to step to change,
+[468.40s -> 472.76s]  additional information to verify each of the steps,
+[473.08s -> 477.84s]  because if the step is wrong, then the final result would be wrong as well, okay?
+[478.20s -> 482.52s]  So eventually, all the way, but the majority of the,
+[482.52s -> 486.02s]  and one of the methods using there is, like, to,
+[486.34s -> 491.22s]  and they apply the, in the original paper presenting this one,
+[491.74s -> 493.98s]  they propose to use,
+[495.32s -> 496.96s]  they propose to use the,
+[498.22s -> 501.56s]  the principle of proving by contradiction.
+[502.10s -> 506.42s]  So, we wanted to prove P,
+[507.50s -> 510.46s]  and we want to prove P.
+[510.82s -> 514.58s]  We assume that negation of P, not P, is true.
+[514.86s -> 516.30s]  And we, we try to derive,
+[516.50s -> 520.38s]  we try to derive a contradiction, and then we can conclude that P is true, right?
+[521.18s -> 526.68s]  And so, unfortunately, I cannot reproduce the example of,
+[527.04s -> 532.22s]  of this, of this example in the, the Cleveland paper.
+[532.22s -> 538.20s]  And because of the capability of LIM is so good now,
+[538.62s -> 544.40s]  finding an example is wrong and not, it's not simple.
+[544.86s -> 545.94s]  So I copy here.
+[546.50s -> 554.38s]  The snippet that was presented in the original paper introducing this approach.
+[555.44s -> 556.62s]  And here.
+[558.02s -> 565.06s]  Now, the question was, today is April 10th, 1985.
+[565.84s -> 569.70s]  Change appointment will be three days later.
+[570.74s -> 572.46s]  What when, what is the date?
+[572.66s -> 576.14s]  10 days ago in the Monday.
+[576.78s -> 577.74s]  Year format?
+[578.80s -> 583.28s]  So, and we do, do think step by step.
+[584.22s -> 587.08s]  And the answer is you could see there are six steps.
+[587.94s -> 591.46s]  The first step set stated what date is today.
+[591.88s -> 593.92s]  And then the second step step,
+[595.04s -> 602.12s]  like is concerned with change appointment, which is three day later, three days later.
+[602.64s -> 604.86s]  So, and then the calculation.
+[605.16s -> 606.12s]  So, change.
+[606.34s -> 614.96s]  appointment will be on April the 13th, 1985, which is still correct, right?
+[614.96s -> 623.78s]  But then it says that to find the date 10 days ago, we subtract 10 days from April the
+[623.78s -> 630.84s]  13th, 1984, which basically results in something incorrect.
+[630.84s -> 647.98s]  Now, so here, so this approach basically suggests that we add the reviews or verification mechanism.
+[648.40s -> 658.16s]  Say, for example, after this is done, it will say, okay, step six is true because we are
+[658.16s -> 660.68s]  subtracting 10 days from the given date.
+[660.84s -> 670.98s]  So April 13th, 1985, by subtracting 10 days, we go back in time and arrive, everything
+[670.98s -> 672.08s]  is correct, right?
+[672.08s -> 684.04s]  The only thing is that this is false, this reasoning is false because it doesn't understand,
+[684.36s -> 686.34s]  it doesn't answer the question.
+[687.44s -> 689.26s]  So, yeah.
+[689.54s -> 690.78s]  And the second reason.
+[690.84s -> 698.64s]  The review is saying that this step is false because the reasoning in step four is already
+[698.64s -> 703.66s]  incorrect, right?
+[703.66s -> 707.26s]  And then it also provides the reasoning like this.
+[707.26s -> 718.18s]  So logical chain of thought basically inserts this kind of verification mechanism to each
+[718.18s -> 719.54s]  of the steps.
+[719.54s -> 723.86s]  Finally, theMissing part in step five.
+[723.86s -> 725.94s]  We can read this kind of Tennesse and try to correct it when it comes.
+[725.94s -> 727.80s]  Okay.
+[728.32s -> 731.52s]  So here, in this example, we also have.
+[732.36s -> 737.06s]  So you can see that the template can be written in a different way.
+[737.28s -> 741.24s]  So, an example.
+[746.24s -> 748.40s]  And, so here we have.
+[748.54s -> 749.28s]  Wait.
+[749.54s -> 762.82s]  um in this white place so now here's an example of the statement saying that what the system
+[762.82s -> 773.14s]  needs to do and then profile so walk through each of the premise one by one before we do that right
+[773.14s -> 784.10s]  so here um the example that is given it like if the office is south of the park and the park is
+[784.90s -> 792.34s]  south of the library what is the relationship between the library and the office right if so
+[792.34s -> 796.50s]  imagine that you here you have uh here you have like the
+[799.86s -> 802.90s]  part right and up here you have the south so
+[803.78s -> 815.14s]  library is back in the sound of library and then here up here you have like office is south of park
+[815.14s -> 825.54s]  so we have that kind of reasoning and then we can say that okay since library is the top and the
+[825.54s -> 832.82s]  office is at the bottom so library is not of the office there are some therefore the answer is
+[833.14s -> 838.90s]  the library is not of the office and then we have a new question here that
+[838.90s -> 848.50s]  at least it's taller than bob charlie is shorter than bob dan dan is taller than at least so who is
+[848.50s -> 856.18s]  the shortest and who is the second tallest and then the reasoning that it do so it provides a
+[856.18s -> 863.06s]  reasoning uh to determine the height ranking let's break down the relationship step by step
+[863.14s -> 870.34s]  now here we have first at least taller than bob we'll write like this charlie is shorter than bob
+[870.34s -> 880.10s]  so we have both be greater than charlie and then diana is taller than alice so we have dan and alice
+[880.10s -> 885.62s]  and bob and charlie and therefore so we have this answer right so it's perfect
+[890.26s -> 892.90s]  and now so this is the example that i
+[893.46s -> 898.50s]  uh uh i couldn't reproduce it uh this is
+[901.54s -> 906.26s]  this logical chain of thought right so this is we have here um
+[909.30s -> 921.46s]  and the i am germany is pretty good it basically reduced the step of reasoning too far because i
+[921.46s -> 922.42s]  think uh
+[923.78s -> 927.38s]  the reference is uh today is the 10th
+[927.38s -> 936.66s]  8 april the 10th and the 10th appointment is 21st uh 21 day later and so but this is
+[936.66s -> 944.58s]  information it's extra external extraneous to the fine final so it can ignore it
+[944.58s -> 950.74s]  and then it say okay that it will end the deduction which is much better right so
+[953.14s -> 960.82s]  the next example of the other one of the other also important uh prompting technique is tree
+[960.82s -> 970.18s]  is called tree of thoughts and here the key thing is that this approach tries to systematically
+[971.14s -> 978.10s]  explore uh all the possible reasoning chain with a look ahead to solving the problem
+[978.10s -> 981.86s]  in an open concept to learn about reasoning and that's also going to be the next step
+[981.86s -> 982.50s]  next
+[983.14s -> 992.34s]  the problem um which is very similar to the way we play of like we we try to solve also we didn't
+[992.34s -> 998.66s]  think much but if it is violet if we do something it violates so we say okay with this one we don't
+[999.30s -> 1006.34s]  this cannot be done in this situation or so and so forth and but if we are lucky we will stop
+[1006.34s -> 1014.26s]  um otherwise we'll just try another way of solving the problem and make sure the only
+[1014.26s -> 1021.06s]  thing that we need to make sure is that we don't want to do this we don't want it to
+[1022.66s -> 1025.70s]  repeat it uh all the examination right
+[1026.42s -> 1035.46s]  and uh for this reason it's kind of like similar to breakfast in the short space so let us
+[1037.14s -> 1046.02s]  check out an example again so here it's basically the template one of the templates
+[1046.02s -> 1051.06s]  one of the possible so imagine three different experts are answering this question
+[1051.78s -> 1057.94s]  all experts will write down one step of their thinking then share with the other group
+[1057.94s -> 1065.94s]  after all experts have shared their first broad step they will evaluate each
+[1065.94s -> 1066.34s]  other
+[1066.34s -> 1076.26s]  the idea they will only continue with the most promising part adding the adding to the other
+[1076.26s -> 1084.98s]  right so here i have the question uh use the number two three eight and eight exactly ones
+[1085.94s -> 1096.18s]  each and construct the number 24 using the operation um plus minus division and multiplication
+[1097.30s -> 1107.14s]  so um in the first step it's so it it is instructed the system is instructed to have
+[1107.14s -> 1116.58s]  each expert exposed a starting approach and then in the step two that we critic approaches for
+[1116.58s -> 1126.34s]  our logic and first visibility with and then the third step is to do the expand expansion we take the
+[1126.34s -> 1135.78s]  best approach and develop it further and then at that point we make the conclusion so
+[1137.94s -> 1145.46s]  um i have this question here right so the question it was reiterated
+[1145.46s -> 1156.10s]  is like uh try to to construct the number 24 hour two three eight and eight now as you can see that
+[1156.10s -> 1165.30s]  what is what the what germany does is like the first generation generation uh so multiplier
+[1166.10s -> 1174.82s]  i wanted to raise this by this to do this i need the following remaining eight and two to create
+[1176.18s -> 1185.22s]  i um one it's the expression like this right so expert me will say something
+[1186.10s -> 1198.66s]  in this either contradictory or similar right and expo c is like the um i will try to reach the last
+[1198.66s -> 1208.74s]  number and subtraction back down to 24 for example so all these things right now let's see how does
+[1208.74s -> 1215.54s]  this do so that is the that's the problem that the only the only different um
+[1216.26s -> 1222.58s]  generic problem is that i don't we don't have this um question
+[1224.82s -> 1230.58s]  here we have the image i have the question yeah the question is this one okay
+[1235.30s -> 1236.82s]  the question is this one
+[1239.86s -> 1245.94s]  so yeah and here here's the solution that is so expert
+[1246.26s -> 1255.70s]  a is like i wanted to raise 24 by multiplying three times eight like that so this i need to use
+[1255.70s -> 1264.18s]  the remaining b eight and two to create the starting explode expression itself so this is
+[1264.18s -> 1274.50s]  something that uh so it does so b has something else uh and c is another one so the three experts
+[1276.10s -> 1284.82s]  right to that and then in the second step they would evaluate that and critic the other the other
+[1284.82s -> 1296.74s]  people or even themselves uh so here like the load so the evaluation of expert a say that it the
+[1297.38s -> 1301.16s]  logical sound the logic in thinking itself but it is difficult to figure out what whether we get to now or not
+[1301.16s -> 1305.98s]  it is difficult to figure out what whether we get to now or not
+[1306.10s -> 1307.66s]  number two, two, two, right?
+[1307.86s -> 1309.42s]  So that's one.
+[1310.56s -> 1315.88s]  And reviewer B or expert B,
+[1316.16s -> 1322.40s]  exploring transaction is often a pro move.
+[1323.08s -> 1327.28s]  So this is something that we can also check.
+[1327.28s -> 1330.28s]  And then the evaluation of the expert C,
+[1330.88s -> 1334.12s]  it is the same, right?
+[1334.20s -> 1335.50s]  We can say that.
+[1335.50s -> 1338.22s]  And here the explanation comes.
+[1339.06s -> 1341.30s]  Like, for example, we have,
+[1341.78s -> 1343.52s]  let's see if we can use it.
+[1344.14s -> 1352.12s]  If we wanted to make it 24 using 24 by something, right?
+[1352.28s -> 1354.98s]  So this is, so we have this.
+[1356.04s -> 1359.78s]  And then do this kind of like,
+[1360.38s -> 1364.48s]  but then it will not find,
+[1365.28s -> 1365.48s]  you know,
+[1365.60s -> 1366.62s]  so in right,
+[1366.74s -> 1367.84s]  right at the first step,
+[1368.18s -> 1370.74s]  it doesn't find the answer.
+[1370.96s -> 1374.20s]  And then it will try to debate by itself.
+[1374.72s -> 1376.38s]  And as you can see,
+[1376.42s -> 1378.66s]  it looked quite complicated, right?
+[1379.30s -> 1382.02s]  And eventually it come up with a,
+[1382.88s -> 1384.50s]  with a,
+[1384.50s -> 1386.96s]  with a solution here, right?
+[1386.96s -> 1389.56s]  But understanding that in between,
+[1389.76s -> 1395.14s]  there are a lot of shows that it executed to find it, right?
+[1395.50s -> 1396.80s]  You can see this one.
+[1396.80s -> 1403.22s]  So try the actual solution part is if we had to be perfect, right?
+[1403.22s -> 1407.18s]  But where is number second,
+[1407.18s -> 1410.18s]  the second number eight and number two, right?
+[1410.18s -> 1414.44s]  So if we can use eight and two and make a one,
+[1414.44s -> 1415.94s]  so like this,
+[1415.94s -> 1418.50s]  but we cannot do that, right?
+[1418.50s -> 1421.18s]  So this is something like,
+[1421.18s -> 1424.74s]  and you can see it quite complicated here.
+[1424.74s -> 1429.74s]  It does a lot of stuff and if not,
+[1430.08s -> 1431.22s]  so it repeat,
+[1431.40s -> 1431.76s]  okay,
+[1431.76s -> 1436.76s]  I'm doing it again here and it's it,
+[1437.58s -> 1440.50s]  did it still not cool,
+[1440.76s -> 1441.06s]  right?
+[1441.06s -> 1443.64s]  Even though the number is 24 now,
+[1445.02s -> 1449.88s]  but then it's still not good because doesn't number it doesn't use number three.
+[1450.84s -> 1452.92s]  Now the next thing here,
+[1453.06s -> 1453.84s]  we have that.
+[1453.84s -> 1454.14s]  Oh,
+[1454.14s -> 1460.80s]  I have the expansion like this and eventually I get this thing,
+[1460.80s -> 1461.20s]  right?
+[1461.20s -> 1467.88s]  So what we can do that here we can stop and try to,
+[1467.88s -> 1476.40s]  I try to identify the successful branch involving this,
+[1478.40s -> 1482.10s]  this AI,
+[1482.10s -> 1482.74s]  this,
+[1482.74s -> 1483.60s]  um,
+[1483.60s -> 1484.12s]  this kind of,
+[1484.12s -> 1484.96s]  this kind of thing.
+[1484.96s -> 1487.34s]  It's not that simple,
+[1487.34s -> 1487.68s]  right?
+[1487.68s -> 1487.94s]  So,
+[1487.94s -> 1492.98s]  but we can see that it finally found out the answer.
+[1493.48s -> 1494.10s]  And of course,
+[1494.10s -> 1495.00s]  like,
+[1495.00s -> 1496.14s]  um,
+[1496.14s -> 1502.06s]  I'm not quite sure how many of us can follow this threat and,
+[1502.06s -> 1502.90s]  uh,
+[1502.90s -> 1506.88s]  finding the solution without using the computer,
+[1507.62s -> 1509.68s]  but not that with the computer,
+[1509.68s -> 1511.62s]  it also not easy.
+[1512.30s -> 1513.70s]  It's not straightforward.
+[1513.70s -> 1514.10s]  That we can,
+[1514.10s -> 1521.52s]  that you could implement that in about five minutes or something that would not be possible.
+[1523.52s -> 1525.72s]  So moving on,
+[1526.42s -> 1527.22s]  um,
+[1527.72s -> 1530.92s]  prompting also has a lot like,
+[1530.92s -> 1531.52s]  uh,
+[1531.52s -> 1533.80s]  it is very good with generating code,
+[1534.26s -> 1535.04s]  but here,
+[1535.04s -> 1535.54s]  like,
+[1535.54s -> 1536.28s]  uh,
+[1536.28s -> 1536.62s]  from,
+[1536.62s -> 1536.96s]  from,
+[1536.96s -> 1538.28s]  from some description.
+[1538.28s -> 1539.86s]  So I'm just not,
+[1539.86s -> 1540.78s]  uh,
+[1540.78s -> 1541.78s]  I have this here.
+[1541.78s -> 1543.78s]  Uh,
+[1544.10s -> 1546.72s]  the code might say,
+[1546.72s -> 1547.72s]  for example,
+[1547.72s -> 1561.92s]  I ask this generate a Python code for computing square root of a number like that.
+[1561.92s -> 1562.92s]  Yeah.
+[1562.92s -> 1563.92s]  Very nice.
+[1563.92s -> 1564.92s]  Right.
+[1564.92s -> 1568.92s]  So using the math mode and this is the most,
+[1568.92s -> 1569.92s]  uh,
+[1569.92s -> 1570.92s]  because of the,
+[1570.92s -> 1571.92s]  uh,
+[1571.92s -> 1572.92s]  square root,
+[1572.92s -> 1573.92s]  either library,
+[1573.92s -> 1575.16s]  it in,
+[1575.16s -> 1576.10s]  in it library,
+[1576.10s -> 1577.00s]  right?
+[1577.00s -> 1583.04s]  So we can have this code here.
+[1583.04s -> 1586.62s]  You could see that it makes sense,
+[1586.62s -> 1586.96s]  right?
+[1586.96s -> 1590.22s]  Because it's square root here,
+[1590.22s -> 1594.38s]  but it would not.
+[1594.38s -> 1595.54s]  So this code,
+[1595.54s -> 1596.96s]  for example,
+[1596.96s -> 1598.88s]  doesn't work with negative number,
+[1598.88s -> 1599.54s]  right?
+[1599.54s -> 1600.54s]  And,
+[1600.54s -> 1601.30s]  um,
+[1601.30s -> 1601.80s]  and then,
+[1601.80s -> 1603.54s]  and we need to be careful,
+[1603.54s -> 1604.54s]  careful about that.
+[1604.54s -> 1605.54s]  So if you try,
+[1605.54s -> 1606.54s]  if you use,
+[1606.54s -> 1607.54s]  um,
+[1607.54s -> 1608.54s]  last language model to generate code,
+[1608.54s -> 1609.54s]  or we need to rerun it,
+[1609.54s -> 1610.54s]  right?
+[1610.54s -> 1611.54s]  So here,
+[1611.54s -> 1612.54s]  um,
+[1612.54s -> 1613.54s]  um,
+[1613.54s -> 1614.54s]  now that I wanted to ask it,
+[1614.54s -> 1615.54s]  okay,
+[1615.54s -> 1616.54s]  I want to have the program,
+[1616.54s -> 1617.54s]  except the number,
+[1617.54s -> 1618.54s]  it's the input.
+[1618.54s -> 1619.54s]  And the output is the square root.
+[1619.54s -> 1620.54s]  And we can also specify like as input,
+[1620.54s -> 1621.54s]  uh,
+[1621.54s -> 1622.54s]  from the command line,
+[1622.54s -> 1623.54s]  for example,
+[1623.54s -> 1624.54s]  the,
+[1624.54s -> 1625.54s]  the,
+[1625.54s -> 1626.54s]  the,
+[1626.54s -> 1627.54s]  the,
+[1627.54s -> 1628.54s]  the,
+[1628.54s -> 1629.54s]  the,
+[1629.54s -> 1630.54s]  the,
+[1630.54s -> 1631.54s]  the,
+[1631.54s -> 1632.54s]  the,
+[1632.54s -> 1633.54s]  the,
+[1633.54s -> 1634.54s]  the,
+[1634.54s -> 1635.54s]  the,
+[1635.54s -> 1636.54s]  uh,
+[1636.54s -> 1637.54s]  it's gonna be more,
+[1637.54s -> 1639.54s]  more precise for us.
+[1639.54s -> 1640.54s]  Yeah,
+[1640.54s -> 1642.54s]  so here green,
+[1642.54s -> 1643.54s]  uh,
+[1643.54s -> 1644.54s]  uh,
+[1644.54s -> 1645.54s]  interactive square root,
+[1645.54s -> 1646.54s]  we see,
+[1646.54s -> 1647.54s]  uh,
+[1647.54s -> 1648.54s]  uh,
+[1648.54s -> 1649.54s]  uh,
+[1649.54s -> 1650.54s]  the script,
+[1650.54s -> 1651.54s]  the program,
+[1651.54s -> 1652.54s]  the code that we can run,
+[1652.54s -> 1653.54s]  right?
+[1653.54s -> 1654.54s]  And here we see that,
+[1654.54s -> 1655.54s]  uh,
+[1655.54s -> 1656.54s]  it,
+[1656.54s -> 1658.54s]  it does a very good job in,
+[1658.54s -> 1659.54s]  uh,
+[1659.54s -> 1661.54s]  having this test for example.
+[1661.54s -> 1662.54s]  Um,
+[1662.54s -> 1671.18s]  root that so basically this is quite quite good here I find that it capable
+[1671.18s -> 1682.58s]  of generally this thing it's quite good now the next thing is that you can
+[1682.58s -> 1690.32s]  basically we can generate all of that right it can do all this but the next
+[1690.32s -> 1700.54s]  topic is to avoid to allow to mitigate the hallucination problem
+[1700.54s -> 1708.68s]  basically here we have this system row so basically it is the template that we
+[1708.68s -> 1720.28s]  can allow the I will ask when I am to not doing something that that it doesn't
+[1720.32s -> 1728.22s]  if it doesn't find the answer so it should not it should not it should not
+[1728.22s -> 1737.32s]  invented it it should have just it use a contact that we provide for it so here
+[1737.32s -> 1744.14s]  it the system role it lmd the system role and then it can you can have this
+[1744.14s -> 1750.30s]  instruction and the contact it like this and then when we use a query and we
+[1750.30s -> 1763.74s]  that what do you think that the answer would be so and clearly it is saying that
+[1763.74s -> 1771.60s]  okay if you are on the enterprise it mandatory for everyone so then it's the
+[1771.60s -> 1779.20s]  answer it yes right and the password must be at least 12 characters and so on
+[1779.20s -> 1780.20s]  and so forth
+[1780.30s -> 1785.30s]  So this is how it is implemented here.
+[1785.30s -> 1790.30s]  I think I have it here.
+[1790.30s -> 1795.30s]  That is the
+[1795.30s -> 1800.30s]  instruction, the prompt and then
+[1800.30s -> 1807.30s]  no.
+[1807.30s -> 1812.30s]  No, not that one.
+[1812.30s -> 1817.30s]  Hmm.
+[1817.30s -> 1822.30s]  Ah, yeah.
+[1822.30s -> 1827.30s]  This is the one.
+[1827.30s -> 1832.30s]  This is the text that I just showed. And then the answer is
+[1832.30s -> 1837.30s]  since you are on an entry
+[1837.30s -> 1842.30s]  enterprise plan, this is the two-factor authorization.
+[1842.30s -> 1847.30s]  It's mandatory. And then password, it must be at least 12 characters
+[1847.30s -> 1852.30s]  long. So it's something like this.
+[1852.30s -> 1857.30s]  That is the draft. And then
+[1857.30s -> 1862.30s]  the last thing that I have here,
+[1862.30s -> 1867.30s]  the structure, I think that it would be
+[1867.30s -> 1870.30s]  quite interesting for us to know is that
+[1870.30s -> 1873.30s]  the
+[1873.30s -> 1876.30s]  approach called structure, a chain of thought
+[1876.30s -> 1879.30s]  are prompting. And what does it
+[1879.30s -> 1882.30s]  do with that? So
+[1882.30s -> 1886.30s]  it basically tell specifically for
+[1886.30s -> 1889.30s]  code generation. So what does it do is that it
+[1889.30s -> 1892.30s]  kind of like include
+[1892.30s -> 1896.30s]  requirement analysis. And then
+[1896.30s -> 1902.30s]  ask the LLM to adhere to that.
+[1902.30s -> 1905.30s]  Like, say, for example, we provide
+[1905.30s -> 1908.30s]  this first step and we explicit
+[1908.30s -> 1911.30s]  guide the LLM to consider
+[1911.30s -> 1914.30s]  this requirement from the source
+[1914.30s -> 1918.30s]  perspective. This is something that
+[1918.30s -> 1922.30s]  we can kind of run
+[1922.30s -> 1925.30s]  for example. Let's see.
+[1926.30s -> 1932.30s]  So here is an example.
+[1932.30s -> 1935.30s]  And
+[1935.30s -> 1938.30s]  the question here is that, OK,
+[1938.30s -> 1942.30s]  find all students who have taken
+[1942.30s -> 1946.30s]  into, who have taken intro to AI, but have
+[1946.30s -> 1950.30s]  not taken data structure. So that is something that
+[1950.30s -> 1954.30s]  I would, because here the key word is senior logic engineer.
+[1954.30s -> 1960.30s]  So that's something that you break down.
+[1960.30s -> 1963.30s]  It break down this thing and it quite. So
+[1963.30s -> 1966.30s]  first let S be the set of all students.
+[1966.30s -> 1969.30s]  And then A be the set of students who have
+[1969.30s -> 1972.30s]  not, who have taken intro to AI and then
+[1972.30s -> 1975.30s]  who have taken data structure. So
+[1975.30s -> 1978.30s]  we'll have like.
+[1978.30s -> 1982.30s]  And then we have the inclusion rule. So the
+[1982.30s -> 1985.30s]  student must belong to set A,
+[1985.30s -> 1988.30s]  the student must not belong to set B.
+[1988.30s -> 1991.30s]  And so the logical is creative,
+[1991.30s -> 1995.30s]  conform or set different. So then it will have
+[1995.30s -> 1998.30s]  like here the step by step deduction
+[1998.30s -> 2001.30s]  and then eventually does have A.
+[2001.30s -> 2005.30s]  So here like it can easily
+[2005.30s -> 2010.30s]  give you the say yes or the here.
+[2010.30s -> 2011.30s]  Then it will give you the.
+[2011.30s -> 2018.30s]  Code.
+[2018.30s -> 2021.30s]  The Python code.
+[2021.30s -> 2024.30s]  This is the SQL implementation
+[2024.30s -> 2027.30s]  and so on and so forth. It basically
+[2027.30s -> 2032.30s]  everything is.
+[2032.30s -> 2037.30s]  So with that, I will conclude
+[2037.30s -> 2040.30s]  the part on a lecture on the
+[2040.30s -> 2045.30s]  on the.
+[2045.30s -> 2048.30s]  Approaches to prompting and
+[2048.30s -> 2051.30s]  just here to summarize. So
+[2051.30s -> 2054.30s]  here it basically without training
+[2054.30s -> 2058.30s]  we have a zero short few short manual
+[2058.30s -> 2061.30s]  and then there are some like
+[2061.30s -> 2064.30s]  prompting focusing on reasoning and logic.
+[2064.30s -> 2067.30s]  We have like chain of thought
+[2067.30s -> 2069.30s]  and out of chain of thought that the.
+[2069.30s -> 2072.30s]  Tree of thought and so on.
+[2072.30s -> 2074.30s]  So this one we can the
+[2074.30s -> 2076.30s]  the problem could be automatically
+[2076.30s -> 2080.30s]  generated by the last language model
+[2080.30s -> 2084.30s]  and reducing the reducing hallucination
+[2084.30s -> 2086.30s]  code generation.
+[2086.30s -> 2088.30s]  But this part I did not talk about that
+[2088.30s -> 2090.30s]  and you can.
+[2090.30s -> 2096.30s]  So with that, let us conclude with the chapter.
+[2096.30s -> 2098.30s]  And we'll talk about something else.
+[2098.30s -> 2101.30s]  Next week, I see you next Monday.

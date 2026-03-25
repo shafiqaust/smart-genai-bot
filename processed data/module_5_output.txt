@@ -1,0 +1,876 @@
+[0.00s -> 14.00s]  So last class we talked about the variation of how to encode, right?
+[14.00s -> 25.12s]  And I showed you the program, but I was running it and it didn't finish.
+[25.12s -> 40.02s]  So here as you see all that, the usual thing, but it shows you if you are able to complete
+[40.02s -> 42.30s]  the running, it will show something like this.
+[42.30s -> 54.54s]  So there will be this part that they show how the
+[54.54s -> 54.90s]  reconstructions happen.
+[55.12s -> 64.36s]  of a face look like so it sometimes it's good but sometimes it isn't that great
+[64.36s -> 74.38s]  right and it is always a little bit blur and then we also talked about this
+[74.38s -> 84.88s]  latent space distribution shown here are the 50 features that it's trained
+[84.88s -> 96.78s]  and it get out and you can see that nothing get before treatment and now I
+[96.78s -> 102.64s]  think running this part also take a lot of time like the generating new faces
+[102.64s -> 110.74s]  these are the things that you can generate it to see but also here we have
+[110.74s -> 112.98s]  this
+[113.88s -> 114.88s]  money
+[114.88s -> 120.88s]  manipulating of the images we talk about two things one need to transform
+[120.88s -> 129.28s]  from one to the other and this is what you can see how it is happening like from
+[129.28s -> 140.60s]  the given here to here so basically that a linear transformation of and then there
+[140.60s -> 143.88s]  is also the morphing so from transform the
+[143.88s -> 144.88s]  the
+[144.88s -> 150.88s]  this one to this one so the chain is like this
+[150.88s -> 163.20s]  so though those are the discussion about the I think my program still not finished
+[163.20s -> 170.38s]  because if you do that there are a few more like a few more line that is but it
+[170.38s -> 173.38s]  takes so much time
+[173.38s -> 179.38s]  so
+[179.38s -> 183.38s]  what we will talk about today
+[183.38s -> 185.38s]  it what they call
+[185.38s -> 190.38s]  generative adversarial adversarial
+[190.38s -> 191.38s]  network
+[191.38s -> 195.38s]  okay
+[195.38s -> 201.38s]  this one is very similar to the VA
+[201.38s -> 202.38s]  but
+[202.38s -> 203.38s]  but
+[203.38s -> 209.38s]  but it has a different purpose so anyone remember
+[209.38s -> 210.38s]  but it has a different purpose so anyone remember
+[210.38s -> 213.38s]  what are the application of
+[213.38s -> 216.38s]  of the VA
+[216.38s -> 222.38s]  we talk about the potential of that
+[222.38s -> 225.38s]  anyone remember
+[225.38s -> 231.38s]  so
+[231.38s -> 232.38s]  so
+[233.38s -> 234.38s]  you know
+[234.38s -> 240.38s]  so there are four little dimensions
+[240.38s -> 243.38s]  so when you when you are in a large place
+[243.38s -> 245.38s]  you will feel in the world
+[245.38s -> 247.38s]  the first one is obvious but we want to generate a new emotion
+[247.38s -> 248.38s]  the first one is obvious but we want to generate a new emotion
+[248.38s -> 249.38s]  that are kind of close to
+[249.38s -> 251.38s]  that are kind of close to
+[251.38s -> 254.38s]  to the original
+[254.38s -> 256.48s]  what is the there are four of them
+[257.48s -> 259.54s]  the second one is like to reduce
+[259.54s -> 261.38s]  the second one is like to reduce
+[261.38s -> 273.38s]  Dimension, right? Dimensionality reduction is the thing that they call.
+[273.38s -> 282.38s]  The third one is, remember, no? I should have a quiz.
+[282.38s -> 290.38s]  The third one is like, try to figure out who is faking.
+[290.38s -> 296.38s]  Try to identify fake items. There was no in the.
+[296.38s -> 303.38s]  And the third one is great noise.
+[303.38s -> 307.38s]  We wanted to create noise, but so.
+[307.38s -> 311.38s]  Can actually that's the following.
+[311.38s -> 318.38s]  So I asked I asked for illustration from chat from Gemini.
+[318.38s -> 320.38s]  It looked like this.
+[320.38s -> 324.38s]  Here.
+[324.38s -> 329.38s]  The.
+[329.38s -> 331.38s]  The idea is that.
+[331.38s -> 334.38s]  I also have two networks.
+[334.38s -> 343.38s]  One is called the generators and the other one is the discriminator.
+[343.38s -> 345.38s]  And.
+[345.38s -> 349.38s]  Very often, this one it.
+[349.38s -> 352.38s]  Talking about.
+[352.38s -> 357.38s]  Context in the context of.
+[357.38s -> 359.38s]  Someone tried to.
+[359.38s -> 366.38s]  Generate or to produce some items.
+[366.38s -> 367.38s]  And.
+[367.38s -> 369.38s]  The other guy.
+[369.38s -> 374.38s]  So the generator had to.
+[374.38s -> 375.38s]  Say.
+[375.38s -> 377.38s]  It.
+[377.38s -> 379.38s]  Try to create.
+[379.38s -> 380.38s]  Fake.
+[380.38s -> 381.38s]  Fake pictures.
+[381.38s -> 382.38s]  Of.
+[382.38s -> 383.38s]  For that.
+[383.38s -> 389.38s]  And in our example, they use the Lego bricks as an example.
+[389.38s -> 392.38s]  And then the discriminator.
+[392.38s -> 394.38s]  Trying to detect.
+[394.38s -> 395.38s]  Even an image.
+[395.38s -> 396.38s]  Of a picture.
+[396.38s -> 398.38s]  In fact, whether it is.
+[398.38s -> 399.38s]  A fake product.
+[399.38s -> 401.38s]  Or a real one.
+[401.38s -> 402.38s]  So.
+[402.38s -> 403.38s]  It.
+[403.38s -> 405.38s]  Kind of tug of war.
+[405.38s -> 406.38s]  And.
+[406.38s -> 408.38s]  This is the kind.
+[408.38s -> 409.38s]  Of.
+[409.38s -> 410.38s]  The schema of this.
+[410.38s -> 411.38s]  Is.
+[411.38s -> 412.38s]  More or less like that.
+[412.38s -> 413.38s]  The.
+[413.38s -> 414.38s]  Generator.
+[414.38s -> 415.38s]  Would.
+[415.38s -> 416.38s]  Add some noise to the.
+[416.38s -> 417.38s]  Three.
+[417.38s -> 418.38s]  Images.
+[418.38s -> 419.38s]  And produce.
+[419.38s -> 420.38s]  An image.
+[420.38s -> 421.38s]  The discriminator.
+[421.38s -> 422.38s]  Would.
+[422.38s -> 423.38s]  Take.
+[423.38s -> 424.38s]  Some.
+[424.38s -> 425.38s]  Images.
+[425.38s -> 426.38s]  And produce.
+[426.38s -> 427.38s]  An image.
+[427.38s -> 428.38s]  The discriminator.
+[428.38s -> 429.38s]  Would.
+[429.38s -> 430.38s]  Take.
+[430.38s -> 431.38s]  Some.
+[431.38s -> 432.38s]  Images.
+[432.38s -> 433.38s]  And produce.
+[433.38s -> 434.38s]  An image.
+[434.38s -> 435.38s]  The discriminator.
+[435.38s -> 436.38s]  Would.
+[436.38s -> 437.38s]  Take.
+[437.38s -> 438.38s]  Some.
+[438.38s -> 439.38s]  Images.
+[439.38s -> 440.38s]  And produce.
+[440.38s -> 441.38s]  An image.
+[441.38s -> 442.38s]  Of.
+[442.38s -> 443.38s]  A.
+[443.38s -> 444.38s]  Real.
+[444.38s -> 445.38s]  And.
+[445.38s -> 446.38s]  Then try to.
+[446.38s -> 447.38s]  And say that.
+[447.38s -> 448.38s]  Oh.
+[448.38s -> 449.38s]  This one is real.
+[449.38s -> 450.38s]  This one is fake.
+[450.38s -> 451.38s]  Right.
+[451.38s -> 452.38s]  That.
+[452.38s -> 453.38s]  Very.
+[453.38s -> 454.38s]  Easy.
+[454.38s -> 455.38s]  How.
+[455.38s -> 456.38s]  To.
+[456.38s -> 457.38s]  Say.
+[457.38s -> 458.38s]  But.
+[458.38s -> 459.38s]  These.
+[459.38s -> 460.38s]  Are.
+[460.38s -> 461.38s]  Very.
+[461.38s -> 462.38s]  Specific.
+[462.38s -> 463.38s]  Applications.
+[463.38s -> 464.38s]  Do.
+[464.38s -> 465.38s]  You.
+[465.38s -> 466.38s]  Think.
+[466.38s -> 467.38s]  Of.
+[467.38s -> 468.38s]  Something.
+[468.38s -> 469.38s]  That.
+[469.38s -> 470.38s]  Would.
+[470.38s -> 471.38s]  Take.
+[471.38s -> 472.38s]  Some.
+[472.38s -> 473.38s]  Images.
+[473.38s -> 474.38s]  And produce.
+[474.38s -> 475.38s]  An image.
+[475.38s -> 476.38s]  Of.
+[476.38s -> 477.38s]  A.
+[477.38s -> 478.38s]  Images.
+[478.38s -> 479.38s]  Of.
+[479.38s -> 480.38s]  A.
+[480.38s -> 481.38s]  Real.
+[481.38s -> 482.38s]  The discriminator.
+[482.38s -> 483.38s]  Would.
+[483.38s -> 484.38s]  Take.
+[484.38s -> 485.38s]  Some.
+[485.38s -> 486.38s]  Images.
+[486.38s -> 487.38s]  Of.
+[487.38s -> 488.38s]  A.
+[488.38s -> 489.38s]  Real.
+[489.38s -> 490.38s]  That.
+[490.38s -> 491.38s]  Is.
+[491.38s -> 492.38s]  A.
+[492.38s -> 493.38s]  Specific.
+[493.38s -> 494.38s]  Of.
+[494.38s -> 495.38s]  An.
+[495.38s -> 507.38s]  Now, in the implementation in the code that they have, they use this data set called the
+[507.38s -> 515.70s]  brick data set from Lego, the 40,000 images that is given in there.
+[517.06s -> 525.14s]  And they are of different shape and size and different structure as well.
+[525.38s -> 537.06s]  We implement this, one network is the discriminator and the other one is the generator.
+[538.82s -> 544.34s]  And there are a few things that I think we should look at that.
+[555.38s -> 562.66s]  So the first block and the second block here, it's like the usual thing, right?
+[562.66s -> 566.42s]  And then the third block is getting the data and all that.
+[568.82s -> 571.38s]  And then now in the...
+[575.86s -> 583.22s]  So the discriminator job is to take an image and then say real or what, right?
+[583.22s -> 584.66s]  Real is fake.
+[585.70s -> 586.82s]  Real is what.
+[586.82s -> 592.02s]  So it's implementation something quite the usual thing, right?
+[593.70s -> 596.58s]  But here in the code they use some...
+[599.06s -> 608.82s]  I don't think that there is anything that are specific in the design of a discriminator here,
+[608.82s -> 609.54s]  right?
+[609.54s -> 613.30s]  So here you have like a convolutional...
+[613.30s -> 620.82s]  And then multiple layers that are stuck with each other, and the number here are basically
+[620.82s -> 626.82s]  like, we are, I hope you are familiar with this by now, right?
+[626.82s -> 637.62s]  So then, so this is basically the discriminator, nothing special.
+[637.62s -> 640.82s]  So this is basically the discriminator, nothing special.
+[640.82s -> 642.82s]  So this is basically the discriminator, nothing special.
+[643.62s -> 649.14s]  Then we have this, the, the parameter pre now that also nothing that...
+[651.62s -> 663.78s]  Now the generator has a slight difference.
+[663.78s -> 669.54s]  There is one additional type of layer that we never talked about before.
+[670.10s -> 671.22s]  It's a reshaped layer.
+[673.30s -> 686.18s]  For this one, the reshaped layer is basically similar to the convolutional to the transposed
+[686.18s -> 698.66s]  in that it takes a flat one and gives a multi-dimensional one for us to use.
+[698.66s -> 703.06s]  Maybe I can stay here and I can use this one.
+[703.30s -> 718.58s]  Is pretty good so for us to have the previous slapping up
+[718.58s -> 719.70s]  So this one here.
+[723.14s -> 727.62s]  It's reshaped layer, right?
+[727.62s -> 728.98s]  That's a dar- besides...
+[728.98s -> 730.10s]  ...
+[730.10s -> 731.54s]  another type of layer that is...
+[731.54s -> 732.74s]  that it implements in...
+[733.30s -> 743.30s]  It's basically on some shape like this, so in this case if it's like this, it makes it
+[743.30s -> 751.54s]  like three dimensions, one, one, one hundred.
+[751.54s -> 761.76s]  Like one, one hundred, right, it makes it like this.
+[761.76s -> 777.16s]  Now then everything else is, I don't know, similar, right, that's like different, like
+[777.16s -> 788.54s]  much normalization and then the activation function and so forth, so that's the usual.
+[788.54s -> 791.28s]  Now what is interesting is.
+[791.28s -> 791.74s]  In this case.
+[791.74s -> 806.20s]  There are something mentioned here like upsampling, there is something here that is not in the
+[806.20s -> 812.74s]  code but they mention that in the book is that another technique that you could use
+[812.74s -> 821.26s]  to kind of like changing the size of the input is what they call upsampling.
+[821.26s -> 833.86s]  So remember, when we have.
+[833.86s -> 843.72s]  We can, we can increase the size of the output with convolutional, layers.
+[843.72s -> 846.12s]  Right?
+[846.12s -> 848.02s]  By having this.
+[848.02s -> 851.14s]  So sometime you wanted to increase the size.
+[851.14s -> 851.24s]  Right?
+[851.26s -> 865.74s]  this one into something like a beaker, by having the stripe setting or when you do stripe
+[865.74s -> 874.14s]  increasingly you make it smaller but in here in the up sampling you do the forward
+[875.18s -> 877.18s]  up sampling by two for example
+[881.26s -> 889.82s]  when you say that let's say stripe to be one then you can say okay keep this thing
+[892.30s -> 899.66s]  and then input something exactly like that like double it right here one one zero
+[900.86s -> 904.54s]  then it is one one zero one one zero for example
+[906.94s -> 909.26s]  so from one you get it due to two
+[909.82s -> 911.18s]  and then the same
+[911.26s -> 917.34s]  thing like then you have something like this let me draw it smaller so i can
+[923.74s -> 925.66s]  then you have like one
+[929.18s -> 932.78s]  one zero zero um
+[932.78s -> 950.30s]  one zero and then one zero no of one one one one then it has to be into like this
+[955.02s -> 961.02s]  and then so this one would be like
+[962.78s -> 975.26s]  one zero one zero um one zero and one zero one one one one so it double
+[977.90s -> 987.34s]  so basically you can double the cycle this line this row here it uh repeated
+[990.22s -> 992.70s]  now this one is repeated here
+[993.58s -> 1000.38s]  this one is repeated here and this one is repeated here and this one repetitive
+[1001.90s -> 1009.42s]  so in in that kind of order so with upsampling you can basically increase the size of the of the
+[1009.42s -> 1018.62s]  image if we do that using convolution so this would be zero zero if we increase the size right
+[1019.26s -> 1022.62s]  one so the the second drop
+[1022.78s -> 1024.30s]  so for example zero zero
+[1028.94s -> 1036.30s]  this kind of thing so when you do that like one zero and then zero zero that when you
+[1036.30s -> 1046.94s]  do the convolution you insert well you insert it but you insert with the with his own with nothing
+[1046.94s -> 1051.90s]  just empty that's the difference between this and that
+[1052.78s -> 1057.50s]  now
+[1058.94s -> 1065.90s]  and as always in training the only thing that is we need to worry about is the loss function right
+[1067.26s -> 1077.74s]  and um here it's a little bit also it's more involved than the load function first we have
+[1077.74s -> 1078.38s]  to decide
+[1082.78s -> 1091.90s]  how to train this and there is slight difference between the training of the
+[1091.90s -> 1102.88s]  variational auto-encode so this is the scheme of that so in order for the
+[1102.88s -> 1111.04s]  generator to create fake images as good as it could be it need to be able to
+[1111.04s -> 1118.18s]  decide what is what is the value that let's just say that it generates some
+[1118.18s -> 1124.30s]  images so it need to know whether this is real or fake in the eye of the
+[1124.30s -> 1131.86s]  generator in order to make sure right so how does it do that it ask the
+[1131.86s -> 1140.32s]  discriminator and this discriminator give it something they call that in this
+[1140.32s -> 1141.02s]  case
+[1141.02s -> 1146.42s]  in this he can they call that like
+[1156.52s -> 1163.34s]  right now the one thing though that is
+[1163.34s -> 1170.78s]  important to do in this one is that during the training
+[1171.02s -> 1176.42s]  normally they update it they update it
+[1177.22s -> 1183.90s]  lost function the respect back propagation value by immediately after
+[1183.90s -> 1194.84s]  dispatch for this guy the answer of the discriminator to the generator will
+[1194.84s -> 1200.52s]  always to be suppose that this guy
+[1201.02s -> 1212.42s]  realize that it is a fake one shouldn't give to this guy that value no it will
+[1212.42s -> 1223.86s]  keep the reverse suppose that it says 0.2 is the probability of my prediction
+[1223.86s -> 1230.52s]  about this one is image is a fake one so the generator would have seen it should be 0.2 so the generator would have seen it should be 0.2 so the generator would have seen it should be 0.2
+[1230.52s -> 1232.52s]  0.2 so the generator would have seen it should be 0.2 so the generator would have seen it should be 0.2
+[1232.52s -> 1242.06s]  right because the goal difference the goal of this guy generate something to to this
+[1242.06s -> 1250.08s]  guy to believe that it is a real one so the difference the way the encoding the
+[1250.08s -> 1260.02s]  update of this thing is more involved than the usual one remember when we when we have this
+[1260.02s -> 1268.30s]  huge network right we go from here to here and then at this one we calculate
+[1268.30s -> 1275.52s]  some loss and let's just say the remember in the VEI for example the loss
+[1275.52s -> 1285.52s]  function is like the difference between the generated one and the the original
+[1285.52s -> 1290.02s]  one right that's the difference and they calculated that they calculated
+[1290.02s -> 1295.96s]  some value and that is what they call the binary cost and profit right and then
+[1295.96s -> 1307.06s]  feed it back so in here it's like this one is done for this for training this
+[1307.06s -> 1313.18s]  guy thing is the same but because there will be images that are labeled fact and
+[1313.18s -> 1319.00s]  there will be invasions that that label is the real one so this guy he needs to
+[1319.00s -> 1319.20s]  say
+[1320.02s -> 1331.34s]  but for this guy because he doesn't know he doesn't know which one is fake which one
+[1331.34s -> 1338.84s]  is real right so then it will it will ask this guy and when he asks this guy this guy
+[1338.84s -> 1349.86s]  would the return would be like just for the sake it has to be masked with this label
+[1350.02s -> 1350.04s]  would the return would be like just for the sake it has to be masked with this label
+[1350.04s -> 1352.16s]  would the return would be like just for the sake it has to be masked with this label like one one one
+[1352.16s -> 1352.18s]  like one one one
+[1352.18s -> 1354.52s]  like one one one because
+[1354.52s -> 1354.54s]  because
+[1354.54s -> 1359.20s]  because if the discriminator are able is able to
+[1359.20s -> 1359.22s]  if the discriminator are able is able to
+[1359.22s -> 1362.56s]  if the discriminator are able is able to to realize that it is a fake one
+[1362.56s -> 1362.58s]  to realize that it is a fake one
+[1362.58s -> 1366.80s]  to realize that it is a fake one then it is good for the generator
+[1366.80s -> 1366.82s]  then it is good for the generator
+[1366.82s -> 1369.12s]  then it is good for the generator if it is fake then it is good for the
+[1369.12s -> 1371.32s]  if it is fake then it is good for the generator and it
+[1371.32s -> 1371.34s]  if it is fake then it is good for the generator and it
+[1371.34s -> 1374.36s]  if it is fake then it is good for the generator and it one then it is not good for the
+[1374.36s -> 1374.38s]  one then it is not good for the
+[1374.38s -> 1391.50s]  therefore we update so let me show you how it updated yeah
+[1393.42s -> 1403.50s]  so this is a
+[1405.02s -> 1408.06s]  so first of all the d loss is the discriminator loss
+[1409.34s -> 1418.62s]  and then for the real one and the fake one the basically this is how the law comes in and then
+[1418.62s -> 1433.50s]  for the for the generator loss it is updated with this one in the price credit so it's too bad
+[1434.38s -> 1442.22s]  and now we train it we train it like with the same thing
+[1442.22s -> 1451.42s]  as before uh so i i start this program uh since uh i start this notebook from
+[1452.38s -> 1463.10s]  about eight o'clock in the morning so it managed to so here is the output
+[1464.94s -> 1465.34s]  of the
+[1468.30s -> 1475.66s]  of the generator after like one epoch two epochs and so forth
+[1476.30s -> 1483.82s]  take quite quite some time because you know there are 40 000 of images in the data set
+[1485.26s -> 1493.42s]  and now i i also have a version of that maybe because of this and it takes both of them so you
+[1493.42s -> 1493.82s]  can see
+[1494.54s -> 1501.18s]  uh it uh i also try to run both of them at the same time and that may not be the
+[1501.82s -> 1507.90s]  right thing to do because then they they they they have resource contention so this guy
+[1509.02s -> 1518.30s]  had uh been training around that that time too and about about 10 and then
+[1518.30s -> 1521.66s]  it's still not feeling it only finished five epochs
+[1522.86s -> 1524.30s]  it did not acid
+[1524.30s -> 1536.14s]  for free now so it's something that now you can see here so there are something that is
+[1537.74s -> 1545.82s]  done here but i couldn't run it so it didn't finish until the end maybe to
+[1547.02s -> 1549.98s]  because it doesn't generate the new images for me yet
+[1549.98s -> 1555.54s]  even though i asked it for so maybe when i come home
+[1555.54s -> 1559.74s]  i see that i show you next one in that case
+[1559.74s -> 1562.86s]  yeah
+[1562.86s -> 1574.74s]  the parameters or learn what
+[1574.74s -> 1577.90s]  so i from my from what i understand
+[1577.90s -> 1579.18s]  it's been
+[1579.18s -> 1579.90s]  the
+[1579.90s -> 1579.96s]  the
+[1579.96s -> 1579.98s]  the
+[1579.98s -> 1580.54s]  the
+[1580.54s -> 1582.78s]  basically training that for the discriminator
+[1584.70s -> 1590.38s]  no no no basically the data set for the training for this whole thing
+[1591.50s -> 1603.34s]  it's the same it's a 40 000 40 000 images so now okay let's go back
+[1605.34s -> 1609.90s]  so normally let's let's if we go to just have one network like it's like
+[1609.90s -> 1619.02s]  a multi multi-layer perceptron for example right we have this you set up the layers and then you have
+[1619.02s -> 1626.62s]  the loss function and the goal is to have this loss function minimized right yes and so we start out
+[1626.62s -> 1634.70s]  with some random assignment for each of the weight maybe starting with zero at the beginning for all
+[1634.70s -> 1639.82s]  the weight right on zero is bad because those then would never yes but then
+[1639.82s -> 1642.14s]  it then go back
+[1642.14s -> 1645.58s]  now
+[1645.58s -> 1648.78s]  the loss function
+[1648.78s -> 1651.10s]  for this guy
+[1651.10s -> 1652.78s]  is defined
+[1652.78s -> 1654.78s]  in a very similar way
+[1654.78s -> 1655.82s]  okay
+[1655.82s -> 1658.54s]  because this guy
+[1658.54s -> 1660.22s]  i'm sorry
+[1660.22s -> 1661.58s]  this guy
+[1661.58s -> 1662.78s]  take in
+[1662.78s -> 1663.74s]  the
+[1663.74s -> 1668.06s]  data with the label 3 and 5
+[1668.06s -> 1669.74s]  and then then
+[1669.74s -> 1675.98s]  you can define that uh you define the loss function in the same way that you have been defined
+[1676.86s -> 1679.90s]  and then this guy this guy will be able to learn right
+[1681.90s -> 1691.10s]  now the generator also receives the same thing it also receives this 40 000 with the back wheel and
+[1691.82s -> 1699.66s]  type okay and then it does but it it also
+[1699.66s -> 1701.50s]  needs to learn
+[1701.50s -> 1704.14s]  the thing is
+[1704.14s -> 1705.42s]  in here
+[1705.42s -> 1707.42s]  we have this
+[1707.42s -> 1711.42s]  we have this
+[1713.74s -> 1717.34s]  we have the the the loss function
+[1717.34s -> 1719.26s]  so this guy
+[1719.26s -> 1722.14s]  now i'll have to
+[1722.14s -> 1724.46s]  learn
+[1724.46s -> 1725.58s]  somehow
+[1725.58s -> 1729.18s]  to tell to to be able to generate
+[1729.66s -> 1730.94s]  the images
+[1730.94s -> 1733.18s]  for this guy
+[1733.18s -> 1734.54s]  so that
+[1734.54s -> 1736.70s]  if
+[1736.70s -> 1738.14s]  he thinks
+[1738.14s -> 1740.30s]  that it is a good one
+[1740.30s -> 1741.58s]  then the other guy
+[1741.58s -> 1743.98s]  have to think that it is the
+[1743.98s -> 1745.50s]  type one
+[1745.50s -> 1748.46s]  and vice versa
+[1748.46s -> 1749.82s]  because this guy
+[1749.82s -> 1755.58s]  cannot realize on the label anymore
+[1755.58s -> 1756.54s]  this guy doesn't have
+[1756.54s -> 1759.34s]  because so the drawing is like that but then
+[1759.34s -> 1763.10s]  this guy should not be alive on this
+[1763.10s -> 1766.46s]  on the on the on the label to calculate the
+[1766.46s -> 1768.14s]  prediction
+[1768.14s -> 1770.46s]  uh the loss function
+[1770.46s -> 1772.38s]  if he realized on that
+[1772.38s -> 1778.46s]  then he would behave exactly like the discriminator
+[1778.46s -> 1780.54s]  so do we not make the
+[1780.54s -> 1782.70s]  stimulating oh and degenerate the event
+[1782.70s -> 1785.42s]  the spiritual thing and then the generator
+[1785.42s -> 1786.46s]  no no
+[1786.46s -> 1788.62s]  so do you
+[1788.62s -> 1793.26s]  understand the the the problem with the generate with the deep with
+[1793.26s -> 1795.26s]  training the generator
+[1795.26s -> 1798.86s]  so normally when we when we generate this card right
+[1798.86s -> 1802.70s]  we know which one is real with one effect
+[1802.70s -> 1806.30s]  and therefore at the end
+[1806.38s -> 1809.58s]  of the of the network
+[1809.58s -> 1811.98s]  we know
+[1813.02s -> 1818.06s]  how to calculate loss function based on okay this is what i'm generating
+[1818.06s -> 1820.30s]  and this is the real one
+[1820.30s -> 1821.26s]  so
+[1821.26s -> 1823.58s]  what is the difference
+[1823.58s -> 1825.90s]  and therefore i can calculate the loss
+[1825.90s -> 1826.78s]  function
+[1826.78s -> 1827.74s]  right
+[1827.74s -> 1831.10s]  but for this guy
+[1831.10s -> 1833.02s]  the purpose of his
+[1833.02s -> 1835.82s]  is that he needs to make
+[1835.82s -> 1837.50s]  the generator
+[1837.50s -> 1838.62s]  believe
+[1838.62s -> 1840.22s]  that the real image
+[1840.22s -> 1843.10s]  are the fake one
+[1844.06s -> 1846.06s]  and
+[1846.06s -> 1846.70s]  the fake image
+[1846.70s -> 1847.90s]  is the fake image
+[1847.90s -> 1853.02s]  are the real one
+[1853.02s -> 1856.06s]  so then at the end
+[1856.06s -> 1859.02s]  of that he has this prediction but now
+[1859.02s -> 1860.22s]  how can he
+[1860.22s -> 1863.58s]  how can he
+[1863.58s -> 1866.06s]  get the lost function to to to to
+[1866.06s -> 1866.78s]  feedback
+[1866.78s -> 1868.62s]  to continue the training the back to
+[1868.62s -> 1870.06s]  progress
+[1870.06s -> 1873.66s]  so in the so that's why they have this
+[1873.66s -> 1874.14s]  label
+[1874.14s -> 1876.78s]  you know right for the for the for the
+[1876.78s -> 1877.66s]  fake one
+[1877.66s -> 1879.82s]  for the real one
+[1879.82s -> 1882.22s]  he has this so this is the card so he
+[1882.22s -> 1884.78s]  would ask the discriminator
+[1884.78s -> 1887.18s]  okay what is the value so they change
+[1887.18s -> 1890.14s]  the two things of the same time
+[1890.14s -> 1892.30s]  however
+[1892.30s -> 1893.66s]  the
+[1893.66s -> 1896.62s]  this guy had to be frozen
+[1896.62s -> 1898.22s]  yeah
+[1898.22s -> 1901.58s]  so that for the whole batch
+[1901.58s -> 1903.90s]  it had to be frozen the prediction had
+[1903.90s -> 1906.94s]  to the weight had to be frozen so that
+[1906.94s -> 1907.74s]  he can get
+[1907.74s -> 1911.42s]  the answer
+[1911.42s -> 1916.06s]  no still no
+[1916.06s -> 1917.66s]  but so
+[1917.66s -> 1920.86s]  the loss of the generator
+[1920.86s -> 1923.50s]  is the reverse of the loss of the
+[1923.50s -> 1924.86s]  discriminator
+[1924.86s -> 1928.38s]  not exactly because the two of them
+[1928.38s -> 1931.42s]  maybe the structure the the architecture
+[1931.42s -> 1933.02s]  is quite different right
+[1933.02s -> 1936.30s]  so the the the way they they have the
+[1936.30s -> 1938.38s]  calculation of course
+[1938.38s -> 1939.82s]  the loss of the
+[1939.82s -> 1942.78s]  intuitive with the loss function of
+[1942.78s -> 1944.86s]  this guy
+[1944.86s -> 1948.06s]  is the minimizer right we minimize that
+[1948.06s -> 1948.54s]  one
+[1948.54s -> 1950.62s]  but as we will see later the loss
+[1950.62s -> 1953.18s]  function of this guy
+[1953.18s -> 1957.50s]  in this architecture in this way of
+[1957.50s -> 1959.58s]  training
+[1959.58s -> 1962.46s]  doesn't make a lot of sense
+[1962.46s -> 1965.10s]  comparing to the loss function of all
+[1965.10s -> 1965.98s]  other
+[1966.30s -> 1968.70s]  types of architect
+[1968.70s -> 1970.78s]  that what it is written in the original
+[1970.78s -> 1971.34s]  one
+[1971.34s -> 1975.42s]  it it is not
+[1975.42s -> 1978.86s]  correlated with the
+[1978.86s -> 1980.62s]  with the purpose
+[1980.62s -> 1984.14s]  so with the idea of
+[1984.14s -> 1986.38s]  minimized
+[1986.38s -> 1990.62s]  and we'll see here
+[1990.62s -> 1994.14s]  i think that's something that
+[1994.14s -> 1995.82s]  this is one
+[1996.30s -> 2004.30s]  you can see that the loss function here
+[2004.30s -> 2005.90s]  so the
+[2005.90s -> 2009.74s]  this is a lot of discriminator
+[2009.74s -> 2013.42s]  it reduces
+[2013.42s -> 2016.78s]  but the loss function of that
+[2016.78s -> 2019.98s]  the more we training the more we trade
+[2019.98s -> 2023.74s]  the loss function of the generator
+[2023.74s -> 2025.18s]  okay
+[2025.18s -> 2025.82s]  so
+[2025.82s -> 2027.82s]  the loss function of this guy is
+[2027.82s -> 2029.82s]  that's why they say that it's not quite
+[2029.82s -> 2031.82s]  and
+[2031.82s -> 2033.82s]  the accuracy of
+[2033.82s -> 2035.82s]  of of this guy
+[2035.82s -> 2037.82s]  is improving
+[2037.82s -> 2039.82s]  the accuracy of this guy is decreasing
+[2039.82s -> 2041.82s]  but this is
+[2041.82s -> 2043.82s]  sometimes it is it is
+[2043.82s -> 2045.82s]  good in that sense that what is that
+[2045.82s -> 2047.82s]  big one
+[2047.82s -> 2049.82s]  because it wants to generate a fake
+[2049.82s -> 2051.82s]  image it doesn't want to generate
+[2051.82s -> 2053.82s]  dreams
+[2053.82s -> 2055.82s]  that's that's the point
+[2055.82s -> 2061.82s]  any other questions
+[2061.82s -> 2067.82s]  is the loss of the generator
+[2067.82s -> 2069.82s]  calculated by checking all the
+[2069.82s -> 2071.82s]  non-happier
+[2071.82s -> 2073.82s]  the other
+[2073.82s -> 2075.82s]  results
+[2075.82s -> 2077.82s]  not just that
+[2077.82s -> 2079.82s]  they also taking into consideration
+[2079.82s -> 2081.82s]  see
+[2081.82s -> 2083.82s]  because
+[2083.82s -> 2085.82s]  we are friends
+[2085.82s -> 2090.82s]  the discriminator will give a probability not 0 as 1.
+[2090.82s -> 2091.82s]  Oh, yes.
+[2091.82s -> 2092.82s]  Right?
+[2092.82s -> 2097.82s]  So therefore, when it is calculated,
+[2097.82s -> 2099.82s]  it will calculate all this kind.
+[2099.82s -> 2103.82s]  I think that I have a copy of the...
+[2103.82s -> 2106.82s]  Because of that discussion, I think that I...
+[2106.82s -> 2113.82s]  So here, you can see that on the left,
+[2113.82s -> 2116.82s]  like in the next few slides,
+[2116.82s -> 2121.82s]  this is the generator improved over this.
+[2121.82s -> 2126.82s]  So initially, after 1A broken,
+[2126.82s -> 2129.82s]  it kind of gave me very...
+[2129.82s -> 2136.82s]  Not quite 1, but it's after 175, I thought.
+[2136.82s -> 2140.82s]  It looks quite...
+[2140.82s -> 2143.82s]  And then on the image here,
+[2143.82s -> 2151.82s]  they do that after 25.
+[2151.82s -> 2156.82s]  You see?
+[2156.82s -> 2160.82s]  25 epochs, they bring that out.
+[2160.82s -> 2168.82s]  And it starts looking like a brick, right?
+[2168.82s -> 2173.82s]  So now, just to understand,
+[2173.82s -> 2179.82s]  so the generator now can also produce images
+[2179.82s -> 2182.82s]  that are not in the training set,
+[2182.82s -> 2184.82s]  which is what we want.
+[2184.82s -> 2186.82s]  We want it to be something that...
+[2186.82s -> 2189.82s]  And they do some analysis.
+[2189.82s -> 2191.82s]  They check out, like, the closest one,
+[2191.82s -> 2193.82s]  like for this one and this one,
+[2193.82s -> 2195.82s]  this one and this one.
+[2195.82s -> 2198.82s]  So basically, it kind of...
+[2198.82s -> 2201.82s]  It looks like a logo here, right?
+[2201.82s -> 2202.82s]  Yes.
+[2202.82s -> 2207.82s]  And after that, it starts looking very kind of...
+[2207.82s -> 2217.82s]  Now, to answer your question,
+[2217.82s -> 2221.82s]  I think that here is, like, a few things
+[2221.82s -> 2226.82s]  that it's difficult to generate these images,
+[2226.82s -> 2229.82s]  or a few things.
+[2229.82s -> 2231.82s]  So when...
+[2232.82s -> 2235.82s]  When the discriminator is very good,
+[2235.82s -> 2238.82s]  then the generator is just...
+[2238.82s -> 2241.82s]  couldn't generate,
+[2241.82s -> 2243.82s]  like, three images.
+[2243.82s -> 2247.82s]  It's only three images, basically.
+[2247.82s -> 2249.82s]  Like, the reason is,
+[2249.82s -> 2252.82s]  when the generator is...
+[2252.82s -> 2256.82s]  When the discriminator is so good,
+[2256.82s -> 2257.82s]  what that should mean is,
+[2257.82s -> 2259.82s]  when you start to generate,
+[2259.82s -> 2261.82s]  it will know what is real, what is fake.
+[2262.82s -> 2264.82s]  So the answer to that...
+[2264.82s -> 2266.82s]  So that's why the feedback
+[2266.82s -> 2268.82s]  from the discriminator
+[2268.82s -> 2273.82s]  to the generator is quite small.
+[2273.82s -> 2275.82s]  And when it's small,
+[2275.82s -> 2280.82s]  the fake propagation doesn't work anymore.
+[2280.82s -> 2283.82s]  And therefore, the way that it's generated,
+[2283.82s -> 2288.82s]  it just doesn't seem to work anymore.
+[2288.82s -> 2291.82s]  So what are the solutions in there?
+[2292.82s -> 2294.82s]  There are a lot of solutions
+[2294.82s -> 2296.82s]  that they were proposing.
+[2296.82s -> 2303.82s]  One is that you can kind of, like...
+[2303.82s -> 2308.82s]  You increase the number of...
+[2308.82s -> 2312.82s]  Oh, I think that it should have been...
+[2312.82s -> 2314.82s]  The first two are the same.
+[2314.82s -> 2318.82s]  And then, basically, you're learning...
+[2318.82s -> 2320.82s]  The thing is that the discriminator
+[2320.82s -> 2322.82s]  learned too fast.
+[2322.82s -> 2325.82s]  So you can slow it down to do that
+[2325.82s -> 2329.82s]  by various, various rulings.
+[2329.82s -> 2332.82s]  And then,
+[2332.82s -> 2334.82s]  the second situation is that
+[2334.82s -> 2340.82s]  the generator overpowers the discriminator.
+[2340.82s -> 2343.82s]  Then what happens?
+[2343.82s -> 2344.82s]  The...
+[2344.82s -> 2347.82s]  Something like this.
+[2347.82s -> 2350.82s]  Then, what we can do is that
+[2350.82s -> 2352.82s]  we can do the reverse of...
+[2352.82s -> 2353.82s]  the...
+[2353.82s -> 2355.82s]  this proposal.
+[2355.82s -> 2357.82s]  Right?
+[2357.82s -> 2360.82s]  The other thing that is important to...
+[2360.82s -> 2361.82s]  that...
+[2361.82s -> 2365.82s]  There are two things.
+[2365.82s -> 2366.82s]  The loss function,
+[2366.82s -> 2368.82s]  the loss value
+[2368.82s -> 2370.82s]  for the generator becomes
+[2370.82s -> 2372.82s]  not so informative.
+[2372.82s -> 2373.82s]  It's like...
+[2373.82s -> 2374.82s]  You can see that they...
+[2374.82s -> 2376.82s]  They have this...
+[2376.82s -> 2377.82s]  picture, right?
+[2377.82s -> 2379.82s]  The analysis
+[2379.82s -> 2380.82s]  saying that,
+[2380.82s -> 2382.12s]  oh,
+[2382.82s -> 2387.82s]  the loss function is increasing.
+[2387.82s -> 2391.82s]  So it's not really...
+[2391.82s -> 2394.82s]  under elaborated at all.
+[2394.82s -> 2397.82s]  And then there are a lot of hyperparameters
+[2397.82s -> 2398.82s]  that you need to train
+[2398.82s -> 2399.82s]  and all this kind of thing.
+[2399.82s -> 2400.82s]  That's that.
+[2400.82s -> 2401.82s]  But that, to me,
+[2401.82s -> 2403.82s]  it is not like the
+[2403.82s -> 2404.82s]  unusual thing
+[2404.82s -> 2408.82s]  when we have a lot of that.
+[2408.82s -> 2411.82s]  Now,
+[2411.82s -> 2415.82s]  to address all these issues,
+[2415.82s -> 2419.82s]  people come up with something else.
+[2419.82s -> 2421.82s]  But before I...
+[2421.82s -> 2423.82s]  Before I...
+[2423.82s -> 2426.82s]  So this is a problem that it...
+[2426.82s -> 2427.82s]  We...
+[2427.82s -> 2429.82s]  I don't know whether we have discussed about that
+[2429.82s -> 2431.82s]  or we have talked about that,
+[2431.82s -> 2433.82s]  but this is one of the main problems
+[2433.82s -> 2437.82s]  when you train a neural network.
+[2437.82s -> 2440.82s]  They call that the problems of vanishing gradient.
+[2440.82s -> 2445.82s]  So,
+[2445.82s -> 2446.82s]  the...
+[2446.82s -> 2447.82s]  The...
+[2447.82s -> 2449.82s]  The main reason for that is that
+[2449.82s -> 2454.82s]  we calculate the partial derivation, right?
+[2454.82s -> 2456.82s]  And then by the chain rule,
+[2456.82s -> 2460.82s]  you do this with a massification.
+[2460.82s -> 2464.82s]  And when all of these are very small,
+[2464.82s -> 2466.82s]  when all of the terms
+[2466.82s -> 2468.82s]  are very small,
+[2468.82s -> 2470.82s]  so what happens?
+[2470.82s -> 2474.82s]  So you get this...
+[2474.82s -> 2478.82s]  This whole thing is becoming zero, right?
+[2478.82s -> 2483.82s]  Imagine like 0.1 times 0.1
+[2483.82s -> 2485.82s]  times 0.1,
+[2485.82s -> 2488.82s]  like this, I mean.
+[2488.82s -> 2490.82s]  So,
+[2490.82s -> 2493.82s]  the main reason is because of this one,
+[2493.82s -> 2494.82s]  but...
+[2494.82s -> 2496.82s]  So people have said,
+[2496.82s -> 2499.82s]  okay, we need to give this to Michael
+[2499.82s -> 2505.32s]  to address that issue, to avoid that.
+[2506.86s -> 2512.88s]  So that is one of the problems that we need to,
+[2513.38s -> 2518.48s]  I just wanted to flashback so that you are aware of that.
+[2519.44s -> 2525.12s]  And for the training, that's one of the problems.
+[2525.12s -> 2535.14s]  And so that when, let's say, when the discriminator overpowers the generator,
+[2535.36s -> 2538.36s]  that is going to happen for the generator training.
+[2541.78s -> 2551.66s]  So then people try to address the issue that is created by this GAN.
+[2554.16s -> 2554.88s]  And.
+[2555.12s -> 2563.28s]  The first thing is that they, okay, the loss function doesn't make sense for the generator.
+[2563.28s -> 2573.62s]  So we wanted to have this new architecture or new idea so that we can avoid that problem.
+[2574.30s -> 2580.80s]  And then what they do is that they basically build a new thing.
+[2582.42s -> 2584.78s]  They introduce what they call the Wasserstein.
+[2585.84s -> 2586.80s]  Loss function.
+[2589.72s -> 2594.18s]  For both the discriminator and the generators, right?
+[2595.14s -> 2598.02s]  And use that loss function to train.
+[2598.80s -> 2600.30s]  Now, here's the thing.
+[2605.82s -> 2607.68s]  Here's how this is calculated.
+[2610.14s -> 2614.16s]  So in the Wasserstein loss function on this side,
+[2614.24s -> 2615.12s]  it is the one.
+[2615.20s -> 2618.42s]  That we applied for the favorite one.
+[2618.94s -> 2620.88s]  This is the Wasserstein loss function.
+[2622.36s -> 2625.74s]  So in here, you can see that.
+[2627.26s -> 2632.40s]  The, this is what they call the binary cost and profit.
+[2634.14s -> 2634.64s]  Right?
+[2635.16s -> 2641.04s]  The, we have a step or a collection of data, right?
+[2641.84s -> 2642.84s]  This is why it is a layer.
+[2642.84s -> 2643.92s]  This is why it is a layer.
+[2643.92s -> 2644.68s]  This is why it is a layer.
+[2644.68s -> 2645.12s]  This is why it is a layer.
+[2645.24s -> 2647.70s]  of the, of the data.
+[2648.70s -> 2649.20s]  right.
+[2650.20s -> 2650.78s]  and
+[2651.56s -> 2653.56s]  It's label zero and one.
+[2653.96s -> 2654.96s]  and zero.
+[2655.74s -> 2660.22s]  And then the PI, the predicted probability of the discriminator.
+[2661.90s -> 2662.92s]  So it is, it's right.
+[2664.88s -> 2666.42s]  Then it's close to zero.
+[2666.80s -> 2668.90s]  How it is, is close to the what.
+[2670.06s -> 2671.34s]  And that how it is.
+[2671.94s -> 2674.28s]  So, for the discriminator loss function,
+[2674.28s -> 2675.06s]  this is how we call it.
+[2675.06s -> 2685.74s]  calculated. Because we know what data point is real, what data point is fake. But for
+[2685.74s -> 2697.88s]  this guy, we are using only the fake one. So that's how it is. So the Wasserstein loss
+[2697.88s -> 2709.62s]  function is defined. And also in the implementation, they use this. They make sure, they insist
+[2709.62s -> 2719.24s]  on using the fake as minus one and the other as one. And then the, the, the, the, the, it
+[2719.24s -> 2727.22s]  is like a kind of like the average and sum of weight of that value.
+[2727.22s -> 2727.86s]  And then the, the, the, the, the, the, the, the, the, the, the, the, the, the, the, the,
+[2727.88s -> 2746.48s]  the, the, the, the, for this one and for this one, they are using that. So you can see that.
+[2746.48s -> 2757.22s]  So the main problem with the Wasserstein loss function is that it can generate the value
+[2757.22s -> 2765.02s]  last much larger than minus one in one which is not very good for machine
+[2765.02s -> 2772.64s]  learning so what do they do they in sit on so what they wanted to do what they
+[2772.64s -> 2781.00s]  call that sleeping the weight of the ticket we did a lot when we win the
+[2781.00s -> 2789.18s]  end up so they need a kind of lighted you say you know the leaky or the
+[2789.18s -> 2797.80s]  response so this is a function that make sure that you never get out of it so you
+[2797.80s -> 2804.38s]  can take very we decide or decide that you cannot take the very European that
+[2804.38s -> 2807.24s]  intuitively
+[2808.50s -> 2811.00s]  with all of that
+[2811.00s -> 2821.46s]  how they how they do the training so they will face that day I think help
+[2821.46s -> 2832.50s]  basically for the digital illuminator and deliver to generate images and then
+[2832.50s -> 2837.32s]  you get some credit and then you get it but they go to stop in gradient
+[2837.32s -> 2841.00s]  fanatic yeah which is this one
+[2841.00s -> 2849.88s]  here that the value is to be in a Lipschitz continuous function. So that one value and
+[2849.88s -> 2860.52s]  this Wasserstein loss and then the two of them is going to be used as a loss function value
+[2860.52s -> 2869.80s]  for the post-training Bobo test time. So how do they implemented it?
+[2872.28s -> 2879.72s]  That it, I haven't been able to run it yet so
+[2890.52s -> 2893.96s]  you can see that here it's almost the same.
+[2903.32s -> 2904.44s]  This is the main thing
+[2909.96s -> 2911.40s]  and then this is also
+[2915.48s -> 2917.88s]  the update here the loss function
+[2920.52s -> 2933.24s]  that's how they updated it. The good thing about this is that we never we don't
+[2933.24s -> 2939.72s]  we don't really need to like make out make the implementation of ourselves but they already
+[2939.72s -> 2946.60s]  have everything implemented we just need to know which API to call with API row to call
+[2949.48s -> 2950.44s]  and it was set
+[2950.52s -> 2959.64s]  that basically I will try to run it and then we will do the comparison maybe on Wednesday
+[2960.76s -> 2964.84s]  hopefully it will be done that if we use this
+[2967.16s -> 2979.40s]  w like Wasserstein loss function with gradient penalty then the images that the generator
+[2979.40s -> 2980.28s]  generate its
+[2980.52s -> 2988.92s]  will be sharper than the other one and then the other one is the other advantage is the key in
+[2989.48s -> 2996.04s]  that is that the loss function makes sense now with the with the generator
+[2998.36s -> 3008.68s]  and the training is I wouldn't say simpler but it's more stable it can be conducted
+[3011.48s -> 3014.68s]  so in here you can see
+[3024.36s -> 3029.24s]  this is a loss function that basically the two components
+[3031.96s -> 3039.64s]  the gradient penalty is going down and then this one this one kind of like the same
+[3041.48s -> 3045.32s]  a little bit now like that and then
+[3049.48s -> 3050.76s]  Hi there
+[3050.76s -> 3052.28s]  and then
+[3061.40s -> 3062.30s]  here we go
+[3062.30s -> 3066.94s]  so
+[3066.94s -> 3068.04s]  and then
+[3068.04s -> 3070.20s]  for
+[3070.20s -> 3076.68s]  behavior that would perish now much more sample that the other one except
+[3085.40s -> 3086.04s]  any question
+[3090.92s -> 3099.16s]  yeah so it's the uninformed loss generation thing the case where we generate a skip
+[3099.16s -> 3104.04s]  generating a small type of unit you know uninformed uninformed
+[3105.08s -> 3109.16s]  loss it's like i look at the loss function and i don't know
+[3111.64s -> 3114.04s]  where the where does the training is headed
+[3116.20s -> 3120.84s]  like if you look at the loss function of the of the discriminator for example
+[3121.48s -> 3125.16s]  it's going down right and so it's approaching zero
+[3127.08s -> 3128.20s]  and then i know that
+[3129.64s -> 3137.32s]  it is improving the training improving but for the other one i cannot make that
+[3137.96s -> 3143.56s]  statement about about the loss function of of the generator
+[3145.88s -> 3153.88s]  i i cannot the idea is i cannot realize whether it is good or whether it is bad
+[3159.16s -> 3168.36s]  or the other way around
+[3171.56s -> 3185.16s]  it's like an informative so i look at that i don't know
+[3185.16s -> 3187.40s]  okay
+[3189.16s -> 3200.04s]  discriminant. That's what you can do. You can start the discriminating method. You can start the
+[3200.04s -> 3210.28s]  other the generation. It's the same thing like it's the same thing like the auto encoder, right?
+[3210.28s -> 3216.84s]  You can start the encoder. You start with and and I think that in the code in in each of these
+[3216.84s -> 3229.40s]  things they do they do both that. As you can see here um yeah it's doing something here but I think
+[3229.40s -> 3243.72s]  that um we train it right we create train it and then what we do we save it somewhere I think that
+[3244.84s -> 3245.88s]  so it's doing some
+[3246.84s -> 3262.12s]  in in each of the notebooks you'll see that they have generated in the same thing which is discriminating
+[3262.12s -> 3269.24s]  they save it so in each of these ones they do have that the motor so that after you train
+[3269.24s -> 3276.12s]  basically after this one is done you don't need to restrain. You don't need to restrain this.
+[3276.12s -> 3284.28s]  you need to load it back to the moon.
+[3284.28s -> 3287.48s]  This one is much...
+[3290.20s -> 3293.08s]  You can see that
+[3295.08s -> 3298.76s]  this one is done earlier, faster.
+[3298.76s -> 3302.36s]  You can see here, after one epoch,
+[3302.36s -> 3307.64s]  all of that, we need to see how many that they have here.
+[3313.24s -> 3322.76s]  If we only train after like 25, then I think that we need to run it, we'll see how it is doing.
+[3325.00s -> 3329.00s]  So the last thing that I wanted to talk about...
+[3332.36s -> 3336.92s]  is this one.
+[3341.64s -> 3348.44s]  Because of conditional gas, or conditional Wasserstein
+[3350.36s -> 3355.56s]  gas. And it is... the thing is like this.
+[3358.36s -> 3360.84s]  So previously, after we...
+[3362.36s -> 3366.04s]  the generator is the great victim, or the discriminator.
+[3366.60s -> 3369.32s]  They are, like, they generate the images.
+[3369.32s -> 3370.76s]  But we have no constraints.
+[3372.84s -> 3379.08s]  Say, oh, I only want you to generate for me the people we're calling here.
+[3382.04s -> 3385.00s]  Then, C-chain does that.
+[3387.08s -> 3388.04s]  How do we do that?
+[3389.48s -> 3391.48s]  Basically, you...
+[3392.36s -> 3395.72s]  we added one more component as the input
+[3399.00s -> 3400.52s]  to the... to the network.
+[3402.76s -> 3406.44s]  Which is, they call that one-hot encoded label.
+[3406.44s -> 3407.88s]  Basically, you specify,
+[3409.24s -> 3412.44s]  based on the label, based on the data that you have,
+[3412.44s -> 3415.40s]  you add one more vector to this...
+[3416.92s -> 3418.04s]  to this architecture.
+[3418.92s -> 3419.96s]  And then you get it.
+[3420.52s -> 3422.04s]  So then, the generator...
+[3422.36s -> 3425.80s]  the generator would only worry about that one.
+[3425.80s -> 3429.32s]  And then this guy is also, like, basically the...
+[3431.00s -> 3433.40s]  they receive both of them like that, right?
+[3434.68s -> 3436.12s]  And you basically...
+[3439.88s -> 3442.28s]  for the... for the discriminator or the...
+[3442.28s -> 3444.28s]  so this is what is generated.
+[3444.28s -> 3451.08s]  For example, it's only... only these actor images are generated.
+[3451.08s -> 3452.12s]  This one would not be.
+[3452.84s -> 3453.32s]  Right.
+[3455.40s -> 3455.96s]  And now...
+[3456.68s -> 3458.28s]  now if it worked here,
+[3459.24s -> 3460.36s]  the one-hot...
+[3469.08s -> 3469.80s]  So where...
+[3469.80s -> 3472.52s]  so this is the critical input, the same thing.
+[3477.48s -> 3478.36s]  Need to find...
+[3481.40s -> 3482.28s]  where does it head...
+[3482.36s -> 3491.04s]  so I don't know
+[3491.04s -> 3493.10s]  let's check
+[3493.10s -> 3498.96s]  ah here
+[3498.96s -> 3503.26s]  oh
+[3503.26s -> 3506.84s]  this one yeah
+[3506.84s -> 3510.54s]  we have the label input is
+[3510.54s -> 3513.74s]  this one
+[3513.74s -> 3518.48s]  so they would have something like this
+[3518.48s -> 3524.90s]  and
+[3524.90s -> 3533.82s]  and then you add this as the input
+[3533.82s -> 3538.10s]  of the
+[3538.10s -> 3539.06s]  of the
+[3539.06s -> 3540.18s]  of the
+[3540.18s -> 3540.52s]  of the
+[3540.54s -> 3542.00s]  of the
+[3542.00s -> 3545.68s]  so it's basically very simple
+[3545.68s -> 3552.86s]  and what you
+[3552.86s -> 3555.18s]  basically what you can do
+[3555.18s -> 3556.94s]  you can have that
+[3556.94s -> 3560.64s]  that's the end of my
+[3560.64s -> 3562.54s]  presentation for today
+[3562.54s -> 3569.16s]  any questions
+[3569.16s -> 3569.32s]  yeah
+[3569.32s -> 3569.52s]  thank you
+[3569.52s -> 3569.54s]  bye
+[3569.54s -> 3569.56s]  bye
+[3569.56s -> 3569.58s]  bye
+[3569.58s -> 3569.60s]  bye
+[3569.60s -> 3569.62s]  bye
+[3569.62s -> 3569.64s]  bye
+[3569.64s -> 3569.66s]  bye
+[3569.66s -> 3569.72s]  bye
+[3569.72s -> 3569.98s]  bye
+[3570.20s -> 3570.26s]  bye
+[3570.26s -> 3570.32s]  bye
+[3570.32s -> 3570.36s]  bye
+[3570.36s -> 3570.40s]  bye
+[3570.40s -> 3570.48s]  bye
+[3570.48s -> 3570.52s]  bye
+[3570.54s -> 3580.32s]  I will I will provide you with a specification of the like of the project so you can have it
+[3580.32s -> 3589.02s]  and I open it today evening for you to see and then if you have question please let me know
+[3589.02s -> 3602.22s]  right and anything else yes that will discard on Wednesday but I I will not make a presentation
+[3602.22s -> 3610.24s]  rather I would like to ask your health to make the presentation you read it and then let discuss
+[3610.24s -> 3618.92s]  what do you see in there and all right and see what
+[3618.92s -> 3619.00s]  the result looks like so please look forward to seeing you also thank you
+[3619.02s -> 3630.38s]  we can take advantage of that I mean I wanted to us to discuss a few of the
+[3630.38s -> 3638.00s]  things first and then we talk about the kind of the formality of agentic AI
+[3638.00s -> 3645.72s]  what that
+[3664.94s -> 3667.86s]  and if you if you have any questions that email me
+[3667.86s -> 3667.96s]  I would be happy to answer them and we can take advantage of that and if you have any questions about the kind of the formality of agentic AI
+[3667.96s -> 3667.98s]  okay and if you if you have any questions about the kind of the formality of agentic AI
+[3667.98s -> 3669.94s]  I'll try to answer, all right?
+[3680.60s -> 3682.50s]  Can go home a little bit early today.
+[3684.98s -> 3687.80s]  So, are you free right now?
+[3687.80s -> 3690.08s]  You know, I have a meeting at the-
+[3690.08s -> 3691.92s]  Oh, so, in the morning.
+[3691.92s -> 3693.34s]  Yeah, in the morning.
+[3697.98s -> 3699.32s]  Mm-hmm, yeah.

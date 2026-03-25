@@ -1,0 +1,389 @@
+[0.00s -> 14.02s]  So, what we're going to talk about today is, they call that auto-encoders and variational
+[14.02s -> 17.02s]  auto-encoder.
+[17.02s -> 24.34s]  At the end of the course, at the end of today, we learn one thing to generate images.
+[24.34s -> 33.02s]  So that's going to be the start of generating AI, that kind of stuff that we really wanted
+[33.02s -> 37.72s]  to work on.
+[37.72s -> 45.32s]  So the idea of the auto-encoder looks like this.
+[45.32s -> 52.54s]  I have a collection of unlabeled images, or maybe unlabeled images, as we will see in
+[52.54s -> 54.04s]  the second example.
+[54.34s -> 67.38s]  And in this book, they use a fashion data set, where we have images about boots, about
+[67.38s -> 74.52s]  all these items that are fashion-like.
+[74.52s -> 82.54s]  And what I wanted to do is that I wanted to create a machine learning model that generates
+[82.54s -> 83.54s]  new images.
+[83.54s -> 84.34s]  Ta-da!
+[84.34s -> 87.34s]  Similar to the one in the collection.
+[87.34s -> 99.52s]  Yeah, the idea is that I also wanted to compress the data, because, you know, images always
+[99.52s -> 102.20s]  take a lot of space, right?
+[102.20s -> 107.16s]  They use store and then search.
+[107.16s -> 114.22s]  Sometimes we wanted to, because of the images may be blurred, we wanted to improve it.
+[114.34s -> 122.94s]  Or if this is all my trademark, I don't want anybody to infringe.
+[122.94s -> 133.12s]  If somebody make a fake one, I wanted to discover them.
+[133.12s -> 141.34s]  That's when the auto-encoders come in.
+[141.34s -> 143.34s]  So auto-encoder basically is a...
+[143.34s -> 144.34s]  It's a...
+[144.34s -> 157.66s]  is a neural network architect that allows us to do this kind of stuff.
+[157.66s -> 162.96s]  The basic idea of the autoencoder is like this.
+[162.96s -> 173.38s]  I wanted to develop a machine learning model and basically the idea is the neural network
+[173.38s -> 178.90s]  model that has two functions.
+[178.90s -> 183.64s]  One is that encodes all this data that I have.
+[183.64s -> 193.82s]  So from an input x, it maps into a value h here.
+[193.82s -> 203.34s]  And then the decoding function that basically takes an h, takes a value in this value.
+[203.38s -> 211.62s]  And then map it into data that I want.
+[211.62s -> 221.56s]  So the general architecture looks like this.
+[221.56s -> 230.68s]  Now instead of one neural network as we have seen in the last two examples, now we use
+[230.68s -> 233.38s]  two neural networks.
+[233.38s -> 240.50s]  One doing the input and the other one is doing the decoding.
+[240.50s -> 245.32s]  So that's why they have encoder and decoder.
+[245.32s -> 260.58s]  So in your computer science study, you probably learned something like this already, right?
+[260.58s -> 263.18s]  But for the search purposes.
+[263.38s -> 264.38s]  Yes.
+[264.38s -> 265.38s]  What was that?
+[265.38s -> 270.38s]  Very often you do hashing or you do indexing, right?
+[270.38s -> 286.16s]  So you take a piece of information and you map it to something, right, to your question.
+[286.16s -> 289.66s]  So but hashing stop here.
+[289.66s -> 292.50s]  Hashing is very difficult to go back, right?
+[292.50s -> 293.30s]  Yes.
+[293.30s -> 299.98s]  Hashing is not the purpose of, hashing is not for the reverse of it, right?
+[299.98s -> 307.24s]  But this autoencoder has its purpose as well.
+[307.24s -> 314.94s]  And so, and they call this space, this space here.
+[314.94s -> 318.52s]  The code space is latent space.
+[318.52s -> 321.32s]  You don't see that, but you know where that is.
+[321.32s -> 322.42s]  You can examine it, right?
+[322.42s -> 336.90s]  So and the key idea in the training of this guy is what they call the reconstruction loss
+[336.90s -> 339.50s]  function.
+[339.50s -> 350.10s]  So that means that, okay, I have this X, I map it to H and then H map into the X star,
+[350.10s -> 351.10s]  right?
+[351.10s -> 352.30s]  And so what is that?
+[352.30s -> 358.58s]  That is how much loss do I have to incur in that?
+[358.58s -> 363.24s]  And so I wanted to minimize that, right?
+[363.24s -> 371.52s]  And then turn out that this idea have a lot of utility application.
+[371.52s -> 374.72s]  And these are the four applications that you can.
+[374.72s -> 380.10s]  The first, I think the first one that they think of is this one.
+[380.10s -> 381.38s]  It's dimensional, right?
+[381.38s -> 384.78s]  Dimensionality reduction.
+[384.78s -> 393.46s]  What does it mean is that you have a data with many, many dimensions, many features.
+[393.46s -> 396.56s]  So you compress it.
+[396.56s -> 401.98s]  So you simplify it, yet you retain its main characters.
+[401.98s -> 408.14s]  And so that's why they call it dimensionality reduction, okay?
+[408.14s -> 409.66s]  So let's say for example, you.
+[409.66s -> 410.66s]  You say, okay, I want to do this.
+[410.66s -> 410.86s]  I want to do that.
+[410.86s -> 410.98s]  I want to do that.
+[410.98s -> 411.22s]  I want to do that.
+[411.22s -> 411.34s]  I want to do that.
+[411.38s -> 417.38s]  And we will see that so and then or removing noise
+[419.54s -> 424.52s]  That means that if you have an images that are blurred now you can sharpen
+[427.34s -> 429.52s]  Feature extraction is like oh
+[430.14s -> 433.50s]  I have a data that has multiple
+[434.24s -> 441.30s]  Dimensions, I only interested a few then I only so they got efficient in extraction
+[441.38s -> 445.42s]  and the robot robot has been made here if I have a
+[446.24s -> 452.40s]  Like I don't want anything cut into my data, right? So that the application that
+[453.38s -> 455.20s]  now
+[455.20s -> 457.20s]  They look very simple in this
+[458.36s -> 460.36s]  And
+[460.98s -> 466.06s]  Now we have as we as we had mentioned we have this
+[467.10s -> 469.90s]  Data we have this data set, right?
+[471.60s -> 473.60s]  We wanted to
+[475.70s -> 477.54s]  Do that and
+[477.54s -> 480.94s]  Who can tell me who we met who remembered?
+[480.94s -> 483.70s]  What are the steps that we need to do in order to?
+[485.50s -> 487.50s]  Implement
+[488.52s -> 490.98s]  An ML application if
+[493.14s -> 495.14s]  So the first is data, right?
+[495.18s -> 498.78s]  They have a collection second one needs data cleaning, right?
+[498.80s -> 500.80s]  So these two step is already that
+[500.80s -> 504.08s]  right? They already have that for us. What is the third step?
+[508.32s -> 510.96s]  What's that? Make what?
+[513.28s -> 519.92s]  The model, right? So we would, yes, yes, of course the final goal is to get the model, right?
+[520.48s -> 525.36s]  But then we need to what? We need to design it, right? We need to design how many
+[525.36s -> 532.40s]  layers, how many layers, what kind of layer that we need, right? And then what else?
+[536.96s -> 538.00s]  Design it randomly.
+[540.24s -> 548.00s]  So, I need
+[551.28s -> 554.08s]  Yeah, no, no people.
+[555.36s -> 563.12s]  Okay, I need to decide how many layers do I need, right? And how many,
+[563.12s -> 568.32s]  like what kind of layer do I need here, right? And then what else?
+[570.80s -> 577.76s]  The parameters. So the, the, the actually what is important is like, how do we train it, right?
+[578.40s -> 583.36s]  The loss function, the optimizers, right? So that's what we need to do.
+[585.52s -> 588.48s]  So yeah, I, I think that we can do that.
+[591.36s -> 594.32s]  So for the implementation of the
+[597.28s -> 607.52s]  of the auto decode encoder, what we need is, interestingly, we need a few things that is
+[609.04s -> 614.16s]  that mentioned, and this thing has not been introduced.
+[615.36s -> 620.48s]  So we will see the details about each of the things of the layer later,
+[620.48s -> 629.36s]  but they also added one more thing is they call that the convolutional transpose layer.
+[631.44s -> 632.40s]  So in this thing,
+[636.56s -> 643.20s]  instead of shrinking the original image,
+[644.16s -> 644.72s]  they may give it.
+[645.36s -> 666.60s]  So here in this example they show how a 6x6 image can be obtained from a 3x3, the blue
+[666.60s -> 677.46s]  here are the original one, okay? So when they set the stripe, remember what the stripe is, right?
+[677.46s -> 693.16s]  How do we move? So when they set the stripe by 2, it gives us, it gives us, we give each of the pixels one
+[693.16s -> 696.30s]  more, one more step. So that
+[696.60s -> 704.40s]  when you do that, you double the size of the original image. So that, that is one
+[704.40s -> 713.58s]  type of new layer that we're going to work with. And then the loss function, we
+[713.58s -> 719.16s]  need to make the decision on that, and in this example they use what they call
+[719.16s -> 726.28s]  binary growth and drop. And the optimizer function, we'll see in the growth
+[726.28s -> 749.38s]  soon. So now let us look at that. So here, here's the auto encoder that we have. So the
+[749.38s -> 755.80s]  usual thing, right? They, here, the first block is just loading the parameter, like loading the
+[755.80s -> 756.28s]  library.
+[756.28s -> 775.52s]  The API. So here you have, and we run it, and then setting the parameter. The picture in there, it's like 32 by 32.
+[775.52s -> 786.04s]  So therefore,
+[786.28s -> 816.14s]  So the issue of this picture here, this one, like 32 by 32, but it, it's black and white. So therefore,
+[816.14s -> 816.26s]  So the issue of this picture here, this one, like 32 by 32, but it, it's black and white. So therefore,
+[816.28s -> 835.72s]  the channel is one. And the batch size and the buffer size we have seen before, right? And the validation split. It means that 80% of the data will be used for training and 20% will be used for testing, right? And then that the number of. So we will run it.
+[835.72s -> 839.66s]  And then that the number of. So we will run it.
+[839.66s -> 841.50s]  And then that the number of. So we will run it.
+[841.50s -> 843.40s]  We load the data, and then we process it.
+[843.40s -> 846.14s]  We load the data, and then we process it.
+[846.14s -> 856.64s]  then it displays some kind of like some hand random random picture out of the
+[856.64s -> 868.28s]  now look at the encoder now we have the first layer is the input layer right so
+[868.28s -> 881.64s]  that and here we have the convolutional two dimension and here we have
+[881.64s -> 889.96s]  also another one so which stuck up the convolutional and then we I think we
+[889.96s -> 898.16s]  flatten it but this one here we kind of remember the shape before the
+[898.16s -> 898.26s]  formal type theseultra and then Спасибо что我把它辿入一个形式 lucho, famous meда rafu actually we made other learning methods in the hamburger Then I think the moment my behavior as I as you in Omaha now you know y'all you can see that I
+[898.26s -> 904.96s]  flattening and then here they get this k-thumbs that allow us to remember that and then that
+[904.96s -> 921.20s]  mean that encoder and we can see the number of parameters that it's uh required
+[921.20s -> 926.16s]  like 73 000 right now the decoder
+[929.68s -> 931.60s]  decoder also use some
+[934.32s -> 942.00s]  input layer the dance and then now you can see that the reshape layer in another type of layer
+[942.00s -> 948.72s]  that of so the reshape layer the purpose of the reshape layer is a forward
+[950.80s -> 951.04s]  but
+[951.04s -> 951.20s]  you
+[951.20s -> 958.88s]  remember that when we take the input we can do a lot of convolutional layers right
+[959.84s -> 965.68s]  just to change it but then we flatten it right
+[968.40s -> 975.68s]  then now when we flatten it because the input layer usually took in
+[977.36s -> 980.64s]  like just a single one-dimensional
+[981.28s -> 993.28s]  right right so now but the that is the purpose of the encoder but what about the decoder the
+[993.28s -> 999.52s]  decoder does something different the decoder now the purpose of the decoder it has to it has to
+[999.52s -> 1008.72s]  regenerate the images meaning that it needs to have the the dimensional right and so the reshape
+[1008.72s -> 1009.44s]  basically
+[1009.44s -> 1019.04s]  and you see shape before flattening so it's taking that and then we create the
+[1020.80s -> 1029.12s]  the shape of the picture of the image that you watch and then that now when you after you do the
+[1029.12s -> 1033.68s]  reshape to do this convolutional convolutional
+[1035.52s -> 1039.04s]  transport layer right that's the kind of thing
+[1039.52s -> 1046.00s]  other than that everything is kind of like seamless and then it can give you the output
+[1055.76s -> 1067.12s]  so here's the decoder that that only took in like this one right and we can have that now the auto
+[1067.12s -> 1069.28s]  encoder is within the decoder and we can have that now the auto encoder is within the decoder that
+[1069.28s -> 1070.00s]  two networks
+[1073.68s -> 1083.92s]  one is the input and the encoder and then the decoder encoder takes the input of the original
+[1083.92s -> 1091.52s]  one right but the decoder takes the input from the encoder right so that's
+[1098.24s -> 1099.04s]  and we run it
+[1099.28s -> 1105.60s]  then we train it when we train it we need
+[1107.84s -> 1116.56s]  the load function and the optimized method we don't we discussed about that the last time
+[1121.68s -> 1124.48s]  and then we now we just need to run it
+[1126.72s -> 1129.04s]  so now last time i did not
+[1129.28s -> 1144.40s]  thread the code about the autops
+[1144.40s -> 1152.80s]  and this and then we will give you an image like this so you can actually see what is happening
+[1153.36s -> 1153.90s]  now
+[1153.90s -> 1154.64s]  oh
+[1154.64s -> 1155.20s]  how
+[1155.20s -> 1155.36s]  how
+[1155.36s -> 1155.86s]  this
+[1155.86s -> 1156.32s]  goes
+[1156.32s -> 1156.80s]  what
+[1156.80s -> 1157.20s]  kind
+[1157.20s -> 1157.72s]  of
+[1157.72s -> 1158.24s] odes
+[1158.24s -> 1158.58s]  uh
+[1158.58s -> 1158.68s]  for here
+[1158.68s -> 1158.96s]  let me just talk about some aspects to that
+[1158.96s -> 1159.12s]  um
+[1159.12s -> 1165.28s]  after so they have this model checkpoint go back you save everything basically you
+[1165.28s -> 1173.20s]  set the state of the of the training process and then you can restart that right and
+[1182.96s -> 1184.96s]  so it oh
+[1184.96s -> 1188.56s]  that's the reason
+[1196.80s -> 1203.36s]  so it so why why it was working i will continue on this one and we'll see
+[1205.28s -> 1210.96s]  so we have this implementation right and i mentioned about the reshape layer
+[1212.24s -> 1214.80s]  i just put it here so that we
+[1214.96s -> 1222.00s]  know like we talked about this before now we have the reshape layer and then we also have
+[1222.96s -> 1223.84s]  we move this thing
+[1228.96s -> 1231.44s]  so this is the purpose of the reshape layer
+[1233.60s -> 1242.32s]  remember we take in an input right and then we flatten it to a dense layer the output of this
+[1243.92s -> 1244.88s]  is from there
+[1244.96s -> 1254.96s]  right so therefore we need to reshape it the one thing this layer here it takes in kind of like
+[1256.64s -> 1265.04s]  the parameters that of this form so here i write a times b times c but a time if you could have
+[1265.04s -> 1274.40s]  that a time b it just the requirement is that this product has to be the same as this one
+[1274.96s -> 1283.36s]  like the original you have right so you can convert a three dimension or three color into
+[1283.36s -> 1291.76s]  just only two something like that right that is the requirement it has to be this the product has
+[1291.76s -> 1299.68s]  to be exactly the same the number of of point of pixels that we created of the input that we created
+[1299.68s -> 1300.80s]  for the input layer
+[1305.92s -> 1306.40s]  so
+[1309.44s -> 1312.64s]  let's see um it almost done
+[1319.20s -> 1327.28s]  is it done one two three so you are we only use three epochs so we done so here as you can see
+[1328.48s -> 1334.88s]  at this part here i did not mention about that the last time but this is also something that we're going
+[1334.96s -> 1338.80s]  to do so we don't we don't have to we don't have to
+[1340.64s -> 1346.00s]  train every time that we're trying to look at that right i just show you that because of
+[1346.00s -> 1350.40s]  but we could have what we could have is we could have said
+[1352.32s -> 1362.00s]  the output of our of our training process so here we have three say
+[1363.68s -> 1364.80s]  one is out to end
+[1365.60s -> 1371.36s]  the other one encoder and the other one is the decoder who can think of like why do we say
+[1378.56s -> 1384.96s]  who can make the gas why do we why do we say three things instead of
+[1384.96s -> 1390.48s]  normally we take only the model right the model here is the output encoder
+[1395.92s -> 1405.12s]  so we also use encoders and decoders separately yes or something that's right imagine this so
+[1405.84s -> 1410.24s]  imagine that if i wanted to use the encoder
+[1412.08s -> 1420.48s]  say to know okay if i have an image right i wanted to know where in the in the latent space
+[1420.48s -> 1422.64s]  i want to know where in the in the latent space
+[1422.64s -> 1424.64s]  i want to know where in the in the latent space
+[1424.64s -> 1432.40s]  the space that is supposed to be that i i can leave that one right but i also like
+[1434.16s -> 1440.56s]  and here's the point if we just have the decoder and assuming that this is what we
+[1441.28s -> 1449.68s]  that this is the latent space and this is good i can take a point here and ask the decoder to oh
+[1449.68s -> 1453.92s]  give me the image
+[1454.64s -> 1459.44s]  that corresponding to this point which is generating images right
+[1463.20s -> 1469.04s]  this all these points here are the points that come in from the real data
+[1470.08s -> 1479.60s]  but there are points that no real data map into so if i put one here i generate something that is new
+[1481.84s -> 1482.34s]  right
+[1484.64s -> 1492.80s]  this is the point and then there so the four then the four things that i was mentioning about
+[1493.60s -> 1499.52s]  like the application of the auto decoder is you can use them separately
+[1502.56s -> 1504.32s]  when you use the encoder
+[1506.48s -> 1509.20s]  you basically do the following
+[1513.12s -> 1513.92s]  suppose that
+[1515.60s -> 1520.80s]  suppose that this this is the this is the latent space right
+[1522.48s -> 1532.72s]  if you use the encoder you know that you would map your input data into something here
+[1533.60s -> 1543.28s]  so say for example you have many uh you have a data that has many features many dimensions and now
+[1543.28s -> 1544.32s]  you're moving to a you have a data that has many features many dimensions and now you're moving to a
+[1544.64s -> 1548.64s]  two-dimensional that's a bit dimensionality reduction right
+[1550.08s -> 1558.24s]  you can also make a comparison to say whether it is something that fake or not right
+[1560.64s -> 1564.80s]  so this all the noise things right this is kind of like that kind of stuff
+[1565.44s -> 1573.12s]  and when you do use the decoder alone you are generating new data
+[1575.28s -> 1585.76s]  okay so now it's now it's done we can see it in some of the things that so we save it
+[1586.72s -> 1588.96s]  now we can do the reconstruction right
+[1591.52s -> 1592.08s]  hopefully
+[1595.84s -> 1602.80s]  see it basically it do this this is the top with the real one
+[1603.92s -> 1604.56s]  the bottom
+[1604.56s -> 1613.28s]  bottom here is a reconstructed one. You can see that they are not exactly the same, right?
+[1613.92s -> 1621.44s]  But they are kind of close enough. They may be a little bit blurred, too. And
+[1621.44s -> 1632.00s]  we'll see here. So, this is a modulator. So, basically,
+[1634.08s -> 1638.32s]  the calculation, this one is mapped into this point.
+[1640.64s -> 1646.08s]  And then this point is encoded into this one, and so on and so forth. So, you can see
+[1649.12s -> 1651.20s]  the point is like, which one is that?
+[1651.84s -> 1664.72s]  Minus.41.8, minus 1.8 is around here. And then 0.12 is somewhere here. I think I have the- it has
+[1664.72s -> 1674.80s]  a... Yeah. So, the point is like that, you see? These are the points
+[1677.12s -> 1681.36s]  is mapped to this one, and then this is the one. And if we want to take this
+[1681.44s -> 1701.76s]  one we get it. With me? That's cool, huh? Now, one thing though, that it is worth to
+[1701.76s -> 1715.76s]  consider that, right? We wanted to examine the latent space a little bit. So here is a kind of
+[1717.84s -> 1726.08s]  you can see that there are 10 types of items in this in this data set, like zero, one,
+[1726.08s -> 1731.52s]  so and each kind of like color code like this. So this they also,
+[1731.52s -> 1738.88s]  this is also that the network that we trained map most of this into here, and so on and so forth.
+[1741.76s -> 1748.80s]  There are, there are places where nothing is mapped into and all that, right?
+[1751.76s -> 1752.96s]  And you can see that
+[1757.84s -> 1761.44s]  one of the difficult thing is that if we pick a point
+[1761.84s -> 1769.36s]  anywhere, unless we see the image that is generated by the
+[1769.36s -> 1772.48s]  because we don't really have any clue what it's going to be.
+[1775.52s -> 1779.36s]  Now, the main reason is that
+[1781.20s -> 1790.00s]  the main reason is that it's kind of like it's the distribution of this point. We don't know.
+[1791.52s -> 1798.08s]  We don't have we don't have any clue how they is and there are there are things I say for example,
+[1799.36s -> 1801.60s]  this thing here seems to be
+[1804.32s -> 1813.12s]  more preferable than this thing here. So it looks like that if we pick out something around here
+[1814.32s -> 1820.88s]  in this area, we might get things more closer to those to the last group of items.
+[1821.52s -> 1834.88s]  than it really was. So we want a little bit more than that. And that's one of the reasons that the
+[1834.88s -> 1843.04s]  main driving force for the introduction of what they call the variation of autoencoders.
+[1843.04s -> 1853.52s]  We wanted to have at least a more reasonable distribution of items.
+[1855.36s -> 1864.40s]  And so then that is what they introduce.
+[1870.48s -> 1872.88s]  So now the variation of
+[1873.04s -> 1880.96s]  autoencoder look almost exactly the same as the autoencoder. The only difference is this thing.
+[1887.60s -> 1894.00s]  There, instead of the encoder,
+[1896.80s -> 1901.44s]  put each of the x, each of the input data,
+[1902.08s -> 1913.04s]  into a point in the latent space. They create a probabilistic distribution.
+[1914.64s -> 1922.88s]  So that is why you see this kind of particular problem distribution. Whereas in the
+[1930.80s -> 1931.12s]  The original one
+[1931.44s -> 1940.58s]  of like you have the space here I have the input I map into a in the point here
+[1940.94s -> 1948.52s]  we are in here same here but I map it into something like this and some
+[1948.52s -> 1962.32s]  distribution for each item we get different distribution yeah we'll see
+[1962.32s -> 1970.42s]  with a little bit more detail right other than that this function is the
+[1970.42s -> 1976.66s]  same so in the first one we know exactly where the point maps were in the second
+[1976.66s -> 1978.32s]  one we don't know exactly what we have
+[1978.32s -> 1978.50s]  something like this but we know exactly where the point maps were in the second one we don't know exactly what we have some
+[1978.50s -> 1984.04s]  distribution we have some description about that yeah and they actually they
+[1984.04s -> 1989.78s]  trying to map it into a caution distribution with a meaning the
+[1989.78s -> 2002.32s]  variance right so we'll see yeah so basically the in the encoder here's what
+[2002.32s -> 2008.30s]  it is right the point and here it is in general it is a multi-variable normal
+[2008.30s -> 2017.08s]  distribution but in in this fashion data set it is at a two-dimensional normal
+[2017.08s -> 2023.56s]  distribution so can we change the distribution with what kind of
+[2023.56s -> 2030.86s]  distribution we want or is it fixed parameter hyperparameter type of
+[2030.86s -> 2038.10s]  distribution that we want to map any point I think the goal is for the goal
+[2038.10s -> 2043.40s]  here the leg was playing that is the goal is always the normal distribution
+[2043.40s -> 2054.24s]  but the parameter you can change like the mean in the body that's the good
+[2054.24s -> 2060.60s]  question I honestly because this is something that I not working on very
+[2060.60s -> 2067.88s]  closely I only understand that in that maybe I check on that and see what I'm
+[2067.88s -> 2072.62s]  looking for that I think that it might be different but yeah so that we're
+[2072.62s -> 2076.62s]  looking at this in an interesting way because we have to try to figure out
+[2076.62s -> 2081.86s]  right so only when you have to figure out a lot of things you have to have a
+[2081.86s -> 2084.68s]  story you know so that when you know that you can select that which is the
+[2084.68s -> 2091.34s]  situation you want for example let's say you know this is the point this is a
+[2091.34s -> 2096.00s]  particular point this point this point this point this point this point this
+[2096.00s -> 2097.26s]  point this point this point this point this point this point that will be the
+[2097.26s -> 2097.54s]  key
+[2097.54s -> 2102.02s]  mapping everything in that model and learning mu and sigma squared.
+[2102.02s -> 2105.38s]  Yeah, the mu and the sigma, but the mu and the sigma
+[2105.38s -> 2111.62s]  depend on the items. Yeah. On the graph, the last of the group, the graph of the,
+[2111.62s -> 2118.02s]  of the... And what I'm saying is that if the framework is fixed, then the mu and
+[2118.02s -> 2121.38s]  sigma squared... Yes, the mu and the sigma...
+[2121.38s -> 2125.30s]  ...depending on the item. Depending on the data.
+[2125.30s -> 2130.58s]  They're assuming that everything will map into this frame, this Gaussian thing.
+[2130.58s -> 2135.22s]  Yeah. This is what they're trying to capture.
+[2135.22s -> 2139.38s]  Yeah. Because that eliminates any reference,
+[2139.38s -> 2145.30s]  preferential treatment of items. So, as we will see later, it will not
+[2145.30s -> 2152.82s]  going to be, like, biases against, against items.
+[2155.30s -> 2159.70s]  So, okay, now... And now...
+[2163.54s -> 2168.58s]  You can see that... And did I talk about embedding before?
+[2169.78s -> 2176.58s]  No, right? And this is the first time that we should talk about that. Now, the idea is that
+[2179.06s -> 2184.58s]  now that, now that we map the input into element,
+[2185.30s -> 2193.06s]  we're going to have a vector of number. And that's what they call the embedding of
+[2193.06s -> 2200.74s]  things into a vector. A, a, a number. Like, a vector, right? In our case, it's just a number
+[2200.74s -> 2209.78s]  on the two dimensions, but it could be multiple. Like, the vector maybe has multiple items.
+[2211.86s -> 2213.06s]  So, now...
+[2213.06s -> 2218.66s]  We do the encoding, and now we can see...
+[2220.82s -> 2224.18s]  This is the embedding of 10
+[2226.66s -> 2235.14s]  images. So, the first 10 images is mapped into this, this, the value of that.
+[2236.42s -> 2242.74s]  Yeah. We're creating the letters, 2x2 letter space. So, is that user choice or...
+[2243.86s -> 2244.74s]  Can that be changed?
+[2246.42s -> 2253.14s]  I think that it is a user, user choice. But it also depends on data. This one, we have only...
+[2256.90s -> 2265.54s]  We have only the, um, right-gap images. So, later on, we'll... So, basically, in this,
+[2265.54s -> 2272.82s]  in this, uh, I think in this series of things, I only see that they use two-dimensional.
+[2273.30s -> 2275.22s]  Right?
+[2280.58s -> 2281.22s]  And then...
+[2284.26s -> 2290.66s]  So, that is, and then, they're here, so this is basically what they display.
+[2290.98s -> 2293.86s]  That, all the picture... That was, so...
+[2294.66s -> 2296.90s]  The dots here...
+[2298.58s -> 2301.62s]  Is the dot collects onto to one image?
+[2301.62s -> 2302.10s]  In the, this...
+[2302.10s -> 2302.50s]  So, this is the data?
+[2302.50s -> 2302.82s]  Yeah. So, this is the data.
+[2302.82s -> 2317.54s]  in the data in the training so yeah so they did what they have they display that and then now
+[2320.26s -> 2325.30s]  this is what we have seen you can see that now that we have this
+[2325.30s -> 2334.66s]  10 color 10 type of item 10 categories right so they i don't mapping it so this picture is
+[2334.66s -> 2341.30s]  not quite the same as what we saw in the other one because of the way they have it
+[2343.54s -> 2349.62s]  like different but you can see that this area for example nothing is mapped into
+[2350.58s -> 2355.06s]  right and now they generate this using the
+[2355.06s -> 2355.30s]  dictionary
+[2355.30s -> 2355.80s]  code
+[2359.86s -> 2361.78s]  so and now it draw
+[2364.82s -> 2372.82s]  see these are the 10 the the the the that many like one two three four five six the 18
+[2374.66s -> 2382.10s]  point so it took this point and map in this is the picture that is generated
+[2384.42s -> 2384.92s]  okay
+[2385.94s -> 2391.46s]  and uh what we can see here so like here the here's the thing that they
+[2394.90s -> 2396.26s]  a little bit more of that
+[2401.62s -> 2402.34s]  any questions
+[2405.46s -> 2410.90s]  i think there's a generated picture that they have uh using the code here
+[2415.70s -> 2419.78s]  the different rows is that representative evolution of quality proof
+[2422.82s -> 2423.32s]  yes
+[2425.86s -> 2429.62s]  but this one is the auto decoder this is not the variation now
+[2429.62s -> 2436.82s]  auto auto decoder yet because i was training it before i show you so so this is still the
+[2436.82s -> 2444.74s]  auto decoder right so you can see that uh thing it right i don't think that i have
+[2445.62s -> 2462.66s]  time to enough time to talk about the um i wonder have you run the code on linux yet
+[2469.86s -> 2470.36s]  no
+[2471.14s -> 2471.64s]  huh
+[2471.64s -> 2474.76s] , i have connected but have not ran it yet
+[2474.76s -> 2479.96s]  maybe maybe you can you run it now can you log in into the
+[2481.24s -> 2485.08s]  the school machine and run it so that i know you can do it
+[2490.28s -> 2497.32s]  just run the first one it's fine the first the the the the system in the first uh the first um
+[2498.20s -> 2500.12s]  the last lecture is okay with me
+[2500.12s -> 2508.28s]  does it work
+[2508.76s -> 2517.48s]  yeah okay it works now okay so you you i see so well that is fine but you will have difficulty
+[2517.48s -> 2524.76s]  for the later later chapters in the later chapter our machine will not be able to run it anymore
+[2525.72s -> 2529.88s]  so you will need to be able to use the machine with the gpu
+[2530.12s -> 2536.12s]  to run the later code so you better try it now before it's too late
+[2538.60s -> 2546.12s]  so you can access the the website so everybody has the cs account right
+[2547.88s -> 2551.64s]  please log in into that and then trying to run
+[2551.64s -> 2559.56s]  the code so that i know that you can't you don't have any problem because later the the the normal
+[2559.56s -> 2563.94s]  machine my machine will not be able to work
+[2565.44s -> 2568.44s]  yeah
+[2589.56s -> 2592.56s]  I don't know

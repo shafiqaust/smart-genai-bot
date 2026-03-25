@@ -1,0 +1,304 @@
+[0.00s -> 5.12s]  .
+[5.12s -> 6.96s]  Hey folks, my name is Chris Norring.
+[6.96s -> 9.88s]  I work as a Senior Cloud Advocate at Microsoft.
+[9.88s -> 11.80s]  In today's lesson, lesson five,
+[11.80s -> 15.32s]  we'll talk about how to create advanced prompt.
+[15.32s -> 18.36s]  You can definitely check out this link here at the bottom,
+[18.36s -> 21.00s]  aka MSGenAI beginners,
+[21.00s -> 22.48s]  where you will be able to find
+[22.48s -> 23.96s]  all the different lessons that will
+[23.96s -> 26.92s]  skill you up from beginner to expert.
+[26.92s -> 29.00s]  Now, as we move in,
+[29.00s -> 31.40s]  let's check out this lesson.
+[31.40s -> 34.12s]  You can see that this is part of a GitHub repo.
+[34.12s -> 35.80s]  There's a ton of different lessons here,
+[35.80s -> 37.92s]  so we definitely recommend that you
+[37.92s -> 39.48s]  check out all of these lessons
+[39.48s -> 41.32s]  to make sure that you skill up properly.
+[41.32s -> 44.52s]  The goals of this lesson is to learn how to
+[44.52s -> 46.88s]  apply prompt engineering techniques
+[46.88s -> 49.76s]  that improve the outcome of your prompts.
+[49.76s -> 53.40s]  Hopefully by now, you saw the previous video where we
+[53.40s -> 56.68s]  introduced the concepts of prompts and prompt engineering.
+[56.68s -> 58.24s]  This takes it to
+[58.24s -> 60.72s]  a different level where we explain that there is
+[60.72s -> 63.24s]  actually a method and an engineering principle
+[63.24s -> 65.32s]  behind getting a better result
+[65.32s -> 68.00s]  because that's really what we're trying to achieve.
+[68.00s -> 71.92s]  For example, if we look at a very basic prompt,
+[71.92s -> 73.64s]  you see that it says how to
+[73.64s -> 75.92s]  generate 10 questions on geography.
+[75.92s -> 77.32s]  That's all well and fine,
+[77.32s -> 79.16s]  but there are some hidden clues in here
+[79.16s -> 80.80s]  that makes this a good prompt because
+[80.80s -> 84.16s]  we are providing context by saying geography.
+[84.16s -> 86.56s]  We're also limiting the output,
+[86.56s -> 88.68s]  by saying no more than 10 questions,
+[88.68s -> 91.28s]  not 20 questions, not 30 questions,
+[91.28s -> 93.32s]  not 50 questions, but 10.
+[93.32s -> 95.28s]  This is an important principle when it comes to
+[95.28s -> 97.12s]  be better at prompting,
+[97.12s -> 100.00s]  which is what you're about to do.
+[100.00s -> 102.56s]  Also, one other thing,
+[102.56s -> 104.40s]  when it comes to a topic,
+[104.40s -> 105.56s]  when you go into a topic,
+[105.56s -> 108.12s]  just imagine that it could be a very big topic.
+[108.12s -> 111.60s]  The more you can drill down into specifics, the better.
+[111.60s -> 114.72s]  For example, if you're interested in Paris and London,
+[114.72s -> 116.44s]  you should say that instead of,
+[116.44s -> 118.84s]  UK or France or what have you.
+[118.84s -> 122.00s]  Always think about providing just the right level of
+[122.00s -> 125.60s]  context to ensure that that output is what you need.
+[125.60s -> 128.72s]  The format is also something that we can work on.
+[128.72s -> 131.64s]  So far, you saw how we said 10 questions,
+[131.64s -> 135.40s]  but you can also decide how you want that output to come to you,
+[135.40s -> 137.40s]  like for example, with a title,
+[137.40s -> 140.88s]  a description, or maybe some other keywords.
+[140.88s -> 143.12s]  These are just some good grounding,
+[143.12s -> 145.76s]  some basic tips on how to be a better prompter.
+[145.76s -> 148.36s]  But there are also some various techniques
+[148.36s -> 150.56s]  that we're here to learn today.
+[150.56s -> 152.96s]  And this is something that you can take with and run,
+[152.96s -> 155.24s]  and it doesn't really matter whether you're using
+[155.24s -> 159.40s]  Azure OpenAI or GPT or some other AI systems.
+[159.40s -> 161.20s]  These are techniques and technologies,
+[161.20s -> 164.20s]  approaches that you can use anywhere.
+[164.20s -> 166.56s]  So what you've seen so far is a principle here
+[166.56s -> 168.56s]  called zero-shot prompting.
+[168.56s -> 171.12s]  This is your most basic form of prompting
+[171.12s -> 173.44s]  where you construct a prompt,
+[173.44s -> 175.20s]  you're sending that to your AI system,
+[175.20s -> 177.80s]  your AI assistant, and you hope for the best.
+[177.80s -> 180.92s]  Now, one other principles that you could be using also
+[180.92s -> 183.56s]  is something called chain of thought.
+[183.56s -> 186.20s]  And what we want to say about this principle is that,
+[186.20s -> 188.96s]  imagine this, imagine that you are a student
+[188.96s -> 190.88s]  and you're a teacher, right?
+[190.88s -> 193.76s]  So the student would guide you through a problem by saying,
+[193.76s -> 195.76s]  Chris, to actually solve this problem,
+[195.76s -> 197.48s]  you need to take a few steps.
+[197.48s -> 200.68s]  First, you need to do A, then B, and then C.
+[200.68s -> 202.72s]  And then you try to mimic what the teacher does.
+[202.72s -> 205.08s]  And little by little, you're able to take
+[205.20s -> 208.96s]  more advanced problems and kind of conquer those.
+[208.96s -> 210.80s]  That's the idea of chain of thought.
+[210.80s -> 213.76s]  But now imagine instead of a student and a teacher,
+[213.76s -> 215.68s]  it's you who are the teacher,
+[215.68s -> 219.12s]  and the student is really the LLM or your AI assistant.
+[219.12s -> 221.00s]  So you are guiding it step by step
+[221.00s -> 224.60s]  on how to actually present the solution to a problem.
+[224.60s -> 227.76s]  We'll quickly show a example of that one.
+[228.76s -> 232.20s]  There's also something called generated knowledge.
+[232.20s -> 234.84s]  And the idea is to improve the response of a prompt.
+[234.84s -> 237.96s]  And you can provide a generated facts
+[237.96s -> 242.12s]  or add additional knowledge that then the AI assistant
+[242.12s -> 245.04s]  can utilize to present you with a better response
+[245.04s -> 247.64s]  and if it didn't have those facts.
+[247.64s -> 250.64s]  And then there's a principle called least to most.
+[250.64s -> 252.68s]  It's very similar to chain of thought,
+[252.68s -> 254.60s]  but this is about breaking down the problem
+[254.60s -> 256.00s]  into a series of steps.
+[256.00s -> 258.20s]  And we see how this could be really useful in,
+[258.20s -> 259.92s]  for example, data science,
+[259.92s -> 262.40s]  where it's often known which steps that's gonna happen
+[262.40s -> 264.40s]  in what order, for example,
+[264.40s -> 266.56s]  fetching data, cleaning data,
+[266.56s -> 268.64s]  and doing some other projections maybe,
+[268.64s -> 272.04s]  and then you end up training maybe a machine learning model.
+[272.04s -> 274.64s]  And there's also a couple of techniques here
+[274.64s -> 277.32s]  that I thought to mention at the very end of things,
+[277.32s -> 280.92s]  which is self-refine and meiotic prompting.
+[280.92s -> 282.76s]  Now, the idea with self-refine
+[282.76s -> 285.08s]  is that you are actually critiquing the LLM,
+[285.08s -> 288.56s]  your AI assistant said, are you sure about these facts?
+[288.56s -> 290.88s]  And what you're saying to it is not only
+[290.88s -> 293.36s]  that you're questioning the very output,
+[294.40s -> 296.76s]  but you're saying, how can you improve this response
+[296.76s -> 299.72s]  just to give it a few different iterations of saying,
+[299.72s -> 301.60s]  oh, you're really sure about this response.
+[301.60s -> 305.16s]  How about you try and go for another round?
+[305.16s -> 308.04s]  Meiotic prompting is interesting because what you want to,
+[308.04s -> 309.24s]  just like with self-refine,
+[309.24s -> 312.24s]  is that you wanna make sure that the outcome is correct.
+[312.24s -> 315.68s]  So what you do is that you break down the answer,
+[315.68s -> 317.24s]  which might consist of, let's say,
+[317.24s -> 318.92s]  five or six different parts.
+[318.92s -> 320.44s]  And for each and every part,
+[320.44s -> 324.36s]  you are trying to ascertain whether that response from the AI
+[324.36s -> 326.52s]  assistant is actually correct by getting it
+[326.52s -> 331.04s]  to countermand itself by giving you a different response.
+[331.04s -> 334.84s]  So definitely look at self-refine and meiotic prompting
+[334.84s -> 338.00s]  if you're interested in validating your response.
+[338.00s -> 340.32s]  And also something,
+[340.32s -> 342.12s]  so why are we doing this in the first place?
+[342.12s -> 344.12s]  Why do we need techniques to actually ensure
+[344.12s -> 347.20s]  that the output of our AI assistant is correct?
+[347.20s -> 350.64s]  Well, the truth is it doesn't know everything, right?
+[350.64s -> 352.20s]  And just like us humans,
+[352.20s -> 354.32s]  we make up responses when we don't have it.
+[354.32s -> 356.20s]  Especially if we're kids, right?
+[356.20s -> 357.92s]  But it's the same thing with an AI.
+[357.92s -> 359.56s]  If it doesn't have the correct answer,
+[359.56s -> 362.48s]  it's trying to give you its best guess what it should be.
+[362.48s -> 365.68s]  And this is a way for you to tell the LLM,
+[365.68s -> 367.16s]  are you really sure about this response?
+[367.16s -> 368.52s]  You didn't make it, yeah.
+[368.52s -> 372.92s]  This is also known as hallucinating when it comes to LLMs.
+[372.92s -> 376.36s]  But yeah, now that I've described these various principles,
+[376.36s -> 377.68s]  let's look at chain of thought,
+[377.68s -> 380.56s]  because I find that this one is super interesting.
+[380.56s -> 382.96s]  So imagine now that you have this simple problem
+[382.96s -> 383.96s]  where you say,
+[383.96s -> 385.48s]  Alice has five apples,
+[385.48s -> 387.08s]  she throws away three apples,
+[387.08s -> 388.84s]  she gives two apples to Bob,
+[388.84s -> 390.80s]  and Bob gives one back.
+[390.80s -> 393.68s]  How many apples does Alice have?
+[393.68s -> 396.28s]  Now, it answers us with five.
+[396.28s -> 397.76s]  And this is problematic, right?
+[397.76s -> 400.12s]  Because five is incorrect.
+[400.12s -> 401.64s]  If you actually do the math for this,
+[401.64s -> 403.44s]  you see that you should calculate it
+[403.44s -> 407.24s]  as five minus three minus two plus one, which is one.
+[407.24s -> 409.32s]  And it's actually answering us with five.
+[409.32s -> 413.68s]  So how can we actually come up with a better response?
+[413.68s -> 416.56s]  Well, and this is where the whole chain of thought comes in,
+[416.56s -> 419.64s]  and this is really the teacher and the student idea.
+[419.64s -> 422.36s]  So the idea of what you're doing is to show the LLM,
+[422.36s -> 424.32s]  you show your AI assistant,
+[424.32s -> 425.84s]  here's a similar problem,
+[425.84s -> 427.36s]  here's how I break it down,
+[427.36s -> 431.12s]  and then hopefully you end up with a more accurate response.
+[431.12s -> 434.56s]  So what you can do is give it a similar example
+[434.56s -> 436.88s]  where you say that Lisa has seven apples,
+[436.88s -> 438.68s]  she throws away one apple,
+[438.68s -> 440.48s]  she gives four apples to Bart,
+[440.48s -> 442.40s]  and Bart gives one back.
+[442.40s -> 443.52s]  And then you show the calculator, and then you say,
+[443.52s -> 445.40s]  okay, I'm going to show you the LLM.
+[445.40s -> 448.52s]  And you show the calculation being seven minus one is six,
+[448.52s -> 452.20s]  six minus four is two, two plus one equals three.
+[452.20s -> 454.04s]  Now, this is super interesting, right?
+[454.04s -> 456.20s]  Because now you've shown a similar examples,
+[456.20s -> 458.64s]  but you also show the calculation.
+[458.64s -> 461.48s]  And then you add the original question being,
+[461.48s -> 464.52s]  Alice has five apples, she throws away three apples,
+[464.52s -> 465.96s]  gives two apples to Bob,
+[465.96s -> 468.76s]  Bob gives one back, and so on and so forth.
+[468.76s -> 472.96s]  And lo and behold, now the LLM will actually answer you
+[472.96s -> 475.96s]  in the same way that it did in the previous example.
+[475.96s -> 479.00s]  So just to rehash what we did here,
+[479.00s -> 481.64s]  we provided it with a similar examples.
+[481.64s -> 486.12s]  We provided it with a calculation for how to calculate
+[486.12s -> 488.20s]  this very similar answer.
+[488.20s -> 491.40s]  And then we re-added our original question.
+[491.40s -> 493.96s]  And all of this is called chain of thought
+[493.96s -> 497.64s]  because we teach it how to do things in a chain.
+[497.64s -> 500.20s]  So we're showing the entire calculation,
+[500.20s -> 501.72s]  the entire chain of thought,
+[501.72s -> 502.76s]  from start to finish,
+[502.76s -> 504.92s]  and we're showing that the LLM,
+[504.92s -> 509.92s]  our AI assistant is now able to answer us better.
+[509.92s -> 512.32s]  Now, looking at generated knowledge,
+[512.32s -> 514.72s]  this principle is also super interesting
+[514.72s -> 518.20s]  because this allows you to provide information
+[518.20s -> 521.08s]  to your question as you need it.
+[521.08s -> 523.68s]  So what we're looking at here is a template.
+[523.68s -> 525.16s]  We see that this is a template
+[525.16s -> 527.20s]  because it's using these curly brackets
+[527.20s -> 529.32s]  where with company and company name
+[529.32s -> 530.84s]  and products and products list,
+[530.84s -> 532.56s]  this is information that doesn't exist yet.
+[532.56s -> 537.56s]  question to be able to be posed towards the AI system, we need to fetch this information from
+[537.56s -> 543.24s]  somewhere. And once we fetch this information, once we include it into our prompt, then we will
+[543.24s -> 550.28s]  be able to get a better response from the LLM. And this is oftentimes used in a principle called
+[550.28s -> 556.54s]  RAG or retrieval augmented generation. The idea is that you fetch existing data that you own as
+[556.54s -> 561.78s]  part of your company, you insert that as part of your template, then you ask the question to the
+[561.78s -> 567.76s]  AI assistant, and then you arrive at hopefully a better response than if you had just tried to ask
+[567.76s -> 575.08s]  the LLM the question right away. So imagine now, if we go just to show an example of this,
+[575.86s -> 583.56s]  if we just ask it, please suggest an insurance like this. So we go to our playground that we
+[583.56s -> 588.40s]  can have, and you definitely have the same kind of playground. So what we can do here inside of
+[588.40s -> 591.76s]  this playground is we can paste this, and this is not fetching anything.
+[591.78s -> 596.38s]  Any business data is only fetching the actual question. So at this point, we're saying,
+[596.90s -> 602.32s]  please suggest an insurance giving the following budget and requirements. My budget is $1,000,
+[602.70s -> 608.28s]  and it should be about car and home, or even better, let's remove this part. And then what
+[608.28s -> 616.18s]  we want to do is to scroll down all the way to the bottom, see if we can do that. So now we can
+[616.18s -> 621.46s]  come to a point where we hit generate button. But now we're going to get a response where we just
+[621.78s -> 627.36s]  hope that the LLM is actually trained on insurance products, and we get a very generic response. So
+[627.36s -> 633.20s]  we're not really happy about this response because it says, well, for $1,000 there's multiple
+[633.22s -> 638.50s]  insurances, but this is not really what you want, right? Because most likely you own an insurance
+[638.50s -> 643.56s]  company and you want that insurance products to actually be something that you tell the user
+[643.56s -> 649.40s]  about. So if the user comes to your site, they ask about the best insurance, you actually need
+[649.40s -> 650.82s]  to fill this stuff out.
+[650.84s -> 651.28s]  So,
+[651.28s -> 654.98s]  Instead of just asking this question, provide that extra context.
+[655.08s -> 662.44s]  And now we pretend that this extra context has been fetched from somewhere before the user's request is actually coming through.
+[662.54s -> 664.08s]  And this is what we call a RAG.
+[664.14s -> 670.38s]  So imagine now that we fetched this information thanks to doing some web API call with Acme insurance.
+[670.60s -> 673.06s]  We're showing it all the different insurances.
+[673.26s -> 675.48s]  And now we still ask the same question.
+[675.62s -> 677.00s]  We have a budget of $1,000.
+[677.00s -> 682.98s]  And at this point, we want to go back and we want to hit generate.
+[683.16s -> 687.48s]  And this time we're hoping for a better answer because we provided it with more context.
+[688.24s -> 695.16s]  So now we can see because we added this generated data, we ask our question of $1,000.
+[695.64s -> 699.02s]  Now it's saying to us, here's a much better response.
+[699.18s -> 703.62s]  You should be using the cheap insurance of $500 that's within your budget.
+[703.98s -> 706.98s]  Or you can use the other one for $600 and so on.
+[707.30s -> 710.22s]  All of this is based on this improved context.
+[710.42s -> 713.84s]  But of course, the devil's in the detail here, right?
+[714.02s -> 715.74s]  How do we actually fetch this data?
+[715.98s -> 719.82s]  This is where RAG solutions come in and you need to build a system around it.
+[719.88s -> 727.24s]  But the good news here is that we have many samples on Azure, how to do this for Python, for JavaScript, for Java, .NET and so on.
+[727.32s -> 728.56s]  So don't worry.
+[728.70s -> 730.26s]  We got your back even here.
+[730.46s -> 736.38s]  Yes, we went through this example and you can see how much better the prompt was when you were able to.
+[737.00s -> 750.62s]  One time provide that extra context while asking this question and just to show you also about least to most that this is a principle of how you're able to present it with a breakdown of a problem.
+[750.82s -> 766.22s]  So as I said before, let's, for example, use this within data science and we can actually start with the prompt in which we say, well, how would I do data science in five steps or how would I make this chocolate cake in five steps by having this?
+[766.22s -> 773.76s]  This initial prompt, we are actually able to use the LLM and we get some kind of recipe for how to solve our problem.
+[773.98s -> 778.92s]  So here we're saying collect data, clean data, analyze data, plot data and present data.
+[779.30s -> 780.50s]  That's excellent, right?
+[780.88s -> 795.54s]  Because once we have that breakdown, we can actually use each of these steps and go back here and say, how would I do collect data in data science?
+[795.54s -> 795.60s]  Yes.
+[796.22s -> 802.62s]  So now we're utilizing the fact that we've already asked that initial prompts, how we do data science in five steps.
+[802.82s -> 806.66s]  Now we're using the information of knowing what one of these steps are called.
+[807.30s -> 811.52s]  And we can just make that information important with a quote.
+[811.66s -> 812.72s]  And now we hit generate.
+[813.32s -> 818.90s]  And now it's able to give us a better answer about how to do data science because we mentioned a specific step.
+[819.90s -> 825.90s]  And if we want to be even better with this response, show me Python code.
+[826.22s -> 837.06s]  And this is just utilizing all of those great principles when it comes to prompting in general, that if we add more context on how to do something, we are more likely to get the response we need.
+[837.56s -> 846.14s]  And by me adding show me Python code and collect data in combination, you see that I now get some kind of answer that makes sense.
+[846.68s -> 849.34s]  So now it says how to read data from a CSV file.
+[849.52s -> 853.42s]  And it's showing me how to do header information on the data.
+[853.42s -> 856.16s]  It's showing me how to select various features from.
+[856.22s -> 861.94s]  So you can see context matters and the more specific you are.
+[862.48s -> 866.12s]  And I think you all saw this when I didn't say show me Python code.
+[866.20s -> 867.36s]  It just gave me some text.
+[867.50s -> 870.88s]  It didn't really show me what I needed, which was the Python code.
+[873.00s -> 882.40s]  And yeah, as I mentioned before, self-refined, this is a very important process when it comes to critiquing your results to say, are you sure about this outcome?
+[883.34s -> 886.14s]  And here you can see an example of this technology.
+[886.22s -> 894.20s]  Where we are saying we first start off with a prompt where we say create the Python Web API with routes, products and customer.
+[894.54s -> 895.76s]  That's a great start, right?
+[896.24s -> 902.30s]  But what you want to do as part of the self-refine is to say, suggest three improvements of the above code.
+[902.70s -> 907.76s]  So here we're saying we're not really happy with your first attempt, but we want to iterate on the results.
+[907.76s -> 914.66s]  And now we can say three improvements or five improvements or just any improvements and we arrive at the better response.
+[915.26s -> 916.16s]  So we can take.
+[916.38s -> 935.94s]  And we can keep self-critiquing and number of times until we're happy with the end results and myotic prompting is also an interesting one, is that we can ask the LLM to answer a question and for each part of the answer, we can ask you to explain the answer just to make sure that what we're getting back seems consistent.
+[935.94s -> 944.24s]  If we notice any kind of signs of inconsistency, that's probably something that we can discard because then the LLM is just making stuff up.
+[944.24s -> 946.22s]  And we can see here, for example, over here.
+[946.22s -> 950.48s]  So how can we create a crisis plan to mitigate a pandemic in five steps?
+[950.60s -> 950.96s]  Great.
+[950.96s -> 952.22s]  We get five steps back.
+[953.54s -> 959.06s]  And for each step, can you explain more in detail how I can deal with each of these?
+[959.30s -> 966.80s]  But if we come to a point now where it starts to explain one of these steps and it doesn't seem like what it's explaining back makes a lot of sense.
+[967.44s -> 970.62s]  As I said before, it's probably something that we can discard.
+[970.64s -> 974.46s]  Hopefully you'll be able to feel like you're skilled up in your prompting.
+[974.46s -> 975.26s]  You've leveled up.
+[975.68s -> 976.18s]  You now feel.
+[976.32s -> 977.90s]  Like you have different options.
+[978.14s -> 983.50s]  Chain of thought was a fantastic pattern to use if you wanted to lead it in its reasoning.
+[983.50s -> 993.38s]  If you feel like it's doing wrong for some reason, it really helps to provide an example to break it down in steps and even showing it the calculation and critiquing the result.
+[993.38s -> 1000.90s]  You saw how you could improve that source code step by step by just asking for do that improvement or do this improvement and so on.
+[1000.90s -> 1005.68s]  So with these patterns, you can see how we can improve the quality of the output.
+[1005.68s -> 1008.62s]  Because of the output, because that's really what we want.
+[1008.62s -> 1013.30s]  At the end of the day, we want something that's more correct or more to our liking.
+[1013.30s -> 1016.36s]  So huge thank you everyone for watching this video.

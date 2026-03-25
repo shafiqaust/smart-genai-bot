@@ -1,0 +1,514 @@
+[0.00s -> 14.32s]  Good afternoon, everyone. So this afternoon, we're talking about different approaches to
+[14.32s -> 28.54s]  problem engineering. Now, let's, so the reading materials and learning materials I posted
+[28.54s -> 39.08s]  on the canvas. Mostly, I take the description of the approaches that we are studying in
+[39.08s -> 51.54s]  the survey A and B. A is more surveys about methods to solve problems in natural language
+[51.54s -> 58.46s]  processing. Whereas the second one, the B, is more like the general approaches to
+[58.54s -> 67.46s]  problem engineering. So I take the material from there. And it is, these surveys are so
+[67.46s -> 76.94s]  expensive, extensive. I will not be able to do all of them. We do a few of them just so
+[76.94s -> 87.40s]  that, you know, you have some idea what problem engineering is. And you can also practice
+[87.40s -> 87.80s]  it.
+[88.54s -> 97.86s]  So, first, in the surveys A, they list several applications of problem engineering in natural
+[97.86s -> 105.36s]  language processing in general. But, you know, that because of language, large language model,
+[105.78s -> 116.90s]  it's so far the one that we are talking about, like Gemini or Chachi-PT, that they do mostly
+[116.90s -> 118.52s]  we take and solve natural language.
+[118.54s -> 126.76s]  But they do also, you know, there are, so these are the list of applications that was
+[126.76s -> 138.16s]  made, that was discussed, knowledge probing, that, like, we ask the large language model
+[138.16s -> 146.12s]  for some questions, and then we get the answer. They are very generic, and most often people
+[146.12s -> 147.40s]  are trying to use this.
+[147.40s -> 148.52s]  I know.
+[148.54s -> 155.98s]  So, you know, there are a lot of applications in, like, track finding. We will see here,
+[156.06s -> 164.64s]  for example, we have run a few of them, like, two of them. Like, we can ask, what is the
+[164.64s -> 172.18s]  weather like today in Las Cruces? And we get some answer like this. Basically, this is
+[172.18s -> 175.72s]  what is high, what is low, and so on and so forth.
+[175.72s -> 175.96s]  Right.
+[176.76s -> 177.04s]  And,
+[178.54s -> 186.06s]  the other, some type of other question is, like, how old is Abraham Lincoln? And Gemini
+[186.06s -> 194.06s]  isn't, like, he's no longer living, but if he were to live, to be alive today, he would
+[194.06s -> 204.48s]  be 216 years old, because he was born on February 12th, you know, 1809, and so forth.
+[204.48s -> 204.72s]  Right.
+[204.78s -> 208.26s]  So, those are the things that, basically,
+[208.54s -> 217.26s]  that we can, classification-based, as, as, as, like, take classification. For example,
+[217.26s -> 228.06s]  when you read a review of a movie, or review of a restaurant, you would read, so, the people
+[228.06s -> 234.66s]  who write the review indicate that the movie is good, the movie is bad, and so on and so
+[234.66s -> 236.24s]  forth. So, you have that kind.
+[236.76s -> 237.32s]  Right.
+[237.32s -> 238.52s]  Or, naturally,
+[238.54s -> 249.22s]  language inference, that aim to predict the relationship between sentences. And then,
+[249.22s -> 257.72s]  information extraction, for example, there was a thing that, like, for example, this
+[257.72s -> 267.38s]  very inter, like, in many fields, we have this relationship, or, entities that are,
+[267.38s -> 276.62s]  that are, like, prevalent in knowledge graph, that, and you wanted to extract the information
+[276.62s -> 285.26s]  from text, and, I don't know, are you aware of, like, the fee-based, for example, or the
+[285.26s -> 292.42s]  knowledge, Google knowledge graph, that, like, have a lot of information about movie, about,
+[292.42s -> 296.06s]  celebrities, and so on and so forth.
+[296.06s -> 296.56s]  Right.
+[297.38s -> 297.96s]  Right.
+[297.96s -> 301.82s]  So, what is your point about that?
+[301.82s -> 306.92s]  Yeah, so, I think there's a very, very interesting issue, and, you know, actually,
+[306.92s -> 316.94s]  it's, you know, it's a, it's, it's a big one, but, I think it is, a really interesting
+[316.94s -> 317.64s]  one.
+[317.64s -> 318.30s]  Yeah.
+[318.30s -> 318.78s]  Yeah.
+[318.78s -> 326.14s]  Well, I think that, you know, the, the, the, the, the general argument is that the, in
+[326.14s -> 326.92s]  this sense, that, yeah.
+[326.92s -> 338.52s]  to solve that for us, and that's very easy to understand, right?
+[338.52s -> 347.64s]  But common sense reasoning, the other thing that we do, all of us do that every day, but
+[347.64s -> 354.62s]  maybe many of you do not know the term, and common sense reasoning refers to the type
+[354.62s -> 368.60s]  of reasoning that we make every day, for example, that we know that birds do fly, and that penguins
+[368.60s -> 377.10s]  do not fly, and so we often, when we see a bird, we will make a conclusion that that
+[377.10s -> 381.48s]  bird, that particular bird, flies, right?
+[381.48s -> 384.60s]  But then we recognize that it is actually a bird.
+[384.60s -> 397.78s]  Then we draw our previous conclusion, so that is something that we do every day, but
+[397.78s -> 403.42s]  mathematically that is something that is quite difficult to achieve.
+[403.42s -> 412.98s]  And then question answering, there are a lot of tasks that we can, like, we give it a text
+[412.98s -> 414.44s]  and we ask a question.
+[414.60s -> 424.20s]  We have a document, and we ask a question, so that text generation is obvious, because
+[424.20s -> 433.88s]  there are a lot of generations, and then automatic, interestingly, automatic devaluation of text
+[433.88s -> 443.74s]  generation is something that we also, so people also think of using that, using LLM to do things,
+[443.74s -> 443.96s]  right?
+[443.96s -> 443.98s]  Right.
+[443.98s -> 444.02s]  Right.
+[444.02s -> 444.06s]  Right.
+[444.06s -> 444.08s]  Right.
+[444.08s -> 444.14s]  Right.
+[444.14s -> 444.18s]  Right.
+[444.18s -> 444.20s]  Right.
+[444.20s -> 444.22s]  Right.
+[444.22s -> 444.24s]  Right.
+[444.24s -> 444.26s]  Right.
+[444.26s -> 444.30s]  Right.
+[444.30s -> 444.32s]  Right.
+[444.32s -> 444.34s]  Right.
+[444.34s -> 444.36s]  Right.
+[444.36s -> 444.38s]  Right.
+[444.38s -> 444.42s]  Right.
+[444.60s -> 445.20s]  Right.
+[445.20s -> 445.22s]  Right.
+[445.22s -> 445.26s]  Right.
+[445.26s -> 445.28s]  Right.
+[445.28s -> 445.30s]  Right.
+[445.30s -> 445.32s]  Right.
+[445.32s -> 445.34s]  Right.
+[445.34s -> 445.36s]  Right.
+[445.36s -> 445.38s]  Right.
+[445.38s -> 445.42s]  Right.
+[445.42s -> 445.44s]  Right.
+[445.44s -> 445.46s]  Right.
+[445.46s -> 445.48s]  Right.
+[445.48s -> 445.50s]  Right.
+[445.50s -> 445.52s]  Right.
+[445.52s -> 445.54s]  Right.
+[445.54s -> 445.56s]  Right.
+[445.56s -> 445.58s]  Right.
+[445.58s -> 445.60s]  Right.
+[445.60s -> 445.62s]  Right.
+[445.62s -> 445.64s]  Right.
+[445.64s -> 445.66s]  Right.
+[445.66s -> 445.70s]  Right.
+[445.70s -> 445.74s]  Right.
+[445.74s -> 445.76s]  Right.
+[445.76s -> 445.82s]  Right.
+[445.82s -> 445.84s]  Right.
+[445.84s -> 445.86s]  Right.
+[445.86s -> 445.90s]  Right.
+[445.90s -> 445.92s]  Right.
+[445.92s -> 445.94s]  Right.
+[445.94s -> 445.98s]  Right.
+[445.98s -> 446.00s]  Right.
+[446.00s -> 446.06s]  Right.
+[446.06s -> 446.10s]  Right.
+[446.10s -> 446.14s]  Right.
+[446.14s -> 446.16s]  Right.
+[446.16s -> 446.18s]  Right.
+[446.18s -> 446.22s]  Right.
+[446.22s -> 446.24s]  Right.
+[446.24s -> 446.26s]  Right.
+[446.26s -> 446.30s]  Right.
+[446.30s -> 446.34s]  Right.
+[446.34s -> 446.38s]  Right.
+[446.38s -> 446.42s]  Right.
+[446.42s -> 446.46s]  Right.
+[446.46s -> 446.48s]  Right.
+[446.48s -> 446.50s]  Right.
+[446.50s -> 462.54s]  Right.
+[462.54s -> 462.58s]  Right.
+[462.58s -> 462.62s]  Right.
+[462.62s -> 462.66s]  Right.
+[462.66s -> 462.70s]  Right.
+[462.70s -> 462.74s]  Right.
+[462.74s -> 462.80s]  Right.
+[462.80s -> 465.56s]  But videos know this kind of thing.
+[465.56s -> 470.04s]  Because there was a thing that was so interesting.
+[470.04s -> 472.24s]  We showed a video and we asked,
+[472.24s -> 476.04s]  what are the characters in the video doing?
+[476.04s -> 480.26s]  Who are the things that we can very,
+[480.26s -> 482.94s]  like it's very interesting and very important
+[482.94s -> 487.94s]  to develop and make our application.
+[487.94s -> 492.94s]  That was also something like adapting the result
+[499.30s -> 502.98s]  from one domain to the other domain, for example.
+[507.42s -> 512.42s]  Like we generate data set, for example.
+[515.08s -> 516.88s]  There was a lot of like,
+[516.88s -> 517.94s]  there was an application
+[517.94s -> 522.94s]  so now let us move on to the problem state engineering.
+[526.18s -> 527.70s]  So to answer the question,
+[527.70s -> 529.42s]  what is problem and problem engineering.
+[529.42s -> 533.06s]  So we already, what we,
+[533.06s -> 535.90s]  but we had tried and what we had seen
+[535.90s -> 538.98s]  in the Microsoft course history,
+[545.42s -> 547.30s]  because of language model,
+[547.94s -> 552.94s]  is a pre-trained model that predicts the next token.
+[554.06s -> 556.94s]  And that can continue endlessly, right?
+[556.94s -> 561.94s]  So if you ask it, it can, even a very single easy question,
+[562.52s -> 565.82s]  you can, it can give you like a bunch of information.
+[567.18s -> 572.10s]  But just from the user perspective,
+[572.10s -> 575.24s]  every time we use the large language model,
+[575.24s -> 577.90s]  we have some expectation.
+[577.90s -> 581.44s]  So the prompts, by definition,
+[581.44s -> 585.40s]  is the natural language instruction
+[585.40s -> 589.52s]  that provide context to guide the model
+[589.52s -> 592.74s]  to predict a sequence of the next token
+[592.74s -> 595.82s]  that match our expectation.
+[595.82s -> 598.48s]  And from engineering,
+[598.48s -> 602.16s]  it's a practice of designing and refining prompts
+[602.16s -> 607.16s]  to guide AI model toward producing the desired outputs.
+[607.90s -> 608.74s]  Right?
+[608.74s -> 611.82s]  So that is something that,
+[611.82s -> 616.82s]  something analog, an analogy of using the LLM,
+[618.56s -> 623.56s]  or it's something like we are doing something with a friend
+[624.48s -> 626.94s]  and trying to solve a problem
+[626.94s -> 631.94s]  or to quiz each other or something like that, right?
+[633.48s -> 636.48s]  Now, let's get us to the screen.
+[637.90s -> 638.74s]  Okay.
+[638.74s -> 642.74s]  So this is a very systematic overview of the large language model.
+[642.74s -> 645.44s]  So this is taken from the survey B.
+[645.44s -> 650.48s]  And you can see here, on this part here,
+[652.20s -> 657.20s]  this is what we input, and that is the language model.
+[657.52s -> 662.52s]  And then the output is what we expect, right?
+[663.70s -> 666.48s]  That is something, so the problem engineering addresses,
+[666.48s -> 669.94s]  this component, the input.
+[669.94s -> 674.94s]  How do we do, you know, how do we create the input
+[674.94s -> 679.94s]  so that it give us the right, what we want?
+[680.78s -> 683.98s]  Because this large language model,
+[683.98s -> 685.90s]  that in the middle here,
+[685.90s -> 689.60s]  it had been basically, we can imagine that it,
+[689.60s -> 696.44s]  a person that read all the books that is ever published.
+[696.48s -> 701.18s]  And all the content on the internet, maybe, right?
+[701.18s -> 702.48s]  So that's something that,
+[704.24s -> 707.18s]  so how do we make use of that kind of,
+[709.90s -> 711.52s]  that kind of information?
+[711.52s -> 714.82s]  How do we get the information to serve us?
+[717.72s -> 721.98s]  Now, and it's basically,
+[721.98s -> 726.98s]  there are several approaches to, from engineering.
+[728.52s -> 733.52s]  We discussed a few of them, five of them in this class,
+[733.52s -> 738.14s]  and we will work on like the other one in the next class.
+[746.28s -> 749.78s]  So that's so that it is an example of an application
+[749.78s -> 751.28s]  that we developed here.
+[751.98s -> 756.98s]  We have a group of us here at NMSU developed,
+[756.98s -> 761.98s]  if you would like to extract the entity relation from text.
+[763.82s -> 766.78s]  So that let us go on.
+[767.98s -> 772.98s]  Now, the first in the most simplest form,
+[772.98s -> 775.48s]  it's like zero-shot prompting.
+[775.48s -> 780.48s]  So here, user input a text, right?
+[780.48s -> 781.32s]  And,
+[781.98s -> 785.48s]  maybe a sentence, maybe a graph paragraph,
+[785.48s -> 788.74s]  without any instruction, extra instruction,
+[788.74s -> 793.14s]  and the last language model to keep out somehow.
+[793.14s -> 796.40s]  So, as you have seen before,
+[796.40s -> 799.52s]  so if the format of that format of that is here,
+[799.52s -> 803.60s]  like I have a question and I want to have an answer.
+[803.60s -> 807.86s]  So, I have shared with you like the,
+[807.86s -> 811.74s]  the thing that I made, just so, just so we have,
+[811.74s -> 814.20s]  I have a question here,
+[814.20s -> 819.90s]  and that I asked how all these,
+[819.90s -> 822.90s]  but I could also do something else, like,
+[838.50s -> 841.50s]  so it's like, it will keep us, and so I asked,
+[841.74s -> 844.28s]  okay, how tall is the Efton Tower?
+[844.28s -> 845.16s]  And then,
+[845.16s -> 847.16s]  how tall is this?
+[861.58s -> 862.86s]  So, you can see that, right?
+[862.86s -> 866.16s]  It's very, very effective, very easy to use.
+[866.16s -> 871.24s]  And if we ask questions that are likely that are,
+[871.24s -> 873.24s]  survival in some book,
+[873.24s -> 877.44s]  then this the, the, the last language model,
+[877.44s -> 880.66s]  like the latest German, I open,
+[880.66s -> 885.66s]  or Chachipeti, or OpenAI would probably be able to figure,
+[886.48s -> 888.54s]  to answer, right?
+[888.54s -> 893.20s]  So, let's, let's ask a more difficult question, like,
+[893.20s -> 894.04s]  how,
+[899.58s -> 900.74s]  what would be a,
+[900.74s -> 903.20s]  what would be a more difficult question?
+[903.20s -> 904.04s]  Let's see.
+[922.94s -> 924.20s]  So, here I ask,
+[924.20s -> 927.12s]  how large is the city Hanoi of China?
+[927.12s -> 929.74s]  But China also have a city named Hanoi.
+[929.74s -> 930.70s]  So, let,
+[930.74s -> 931.58s]  let me see.
+[931.58s -> 936.58s]  So, you can see that it doesn't know that there is a Hanoi in,
+[940.58s -> 942.12s]  in China.
+[942.12s -> 942.94s]  Okay.
+[942.94s -> 943.78s]  So, let me be,
+[944.90s -> 945.74s]  let me,
+[955.12s -> 956.50s]  maybe because of,
+[956.50s -> 958.32s]  I write that not in the right way.
+[958.32s -> 959.44s]  So, it doesn't know.
+[959.44s -> 972.90s]  Interesting. I do not know that Ha Nam is in South Korea, but I know when I read the
+[972.90s -> 981.00s]  story from China, there is a mention about Ha Nam. And actually, Ha Nam is also another
+[981.00s -> 988.20s]  city in Vietnam, but it doesn't know. Interesting. You can see that there are things that maybe
+[988.20s -> 1000.92s]  it doesn't, it cannot like tell us exactly. It's not, it also mix up, right? So that is
+[1000.92s -> 1006.80s]  about a zero-shot prompting. So we just ask questions, we just provide something and ask
+[1006.80s -> 1018.18s]  a question. The next approach, it's a few-shot prompting. A few-shot prompting is like, you
+[1018.18s -> 1025.18s]  know, it's different in one shot, like zero-shot prompting in the sense that basically here
+[1025.18s -> 1033.78s]  you provide it with, here you provide the model with some sample example, like you have
+[1033.78s -> 1043.94s]  here the question, and then you provide answer. Then you have another question and you provide
+[1043.94s -> 1048.10s]  answer, question, answer. And then you have a question.
+[1048.18s -> 1056.86s]  Then it asks, you ask for an answer. So, and this can be many of them. It can be like one,
+[1056.86s -> 1063.08s]  it can be two, it could be five, so on and so forth. But keep in mind that the cost of
+[1063.08s -> 1069.12s]  using the large language model as of today, they depend on the number of tokens. And if
+[1069.12s -> 1077.18s]  you basically, if you provide more token here, then the cost to get the answer is higher,
+[1077.18s -> 1078.18s]  right?
+[1078.18s -> 1084.88s]  So that's something that also need to, we need to pay attention to if we wanted to use
+[1084.88s -> 1097.74s]  large language model to do our work now. Example for, I also run a few examples that
+[1097.74s -> 1098.74s]  I'm
+[1098.74s -> 1099.74s]  I'm
+[1099.74s -> 1100.74s]  I'm
+[1100.74s -> 1101.74s]  I'm
+[1101.74s -> 1102.74s]  I'm
+[1102.74s -> 1103.74s]  I'm
+[1103.74s -> 1104.74s]  I'm
+[1104.74s -> 1105.74s]  I'm
+[1105.74s -> 1106.74s]  I'm
+[1106.74s -> 1107.74s]  I'm
+[1107.74s -> 1107.78s]  I'm
+[1108.18s -> 1108.78s]  I'm
+[1108.78s -> 1109.78s]  I'm
+[1109.78s -> 1110.78s]  I'm
+[1110.78s -> 1111.78s]  I'm
+[1111.78s -> 1112.78s]  I'm
+[1112.78s -> 1113.78s]  I'm
+[1113.78s -> 1114.78s]  I'm
+[1114.78s -> 1115.78s]  I'm
+[1115.78s -> 1116.78s]  I'm
+[1116.78s -> 1117.78s]  I'm
+[1117.78s -> 1118.78s]  I'm
+[1118.78s -> 1119.78s]  I'm
+[1119.78s -> 1120.78s]  I'm
+[1120.78s -> 1121.78s]  I'm
+[1121.78s -> 1122.78s]  I'm
+[1122.78s -> 1123.78s]  I'm
+[1123.78s -> 1124.78s]  I'm
+[1124.78s -> 1125.78s]  I'm
+[1125.78s -> 1126.78s]  I'm
+[1126.78s -> 1127.78s]  I'm
+[1127.78s -> 1128.78s]  I'm
+[1128.78s -> 1129.78s]  I'm
+[1129.78s -> 1130.78s]  I'm
+[1130.78s -> 1131.78s]  I'm
+[1131.78s -> 1132.78s]  I'm
+[1132.78s -> 1133.78s]  I'm
+[1133.78s -> 1134.78s]  I'm
+[1134.78s -> 1135.78s]  I'm
+[1135.78s -> 1136.78s]  I'm
+[1136.78s -> 1137.78s]  I'm
+[1138.18s -> 1146.02s]  a score 50 would be described as a fail or poor right and then we can ask another question how
+[1146.02s -> 1153.38s]  about 92 then you can see that it does pretty right uh petty interest correct right and then
+[1153.38s -> 1162.18s]  81 it it's good it still is the um between average and excellent but it is something that
+[1162.18s -> 1170.42s]  uh chat below the wood a little bit they will finish uh firmly within that so it's the answer
+[1171.62s -> 1181.86s]  and then uh here like i said i produce some some uh let's say that another example this one
+[1181.86s -> 1191.94s]  this example is one of the examples that that was used to point out that last language model
+[1192.42s -> 1203.62s]  is not capable of doing thing and like in one shot so um this is this is like we have like
+[1203.62s -> 1212.66s]  all the odd number is like 9 20 and 25 so this is correct right and then the odd number is in the
+[1212.66s -> 1221.22s]  group so this is then to have something like this and then this and then this and then
+[1222.82s -> 1230.26s]  you ask a question like this so this basically now thing is much more like this example is much
+[1230.26s -> 1237.86s]  more like elaborate than the example i gave up there but the idea is the same so you have like
+[1237.86s -> 1250.98s]  here one like one two three four four examples and then now you ask a question so this you can see
+[1250.98s -> 1251.94s]  here like
+[1252.50s -> 1263.46s]  um the like here how how each of the examples answer and then it provides the answer and then
+[1263.46s -> 1272.66s]  here you have like you can see that i noticed that um initially this set of example was used to
+[1273.30s -> 1281.78s]  show that last language model can cannot do reasoning so
+[1282.18s -> 1289.78s]  it is but nowadays you don't even need it's a kind of like multiple examples it's still
+[1290.98s -> 1298.58s]  germany and chat is now pretty good in answering this final question right so but like
+[1300.34s -> 1306.50s]  let's then check for another one and it's not the same thing and now for example here
+[1307.86s -> 1308.90s]  another example
+[1310.90s -> 1312.10s]  it used to be that this
+[1312.18s -> 1320.42s]  example uh like in in the old one it the last language model that is not capable but now
+[1321.22s -> 1328.66s]  now with the new model you put it this thing and it will answer you perfectly and you can even like
+[1329.30s -> 1338.66s]  now make some modification to that like you can see here i can do it very it can do it very well
+[1341.38s -> 1341.88s]  here
+[1342.50s -> 1346.54s]  um
+[1346.54s -> 1360.60s]  uh
+[1360.60s -> 1366.70s]  uh
+[1366.70s -> 1371.14s]  few shot few shot prompting it uh people kind of like enhanced many things um like the well some of us who are we're more Today today we do have we do this method, so that's basically we are sendingור immediately sending word becomes the word he says to
+[1371.14s -> 1380.10s]  of like enhance our capabilities to do complex tasks we still need to be very careful with the
+[1380.10s -> 1390.74s]  prompt and and it is so that we can achieve the the good the good output from the irm
+[1393.62s -> 1400.74s]  yeah i have a so i have previously i have a this one is suitable for our time application
+[1400.74s -> 1408.58s]  you can see that there are very short it basically to retrieve a fact or to check for a fact that we
+[1408.58s -> 1418.26s]  know that exists so now i leave you with one only like what what came uh what do you what is this
+[1418.26s -> 1429.14s]  a few short prompting approach it most suitable for i will see like for example very short surveys
+[1429.14s -> 1430.66s]  and evaluated
+[1430.74s -> 1439.94s]  that that may be something that it isn't able to do right now in your work if you have to do like
+[1439.94s -> 1446.90s]  to aggregate some surveys and then this um this thing is probably quite good
+[1449.38s -> 1457.70s]  the few shots from things is great as we mentioned that the
+[1460.10s -> 1460.60s]  early
+[1461.30s -> 1470.26s]  early like uh last language model struggle with like problem solving mathematical problem solving
+[1470.26s -> 1477.86s]  and this here this example here is a typical example that you would see on the
+[1482.66s -> 1490.66s]  kind of like a problem that earlier uh last language model may have like for example
+[1491.38s -> 1500.50s]  just touch like uh open ai last language model um the charge ability 2.0 for example
+[1501.14s -> 1508.10s]  and not answer this question uh roller has high tennis ball he buys two more cans
+[1509.06s -> 1515.06s]  of tennis ball each can have three tennis balls how many of them does he have so
+[1516.10s -> 1520.42s]  well we can solve that like here like so two can't speak
+[1520.74s -> 1530.34s]  sick but the earlier the earlier system would give a very random answer and therefore so we have here
+[1533.22s -> 1536.10s]  normally if we have the if we use a few
+[1537.38s -> 1541.62s]  few short prompting we'll just keep here like the answer is 11 right
+[1541.62s -> 1549.70s]  11 is the answer no 11 is the answer but we don't have this part
+[1552.58s -> 1560.18s]  and it is very easy for the LLM to answer this question wrong but with this kind of like
+[1562.10s -> 1570.98s]  explanation or step-by-step presentation that so LLM can answer
+[1571.62s -> 1579.38s]  much more questions much more complicated questions like for example here a jacquard can
+[1580.66s -> 1588.66s]  jacquard 16 balls the ball are called both and have a couple of blue so you can see that
+[1588.66s -> 1596.66s]  the calculation that we can do so here is a few examples that I run with with the
+[1599.30s -> 1601.06s]  so here for example I have
+[1601.62s -> 1604.66s]  A
+[1604.66s -> 1609.62s]  this one
+[1609.62s -> 1613.62s]  green
+[1613.62s -> 1615.86s]  so
+[1619.22s -> 1624.18s]  like here like so here so we have this kind of thing like we can
+[1626.02s -> 1630.90s]  have the example with a different information and the answer is
+[1631.62s -> 1639.38s]  2 times 30 plus 5 is 65, and it won't give you the answer, it's 4, and so on and so forth.
+[1639.38s -> 1651.12s]  So this is the kind of thing that now data is going, but this one is probably more elaborate and it still can answer the right answer.
+[1651.78s -> 1660.14s]  You see that here, the example is Tim needs to reach 90 scores to maintain his scholarship.
+[1660.14s -> 1674.60s]  He currently has 25. There are two exams left, each of which has a rank of 0 to 40, like the score is in that rank, and he just completes the first one he calculated that he got.
+[1674.60s -> 1690.12s]  He got at most, he will get at most 30, so much that he needs to get in the last exam to maintain his scholarship, and you can see here the answer that he gets.
+[1690.14s -> 1714.80s]  So he needs a total of 90 points, and the current point is this, and then so he needs this much, right, and the first one he got at most 30, so he needs at least 35, so it's very correct, right, that is something that is like, so now.
+[1717.80s -> 1720.12s]  And this is the kind of thing that.
+[1720.14s -> 1721.86s]  Can do with a chain of thought.
+[1723.64s -> 1727.12s]  But experiment, it's shown.
+[1729.46s -> 1733.04s]  It's a very like so also that.
+[1736.50s -> 1739.14s]  First of all, manual.
+[1740.16s -> 1741.92s]  So creating this kind of.
+[1743.70s -> 1745.32s]  This kind of.
+[1749.30s -> 1749.94s]  Like.
+[1750.14s -> 1750.68s]  Here, right.
+[1752.06s -> 1752.56s]  To here.
+[1753.62s -> 1755.56s]  Like this answer is not.
+[1757.56s -> 1759.16s]  It's not like us.
+[1761.98s -> 1768.46s]  It's very time consuming, and it's sometimes not obvious as well, so.
+[1772.46s -> 1774.14s]  And the next approach.
+[1775.52s -> 1777.26s]  It's attempting to.
+[1778.52s -> 1779.06s]  Do this.
+[1780.14s -> 1804.56s]  But automatically, because the next approach is an automatic chain of thought, so on this side here, so they would have, they would write, but this approach is more suitable for using a program, right, so then they have, yeah, they have a number of questions.
+[1804.56s -> 1806.06s]  That.
+[1806.06s -> 1809.90s]  And then they would ask the.
+[1810.14s -> 1813.64s]  The language model to generate.
+[1813.64s -> 1817.14s]  So it's the kind of like chain of thought.
+[1817.14s -> 1818.84s]  On this side.
+[1818.84s -> 1820.02s]  So.
+[1820.02s -> 1822.02s]  When see here.
+[1822.02s -> 1824.02s]  I have a question.
+[1824.02s -> 1829.02s]  The answer is the answer.
+[1829.02s -> 1831.02s]  Generated by.
+[1831.02s -> 1833.02s]  A request.
+[1833.02s -> 1835.02s]  Let's think step by step.
+[1835.02s -> 1837.02s]  And then when it.
+[1837.02s -> 1838.02s]  Do that.
+[1838.02s -> 1839.02s]  And it generates.
+[1839.02s -> 1840.02s]  This.
+[1840.02s -> 1845.02s]  And then the next question is generated.
+[1845.02s -> 1850.02s]  So.
+[1850.02s -> 1851.02s]  In this approach.
+[1851.02s -> 1853.02s]  The idea is that.
+[1853.02s -> 1857.02s]  Because of the.
+[1857.02s -> 1860.02s]  Samples of the chain of thought.
+[1860.02s -> 1867.02s]  Sometimes the example that we came is my attitude to something.
+[1867.02s -> 1868.02s]  And therefore, so that.
+[1868.02s -> 1869.02s]  So similarly.
+[1869.02s -> 1869.52s]  Yeah.
+[1869.52s -> 1871.52s]  Similarity among those.
+[1871.52s -> 1872.52s]  Example.
+[1872.52s -> 1873.52s]  Too much.
+[1873.52s -> 1875.52s]  And therefore, when we have something new.
+[1875.52s -> 1877.52s]  A new question coming in.
+[1877.52s -> 1879.52s]  The system can not realize that.
+[1879.52s -> 1881.52s]  It may be something different.
+[1881.52s -> 1882.52s]  And it.
+[1882.52s -> 1883.52s]  Use all.
+[1883.52s -> 1884.52s]  Similarity.
+[1884.52s -> 1885.52s]  Decision.
+[1885.52s -> 1886.52s]  And come.
+[1886.52s -> 1887.52s]  So now.
+[1887.52s -> 1888.52s]  When it.
+[1888.52s -> 1889.52s]  When.
+[1889.52s -> 1890.52s]  What?
+[1890.52s -> 1891.52s]  The approach of the chain of thought.
+[1891.52s -> 1892.52s]  It like.
+[1892.52s -> 1893.52s]  It first.
+[1893.52s -> 1894.52s]  Clustering.
+[1894.52s -> 1895.52s]  The question.
+[1895.52s -> 1896.52s]  And then it generates.
+[1896.52s -> 1897.52s]  And then it generates.
+[1897.52s -> 1898.52s]  The.
+[1898.52s -> 1899.52s]  The.
+[1899.52s -> 1900.52s]  The.
+[1900.52s -> 1901.52s]  The.
+[1901.52s -> 1902.52s]  The.
+[1902.52s -> 1903.52s]  The.
+[1903.52s -> 1904.52s]  The.
+[1904.52s -> 1905.52s]  Chain of thought.
+[1905.52s -> 1906.52s]  And then.
+[1906.52s -> 1907.52s]  Then.
+[1907.52s -> 1908.52s]  Using it.
+[1908.52s -> 1909.52s]  To.
+[1909.52s -> 1910.52s]  Answer the final question.
+[1910.52s -> 1911.52s]  And it is something interesting here.
+[1911.52s -> 1912.52s]  Like, why.
+[1912.52s -> 1913.52s]  Shopping.
+[1913.52s -> 1914.52s]  For.
+[1914.52s -> 1915.52s]  Music.
+[1915.52s -> 1916.52s]  Online.
+[1916.52s -> 1917.52s]  Zoe.
+[1917.52s -> 1918.52s]  Both.
+[1918.52s -> 1919.52s]  Free.
+[1919.52s -> 1920.52s]  Country.
+[1920.52s -> 1921.52s]  Album.
+[1921.52s -> 1922.52s]  And.
+[1922.52s -> 1923.52s]  Pop.
+[1923.52s -> 1924.52s]  Album.
+[1924.52s -> 1925.52s]  Each.
+[1925.52s -> 1926.52s]  Album.
+[1926.52s -> 1927.52s]  Came.
+[1927.52s -> 1936.72s]  him with a link lyric sheet and has three songs how many songs does joy buy total so you can see
+[1936.72s -> 1948.16s]  let's move it first uh so both three right and if three is three um so he bought nine songs
+[1948.16s -> 1961.12s]  and then similarly five i'm nine is 15 but 24 with total in 24 and so and so forth you can see
+[1961.12s -> 1972.16s]  that how how it is uh this how this works and here uh and then that but this part here
+[1974.72s -> 1976.64s]  the system generated for us
+[1978.16s -> 1984.72s]  we don't need to generate it right so that is something that it automatic chain of thought
+[1984.72s -> 1994.16s]  it emphasized so and this is like the picture taken from this paper that was referring to
+[1995.04s -> 2005.04s]  by the b by the paper b that i mentioned before so and it is shown that this thing is
+[2006.80s -> 2007.60s]  more effective
+[2008.16s -> 2015.76s]  than chain of thought and as you can see that it also much less uh work for the user right
+[2016.80s -> 2028.56s]  so that is something and um to to to explore it uh to show how to do this we uh we need to
+[2028.56s -> 2037.20s]  basically write a program to do that we cannot run it on the uh on the on the interface with it so
+[2038.40s -> 2045.68s]  in the next so in the so i will provide you with some information so that you can
+[2046.24s -> 2053.28s]  write the program and and then try it out and that something so oh
+[2054.80s -> 2055.30s]  yeah
+[2061.44s -> 2067.68s]  the next the next one it's supposed to be uh the next uh from
+[2068.16s -> 2076.24s]  prompting uh approach is what they call set of consistency chain of thought so the idea is that
+[2077.52s -> 2088.08s]  we in the in the chain of thought we kind of like uh give it a prompt and then we get we get the
+[2088.08s -> 2096.80s]  answer right but by default the last language model only provides one um
+[2098.40s -> 2106.96s]  one answer but we can set it so that it can give us many answers right so here for example
+[2108.08s -> 2115.76s]  and by by setting the temperature uh like lower than one so you can have the answer is this answer
+[2115.76s -> 2124.56s]  is that and then you can say okay i will select among these and this is the two majority for
+[2124.56s -> 2127.60s]  example and i get i answer with this one
+[2128.16s -> 2134.00s]  so this is also taken from this paper um so the the basic idea is like
+[2143.44s -> 2151.04s]  the idea is to basically generate a diverse reasoning chain by sampling from the language
+[2151.04s -> 2161.36s]  model decoder so here we can i have many answers right and then i have that so this is um with that
+[2161.36s -> 2169.84s]  i think i will finish the the video for today but i wanted to mention that
+[2172.08s -> 2178.64s]  i want you to practice the following i will provide that would you please listen to the talk
+[2179.20s -> 2179.84s]  given by
+[2181.92s -> 2190.32s]  german api api with partner if you are familiar with opening i will do the same for so for this one
+[2192.80s -> 2205.84s]  you can see that i there are way to
+[2211.04s -> 2219.20s]  so please
+[2224.56s -> 2234.80s]  okay so please listen to this one and then learn how to write program to
+[2237.60s -> 2240.88s]  take advantage of the germanite api
+[2241.04s -> 2252.26s]  okay so with this I will finish for today and I will provide you the video
+[2252.26s -> 2262.58s]  of the code and out on auto chain of thought and self consistent channel
+[2262.58s -> 2268.22s]  social so we can take the program I can give you the slick skeleton of the
+[2268.22s -> 2274.06s]  program and so you can play with that also I need to do a different recording
+[2274.06s -> 2279.04s]  to have that okay thank you

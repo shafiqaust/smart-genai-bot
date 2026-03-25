@@ -1,0 +1,145 @@
+[0.00s -> 11.00s]  Hi, everyone, and welcome to the first lesson of the Generative AI for Beginners course.
+[11.00s -> 19.00s]  This course is based on an open source curriculum with the same name available on GitHub that you can find at the link on the screen.
+[19.00s -> 25.00s]  I'm Carlotta Castelluccio. I'm a cloud advocate at Microsoft focused on artificial intelligence technologies.
+[25.00s -> 32.00s]  And in this video, I'm going to introduce you to generative AI and large language models.
+[32.00s -> 40.00s]  Large language models represent the pinnacle of AI technology, pushing the boundaries of what was once thought impossible.
+[40.00s -> 49.00s]  They've conquered numerous challenges that older language models struggled with, achieving human level performance in various tasks.
+[49.00s -> 52.00s]  They have similar capabilities and applications.
+[52.00s -> 54.00s]  But for the sake of this course,
+[54.00s -> 64.00s]  We'll explore how large language models are revolutionizing education through a fictional startup that we'll be referring to as our startup.
+[64.00s -> 74.00s]  Our startup works in the education domain with the ambitious mission of improving accessibility in learning on a global scale.
+[74.00s -> 83.00s]  Ensuring equitable access to education and providing personalized learning experiences to every learner according to their needs.
+[83.00s -> 92.28s]  In this course, we'll delve into how our startup harnesses the power of generative AI to unlock new possibilities in education.
+[93.34s -> 102.38s]  We'll also examine how they address the inevitable challenges tied to the social impact of this technology and its technological limitations.
+[103.10s -> 107.58s]  But let's start by defining some basic concepts we'll be using throughout the course.
+[107.58s -> 121.70s]  Despite the relatively recent hype surrounding generative AI, we can say that in the last couple of years, we have really heard of generative AI everywhere and every time.
+[122.60s -> 129.92s]  But this technology has been decades in the making, with its origins tracing back to the 1950s, 1960s.
+[130.10s -> 137.50s]  The earliest AI prototypes consisted of typewritten chatbots relying on knowledge bases maintained.
+[137.58s -> 149.72s]  These chatbots generated responses based on keywords found in user input, but it soon became clear that this approach had scalability limitations.
+[150.96s -> 158.60s]  A significant turning point arrived in the 1990s when a statistical approach was applied to text analysis.
+[159.26s -> 167.56s]  And this gave birth to machine learning algorithms which could learn patterns from data without explicit programming.
+[168.22s -> 174.78s]  And these algorithms allowed machines to simulate human language understanding, having the way for the AI we know today.
+[176.38s -> 186.14s]  In more recent times, advancements in hardware technology allowed for the development of advanced machine learning algorithms, particularly neural networks.
+[186.94s -> 195.02s]  These innovations significantly improved natural language processing, enabling machines to understand the context of words in sentences.
+[196.06s -> 196.86s]  These breakthrough technologies were also used in the development of artificial intelligence.
+[196.86s -> 197.34s]  These algorithms were also used in the development of artificial intelligence.
+[197.34s -> 197.58s]  These algorithms were also used in the development of artificial intelligence.
+[197.58s -> 198.08s]  They powered the birth of virtual assistants in the early 21st century.
+[198.08s -> 198.58s]  They powered the birth of virtual assistants in the early 21st century.
+[199.74s -> 210.04s]  These virtual assistants excelled at interpreting human language, identifying needs, and taking actions to fulfill them,
+[210.62s -> 213.86s]  such as answering queries with predefined scripts
+[213.86s -> 215.88s]  or connecting to third-party services
+[217.50s -> 222.46s]  And so we arrived at generative AI, a subset of deep learning.
+[222.46s -> 223.16s]  And so we arrived at generative AI, a subset of deep learning.
+[223.28s -> 225.28s]  After decades of AI research,
+[225.28s -> 226.34s]  a new model architectureӛn Fukui no Seiko is grown.
+[226.34s -> 226.84s]  a new model architectureӛn Fukui no Seiko is grown.
+[226.84s -> 227.34s]  and has the most precise capabilities for visual classroom pierwszyng and visual input.
+[227.34s -> 235.10s]  known as the transformer emerged, and transformers could handle longer text sequences as input
+[235.10s -> 241.38s]  and were based on the attention mechanism, enabling them to focus on the most relevant
+[241.38s -> 249.02s]  information regardless of its order in the input text. Today, mass generative AI models,
+[249.22s -> 255.40s]  often referred to as large language models, are built upon the transformer architecture,
+[255.40s -> 264.64s]  and that's what the T in GBT actually means. These models trained on vast amounts of data
+[264.64s -> 271.52s]  from sources like books, articles, and websites, possess a unique adaptability. They can tackle
+[271.52s -> 277.64s]  a wide range of tasks and generate chromatically correct text with a hint of creativity. But let's
+[277.64s -> 284.70s]  dive deeper into the mechanism of large language models and shed light on the inner workings of
+[284.70s -> 285.38s]  models like AI.
+[285.40s -> 296.42s]  One of the key concepts to grasp is tokenization. Large language models receive text as input
+[296.42s -> 303.30s]  and produce text as output, if we want to really simplify the mechanism. However, these models
+[303.30s -> 310.34s]  work much more efficiently with numbers rather than with raw text sequences. And that's where
+[310.34s -> 315.38s]  the tokenizer comes into play. Text prompts are chunked into a large number of types of
+[315.38s -> 324.32s]  tokens, helping the model in predicting the next token for completion. Models also have a maximum
+[324.32s -> 333.28s]  length of token window, and model pricing is also typically computed by the number of tokens used in
+[333.28s -> 341.92s]  output and input. So tokenization is really an important concept in large language models and
+[341.92s -> 342.98s]  generative AI domain.
+[345.38s -> 349.28s]  The basic function of token are thick sequences of brackets, which are used in a much more
+[349.28s -> 352.14s]  Phillipe technician sophisticated development model, and they employ counter black haurts.
+[352.14s -> 356.34s]  A token is essentially a chunk of text, which can vary in length, and typically consists
+[356.34s -> 361.66s]  of a sequence of characters. the tokenizer's primary job is to really break down the input
+[361.66s -> 367.36s]  of the text to an array of those tokens. These token are further mapped to the token indexes.
+[367.36s -> 367.42s]  You can cake these up such that it's more like a�
+[367.42s -> 371.78s]  This token index are essentially integers and coding of the original text chunks, making it
+[371.78s -> 372.62s]  it easier for the model to process the information you want to use.
+[372.62s -> 374.54s]  If the output can represent an item or an individual tag with this content, this information could
+[374.54s -> 374.68s]  create a more perfect message. token values are clickable automatization Solomon McLeod What do you think?
+[374.68s -> 375.02s]  You think you can create an item or object that characters with, or create a community unique combination from the
+[375.02s -> 376.90s]  to process and understand.
+[380.24s -> 384.32s]  Now let's move to predicting the output tokens.
+[385.56s -> 389.00s]  Given an input sequence of n tokens
+[389.00s -> 392.62s]  with the maximum n varying from one model to another
+[392.62s -> 397.22s]  according to the maximum content window length
+[397.22s -> 399.40s]  or for one model,
+[399.40s -> 403.06s]  the model is designed to predict a single token
+[403.06s -> 404.60s]  as its output.
+[405.70s -> 408.44s]  But here's where it gets interesting.
+[408.44s -> 411.40s]  The predicted token is then incorporated
+[411.40s -> 414.42s]  into the input of the next iteration,
+[414.42s -> 417.46s]  creating an expanding window pattern.
+[417.46s -> 419.80s]  And this pattern allows the model to provide
+[419.80s -> 423.60s]  more coherent and contextually relevant responses,
+[423.60s -> 427.56s]  often extending to one or multiple sentences.
+[429.46s -> 433.64s]  Now let's delve into the selection process.
+[433.64s -> 435.00s]  The model chooses
+[435.00s -> 437.62s]  the output token based on its probability
+[437.62s -> 440.68s]  of occurring after the current text sequence.
+[440.68s -> 443.30s]  This probability distribution is calculated
+[443.30s -> 446.16s]  using the model's training data.
+[446.16s -> 448.50s]  However, here's the twist.
+[448.50s -> 450.70s]  The model doesn't always choose the token
+[450.70s -> 453.88s]  with the highest probability from the distribution.
+[453.88s -> 456.46s]  To simulate the process of creative thinking,
+[456.46s -> 458.60s]  a degree of randomness is introduced
+[458.60s -> 461.24s]  into the selection process.
+[461.24s -> 463.12s]  This means that the model doesn't produce
+[463.12s -> 464.96s]  the exact same output,
+[465.00s -> 467.74s]  or the same input every time.
+[467.74s -> 470.50s]  That's the element that allows generative AI
+[470.50s -> 474.60s]  to generate text that feels creative and engaging.
+[474.60s -> 476.42s]  Now we see that the main capability
+[476.42s -> 480.16s]  of a large language model is generating a text from scratch,
+[480.16s -> 484.84s]  starting from a textual input written in natural language.
+[484.84s -> 488.64s]  But what kind of textual input and output?
+[488.64s -> 490.80s]  First of all, let me say that the input
+[490.80s -> 494.96s]  of a large language model is known as prompt, while the output,
+[494.96s -> 498.72s]  is known as completion, a term that
+[498.72s -> 502.42s]  refers to the model mechanism of generating the next token
+[502.42s -> 504.92s]  to complete the current input.
+[504.92s -> 507.88s]  Let's do some examples of prompts and completion
+[507.88s -> 511.92s]  by using the OpenAI ChatGPT playground, always
+[511.92s -> 514.20s]  in our educational scenario.
+[514.20s -> 516.44s]  Now, a prompt may include an instruction
+[516.44s -> 519.84s]  specifying the type of output we expect from the model.
+[519.84s -> 521.88s]  In the example we are seeing, we are
+[521.88s -> 524.96s]  asking to write an assignment for a high school
+[524.96s -> 529.34s]  student, including four open-ended questions
+[529.34s -> 533.30s]  about Louis XIV and his court.
+[533.30s -> 536.58s]  And you can see that the output is exactly what I'm asking for.
+[536.58s -> 539.30s]  So the model was able to generate an assignment
+[539.30s -> 541.84s]  with the questions.
+[541.84s -> 546.42s]  Now, another kind of prompt might be a question,
+[546.42s -> 549.54s]  asked in the form of a conversation with an agent.
+[549.54s -> 554.54s]  In this example, we are asking about Louis XIV in a question.
+[554.96s -> 557.54s]  So we asked, who is Louis XIV, and why
+[557.54s -> 560.30s]  he is an important historical character?
+[560.30s -> 562.72s]  And we've got an answer.
+[562.72s -> 566.62s]  Another type of prompt might be a chunk of text to complete,
+[566.62s -> 569.46s]  so an incipit of a text to complete.
+[569.46s -> 575.30s]  And you can see now that we used an incipit of a text
+[575.30s -> 579.58s]  to complete as prompt, and we've got a whole paragraph
+[579.58s -> 584.80s]  to complete the current input.
+[584.96s -> 589.62s]  So this is basically an implicit ask for writing assistance.
+[589.62s -> 593.30s]  Now, the examples I just did are quite simple,
+[593.30s -> 596.12s]  and don't want to be an exhaustive demonstration
+[596.12s -> 598.84s]  of large language models' capabilities.
+[598.84s -> 602.08s]  They just want to show you the potential of using generative
+[602.08s -> 604.72s]  AI, in particular, but not limited
+[604.72s -> 607.80s]  in a context such as the educational context we
+[607.80s -> 610.42s]  have used today as an example.
+[610.42s -> 611.92s]  That's all for now.
+[611.92s -> 613.54s]  In the following lesson, we are going
+[613.54s -> 617.00s]  to explore different types of generative AI models,
+[617.00s -> 621.70s]  and we're going to cover also how to test, to iterate,
+[621.70s -> 624.70s]  and to improve the performance, and compare also
+[624.70s -> 627.46s]  different models to find the most suitable one
+[627.46s -> 629.38s]  for a specific use case.
+[629.38s -> 631.30s]  Thank you.

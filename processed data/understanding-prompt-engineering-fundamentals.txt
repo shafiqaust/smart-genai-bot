@@ -1,0 +1,516 @@
+[0.00s -> 5.16s]  .
+[5.16s -> 9.08s]  Hi, welcome to lesson 4 of Generative AI for Beginners.
+[9.08s -> 10.48s]  My name is Nithya Narasimhan.
+[10.48s -> 12.94s]  I'm a Senior Cloud Advocate on the AI Advocacy team,
+[12.94s -> 14.58s]  and I'm excited to talk to you about
+[14.58s -> 17.08s]  Prompt Engineering Fundamentals.
+[17.08s -> 20.68s]  Today, we're going to first start off with a quick recap.
+[20.68s -> 22.10s]  If you've been following the series,
+[22.10s -> 23.88s]  you know most of the terms.
+[23.88s -> 25.68s]  We'll just look at them really briefly.
+[25.68s -> 28.36s]  Then we'll talk about the three providers that you can use.
+[28.36s -> 31.02s]  If you want to get started trying this out on your own.
+[31.02s -> 33.68s]  But most of this is going to focus on prompt engineering.
+[33.68s -> 34.92s]  You're going to learn what it is,
+[34.92s -> 36.32s]  you're going to learn why it matters,
+[36.32s -> 38.10s]  you're going to learn how to do prompt engineering,
+[38.10s -> 40.82s]  and then we leave you with a sense of intuition for how you
+[40.82s -> 44.36s]  can build your own mindset for prompt engineering in practice.
+[44.36s -> 47.40s]  Let's get started. A quick recap.
+[47.40s -> 49.34s]  If you've been following this course,
+[49.34s -> 51.62s]  these terms are probably familiar to you.
+[51.62s -> 53.72s]  What is a prompt? We're talking
+[53.72s -> 55.70s]  generative AI, large language models.
+[55.70s -> 58.00s]  A prompt is just the natural language input,
+[58.00s -> 60.44s]  the text input that the user provides.
+[60.44s -> 63.46s]  You can almost think of it as the way it programs
+[63.46s -> 65.24s]  the model to do what it wants,
+[65.24s -> 68.02s]  or the user programs the model to do what they want.
+[68.02s -> 71.62s]  The response is then what the model does to
+[71.62s -> 74.40s]  support the user request by generating content.
+[74.40s -> 78.44s]  Fabrication, you might have also heard of it by the term hallucination,
+[78.44s -> 80.76s]  is when sometimes the model
+[80.76s -> 83.12s]  generates a response that may not be rooted in fact.
+[83.12s -> 85.80s]  We'll talk about that. A base LLM,
+[85.80s -> 87.04s]  or large language model,
+[87.04s -> 87.98s]  is really this foundation
+[87.98s -> 90.30s]  or model that's trained on massive amounts of data.
+[90.30s -> 93.40s]  Think of it as a general purpose model that knows everything.
+[93.40s -> 95.86s]  But sometimes you want specialized models,
+[95.86s -> 98.10s]  things that know how to do a task very well.
+[98.10s -> 101.86s]  That's what you look at for instruction tuned LLMs,
+[101.86s -> 103.56s]  things that are good at summarization,
+[103.56s -> 106.18s]  or translation, or code generation.
+[106.18s -> 108.36s]  What is prompt engineering?
+[108.36s -> 112.54s]  Prompt engineering is really this process where you iterate on the prompt,
+[112.54s -> 114.82s]  that the text input that you give to the model,
+[114.82s -> 117.86s]  study the response, and keep going till the response
+[117.86s -> 119.98s]  looks like what you want it to be.
+[119.98s -> 123.40s]  To understand that, you need to understand how it works.
+[123.40s -> 125.94s]  Let's take a look at how the model works.
+[125.94s -> 130.36s]  Chat completion is this very basic thing where you go to the model,
+[130.36s -> 132.46s]  that's you in the pink prompt,
+[132.46s -> 134.22s]  you give it your text input,
+[134.22s -> 137.18s]  and it gives you a content. Done.
+[137.18s -> 140.40s]  But wait, what's prompt engineering?
+[140.40s -> 145.10s]  It turns out that there are a lot of little things you can tweak that will
+[145.10s -> 147.66s]  help the model tune the response that it
+[147.66s -> 149.88s]  provides you. For instance,
+[149.88s -> 152.70s]  you could have prompt templates that the user's input is put
+[152.70s -> 154.76s]  into that provide additional context.
+[154.76s -> 157.14s]  You can look at the conversation history.
+[157.14s -> 160.92s]  You can do things like retrieval augmented generation and grounded in data.
+[160.92s -> 162.48s]  There are system contexts,
+[162.48s -> 164.22s]  there are model parameters.
+[164.22s -> 168.36s]  With prompt engineering, we're really looking at how do we adjust
+[168.36s -> 173.32s]  all these variables so that you get the best response you can for the prompt.
+[173.32s -> 176.82s]  But before we get started and dive into the details,
+[176.82s -> 177.66s]  let's talk about
+[177.66s -> 180.04s]  your choices. Now, if you've been following the course,
+[180.04s -> 182.64s]  there's a getting started folder that will tell you how to
+[182.64s -> 185.00s]  set yourself up with one of these providers.
+[185.00s -> 188.16s]  You can go with OpenAI or Hugging Face,
+[188.16s -> 191.04s]  or you can set up on Azure AI and use
+[191.04s -> 195.90s]  both models in there with Azure OpenAI or Azure AI Studio.
+[195.90s -> 198.06s]  Today, for the most part,
+[198.06s -> 201.56s]  we're going to use OpenAI because that's something that's really accessible to you.
+[201.56s -> 205.04s]  But you can check out the repo for notebooks to use the others.
+[205.04s -> 207.24s]  Once you've picked your model,
+[207.66s -> 210.86s]  again, you have two choices for trying out exercises on your own.
+[210.86s -> 214.54s]  You can go with the no code option where you don't need to know any code at all.
+[214.54s -> 216.52s]  You just go to the sandbox that they provide,
+[216.52s -> 220.62s]  or you can use the notebooks that we've given you that are set up with
+[220.62s -> 221.90s]  your credentials and then you can do
+[221.90s -> 225.28s]  interactively programming exercises to learn prompt engineering.
+[225.28s -> 228.16s]  Today, we're going to pick the no code option.
+[228.16s -> 231.84s]  So now let's dive in. Are you ready?
+[231.84s -> 234.82s]  The first thing we need to understand is why prompt engineering?
+[234.82s -> 237.64s]  What's the motivation? Number one, motivation,
+[237.66s -> 239.34s]  is models are stochastic.
+[239.34s -> 241.26s]  What that means is if you ask the model,
+[241.26s -> 243.28s]  if you go to it and give it a text input,
+[243.28s -> 246.38s]  there's no guarantee it's going to give you the same response every time.
+[246.38s -> 248.72s]  There's no guarantee that the response is going to be correct.
+[248.72s -> 251.76s]  There's no guarantee that the response is what you thought it would be.
+[251.76s -> 254.10s]  Let's take a look at what that means.
+[254.10s -> 258.32s]  What we're going to do is we're going to try out some of these exercises.
+[258.32s -> 261.74s]  First, I have some of these providers set up.
+[261.74s -> 263.28s]  So here is Hugging Face.
+[263.28s -> 264.96s]  We're actually going to use Hugging Chat,
+[264.96s -> 267.42s]  which is their open-source chat implementation.
+[267.66s -> 268.98s]  Which has a model built-in,
+[268.98s -> 271.18s]  and right now we're using Microsoft Fire 3.
+[271.18s -> 276.08s]  I also have it set up with OpenAI, their Playground.
+[276.08s -> 279.04s]  On the other hand, I have Azure OpenAI as well.
+[279.04s -> 282.94s]  So we're going to start by giving all of them the exact same prompt.
+[282.94s -> 284.54s]  Let's see what happens.
+[284.54s -> 286.52s]  So I'm going to go in here and ask,
+[286.52s -> 288.06s]  let's start with Hugging Face and say,
+[288.06s -> 291.42s]  hey, tell me about the element gallium.
+[291.42s -> 294.46s]  You'll see that it's giving you a proper response,
+[294.46s -> 295.84s]  tells you it's a chemical element.
+[295.84s -> 297.34s]  But look at what it's giving you.
+[297.34s -> 299.96s]  It's like a multi-paragraph response, right?
+[299.96s -> 302.04s]  So you go to this provider,
+[302.04s -> 304.50s]  this model, you get this response.
+[304.50s -> 307.34s]  What happens if I tried an OpenAI?
+[307.34s -> 309.90s]  Here I'm using GPT-35 Turbo,
+[309.90s -> 311.80s]  and you'll see that it's given me a response,
+[311.80s -> 315.60s]  and it's shorter, and it seems different, and it keeps going.
+[315.60s -> 319.26s]  Wow, okay. But they were not identical, correct?
+[319.26s -> 321.90s]  Let's try this with Azure OpenAI,
+[321.90s -> 324.08s]  and by now you know where we're going.
+[324.08s -> 326.66s]  So I'm going to say, tell me about the element gallium.
+[326.66s -> 329.32s]  The element gallium.
+[329.32s -> 333.90s]  Remember that Azure OpenAI is using OpenAI under the covers.
+[333.90s -> 336.54s]  You'd assume that it would look similar to the other one,
+[336.54s -> 338.04s]  but it's not exactly,
+[338.04s -> 339.88s]  and this is what we mean by stochastic,
+[339.88s -> 343.28s]  that the same request going to different providers,
+[343.28s -> 345.90s]  different models is going to generate different responses.
+[345.90s -> 347.90s]  But wait, you might tell yourself,
+[347.90s -> 349.52s]  okay, providers are different,
+[349.52s -> 353.52s]  but if I stick to the one provider and just do everything with them,
+[353.52s -> 356.66s]  that's not an issue, right? Okay. Let's try.
+[356.66s -> 358.42s]  Let's try it out and see.
+[358.42s -> 361.84s]  So I'm going to say, tell me about the element gallium,
+[361.84s -> 366.28s]  and first, let's look at the response with GPT-35 Turbo,
+[366.28s -> 371.16s]  and you can see that it's giving me a response which has three to four paragraphs.
+[371.16s -> 373.72s]  Now, I'm going to cancel this response,
+[373.72s -> 376.66s]  switch this to use GPT-4 Turbo,
+[376.66s -> 378.54s]  same provider, right?
+[378.54s -> 380.68s]  Should look similar.
+[380.68s -> 382.62s]  Not exactly, right?
+[382.62s -> 384.72s]  You can see that the text is different.
+[384.72s -> 386.36s]  It's doing something different.
+[386.36s -> 389.26s]  You can see that it's actually giving you stuff in Markdown.
+[389.26s -> 390.86s]  I didn't say what I should do,
+[390.86s -> 392.36s]  but you can see the response is different.
+[392.36s -> 393.60s]  Same provider.
+[393.60s -> 396.12s]  But wait, it gets better.
+[396.12s -> 397.60s]  Let's try something different.
+[397.60s -> 399.80s]  We're going to go back to GPT-35 Turbo,
+[399.80s -> 401.46s]  but now I'm going to basically say,
+[401.46s -> 402.80s]  tell me about the element gallium,
+[402.80s -> 407.36s]  and let's just keep it short so you can see the difference in one sentence, right?
+[407.36s -> 408.60s]  Now, the reason I want to do this,
+[408.60s -> 411.46s]  I want to show you something really interesting.
+[411.46s -> 413.26s]  This sounds nice.
+[413.26s -> 415.96s]  I've already engineered my prompt to give it a shorter response.
+[415.96s -> 417.96s]  I'm going to submit this again.
+[417.96s -> 419.46s]  You're thinking it should give me the same response,
+[419.46s -> 421.46s]  same model, same request.
+[421.46s -> 423.96s]  I haven't changed anything, but look, it's different.
+[423.96s -> 425.96s]  This is stochastic.
+[425.96s -> 429.96s]  This means that if I were to try to use the responses from this model for my actual application,
+[429.96s -> 433.46s]  I have no guarantee I'm going to get the same thing multiple times.
+[433.46s -> 435.46s]  But I want to see something fun.
+[435.46s -> 436.96s]  It gets worse.
+[436.96s -> 438.46s]  See this thing called temperature?
+[438.46s -> 443.96s]  If I change this and say, hey, get more creative the bigger I make it,
+[443.96s -> 445.96s]  now, when I tell a link,
+[445.96s -> 447.96s]  if I load the same thing,
+[447.96s -> 449.96s]  it gives me something completely different.
+[449.96s -> 451.96s]  It tells me everyday electronics to medical imaging.
+[451.96s -> 452.96s]  I don't even know if it's true,
+[452.96s -> 454.96s]  but it tells me something different.
+[454.96s -> 457.96s]  So you can see that by changing the parameters,
+[457.96s -> 458.96s]  changing the model,
+[458.96s -> 460.46s]  changing the text,
+[460.46s -> 462.46s]  we can actually get different responses.
+[462.46s -> 464.96s]  And that is challenge number one.
+[464.96s -> 465.96s]  All right.
+[465.96s -> 467.96s]  Let's look at what else we can do.
+[467.96s -> 468.96s]  We've tried all these.
+[468.96s -> 469.96s]  Oh, yes, system persona.
+[469.96s -> 470.96s]  I forgot that one.
+[470.96s -> 471.96s]  That's a fun one.
+[471.96s -> 472.96s]  So here by default,
+[472.96s -> 474.96s]  the system persona says you're a helpful assistant.
+[475.96s -> 476.96s]  Okay.
+[476.96s -> 478.96s]  Tell me about Gallium.
+[478.96s -> 480.96s]  And we've already seen this.
+[480.96s -> 481.96s]  But now we'll make it fun.
+[481.96s -> 483.96s]  We'll tell the system,
+[483.96s -> 489.96s]  your persona is you are a cheerful or you're a creative assistant
+[489.96s -> 496.96s]  that only speaks in limerick.
+[496.96s -> 497.96s]  All right.
+[497.96s -> 500.96s]  Let's see what happens.
+[500.96s -> 502.96s]  It gives you limericks.
+[502.96s -> 505.96s]  So now you see how you can change the quality of the response.
+[505.96s -> 508.96s]  By trying to tune all these parameters.
+[508.96s -> 513.96s]  That's your first kind of like step into understanding the power of prompt engineering.
+[513.96s -> 516.96s]  But it also exposed to you the challenge of stochastic responses.
+[516.96s -> 517.96s]  There's no determinism.
+[517.96s -> 519.96s]  You don't know what's happening.
+[519.96s -> 521.96s]  But there's a second challenge.
+[521.96s -> 523.96s]  Remember, we talked about fabrication.
+[523.96s -> 526.96s]  Models can fabricate responses.
+[526.96s -> 527.96s]  And because of how they work,
+[527.96s -> 531.96s]  you may not even know that what they're saying is not grounded in truth.
+[531.96s -> 533.96s]  Because remember, a model doesn't really understand,
+[533.96s -> 535.96s]  doesn't know the meaning of what you're asking.
+[535.96s -> 537.96s]  It's just predicting tokens.
+[537.96s -> 540.96s]  It's predicting the next word based on its global knowledge.
+[540.96s -> 543.96s]  So it looks realistic but may not be true.
+[543.96s -> 545.96s]  Let's try it out and see.
+[545.96s -> 549.96s]  So what we're going to do is we're going to look at two different models in OpenAI.
+[549.96s -> 551.96s]  We're going to look at GPT-35 Turbo.
+[551.96s -> 554.96s]  Its cutout date was September 2021.
+[554.96s -> 557.96s]  So it only knows about things prior to that date.
+[557.96s -> 560.96s]  GPT-4 Turbo has a September 2023 cutout date,
+[560.96s -> 563.96s]  but it's also one of the more newer models.
+[563.96s -> 565.96s]  So it kind of has already been given away.
+[565.96s -> 570.96s]  It's a little extra sauce to make sure it doesn't fabricate as much.
+[570.96s -> 572.96s]  So we're going to go to these models and ask them,
+[572.96s -> 575.96s]  who won the 2025 Oscar for Best Picture?
+[575.96s -> 578.96s]  And yes, 2025 has not happened yet.
+[578.96s -> 581.96s]  So let's try it out and see what happens.
+[581.96s -> 583.96s]  So we're going to go in here.
+[583.96s -> 585.96s]  And we're going to first start by saying,
+[585.96s -> 588.96s]  and let's start with GPT-35 Turbo.
+[588.96s -> 591.96s]  And I'm just going to copy this in there.
+[591.96s -> 593.96s]  Oh, and let's reset this
+[593.96s -> 595.96s]  because I want this to go back to normal.
+[595.96s -> 597.96s]  This is being just the default assistant.
+[597.96s -> 599.96s]  So now I'm saying, who won this?
+[599.96s -> 601.96s]  And it's GPT-35 Turbo.
+[601.96s -> 605.96s]  And it doesn't tell you that it doesn't know it's not fabricated.
+[605.96s -> 607.96s]  It just says, I can't tell you real time information,
+[607.96s -> 610.96s]  which itself is weird because you know 2025 is not real time.
+[610.96s -> 612.96s]  But hey, that's okay.
+[612.96s -> 615.96s]  Let's see what happens when I go to GPT-4 Turbo,
+[615.96s -> 616.96s]  which is a newer model.
+[616.96s -> 618.96s]  I give it the same thing.
+[618.96s -> 620.96s]  But what this is doing is telling you,
+[620.96s -> 622.96s]  hey, I don't have information
+[622.96s -> 624.96s]  because you're giving me a date that doesn't exist.
+[624.96s -> 627.96s]  So this is actually a little bit smarter.
+[627.96s -> 630.96s]  But now let's go back and try something interesting.
+[630.96s -> 633.96s]  Remember that GPT-35 Turbo told me that,
+[633.96s -> 635.96s]  you know, hey, I can't tell you
+[635.96s -> 637.96s]  because it's real time information.
+[637.96s -> 640.96s]  Let's try changing it just slightly, right?
+[640.96s -> 641.96s]  We're going to change.
+[641.96s -> 643.96s]  We're asking the same question,
+[643.96s -> 646.96s]  but we're going to change it slightly.
+[646.96s -> 648.96s]  And it's not saying who won it.
+[648.96s -> 651.96s]  Say, tell me the premise for the movie that won the Oscar.
+[651.96s -> 652.96s]  We're saying it won.
+[652.96s -> 653.96s]  Tell me what it was.
+[653.96s -> 656.96s]  Let's see what happens.
+[656.96s -> 657.96s]  Do you see what's happening?
+[657.96s -> 659.96s]  It made up a movie.
+[659.96s -> 661.96s]  It even told me what it did.
+[661.96s -> 663.96s]  This is fabrication.
+[663.96s -> 664.96s]  There's no way this movie exists
+[664.96s -> 666.96s]  because GPT-35 hasn't happened yet, but it did it.
+[666.96s -> 668.96s]  This is fabrication.
+[668.96s -> 672.96s]  Now, let's see what happens if we ask GPT-45 Turbo,
+[672.96s -> 674.96s]  which is the newer model, right?
+[674.96s -> 677.96s]  Or GPT-4 Turbo.
+[677.96s -> 678.96s]  This one is smarter.
+[678.96s -> 681.96s]  It's going to come and say, I can't deal with GPT-25.
+[681.96s -> 683.96s]  It hasn't happened yet, right?
+[683.96s -> 684.96s]  So this is a fair amount.
+[684.96s -> 686.96s]  And just kind of like, you know,
+[686.96s -> 689.96s]  make sure we are not doing the wrong thing.
+[689.96s -> 692.96s]  We can try to have it tell us about the 2015 Oscar,
+[692.96s -> 694.96s]  which you know did happen.
+[694.96s -> 697.96s]  And sure enough, it gives you the right response.
+[697.96s -> 698.96s]  Both of them will do.
+[698.96s -> 702.96s]  So here I can go ahead and do this with GPT-35 Turbo,
+[702.96s -> 704.96s]  and this will get it right as well.
+[704.96s -> 706.96s]  So what did we learn?
+[706.96s -> 709.96s]  We've learned that the prompt engineering model
+[709.96s -> 712.96s]  has an issue with stochastic responses
+[712.96s -> 714.96s]  and with fabrication.
+[714.96s -> 717.96s]  And prompt engineering is what we need to do
+[717.96s -> 720.96s]  to improve the quality of that response.
+[720.96s -> 724.96s]  So now let's dive into how we can do that.
+[724.96s -> 727.96s]  So over here, we're going to look at the first
+[727.96s -> 730.96s]  and kind of like the high-level principle,
+[730.96s -> 735.96s]  which is start by giving your model clear instructions.
+[735.96s -> 738.96s]  We're going to go through a bunch of demos here back to back.
+[738.96s -> 740.96s]  First, we'll start with the basic prompt.
+[740.96s -> 741.96s]  Just let it complete it.
+[741.96s -> 744.96s]  Then we'll iterate on it with conversation.
+[744.96s -> 745.96s]  Then we'll instruct it.
+[745.96s -> 746.96s]  We'll kind of make it clearer
+[746.96s -> 749.96s]  by giving it specific instructions it should do.
+[749.96s -> 752.96s]  Refine it for the specificities of the task,
+[752.96s -> 754.96s]  the format, the length.
+[754.96s -> 756.96s]  Then we'll try doing something called primary content
+[756.96s -> 758.96s]  to see if we can stop the fabrication
+[758.96s -> 760.96s]  or ground it in real data.
+[760.96s -> 761.96s]  Look at cues.
+[761.96s -> 763.96s]  And finally, look at something interesting
+[763.96s -> 767.96s]  called few-shot prompting or providing examples.
+[767.96s -> 769.96s]  Let's get started.
+[769.96s -> 771.96s]  So here, I'm going to go ahead
+[771.96s -> 773.96s]  and go back to the Azure OpenAI.
+[773.96s -> 775.96s]  I'm sorry, the OpenAI model.
+[775.96s -> 777.96s]  We'll stick with GPT-35 Kerbal.
+[777.96s -> 781.96s]  Everything reset back to like the default assistant message.
+[781.96s -> 783.96s]  We'll start with our basic prompt.
+[783.96s -> 784.96s]  So I'm just going to go in,
+[784.96s -> 787.96s]  and I want to just show you what prompt completion looks like.
+[787.96s -> 789.96s]  So what I'm going to say is I'm literally,
+[789.96s -> 793.96s]  and this is how you know that it really doesn't understand context.
+[793.96s -> 796.96s]  I'm just giving it, oh, say, can you see?
+[796.96s -> 797.96s]  Let's see what it does.
+[797.96s -> 799.96s]  It comes back to you with by the dawn's early light.
+[799.96s -> 801.96s]  It's literally just completing it.
+[801.96s -> 804.96s]  So this is a basic prompt that does completion, right?
+[804.96s -> 805.96s]  No context.
+[805.96s -> 806.96s]  I didn't give it a task.
+[806.96s -> 808.96s]  It just predicted the next things.
+[808.96s -> 810.96s]  And lo and behold, anything starts with that
+[810.96s -> 812.96s]  is likely to be the national anthem.
+[812.96s -> 814.96s]  Now let's try a complex prompt.
+[814.96s -> 817.96s]  So what I'm going to do is I'm going to change this now
+[817.96s -> 822.96s]  and say, okay, let's go back to our gallium.
+[822.96s -> 825.96s]  And I'm going to say, hey, what is gallium?
+[825.96s -> 827.96s]  And it comes back to me and tells me, hey,
+[827.96s -> 830.96s]  this is this element in the periodic table.
+[830.96s -> 833.96s]  But now I can get into a conversation, right?
+[833.96s -> 837.96s]  So I can actually say, and this is where it gets interesting,
+[837.96s -> 840.96s]  I can say what follows it.
+[840.96s -> 841.96s]  I didn't give the name.
+[841.96s -> 843.96s]  I just said what follows it.
+[843.96s -> 846.96s]  And it automatically connects the context to what I asked before.
+[846.96s -> 850.96s]  So this is one of the first techniques in prompt engineering that we can
+[850.96s -> 854.96s]  refine the response by getting into a conversation where we interactively
+[854.96s -> 858.96s]  trying to get it to improve on the response from before.
+[858.96s -> 859.96s]  But wait.
+[859.96s -> 862.96s]  Now we want to talk about using instruction.
+[862.96s -> 865.96s]  We were just looking at basic prompts and how you can do complex
+[865.96s -> 867.96s]  multi-turn conversations.
+[867.96s -> 869.96s]  Now let's get serious.
+[869.96s -> 874.96s]  So let's assume that I'm a middle school teacher and I have to do a lesson
+[874.96s -> 876.96s]  plan for my kids on the Civil War.
+[876.96s -> 881.96s]  So I go over here and I say, hey, I need to kind of have something I can
+[881.96s -> 884.96s]  put on a slide that helps them understand the Civil War.
+[884.96s -> 888.96s]  So I go over there and I say, hey, write me a short essay on the Civil War.
+[888.96s -> 894.96s]  And you can see it's writing me this really long essay.
+[894.96s -> 895.96s]  And this is great.
+[895.96s -> 897.96s]  I don't know how much of it is true.
+[897.96s -> 898.96s]  That's a lot.
+[898.96s -> 899.96s]  I don't know.
+[899.96s -> 901.96s]  I mean, like, I couldn't read this in class.
+[901.96s -> 905.96s]  So I'm like, you know, I actually need to get more specific.
+[905.96s -> 909.96s]  So first thing for prompt engineering when you want a better response is you
+[909.96s -> 911.96s]  try to make it more specific.
+[911.96s -> 914.96s]  So what we're going to go in here and we're going to basically let me get
+[914.96s -> 916.96s]  rid of this one.
+[916.96s -> 917.96s]  Okay.
+[917.96s -> 922.96s]  And I'm also going to change the min-maximum length to something smaller
+[922.96s -> 924.96s]  so we're not being overwhelmed.
+[924.96s -> 928.96s]  And what we're going to do is we say write a short essay on the Civil War.
+[928.96s -> 930.96s]  But I'm going to give you more instructions.
+[930.96s -> 932.96s]  Provide key dates for the events.
+[932.96s -> 934.96s]  Tell me the significance.
+[934.96s -> 937.96s]  Identify key figures and their contributions.
+[937.96s -> 941.96s]  Because this is what I want to teach my students, right?
+[941.96s -> 945.96s]  And if you try this, now you can see that it is actually beginning to answer
+[945.96s -> 948.96s]  according to the things that I asked, right?
+[948.96s -> 949.96s]  So it's telling me the events.
+[949.96s -> 951.96s]  It's telling me the issues.
+[951.96s -> 956.96s]  And, by the way, if I continue this on, key figures, and that's because I set
+[956.96s -> 958.96s]  this minimum length to 192.
+[958.96s -> 962.96s]  So the first response came back with that many characters.
+[962.96s -> 965.96s]  And then I had to hit it again for it to continue on, right?
+[965.96s -> 968.96s]  But you can see it's answered my questions.
+[968.96s -> 970.96s]  But this is still a little too much, right?
+[970.96s -> 974.96s]  I want to kind of make it a little bit better because this is not my students
+[974.96s -> 976.96s]  are not going to read all this stuff.
+[976.96s -> 977.96s]  So what can I do?
+[977.96s -> 982.96s]  Let's try to improve it by now defining the length and format.
+[982.96s -> 984.96s]  So I'm going to take the same thing.
+[984.96s -> 986.96s]  And we're going to try to improve the prompt.
+[986.96s -> 988.96s]  And this is literally what prompt engineering is.
+[988.96s -> 989.96s]  You keep iterating.
+[989.96s -> 991.96s]  Now I'm saying provide a list of dates, et cetera.
+[991.96s -> 993.96s]  But now give it to me in markdown.
+[993.96s -> 994.96s]  And two paragraphs.
+[994.96s -> 995.96s]  That's all I want.
+[995.96s -> 996.96s]  Two paragraphs.
+[996.96s -> 998.96s]  And give it to me in markdown.
+[998.96s -> 1000.96s]  Notice how it's formatting it for me in markdown.
+[1000.96s -> 1002.96s]  It's giving me two sections.
+[1002.96s -> 1004.96s]  It's giving me a bulleted list with the dates.
+[1004.96s -> 1008.96s]  I can now copy this into a web page or into a slide.
+[1008.96s -> 1012.96s]  And it's clear, concise, and much better, right?
+[1012.96s -> 1016.96s]  But now let's talk about remember we said fabrication?
+[1016.96s -> 1021.96s]  How can I potentially try to reduce the amount of fabrication this could have?
+[1021.96s -> 1026.96s]  So to try this out, first I'm going to take a question from the Civil War.
+[1026.96s -> 1030.96s]  And I'm going to say, okay, let's ask this question.
+[1030.96s -> 1033.96s]  Who fired on Fort Sumter?
+[1033.96s -> 1035.96s]  And it gives me this information.
+[1035.96s -> 1038.96s]  And I don't know if this is right or wrong.
+[1038.96s -> 1045.96s]  But more importantly, let's say I asked my students to read a particular paragraph and come back to me with a relevant response.
+[1045.96s -> 1048.96s]  I can check if this is what's in there.
+[1048.96s -> 1052.96s]  Now we're going to talk about this thing called primary content.
+[1052.96s -> 1058.96s]  Where now you can actually provide an instruction where you give it the grounding context.
+[1058.96s -> 1062.96s]  So I can actually put down, and this paragraph is actually from Wikipedia.
+[1063.96s -> 1070.96s]  So I can put down the content, the primary content that is relevant to this particular question.
+[1070.96s -> 1072.96s]  And then I ask the question.
+[1072.96s -> 1075.96s]  I'm like, okay, who fired on Fort Sumter?
+[1075.96s -> 1079.96s]  And if you look into this, the answer is actually in this, right?
+[1079.96s -> 1082.96s]  So Confederate troops fired on Fort Sumter.
+[1082.96s -> 1087.96s]  And if I hit an enter, it tells me exactly what's in there.
+[1087.96s -> 1092.96s]  And the interesting thing is if I hit enter again and again, you'll notice that the response remains consistent.
+[1092.96s -> 1101.96s]  It's no longer as stochastic as it used to be because now I've literally given it the context, the primary content on which that question should be asked.
+[1101.96s -> 1103.96s]  Much better, right?
+[1103.96s -> 1105.96s]  What else can we do?
+[1105.96s -> 1115.96s]  Well, let's say, for example, this particular teacher not only wants to get the answer but wants to get the answer to be phrased in a certain way.
+[1115.96s -> 1118.96s]  This is where you can use something called cues.
+[1118.96s -> 1121.96s]  So what happens with cues is if you ask a question.
+[1121.96s -> 1126.96s]  If you ask a question or you tell it to give it an instruction, you can kind of like a cold start.
+[1126.96s -> 1129.96s]  You can nudge it in the direction you want it to go.
+[1129.96s -> 1131.96s]  So let's try this out.
+[1131.96s -> 1134.96s]  I'm going to start with a simple instruction.
+[1134.96s -> 1137.96s]  Tell me about five popular fruits.
+[1137.96s -> 1140.96s]  And it comes back to me with a whole bunch of information, right?
+[1140.96s -> 1143.96s]  And I'm like, that's not what I wanted.
+[1143.96s -> 1148.96s]  I wanted it to tell me something, and I want it to be in alphabetical order.
+[1148.96s -> 1150.96s]  So what I'm going to do is I'm going to do this and say, okay.
+[1150.96s -> 1152.96s]  Tell me about this.
+[1152.96s -> 1156.96s]  And then I'm going to hit this, and I'm going to cue it up.
+[1156.96s -> 1158.96s]  I'm going to cue up the response.
+[1158.96s -> 1160.96s]  I'm going to say, tell me about five popular fruits.
+[1160.96s -> 1164.96s]  And then say the five popular fruits in reverse alphabetical order are.
+[1164.96s -> 1169.96s]  And if I did this right, it gives me the same fruits, and they're in reverse alphabetical order.
+[1169.96s -> 1171.96s]  I kind of seeded it.
+[1171.96s -> 1174.96s]  I nudged it in the direction I wanted it to go.
+[1174.96s -> 1175.96s]  But wait.
+[1175.96s -> 1176.96s]  It gets better.
+[1176.96s -> 1178.96s]  I'm looking at this going, hmm.
+[1178.96s -> 1179.96s]  This is not what I want.
+[1179.96s -> 1182.96s]  I want those kids to remember it.
+[1182.96s -> 1191.96s]  So I want to kind of give it some examples of how I want this to how I want the response to be done, right?
+[1191.96s -> 1193.96s]  And so we can do this.
+[1193.96s -> 1197.96s]  And this is called first we're going to talk about zero-shot prompting and few-shot prompting.
+[1197.96s -> 1202.96s]  So here I'm basically going to start with zero-shot prompting where I'm saying I haven't told you anything.
+[1202.96s -> 1204.96s]  I'm just giving you an example.
+[1204.96s -> 1206.96s]  And I want to see what it does.
+[1206.96s -> 1208.96s]  And you'll see that it continues on.
+[1208.96s -> 1210.96s]  And it tries to describe this fruit.
+[1210.96s -> 1211.96s]  So it didn't learn anything.
+[1211.96s -> 1213.96s]  It's just like continuing on.
+[1213.96s -> 1216.96s]  And I get a decent response.
+[1216.96s -> 1218.96s]  But it's not what I wanted.
+[1218.96s -> 1223.96s]  What if I went in and instead said, hey, what I really want is for you to talk about fruit.
+[1223.96s -> 1226.96s]  But I want you to make it into this kind of like this.
+[1226.96s -> 1231.96s]  Hey, these are maybe elementary school kids.
+[1231.96s -> 1233.96s]  So I'm like A is for apple or fruit.
+[1233.96s -> 1234.96s]  That's sweet.
+[1234.96s -> 1237.96s]  Now let's see what happens when I hit an enter here.
+[1237.96s -> 1239.96s]  Do you see?
+[1239.96s -> 1247.96s]  It not only was able to look at the pattern and see, hey, there are two at a time, but it figured out that they were alphabetical.
+[1247.96s -> 1248.96s]  I didn't tell it.
+[1248.96s -> 1250.96s]  It figured it out that they're alphabetical.
+[1250.96s -> 1252.96s]  And this is the most interesting.
+[1252.96s -> 1254.96s]  It figured out that they rhymed.
+[1254.96s -> 1255.96s]  Sweet and treat.
+[1255.96s -> 1256.96s]  Red and spread.
+[1256.96s -> 1257.96s]  Indeed and treat.
+[1257.96s -> 1258.96s]  You see that?
+[1258.96s -> 1263.96s]  So this is where you can effectively tell it examples of what you want to see.
+[1263.96s -> 1265.96s]  And it tries to learn from them.
+[1265.96s -> 1266.96s]  Not learn from them.
+[1266.96s -> 1271.96s]  Seize the pattern, if you will, and tries to use that pattern to give you a better response.
+[1271.96s -> 1275.96s]  So all of these are techniques you can use for prompt engineering.
+[1275.96s -> 1280.96s]  And with that, let's kind of get back to our slides and wrap up what we were talking about.
+[1280.96s -> 1282.96s]  We talked about clear instructions.
+[1282.96s -> 1283.96s]  You want to try this out.
+[1283.96s -> 1285.96s]  Go try out the assignment that's in the lesson.
+[1285.96s -> 1290.96s]  And you can do that with a code first approach by putting in your credentials.
+[1290.96s -> 1294.96s]  Once you've got that, what can you do next?
+[1294.96s -> 1298.96s]  So you notice the best way for prompt engineering, you have to iterate, iterate, iterate.
+[1298.96s -> 1304.96s]  So you can do things like change the persona, change the parameters, add examples, understand limitations.
+[1304.96s -> 1310.96s]  And when you're done, when you've got it to the point where it looks good, create a template.
+[1310.96s -> 1315.96s]  So that next time you don't need to go through the exercise again, you know exactly the prompt that you need to ask.
+[1315.96s -> 1316.96s]  Put it in there.
+[1316.96s -> 1319.96s]  Share it with all the other teachers so they can use it, too.
+[1319.96s -> 1322.96s]  And this is exactly what we do when we think about prompt template libraries.
+[1322.96s -> 1328.96s]  I encourage you to go look at this site as an example of how you would build a prompt template library for your application.
+[1328.96s -> 1330.96s]  This is prompts for EDU.
+[1330.96s -> 1332.96s]  But you might be telling yourself, well, not education.
+[1332.96s -> 1336.96s]  I want to know how to write prompts for something else, for retail, for gaming.
+[1336.96s -> 1338.96s]  I don't know.
+[1338.96s -> 1341.96s]  This is where I encourage you to go look at the provider sites.
+[1341.96s -> 1343.96s]  OpenAI has a prompt examples collection.
+[1343.96s -> 1348.96s]  So you can go look at what a good prompt looks like, how to set system context parameters, et cetera.
+[1348.96s -> 1352.96s]  Hugging chat will let you pick any model and then literally give it an example.
+[1352.96s -> 1354.96s]  That you can see how it works on it.
+[1354.96s -> 1357.96s]  And Azure AI has a prompt catalog.
+[1357.96s -> 1360.96s]  So you've got a good place to start from.
+[1360.96s -> 1363.96s]  And with that, we come to the end of lesson four.
+[1363.96s -> 1369.96s]  So to recap, if you are interested in what we were doing today, we learned core concepts.
+[1369.96s -> 1373.96s]  We understood the challenges of generative AI today in terms of prompt usage.
+[1373.96s -> 1377.96s]  We figured out what are the different techniques for prompt engineering.
+[1377.96s -> 1382.96s]  And we looked at ways in which you can go and build your intuition by using templates.
+[1382.96s -> 1384.96s]  And examples from other providers.
+[1384.96s -> 1388.96s]  We can't wait to see what generative AI applications you build.
+[1388.96s -> 1390.96s]  See you in the next lesson.
