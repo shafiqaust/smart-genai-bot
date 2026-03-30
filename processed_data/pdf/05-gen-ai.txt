@@ -1,0 +1,414 @@
+SOURCE: 05-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 5 - Autoencoders and Variational Autoencoders – Generating Images
+
+================================================================================
+PAGE 1 - Title Slide
+================================================================================
+Title: Generative Artificial Intelligence
+Subtitle: Week 5: Autoencoders and Variational Autoencoders – Generating Images
+
+================================================================================
+PAGE 2 - Autoencoder (Introduction)
+================================================================================
+Heading: Autoencoder
+
+Given a collection of unlabeled images:
+- Example dataset: The fashion dataset
+
+Create a Machine Learning Model that can:
+- Generate new images that are similar to the ones in the collection
+- Compress the data (save space)
+- Improve the images (enhance the image)
+- Identify (new) images that do not appear in the collection
+
+================================================================================
+PAGE 3 - Autoencoder (Architecture)
+================================================================================
+Heading: Autoencoder
+
+Architecture:
+- Learn efficient codings of unlabeled data using two functions:
+  1. Encoding function: takes input data and maps it to a code (x → h)
+  2. Decoding function: recreates the input from the code (h → x*)
+
+Key element:
+- Reconstruction loss function: the difference between the input (x) and the reconstructed output (x*)
+
+Applications:
+- Dimensionality reduction
+- Removing noise (data denoising)
+- Feature extraction
+- Robustness (anomaly detection)
+
+Diagram components:
+- Input Layer (x)
+- Encoder (compresses input)
+- Code / Bottleneck Space / Latent Space (h)
+- Decoder (reconstructs output)
+- Output Layer (x')
+
+Note: The middle compressed representation is called the Bottleneck Space or Latent Space.
+
+================================================================================
+PAGE 4 - Illustration (Fashion Dataset)
+================================================================================
+Heading: Illustration
+
+Dataset: The fashion dataset (clothing items including boots, t-shirts, tank tops, dresses, jumpsuits, bags, sneakers, sweaters, sandals, heels)
+
+Process:
+1. Encoder: takes an original image and maps it to a point in the latent space
+   - Example: a pair of pants → encoded to coordinates [6.3, -0.9]
+2. Latent Space: 2D scatter plot showing distribution of encoded items
+3. Decoder: takes the latent coordinates and reconstructs the image (Reconstruction)
+
+Example shown: Original item (pants) → Encoding → point [6.3, -0.9] in latent space → Decoding → Reconstruction (pants)
+
+================================================================================
+PAGE 5 - An Implementation
+================================================================================
+Heading: An Implementation
+
+Dataset: The fashion dataset
+
+Architecture uses Convolutional Transpose Layer:
+- stride = 2 → doubles the size of the original
+  - Example: 3x3 input → 6x6 output
+
+Training configuration:
+- Loss function: binary_crossentropy
+- Optimization: adam
+
+Latent space visualization: 2D scatter plot of encoded fashion items
+
+================================================================================
+PAGE 6 - Keras API – Layers and Operations
+================================================================================
+Heading: Keras API – Layers and Operations
+
+Layer types used in autoencoders:
+1. Input
+2. Flatten
+3. Dense
+4. Convolutional
+5. Dropout
+6. Reshape (highlighted in red as important)
+
+Data flow example:
+- Image input shape: 32 x 32 x 3 (RGB image)
+- Flatten operation: converts to 3072 x 1 vector (32 × 32 × 3 = 3072)
+- Dense Layer processing
+- Reshape operation: converts back to a x b x c tensor
+- Convolutional Layer: processes spatial data
+- Output: reconstructed image
+
+Constraint: a × b × c = 3072 (total elements must match original flattened size)
+
+Encoder-Decoder diagram:
+- Encoder: Input Layer → compression layers → Code (h)
+- Decoder: Code (h) → expansion layers → Output Layer (x')
+
+================================================================================
+PAGE 7 - Reconstructing Images & Latent Space
+================================================================================
+Heading: Reconstructing Images & Latent Space
+
+Example encoding-decoding pairs (fashion items):
+- Shoe: encoded as [-1.8, 0.4] → decoded back to shoe
+- Bag: encoded as [1.7, 5.8] → decoded back to bag
+- Pants: encoded as [6.3, -0.9] → decoded back to pants
+- Shorts/skirt: encoded as [3.7, -0.9] → decoded back
+- Sweater: encoded as [0.4, 3.0] → decoded back
+- Long pants: encoded as [4.8, 0.1] → decoded back
+- Top: encoded as [0.9, 1.5] → decoded back
+- Shirt: encoded as [0.8, 2.6] → decoded back
+- Sneaker: encoded as [-1.8, -2.0] → decoded back
+- Shoe: encoded as [-3.4, -1.1] → decoded back
+
+Latent Space Plot:
+- Color-coded scatter plot (0–9 color scale) showing distribution of all encoded items by class
+- X-axis range: -10.0 to 7.5
+- Y-axis range: -2 to 8
+- Different item types cluster in different regions
+
+================================================================================
+PAGE 8 - Generating New Images
+================================================================================
+Heading: Generating New Images
+
+Process: Sample random points from the latent space and decode them to generate new images
+
+Example generated images from sampled latent coordinates:
+Row 1: [5.6, 1.1] [−9, −0.8] [6.7, 0.4] [−9.4, 8.2] [5.7, 6.9] [−0.8, −0.2]
+Row 2: [−5.4, 5.5] [1.3, −2.4] [−6, −1.5] [1.5, 8.1] [−6.4, 0.2] [5.1, 0.9]
+Row 3: [−9.4, −1] [−9.3, 3.4] [6.9, 0.5] [−9.6, 4.8] [−0.5, 7] [−0.6, −2.3]
+
+Red curve on latent space plot indicates the boundary/region of meaningful data.
+
+================================================================================
+PAGE 9 - The Latent Space (Problem with Standard Autoencoders)
+================================================================================
+Heading: The Latent Space
+
+Problem with standard autoencoders for generation:
+- Can pick any point in latent space and get an image
+- However, it is difficult to figure out how to choose a random point in the latent space
+- Reason: the distribution of the points is not defined
+
+Key issue:
+- Areas between data clusters may produce poor or meaningless outputs
+- Decoded embeddings do not cover the space uniformly
+
+Observation from diagram:
+- Left side: scattered point cloud (unlabeled latent points)
+- Right side (color overlay): shows where actual image classes exist
+- Many empty/sparse regions in the latent space produce unusable outputs
+
+Conclusion: "It is working but we want more than that!" → motivates Variational Autoencoders (VAE)
+
+================================================================================
+PAGE 10 - Variational Autoencoder (VAE)
+================================================================================
+Heading: Variational Autoencoder
+
+Purpose:
+- Learn to compress data into a compact and organized space
+- Use that space to generate brand new, similar data
+
+Main components: two neural networks and a latent space
+
+1. Encoder:
+   - Takes input and compresses it
+   - Maps it to a probabilistic distribution (not a single point, unlike standard autoencoders)
+
+2. Latent Space:
+   - The space where the model stores the most important features of the data as mathematical variables
+   - Organized and continuous
+
+3. Decoder:
+   - Samples a point from the distribution
+   - Attempts to reconstruct the original input as accurately as possible
+
+Diagram:
+Input → Encoder (green layers) → Latent Space (red/distribution icon) → Decoder (blue layers) → Output (x')
+
+Key distinction from standard autoencoder:
+- Standard AE: encoder outputs a single point in latent space
+- VAE: encoder outputs a probability distribution over the latent space
+
+================================================================================
+PAGE 11 - The Key Difference – Encoder (Normal Distribution)
+================================================================================
+Heading: The Key Difference – Encoder
+
+Comparison:
+- Autoencoder: encodes image to a single point in the latent space
+- Variational Autoencoder: encodes image to a multivariate normal distribution over the latent space
+
+Normal Distribution (Gaussian Distribution) N(μ, σ):
+- A probability distribution characterized by a distinctive bell curve shape
+- Defined by two variables:
+  - Mean (μ): center of the distribution
+  - Variance (σ²): spread of the distribution
+  - Standard deviation (σ): square root of the variance
+- Formula: f(x | μ, σ²) = (1 / √(2πσ²)) * e^(−(x−μ)² / 2σ²)
+
+Examples of different normal distributions (from plot):
+- μ = 0, σ² = 0.2 (narrow, tall)
+- μ = 0, σ² = 1.0 (standard normal)
+- μ = 0, σ² = 5.0 (wide, flat)
+- μ = −2, σ² = 0.5 (shifted left, moderate width)
+
+VAE encodes each input as a multivariate normal distribution in the latent space (not a single point).
+
+================================================================================
+PAGE 12 - The Encoder (VAE Mechanics)
+================================================================================
+Heading: The Encoder
+
+VAE Encoder outputs:
+- z_mean: mean vector for each latent dimension
+- z_log_var: log variance vector (logarithm of the variance of each dimension)
+
+Assumption:
+- Variational autoencoders assume no correlation between dimensions in the latent space (diagonal covariance matrix)
+
+Sampling – Reparameterization Trick:
+- Formula: z = z_mean + z_sigma * epsilon
+- Where:
+  - z_sigma = exp(z_log_var * 0.5)
+  - epsilon ~ N(0, I)  [sampled from standard normal distribution]
+- Purpose: allows backpropagation through the sampling operation
+
+Latent Space property – Continuous:
+- Decoder ensures that points in the same neighborhood produce similar images when decoded
+- Enables smooth interpolation between concepts
+
+Loss Function (VAE):
+- Total Loss = Reconstruction Loss + Kullback-Leibler Divergence (KL Divergence)
+- KL Divergence: measures how much one probability distribution differs from another
+- KL Divergence formula (for VAE with standard normal prior):
+  D_KL[N(μ, σ) || N(0, 1)] = −(1/2) * Σ(1 + log(σ²) − μ² − σ²)
+
+Diagram:
+Encoder → z_mean → Sample → z → Decoder
+         → z_log_var →
+
+================================================================================
+PAGE 13 - Analysis (VAE Results)
+================================================================================
+Heading: Analysis
+
+Finding: No preference treatment of any one type (class)
+
+VAE latent space results:
+- Left plot: 2D scatter of encoded points (more compact, centered distribution than standard AE)
+  - X-axis range: -3 to 3
+  - Y-axis range: -3 to 3
+
+Example generated images from sampled coordinates:
+Row 1: [-3.4, 3] [-2.9, 3] [-2.5, 3] [-2.1, 3] [-1.6, 3] [-1.3, 3] → boots/shoes
+Row 2: [-0.8, 3] [-0.4, 3] [0.1, 3] [0.5, 3] [0.9, 3] [1.4, 3] → sneakers/bags
+Row 3: [1.8, 3] [2.2, 3] [2.6, 3] [-3.4, 2.6] [-2.9, 2.6] [-2.5, 2.6] → bags/shoes
+
+Color-coded latent space: right side shows organized cluster distribution (0-9 scale)
+Probability plot: shows pixel-level reconstruction probabilities
+
+Key observation: VAE produces a more organized, structured latent space compared to standard AE
+
+================================================================================
+PAGE 14 - VAE with Higher Dimension Dataset (CelebA)
+================================================================================
+Heading: VA with Higher Dimension Data Set
+
+Dataset: CelebA
+- 200,000 color images of celebrity faces with labels
+
+Labeled attributes shown:
+- Glasses
+- Wearing hat
+- Bangs
+- Wavy hair
+- Pointy nose
+- Mustache
+- Oval face
+- Smiling
+
+Images show 3 sample celebrity faces per attribute label.
+
+================================================================================
+PAGE 15 - Reconstruction & Distributions (CelebA)
+================================================================================
+Heading: Reconstruction & Distributions of Points for First 50 Dimensions in the Latent Space
+
+Reconstruction quality:
+- Top row: Example real faces (10 sample celebrity images)
+- Bottom row: Reconstructions (VAE output, visually similar to originals but slightly blurred)
+
+Latent space dimensionality:
+- Model uses at least 50 latent dimensions
+- Each dimension captures different facial feature variations
+
+Distribution plots (50 histograms, labeled 0–49):
+- Each histogram shows the distribution of encoded values for one latent dimension
+- Distributions approximate standard normal (N(0,1)) due to KL divergence regularization
+- Confirms VAE successfully regularizes the latent space
+
+================================================================================
+PAGE 16 - Generating New Images (CelebA)
+================================================================================
+Heading: Generating New Images
+
+Method: Sample random points from the learned latent distribution → decode to face images
+
+Results: 30 generated celebrity-like faces (3 rows × 10 columns)
+- Generated faces show realistic facial features
+- Diversity in: skin tone, hair color, gender, age, expression
+- Images are slightly blurry (common VAE characteristic) but coherent
+
+================================================================================
+PAGE 17 - Latent Space Arithmetic
+================================================================================
+Heading: Latent Space Arithmetic
+
+Concept: Attributes can be added or subtracted in the latent space
+
+Formula for modifying a latent vector:
+  z_new = z + alpha * feature_vector
+
+Where:
+  z = z_mean + z_sigma * epsilon
+  z_sigma = exp(z_log_var * 0.5)
+  epsilon ~ N(0, I)
+
+Feature vector computation:
+  feature_vector (e.g., "smiling") = 
+    average position of encoded images WITH the attribute "smiling"
+    MINUS
+    average position of encoded images WITHOUT the attribute "smiling"
+
+Attributes demonstrated:
+- Smiling: subtracting removes smile, adding increases smile
+- Black hair: controls hair color (lighter ← → darker)
+- Eyeglasses: removes/adds eyeglasses
+- Young: controls apparent age
+- Male: controls gender presentation
+- Blond hair: controls hair color (brown ← → blonde)
+
+Visualization (grid):
+- Rows: different attributes (Smiling, Black hair, Eyeglasses, Young, Male, Blond hair)
+- Columns: alpha values from -4 (Subtracting vector) to +4 (Adding vector)
+  - 0 = Original image
+  - Negative alpha = subtract the attribute
+  - Positive alpha = add the attribute
+
+================================================================================
+PAGE 18 - Morphing
+================================================================================
+Heading: Morphing
+
+Concept: Interpolate between two images in the latent space
+
+Formula:
+  z_new = z_A * (1 – alpha) + z_B * alpha
+
+Where:
+  - z_A = latent encoding of Image A
+  - z_B = latent encoding of Image B
+  - alpha ranges from 0 to 1
+
+Behavior:
+  - alpha = 0 → z_new = z_A (Image A)
+  - alpha = 1 → z_new = z_B (Image B)
+  - Intermediate alpha values → smooth blend between Image A and Image B
+
+Visualization (grid):
+- Rows: 6 different A→B image pairs (celebrity faces)
+- Columns: 11 alpha steps from 0 (Image A) to 1 (Image B)
+- Intermediate columns show smooth morphing transition between faces
+
+Key property enabled by VAE: continuous, smooth latent space allows meaningful interpolation between any two images
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+Summary of Key Concepts:
+
+1. AUTOENCODER: Unsupervised model with encoder + decoder. Learns to compress then reconstruct data. Latent space is unstructured.
+
+2. VARIATIONAL AUTOENCODER (VAE): Extension of autoencoder. Encoder outputs a distribution (mean + log variance) instead of a point. Latent space is continuous and structured.
+
+3. REPARAMETERIZATION TRICK: z = z_mean + z_sigma * epsilon; allows gradient flow through sampling step.
+
+4. KL DIVERGENCE LOSS: Regularizes latent space toward standard normal distribution. Combined with reconstruction loss.
+
+5. LATENT SPACE ARITHMETIC: Attributes encoded as vectors; can be added/subtracted to manipulate generated images.
+
+6. MORPHING: Linear interpolation between two latent vectors produces smooth visual transitions.
+
+7. DATASETS USED: Fashion-MNIST (clothing), CelebA (200k celebrity faces with attribute labels).
+
+8. KERAS LAYERS USED: Input, Flatten, Dense, Convolutional, Convolutional Transpose (stride=2), Dropout, Reshape.
+
+9. TRAINING CONFIG: Loss = binary_crossentropy + KL divergence; Optimizer = Adam.

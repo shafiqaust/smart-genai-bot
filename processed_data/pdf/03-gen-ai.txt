@@ -1,0 +1,214 @@
+SOURCE: 03-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+WEEK: Week 3 — Prompt Engineering & Deep Learning Code
+================================================================================
+
+PAGE 1
+--------------------------------------------------------------------------------
+Title: Generative Artificial Intelligence
+Subtitle: Week 3: Prompt Engineering & Deep Learning Code
+Course: Generative AI
+
+================================================================================
+
+PAGE 2
+--------------------------------------------------------------------------------
+Section: Recap of Prompt Engineering
+
+Table: Application → Prompting Technique → Prompt Acquisition
+
+| Application                   | Prompting Technique              | Prompt Acquisition    |
+|-------------------------------|----------------------------------|-----------------------|
+| New Tasks Without Training    | Zero-shot, Few-shot              | Manual                |
+| Reasoning and Logic           | CoT, Auto-CoT, ToT, etc.         | Manual/LM Generated   |
+| Reduce Hallucination          | RAG                              | Retrieval Based       |
+| Code Generation & Execution   | PoT, SCoT, CoC, etc.             | Manual/Hybrid         |
+| Optimization and Efficiency   | OPRO                             | Manual                |
+
+Definitions:
+- CoT: Chain of Thought
+- Auto-CoT: Automatic Chain of Thought
+- ToT: Tree of Thought
+- RAG: Retrieval-Augmented Generation
+- PoT: Program of Thought
+- SCoT: Structured Chain of Thought
+- CoC: Chain of Code
+- OPRO: Optimization by PROmpting
+
+================================================================================
+
+PAGE 3
+--------------------------------------------------------------------------------
+Section: Coding with Gemini — Example 1: Student Progress Email
+
+Goal: Want to send an email to the students detailing their progress.
+Task: Write a program
+  - Input: (student grade data spreadsheet)
+  - Output: (email per student with their progress)
+
+Student Grade Data Table:
+
+| Student              | Email     | Quiz 1 | Quiz 2 | Quiz 3 | A1 | A2 | A3 |
+|----------------------|-----------|--------|--------|--------|----|----|----|
+| Points Possible      |           | 5      | 5      | 0      | 1  | 1  | 1  |
+| Abraham Avatar       | abrahm    | 5      | 5      | 5      | 1  | 1  | 1  |
+| Bill Murphi          | bill      | 5      | 5      | 5      | 1  | 1  | 1  |
+| George Gestanze      | george    | 5      | 4      | 0      | 1  | 1  | 1  |
+| Antony Lam           | antony    | 5      | 5      | 4      | 1  | 1  | 1  |
+| Registrar Wonderful  | registrar | 5      | 5      | 5      | 1  | 1  | 1  |
+
+Notes:
+- Quiz 3 has 0 points possible (likely not yet graded or not counted)
+- A1, A2, A3 are assignments worth 1 point each
+- Emails appear to be usernames (no domain shown)
+
+================================================================================
+
+PAGE 4
+--------------------------------------------------------------------------------
+Section: Coding with Gemini — Example 2: Student Transcript Generation
+
+Goal: Want to create a transcript for the students.
+
+Student Directory Table:
+
+| Student              | Email     |
+|----------------------|-----------|
+| Abraham Avatar       | abrahm    |
+| Bill Murphi          | bill      |
+| George Gestanze      | george    |
+| Antony Lam           | antony    |
+| Registrar Wonderful  | registrar |
+
+Course Catalog Table:
+
+| Class ID  | Title                  | Number of Credits |
+|-----------|------------------------|-------------------|
+| CSCI 5440 | Generative AI          | 3                 |
+| CSCI 3720 | Compiler and Automata  | 4                 |
+| CSCI 1110 | Problem Solving        | 3                 |
+
+Enrollment/Grades Table:
+
+| Email     | Class ID  | Semester | Grade |
+|-----------|-----------|----------|-------|
+| abrahm    | CSCI 5440 | SP26     | A     |
+| bill      | CSCI 5440 | SP26     | B     |
+| george    | CSCI 5440 | SP26     | A     |
+| antony    | CSCI 5440 | SP26     | C     |
+| registrar | CSCI 5440 | SP26     | A     |
+| abrahm    | CSCI 1110 | SP20     | B     |
+| bill      | CSCI 3720 | FA25     | A     |
+
+Notes:
+- SP = Spring semester; FA = Fall semester
+- SP26 = Spring 2026, SP20 = Spring 2020, FA25 = Fall 2025
+
+================================================================================
+
+PAGE 5
+--------------------------------------------------------------------------------
+Section: Generative Deep Learning
+
+Book Reference:
+- Title: Generative Deep Learning: Teaching Machines to Paint, Write, Compose and Play
+- Edition: Second Edition (O'Reilly)
+
+Codebase URL:
+https://github.com/davidADSP/Generative_Deep_Learning_2nd_Edition#-generative-deep-learning---2nd-edition-codebase
+
+Task: Install and run the examples
+
+Requirements:
+- Conda
+- Docker
+- Jupyter server
+- Kaggle
+
+================================================================================
+
+PAGE 6
+--------------------------------------------------------------------------------
+Section: A Brief Summary of ML Terminologies (Part 1)
+
+Concept: Set of objects X
+- The set of items we want to label/classify.
+Examples:
+  - Set of students → predict whether they will get an A in the class
+  - Set of X-ray images → predict whether the person has bone disease
+  - Set of images → predict whether the image is a car
+
+Concept: Label set Y
+- Types of labels:
+  - 0 or 1 → Boolean (discrete)
+  - {A, B, …} → Categories (discrete)
+  - Real number → Continuous
+
+Concept: Training data
+- Notation: S = ((x1,y1), (x2,y2), … , (xn,yn))
+- Mathematical definition: a subset of X × Y (Cartesian product of X and Y)
+- Meaning: (xi, yi) means xi has the label yi
+
+================================================================================
+
+PAGE 7
+--------------------------------------------------------------------------------
+Section: A Brief Summary of ML Terminologies (Part 2)
+
+Concept: Output of an ML algorithm — Prediction Rule (Model)
+- A function h: X → Y (also called: hypothesis, predictor, classifier)
+- Used to calculate the label y of a piece of data x → h(x)
+- A(S) denotes the output of algorithm A given training dataset S
+
+Concept: Data-generation model
+- Assumptions: data generated by some probabilistic distribution D and a labeling function f
+- Important: The algorithm does NOT know D or f
+
+Concept: Measuring success
+- Multiple algorithms, multiple training datasets → need to compare
+- Define: generalization error (true error, risk) of h — referred to as the loss (L)
+- Goal: Algorithms must try to minimize L(h)
+
+Concept: Empirical Risk Minimization (ERM)
+- True error cannot be established directly
+- Approximation: use error on training set S → denoted LS(h)
+
+Concept: Overfitting
+- Risk when using ERM
+- h performs exceptionally on S but poorly on unseen data (outside training set)
+- Solution: Identify classes of training sets S where overfitting does not occur
+
+================================================================================
+
+PAGE 8
+--------------------------------------------------------------------------------
+Section: General Steps in ML Applications
+
+Pipeline (in order):
+1. Data collection
+2. Data preparation
+3. Choose an ML model
+4. Train the model
+5. Evaluate the model
+6. Parameter tuning
+7. Make predictions
+
+Dataset Reference:
+- CIFAR dataset: https://www.cs.toronto.edu/~kriz/cifar.html
+
+Example: Image Classification with CIFAR
+- Input format: 32 × 32 × 3 (32×32 pixel image, RGB color channels)
+- Represented as: 3072 × 1 vector (flattened)
+- Architecture: Neural network with hidden layers
+  - Layer example: 200 layers, 150 layers
+  - Activation function: ReLU (noted as "RLU" in slide — likely typo for ReLU)
+  - Output layer: final classification output
+- Training parameters:
+  - Optimization algorithm
+  - Batch size
+  - (other hyperparameters implied by "…")
+
+================================================================================
+END OF DOCUMENT
+Total pages extracted: 8
+================================================================================

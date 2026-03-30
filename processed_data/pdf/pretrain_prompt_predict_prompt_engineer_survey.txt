@@ -1,0 +1,1815 @@
+================================================================================
+FILE: pretrain_prompt_predict_prompt_engineer_survey.pdf
+TITLE: Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing
+AUTHORS: Pengfei Liu, Weizhe Yuan, Jinlan Fu, Zhengbao Jiang, Hiroaki Hayashi, Graham Neubig
+AFFILIATIONS: Carnegie Mellon University; National University of Singapore
+ARXIV: arXiv:2107.13586v1 [cs.CL] 28 Jul 2021
+================================================================================
+
+--------------------------------------------------------------------------------
+PAGE 1 — Title, Authors, Abstract
+--------------------------------------------------------------------------------
+
+TITLE: Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing
+
+AUTHORS:
+- Pengfei Liu (Carnegie Mellon University) — pliu3@cs.cmu.edu
+- Weizhe Yuan (Carnegie Mellon University) — weizhey@cs.cmu.edu
+- Jinlan Fu (National University of Singapore) — jinlanjonna@gmail.com
+- Zhengbao Jiang (Carnegie Mellon University) — zhengbaj@cs.cmu.edu
+- Hiroaki Hayashi (Carnegie Mellon University) — hiroakih@cs.cmu.edu
+- Graham Neubig (Carnegie Mellon University) — gneubig@cs.cmu.edu
+
+ABSTRACT:
+This paper surveys and organizes research works in a new paradigm in natural language processing called "prompt-based learning." Unlike traditional supervised learning, which trains a model P(y|x), prompt-based learning is based on language models that model the probability of text directly. The original input x is modified using a template into a textual string prompt x' that has unfilled slots, and the language model probabilistically fills them to obtain a final string x̂, from which the output y is derived.
+
+Key advantages:
+- Allows pre-training on massive amounts of raw text
+- Enables few-shot or zero-shot learning by defining a new prompting function
+- Adapts to new scenarios with few or no labeled data
+
+The paper introduces basics of this paradigm, a unified mathematical notation, and organizes existing work along dimensions: choice of pre-trained models, prompts, and tuning strategies.
+
+RESOURCES MENTIONED:
+- Website: NLPedia–Pretrain (constantly-updated survey and paperlist)
+
+--------------------------------------------------------------------------------
+PAGE 2 — Table of Contents
+--------------------------------------------------------------------------------
+
+TABLE OF CONTENTS:
+1. Two Sea Changes in NLP (p.3)
+2. A Formal Description of Prompting (p.4)
+   2.1 Supervised Learning in NLP
+   2.2 Prompting Basics
+       2.2.1 Prompt Addition
+       2.2.2 Answer Search
+       2.2.3 Answer Mapping
+   2.3 Design Considerations for Prompting
+3. Pre-trained Language Models (p.8)
+   3.1 Training Objectives
+   3.2 Noising Functions
+   3.3 Directionality of Representations
+   3.4 Typical Pre-training Methods
+       3.4.1 Left-to-Right Language Model
+       3.4.2 Masked Language Models
+       3.4.3 Prefix and Encoder-Decoder
+4. Prompt Engineering (p.11)
+   4.1 Prompt Shape
+   4.2 Manual Template Engineering
+   4.3 Automated Template Learning
+       4.3.1 Discrete Prompts
+       4.3.2 Continuous Prompts
+5. Answer Engineering (p.13)
+   5.1 Answer Shape
+   5.2 Answer Space Design Methods
+       5.2.1 Manual Design
+       5.2.2 Discrete Answer Search
+       5.2.3 Continuous Answer Search
+6. Multi-Prompt Learning (p.15)
+   6.1 Prompt Ensembling
+   6.2 Prompt Augmentation
+   6.3 Prompt Composition
+   6.4 Prompt Decomposition
+7. Training Strategies for Prompting Methods (p.17)
+   7.1 Training Settings
+   7.2 Parameter Update Methods
+       7.2.1 Promptless Fine-tuning
+       7.2.2 Tuning-free Prompting
+       7.2.3 Fixed-LM Prompt Tuning
+       7.2.4 Fixed-prompt LM Tuning
+       7.2.5 Prompt+LM Tuning
+8. Applications (p.19)
+   8.1 Knowledge Probing
+   8.2 Classification-based Tasks
+   8.3 Information Extraction
+   8.4 "Reasoning" in NLP
+   8.5 Question Answering
+   8.6 Text Generation
+   8.7 Automatic Evaluation of Text Generation
+   8.8 Multi-modal Learning
+   8.9 Meta-Applications
+   8.10 Resources
+9. Prompt-relevant Topics (p.24)
+10. Challenges (p.27)
+    10.1 Prompt Design
+    10.2 Answer Engineering
+    10.3 Selection of Tuning Strategy
+    10.4 Multiple Prompt Learning
+    10.5 Selection of Pre-trained Models
+    10.6 Theoretical and Empirical Analysis of Prompting
+    10.7 Transferability of Prompts
+    10.8 Combination of Different Paradigms
+    10.9 Calibration of Prompting Methods
+11. Meta Analysis (p.29)
+    11.1 Timeline
+    11.2 Trend Analysis
+12. Conclusion (p.31)
+A. Appendix on Pre-trained LMs (p.44)
+   A.1 Evolution of Pre-trained LM Parameters
+   A.2 Auxiliary Objective
+   A.3 Pre-trained Language Model Families
+
+--------------------------------------------------------------------------------
+PAGE 3 — Section 1: Two Sea Changes in NLP
+--------------------------------------------------------------------------------
+
+SECTION 1: TWO SEA CHANGES IN NLP
+
+PARADIGM A — Fully Supervised Learning (Non-Neural Network):
+- Task-specific model trained solely on input-output examples
+- Relied heavily on feature engineering (domain knowledge to define/extract salient features)
+- Examples: Lafferty et al. (2001), Guyon et al. (2002), Och et al. (2004), Zhang and Nivre (2011)
+
+PARADIGM B — Fully Supervised Learning (Neural Network):
+- Salient features learned jointly with model training
+- Focus shifted to architecture engineering (designing suitable network architectures)
+- Examples: Hochreiter & Schmidhuber (1997), Kalchbrenner et al. (2014), Chung et al. (2014), Kim (2014), Bahdanau et al. (2014), Vaswani et al. (2017)
+
+FIRST SEA CHANGE (2017-2019) — Pre-train and Fine-tune Paradigm:
+- Model with fixed architecture is pre-trained as a language model (LM)
+- LM predicts probability of observed textual data
+- Pre-trained LM adapted to downstream tasks by introducing additional parameters and fine-tuning
+- Focus: objective engineering (designing training objectives for pre-training and fine-tuning)
+- Examples: Radford & Narasimhan (2018), Peters et al. (2018), Dong et al. (2019), Yang et al. (2019), Lewis et al. (2020a)
+- Example of objective engineering: Zhang et al. (2020a) — predicting salient sentences improves summarization
+
+SECOND SEA CHANGE (as of 2021) — Pre-train, Prompt, and Predict:
+- Downstream tasks reformulated to look like original LM training via textual prompts
+- Instead of adapting LM to tasks (LM→Task), tasks are adapted to LMs (Task→LM)
+- Example 1 (sentiment): "I missed the bus today. I felt so ___" — LM fills blank with emotion word
+- Example 2 (translation): "English: I missed the bus today. French: ___" — LM fills blank with French
+- Advantage: A single LM trained unsupervised can solve many tasks
+- Catch: Requires prompt engineering to find best prompt
+
+KEY CONCEPT — Prompt Engineering: Finding the most appropriate prompt to allow a LM to solve the task at hand.
+
+PAPER STRUCTURE:
+- §2: Overview and formal definition of prompting methods
+- §3: Overview of pre-trained language models
+- §4: Prompt engineering
+- §5: Answer engineering
+- §6: Multi-prompt learning methods
+- §7: Prompt-aware training methods
+- §8: Applications
+- §9: Connections to other research fields
+- §10: Challenging problems for further research
+- §11: Meta-analysis of research trends
+
+--------------------------------------------------------------------------------
+PAGE 4 — Section 2: A Formal Description of Prompting (2.1, 2.2 intro)
+--------------------------------------------------------------------------------
+
+SECTION 2.1: SUPERVISED LEARNING IN NLP
+
+Traditional supervised learning: input x → model P(y|x; θ) → output y
+- y can be a label, text, or other output
+- Trained on datasets of input-output pairs
+
+Example 1 — Text Classification:
+- Sentiment analysis: x = "I love this movie." → y = ++ (from label set {++, +, ~, -, --})
+
+Example 2 — Conditional Text Generation:
+- Machine translation: x = "Hyvää huomenta." (Finnish) → y = "Good morning." (English)
+
+SECTION 2.2: PROMPTING BASICS
+
+Core problem with supervised learning: requires large supervised datasets for every task.
+
+Prompt-based learning alternative:
+- Learn a language model P(x; θ) that models probability of text x itself
+- Use this to predict y, reducing need for large supervised datasets
+- Basic prompting predicts highest-scoring ŷ in THREE STEPS: Prompt Addition → Answer Search → Answer Mapping
+
+TERMINOLOGY (Table 2):
+| Term | Notation | Example |
+|------|----------|---------|
+| Input | x | "I love this movie." |
+| Output | y | ++ (very positive) |
+| Prompting Function | f_prompt(x) | [X] Overall, it was a [Z] movie. |
+| Prompt | x' | "I love this movie. Overall, it was a [Z] movie." |
+| Filled Prompt | f_fill(x', z) | "I love this movie. Overall, it was a bad movie." |
+| Answered Prompt | f_fill(x', z*) | "I love this movie. Overall, it was a good movie." |
+| Answer | z | "good", "fantastic", "boring" |
+
+Note: z* represents answers that correspond to true output y*
+
+FOUR PARADIGMS IN NLP (Table 1):
+| Paradigm | Engineering Type | Examples |
+|----------|-----------------|---------|
+| a. Fully Supervised (Non-Neural) | Features (word identity, POS, sentence length) | — |
+| b. Fully Supervised (Neural) | Architecture (convolutional, recurrent, self-attentional) | — |
+| c. Pre-train, Fine-tune | Objective (masked LM, next sentence prediction) | BERT, GPT |
+| d. Pre-train, Prompt, Predict | Prompt (cloze, prefix) | GPT-3, etc. |
+
+KEY RESOURCES IN PAPER:
+- Tab. 7: Systematic comparison among different prompting methods
+- Tab. 10: Organization of commonly-used prompts
+- Tab. 12: Timeline of prompt-based research works
+- Tab. 13: Systematic comparison among different pre-trained LMs
+
+--------------------------------------------------------------------------------
+PAGE 5 — Section 2.2: Prompting Basics (continued)
+--------------------------------------------------------------------------------
+
+SECTION 2.2.1: PROMPT ADDITION
+
+Process:
+1. Apply a template — textual string with two slots: [X] (input slot) and [Z] (answer slot)
+2. Fill slot [X] with input text x
+
+Sentiment example:
+- Input x = "I love this movie."
+- Template = "[X] Overall, it was a [Z] movie."
+- Prompt x' = "I love this movie. Overall, it was a [Z] movie."
+
+Translation example:
+- Template = "Finnish: [X] English: [Z]"
+
+TWO PROMPT VARIETIES:
+1. Cloze prompt: slot [Z] appears in the MIDDLE of text
+2. Prefix prompt: input text comes entirely BEFORE [Z] (slot at end)
+
+IMPORTANT NOTES:
+(1) Templates can have empty slots in middle (cloze) or at end (prefix)
+(2) Template words are not necessarily natural language — can be virtual words (numeric IDs) embedded in continuous space
+(3) Number of [X] and [Z] slots can be flexibly changed per task
+
+EXAMPLES (Table 3 — Inputs, Templates, Answers for different tasks):
+
+Text Classification — Sentiment:
+  Input: "I love this movie."
+  Template: "[X] The movie is [Z]."
+  Answer: great, fantastic, ...
+
+Text Classification — Topics:
+  Input: "He prompted the LM."
+  Template: "[X] The text is about [Z]."
+  Answer: sports, science, ...
+
+Text Classification — Intention:
+  Input: "What is taxi fare to Denver?"
+  Template: "[X] The question is about [Z]."
+  Answer: quantity, city, ...
+
+Text-span Classification — Aspect Sentiment:
+  Input: "Poor service but good food."
+  Template: "Bad [X] What about service? [Z]."
+  Answer: Terrible, ...
+
+Text-pair Classification — NLI:
+  Input: [X1] "An old man with ...", [X2] "A man walks ..."
+  Template: "[X1]? [Z], [X2]"
+  Answer: Yes, No, ...
+
+Tagging — NER:
+  Input: [X1] "Mike went to Paris.", [X2] "Paris"
+  Template: "[X1][X2] is a [Z] entity."
+  Answer: organization, location, ...
+
+Text Generation — Summarization:
+  Input: "Las Vegas police ..."
+  Template: "[X] TL;DR: [Z]"
+  Answer: "The victim ...", "A woman ...", ...
+
+Text Generation — Translation:
+  Input: "Je vous aime."
+  Template: "French: [X] English: [Z]"
+  Answer: "I love you.", "I fancy you.", ...
+
+SECTION 2.2.2: ANSWER SEARCH
+
+- Define Z = set of permissible values for z
+- Z can range from entire language (generative tasks) to small subset (classification)
+- Example classification: Z = {"excellent", "good", "OK", "bad", "horrible"} for Y = {++, +, ~, -, --}
+- f_fill(x', z) = fills [Z] position in prompt x' with potential answer z
+- Search function: ẑ = search_{z∈Z} P(f_fill(x', z); θ)
+- Search can be argmax or sampling
+
+SECTION 2.2.3: ANSWER MAPPING
+
+- Map highest-scoring answer ẑ to highest-scoring output ŷ
+- Trivial in generation tasks (answer = output)
+- Non-trivial when multiple answers map to same output (e.g., "excellent", "fabulous", "wonderful" all map to "++")
+
+--------------------------------------------------------------------------------
+PAGE 6 — Section 2.3: Design Considerations for Prompting
+--------------------------------------------------------------------------------
+
+SECTION 2.3: DESIGN CONSIDERATIONS FOR PROMPTING
+
+FIVE KEY DESIGN DIMENSIONS:
+
+1. Pre-trained Model Choice:
+   - Wide variety of pre-trained LMs to calculate P(x; θ)
+   - Covered in §3
+
+2. Prompt Engineering:
+   - Choice of prompt has large effect on accuracy and which task is performed
+   - Methods to choose f_prompt(x) covered in §4
+
+3. Answer Engineering:
+   - Design Z and mapping function depending on task
+   - Covered in §5
+
+4. Expanding the Paradigm:
+   - Various underlying frameworks to improve results/applicability
+   - Covered in §6
+
+5. Prompt-based Training Strategies:
+   - Methods to train parameters (of prompt, LM, or both)
+   - Covered in §7
+
+TYPOLOGY OF PROMPTING METHODS (Figure 1 — key entries):
+
+Pre-trained Models (§3):
+  - Left-to-Right LM: GPT, GPT-2, GPT-3
+  - Masked LM: BERT, RoBERTa
+  - Prefix LM: UniLM1, UniLM2
+  - Encoder-Decoder: T5, MASS, BART
+
+Prompt Engineering (§4):
+  Shape:
+    - Cloze: LAMA, TemplateNER
+    - Prefix: Prefix-Tuning, PromptTuning
+  Human Effort:
+    - Hand-crafted: LAMA, GPT-3
+  Automated:
+    - Discrete: AdvTrigger, AutoPrompt
+    - Continuous: Prefix-Tuning, PromptTuning
+
+Answer Engineering (§5):
+  Shape:
+    - Token: LAMA, WARP
+    - Span: PET-GLUE, X-FACTR
+    - Sentence: GPT-3, Prefix-Tuning
+  Human Effort:
+    - Hand-crafted: PET-TC, PET-GLUE
+  Automated:
+    - Discrete: AutoPrompt, LM-BFF
+    - Continuous: WARP
+
+Multi-Prompt Learning (§6):
+  - Prompt Ensemble: LPAQA, PET-TC, BARTScore
+  - Prompt Augmentation: GPT-3, KATE, LM-BFF
+  - Prompt Composition: PTR
+  - Prompt Decomposition: TemplateNER
+
+Prompt-based Training Strategies (§7):
+  Parameter Updating:
+    - Promptless Fine-tuning: BERT, RoBERTa
+    - Tuning-free Prompting: GPT-3, BARTScore
+    - Fixed-LM Prompt Tuning: Prefix-Tuning, WARP
+    - Fixed-prompt LM Tuning: T5, PET-TC
+    - Prompt+LM Tuning: P-Tuning, PTR
+  Training Sample Size:
+    - Few/zero-shot: GPT-3, PET-TC
+    - Full-data: PTR, AdaPrompt
+
+--------------------------------------------------------------------------------
+PAGE 7 — Section 2.3 (continued, Figure 1 full typology)
+--------------------------------------------------------------------------------
+
+FULL TYPOLOGY TABLE (from Figure 1):
+
+Pre-trained Models:
+  Left-to-Right LM → GPT [139]; GPT-2 [140]; GPT-3 [16]
+  Masked LM → BERT [32]; RoBERTa [105]
+  Prefix LM → UniLM1 [35]; UniLM2 [6]
+  Encoder-Decoder → T5 [141]; MASS [162]; BART [94]
+
+Prompt Engineering:
+  Shape: Cloze → LAMA [133]; TemplateNER [29]
+  Shape: Prefix → Prefix-Tuning [96]; PromptTuning [91]
+  Hand-crafted → LAMA [133]; GPT-3 [16]
+  Automated Discrete → AdvTrigger [177]; AutoPrompt [159]
+  Automated Continuous → Prefix-Tuning [96]; PromptTuning [91]
+
+Answer Engineering:
+  Token → LAMA [133]; WARP [55]
+  Span → PET-GLUE [154]; X-FACTR [66]
+  Sentence → GPT-3 [16]; Prefix-Tuning [96]
+  Hand-crafted → PET-TC [153]; PET-GLUE [154]
+  Automated Discrete → AutoPrompt [159]; LM-BFF [46]
+  Automated Continuous → WARP [55]
+
+Multi-Prompt Learning:
+  Prompt Ensemble → LPAQA [68]; PET-TC [153]; BARTScore [193]
+  Prompt Augmentation → GPT-3 [16]; KATE [100]; LM-BFF [46]
+  Prompt Composition → PTR [56]
+  Prompt Decomposition → TemplateNER [29]
+  Prompt Sharing → Example Fig. 5
+
+Prompt-based Training Strategies:
+  Promptless Fine-tuning → BERT [32]; RoBERTa [105]
+  Tuning-free Prompting → GPT-3 [16]; BARTScore [193]
+  Fixed-LM Prompt Tuning → Prefix-Tuning [96]; WARP [55]
+  Fixed-prompt LM Tuning → T5 [141]; PET-TC [154]
+  Prompt+LM Tuning → P-Tuning [103]; PTR [56]
+  Few/zero-shot → GPT-3 [16]; PET-TC [153]
+  Full-data → PTR [56]; AdaPrompt [21]
+
+--------------------------------------------------------------------------------
+PAGE 8 — Section 3: Pre-trained Language Models (3.1, 3.2)
+--------------------------------------------------------------------------------
+
+SECTION 3: PRE-TRAINED LANGUAGE MODELS
+
+Overview dimensions: main training objective, type of text noising, auxiliary training objective, attention mask, typical architecture, preferred application scenarios.
+
+SECTION 3.1: TRAINING OBJECTIVES
+
+Standard Language Model (SLM):
+- Trains model to optimize probability P(x) of text from training corpus (Radford et al., 2019)
+- Text predicted in autoregressive fashion, one token at a time (usually left to right)
+
+Denoising Objectives:
+- Apply noising function x̃ = f_noise(x) to input
+- Try to predict original input P(x|x̃)
+- Two flavors:
+  (a) Corrupted Text Reconstruction (CTR): Loss calculated only over noised parts
+  (b) Full Text Reconstruction (FTR): Loss calculated over entirety of input (Lewis et al., 2020a)
+
+MATCHING OBJECTIVES TO TASKS:
+- Left-to-right autoregressive LMs → particularly suitable for prefix prompts
+- Reconstruction objectives → more suitable for cloze prompts
+- Standard LM and FTR objectives → more suitable for text generation tasks
+- Any of the objectives → can be used for classification
+
+SECTION 3.2: NOISING FUNCTIONS
+
+Types of noise (Table 4 — Detailed examples):
+
+Operation | Element | Original Text | Corrupted Text
+---------|---------|---------------|---------------
+Mask | one token | Jane will move to New York . | Jane will [Z] to New York .
+Mask | two tokens | Jane will move to New York . | Jane will [Z] [Z] New York .
+Mask | one entity | Jane will move to New York . | Jane will move to [Z] .
+Replace | one token | Jane will move to New York . | Jane will move [X] New York .
+Replace | two tokens | Jane will move to New York . | Jane will move [X] [Y] York .
+Replace | one entity | Jane will move to New York . | Jane will move to [X] .
+Delete | one token | Jane will move to New York . | Jane move to New York .
+Delete | two tokens | Jane will move to New York . | Jane to New York .
+Permute | token | Jane will move to New York . | New York . Jane will move to
+Rotate | none | Jane will move to New York . | to New York . Jane will move
+Concatenation | two languages | Jane will move to New York . | Jane will move to New York . [/s] 简将搬到纽约。
+
+NOISING TYPES:
+- Masking (Devlin et al., 2019): Replace token/span with [MASK]; can be random or knowledge-targeted (e.g., masking entities)
+- Replacement (Raffel et al., 2020): Replace token/span with another token or piece of information (e.g., image region)
+- Deletion (Lewis et al., 2020a): Delete tokens/spans without adding [MASK]; used with FTR loss
+- Permutation (Liu et al., 2020a): Divide text into spans, permute into new text
+
+--------------------------------------------------------------------------------
+PAGE 9 — Section 3.3, 3.4.1
+--------------------------------------------------------------------------------
+
+SECTION 3.3: DIRECTIONALITY OF REPRESENTATIONS
+
+Two main ways to calculate representations:
+
+1. Left-to-Right:
+   - Representation of each word based on itself and all PREVIOUS words
+   - Example: "This is a good movie" — "good" based on preceding words only
+   - Used for standard LM objectives and output side of FTR objectives
+
+2. Bidirectional:
+   - Representation of each word based on ALL words in sentence (both left and right)
+   - Example: "good" influenced by all words including following "movie"
+
+ADDITIONAL:
+- Models can mix both strategies (Dong et al., 2019; Bao et al., 2020)
+- Representations can be calculated in randomly permuted order (Yang et al., 2019)
+- Implemented via attention masking in Transformer architecture (Vaswani et al., 2017)
+
+ATTENTION MASK PATTERNS (Figure 2):
+(a) Full — all positions can attend to all others (bidirectional)
+(b) Diagonal — each position only attends to itself and previous (left-to-right)
+(c) Mixture — combination of full and diagonal
+
+SECTION 3.4: TYPICAL PRE-TRAINING METHODS
+
+Pre-training architectures summarized (Table 5):
+LM Type | Mask (x) | Noise (x) | Main Obj (x) | Mask (y) | Noise (y) | Main Obj (y) | Application
+--------|----------|----------|------------|----------|----------|------------|------------
+L2R | Diagonal | None | SLM | - | - | - | NLU & NLG
+Mask | Full | Mask | CTR | - | - | - | NLU
+Prefix | Full | Any | CTR | Diagonal | None | SLM | NLU & NLG
+En-De | Full | Any | None† | Diagonal | None | FTR/CTR | NLU & NLG
+
+†: Encoder-decoder architectures usually apply objective functions to decoder only.
+
+SECTION 3.4.1: LEFT-TO-RIGHT LANGUAGE MODEL
+
+- Variety of auto-regressive LM
+- Predicts upcoming words or assigns probability P(x) to sequence x = x1,...,xn
+- Chain rule (left-to-right): P(x) = P(x1) × ... × P(xn|x1...xn-1)
+- Standard since Markov (1913); used in count-based and neural forms
+- Representative modern models: GPT-3 (Brown et al., 2020), GPT-Neo (Black et al., 2021)
+- Note: right-to-left variant: P(xi|xi+1,...,xn)
+- L2R LMs widely used as backbone for prompting (Radford et al., 2019; Brown et al., 2020)
+- Large models (PanGu-α, Ernie-3) often not available publicly, making fine-tuning infeasible
+
+--------------------------------------------------------------------------------
+PAGE 10 — Section 3.4.2, 3.4.3
+--------------------------------------------------------------------------------
+
+SECTION 3.4.2: MASKED LANGUAGE MODELS (MLM)
+
+- Bidirectional objective function for representation learning
+- Predicts masked text pieces based on surrounding context
+- Formula: P(xi|x1,...,xi-1, xi+1,...,xn) — probability of word xi given surrounding context
+- Devlin et al. (2019)
+
+Representative models: BERT (Devlin et al., 2019), ERNIE (Zhang et al., 2019; Sun et al., 2019b)
+
+Best suited for:
+- Natural language understanding tasks (text classification, NLI, extractive QA)
+- Tasks easily reformulated as cloze problems (consistent with MLM training)
+- Methods combining prompting with fine-tuning
+
+SECTION 3.4.3: PREFIX AND ENCODER-DECODER
+
+Both architectures:
+1. Encode source x using encoder with fully-connected mask
+2. Decode target y auto-regressively (left to right)
+
+PREFIX LANGUAGE MODEL:
+- Left-to-right LM that decodes y conditioned on prefixed sequence x
+- x encoded by same model parameters with fully-connected mask
+- Usually uses CTR objective over x, plus standard conditional LM objective over y
+- Examples: UniLM 1-2 (Dong et al., 2019; Bao et al., 2020), ERNIE-M (Ouyang et al., 2020)
+
+ENCODER-DECODER MODEL:
+- Uses left-to-right LM to decode y conditioned on separate encoder for x
+- Encoder and decoder parameters NOT shared
+- Diverse types of noising can be applied to x
+- Examples: T5 (Raffel et al., 2020), BART (Lewis et al., 2020a), MASS (Song et al., 2019)
+
+APPLICABILITY:
+- Naturally suited for text generation (translation, summarization) with or without prompting
+- Prompting methods broaden applicability to non-generation tasks:
+  - Information extraction (Cui et al., 2021)
+  - Question answering (Khashabi et al., 2020)
+  - Text generation evaluation (Yuan et al., 2021b)
+- Prompting makes models like BART applicable to NER (previously less used)
+- Prompting breaks difficulty of unified modeling across different tasks (Khashabi et al., 2020)
+
+FIGURE 3 — Typical LM paradigms:
+(a) Left-to-right LM: causal masking, predict next token
+(b) Masked LM: bidirectional, predict masked tokens
+(c) Prefix LM: full attention on prefix, causal on output
+(d) Encoder-Decoder: full attention on encoder, causal on decoder
+
+--------------------------------------------------------------------------------
+PAGE 11 — Section 4: Prompt Engineering (4.1, 4.2, 4.3 intro, 4.3.1 start)
+--------------------------------------------------------------------------------
+
+SECTION 4: PROMPT ENGINEERING
+
+Definition: Process of creating a prompting function f_prompt(x) that results in most effective downstream performance.
+Focus: Prompt template engineering — human or algorithm searches for best template per task.
+
+SECTION 4.1: PROMPT SHAPE
+
+Two main varieties:
+1. Cloze prompts (Petroni et al., 2019; Cui et al., 2021): Fill in blanks of a textual string
+2. Prefix prompts (Li & Liang, 2021; Lester et al., 2021): Continue a string prefix
+
+Choosing between them:
+- Generation tasks / autoregressive LMs → prefix prompts (match left-to-right nature)
+- Masked LMs → cloze prompts (closely match pre-training task)
+- Full text reconstruction models → versatile, can use either
+- Tasks with multiple inputs (e.g., text pair classification) → templates with [X1], [X2], etc.
+
+SECTION 4.2: MANUAL TEMPLATE ENGINEERING
+
+- Most natural approach: manually create intuitive templates via human introspection
+- Seminal example: LAMA dataset (Petroni et al., 2019) — manually created cloze templates to probe knowledge
+- Brown et al. (2020) — manually crafted prefix prompts for QA, translation, commonsense reasoning
+- Schick & Schütze (2020, 2021a,b) — pre-defined templates for few-shot text classification and generation
+
+SECTION 4.3: AUTOMATED TEMPLATE LEARNING
+
+Issues with manual templates:
+1. Time-consuming and requires expertise (especially for complex tasks like semantic parsing)
+2. Even experienced designers may fail to find optimal prompts (Jiang et al., 2020c)
+
+TWO TYPES:
+1. Discrete prompts (hard prompts): actual text strings
+2. Continuous prompts (soft prompts): described directly in embedding space
+
+Also: static vs. dynamic prompting functions (same template per input vs. custom per input)
+
+SECTION 4.3.1: DISCRETE PROMPTS
+
+D1 — Prompt Mining (Jiang et al., 2020c — MINE approach):
+- Mining-based method using training inputs x and outputs y
+- Scrapes large text corpus (e.g., Wikipedia) for strings containing x and y
+- Finds middle words or dependency paths between inputs and outputs
+- Frequent middle words/paths serve as templates: "[X] middle words [Z]"
+
+D2 — Prompt Paraphrasing:
+- Takes existing seed prompt, paraphrases to create candidate prompts
+- Selects prompt with highest training accuracy
+- Methods: round-trip translation (Jiang et al., 2020c), thesaurus replacement (Yuan et al., 2021b), neural prompt rewriter (Haviv et al., 2021)
+- Haviv et al. (2021): paraphrasing done after input x is inserted, different paraphrase per individual input
+
+D3 — Gradient-based Search:
+- Wallace et al. (2019a): gradient-based search over actual tokens to find sequences triggering desired predictions
+- Iterative, stepping through tokens in the prompt
+- Shin et al. (2020): AutoPrompt — automatically searches for template tokens using downstream training samples; strong performance
+
+D4 — Prompt Generation:
+- Treat prompt generation as text generation task
+- Gao et al. (2021): Use seq2seq T5 to generate template tokens
+  - T5 pre-trained on filling missing spans
+  - Specify positions to insert template tokens
+  - Provide training samples for T5 to decode template tokens
+- Ben-David et al. (2021): Train T5 to generate domain-relevant features (DRFs) — keywords characterizing domain — then concatenate with input to form template
+
+D5 — Prompt Scoring:
+- Davison et al. (2019): knowledge base completion task
+- Hand-craft set of template candidates
+- Fill input and answer slots to form filled prompts
+- Use unidirectional LM to score filled prompts
+- Select template with highest LM probability (custom per input)
+
+--------------------------------------------------------------------------------
+PAGE 12 — Section 4.3.2 Continuous Prompts
+--------------------------------------------------------------------------------
+
+SECTION 4.3.2: CONTINUOUS PROMPTS (SOFT PROMPTS)
+
+Key insight: Prompts don't need to be human-interpretable. They can exist in embedding space.
+
+Two constraints removed:
+1. Embeddings of template words need NOT be embeddings of natural language words
+2. Template need NOT be parameterized by the pre-trained LM's parameters; templates have their OWN parameters tuned on downstream training data
+
+C1 — Prefix Tuning (Li & Liang, 2021):
+- Prepends sequence of continuous task-specific vectors to input
+- LM parameters kept FROZEN
+- Optimizes trainable prefix matrix M_φ:
+  max_φ log P(y|x; θ; φ) = max_φ Σ_yi log P(yi|h<i; θ; φ)
+- h<i = concatenation of all neural network layers at time step i
+- If within prefix: h_i = M_φ[i]; otherwise computed by frozen LM
+- Observation: Continuous prefix learning more sensitive to initialization in low-data settings than discrete prompts
+- Lester et al. (2021) — similar but adds fewer parameters (no additional tunable params within each network layer)
+- Tsimpoukelli et al. (2021) — trains vision encoder to encode image into embeddings that prompt frozen LM; enables few-shot learning for vision-language tasks; prefix is sample-dependent (image representation)
+
+C2 — Tuning Initialized with Discrete Prompts:
+- Initialize continuous prompt search using discrete prompt search results
+- Zhong et al. (2021b): Define template via discrete search (AUTOPROMPT), initialize virtual tokens from discovered prompt, then fine-tune embeddings for task accuracy
+- Initializing with manual templates provides better starting point
+- Qin & Eisner (2021): Learn mixture of soft templates per input; weights and parameters jointly learned from training; initial templates from manual or prompt mining
+- Hambardzumyan et al. (2021): Use continuous template whose shape follows a manual template
+
+C3 — Hard-Soft Prompt Hybrid Tuning:
+- Insert tunable embeddings into hard prompt template
+- Liu et al. (2021b) — P-tuning:
+  - Continuous prompts learned by inserting trainable variables into embedded input
+  - Prompt embeddings represented as output of BiLSTM (Graves et al., 2013) to account for interaction between prompt tokens
+  - Introduces task-related anchor tokens (e.g., "capital" in relation extraction) — NOT tuned during training
+- Han et al. (2021) — PTR (Prompt Tuning with Rules):
+  - Manually crafted sub-templates composed via logic rules
+  - Inserts virtual tokens whose embeddings can be tuned together with LM parameters
+  - Template tokens contain both actual and virtual tokens
+  - Effective for relation classification
+
+--------------------------------------------------------------------------------
+PAGE 13 — Section 5: Answer Engineering (5.1, 5.2 start)
+--------------------------------------------------------------------------------
+
+SECTION 5: ANSWER ENGINEERING
+
+Definition: Searches for answer space Z and map to original output Y that results in effective predictive model.
+Two dimensions: Answer shape and Answer design method.
+
+SECTION 5.1: ANSWER SHAPE
+
+Answer shape granularity options:
+
+1. Tokens: One token from pre-trained LM's vocabulary (or subset)
+2. Span: Short multi-token span — usually used with cloze prompts
+3. Sentence: A sentence or document — commonly used with prefix prompts
+
+Choosing answer shape:
+- Token/text-span: Widely used in classification (sentiment classification — Yin et al., 2019), relation extraction (Petroni et al., 2019), NER (Cui et al., 2021)
+- Longer phrasal/sentential: Language generation tasks (Radford et al., 2019), multiple-choice QA (Khashabi et al., 2020)
+
+SECTION 5.2: ANSWER SPACE DESIGN METHODS
+
+SECTION 5.2.1: MANUAL DESIGN
+
+Unconstrained Spaces:
+- Answer space Z = all tokens (Petroni et al., 2019), fixed-length spans (Jiang et al., 2020a), or token sequences (Radford et al., 2019)
+- Usually map z to y via identity mapping
+
+Constrained Spaces:
+- For limited label spaces (text classification, entity recognition, multiple-choice QA)
+- Yin et al. (2019): Manually design word lists per topic ("health", "finance", "politics", "sports"), emotions ("anger", "joy", "sadness", "fear")
+- Cui et al. (2021): Manually design lists like "person", "location" for NER
+- Zweig et al. (2012): Use LM to calculate probability among multiple choices for multiple-choice QA
+
+SECTION 5.2.2: DISCRETE ANSWER SEARCH
+
+Answer Paraphrasing:
+- Start with initial answer space Z0, expand via paraphrasing
+- Jiang et al. (2020b): P(y|x) = Σ_{z∈para(z0)} P(z|x)
+- Uses back-translation for paraphrasing (translate to another language then back)
+
+Prune-then-Search:
+- Generate initial pruned answer space of plausible answers Z0
+- Algorithm further searches over Z0 for final answers
+- "Verbalizer": function from label y to single answer token z (Schick & Schütze, 2021a)
+- Schick & Schütze (2021a); Schick et al. (2020): Find tokens with ≥2 alphabetic characters, frequent in large unlabeled dataset; iteratively compute word's suitability as representative answer
+- Shin et al. (2020): Learn logistic classifier using contextualized representation of [Z] token; select top-k tokens by probability score
+- Gao et al. (2021): 
+  1. Prune: Select top-k vocabulary words by generation probability at [Z] position
+  2. Further prune by zero-shot accuracy on training samples
+  3. Search: Fine-tune LM with fixed templates + every answer mapping; select best by development set accuracy
+
+Label Decomposition:
+- Chen et al. (2021b): For relation extraction, automatically decompose each relation label into constituent words
+- Example: per:city_of_death → {person, city, death}
+- Probability = sum of each token's probability
+
+SECTION 5.2.3: CONTINUOUS ANSWER SEARCH
+
+- Very few works explore soft answer tokens optimizable via gradient descent
+- Hambardzumyan et al. (2021): Assign virtual token per class label; optimize token embedding jointly with prompt token embeddings
+- Since tokens optimized directly in embedding space, they don't use LM's learned embeddings — learn from scratch per label
+
+--------------------------------------------------------------------------------
+PAGE 14 — Section 5.2 (continued), Section 6 intro, 6.1
+--------------------------------------------------------------------------------
+
+(Additional answer engineering examples already covered in page 13 content.)
+
+SECTION 6: MULTI-PROMPT LEARNING
+
+Motivation: Using multiple prompts can further improve efficacy of prompting methods.
+(Single prompt engineering covered in §4.)
+
+FOUR MULTI-PROMPT METHODS:
+1. Prompt Ensembling
+2. Prompt Augmentation
+3. Prompt Composition
+4. Prompt Decomposition
+
+SECTION 6.1: PROMPT ENSEMBLING
+
+Definition: Using multiple unanswered prompts for an input at inference time to make predictions.
+Prompts can be discrete or continuous.
+
+Benefits:
+1. Leverage complementary advantages of different prompts
+2. Alleviate cost of prompt engineering (choosing single best prompt is challenging)
+3. Stabilize performance on downstream tasks
+
+Combination methods:
+
+Uniform Averaging:
+- P(z|x) := (1/K) Σ_i P(z|f_prompt,i(x))
+- Jiang et al. (2020c): Filter by top-K accuracy, use average log probabilities
+- Schick & Schütze (2021a): Simple average for ensemble annotation of unlabeled data
+- Yuan et al. (2021b): Average of generation scores across prompts
+
+Weighted Averaging:
+- Each prompt associated with a weight (pre-specified or optimized)
+- Jiang et al. (2020c): Learn weight per prompt by maximizing P(target) over training data
+- Qin & Eisner (2021): Same approach + data-dependent weighting based on input probability in each prompt
+- Schick & Schütze (2021a,b): Weight proportional to training set accuracy before training
+
+Majority Voting:
+- For classification tasks, combine results from different prompts via majority vote
+- Lester et al. (2021); Hambardzumyan et al. (2021)
+
+Knowledge Distillation:
+- Schick & Schütze (2021a,b, 2020): Train separate model per template-answer pair; ensemble annotates unlabeled dataset; final model distills knowledge from annotated data
+- Gao et al. (2021): Similar ensemble on auto-generated templates
+
+Prompt Ensembling for Text Generation:
+- Simple: P(zt|x, z<t) := (1/K) Σ_i P(zt|f_prompt,i(x), z<t)
+- Schick & Schütze (2020): Decode with each model separately; score each generation by averaging probability across all models
+
+--------------------------------------------------------------------------------
+PAGE 15 — Section 6.1 (continued), 6.2
+--------------------------------------------------------------------------------
+
+(Uniform and weighted averaging details already covered above.)
+
+SECTION 6.2: PROMPT AUGMENTATION
+
+Also called: Demonstration learning (Gao et al., 2021)
+
+Definition: Provide a few additional answered prompts to demonstrate how LM should answer the actual prompt.
+
+Example:
+- Basic: "China's capital is [Z]."
+- Augmented: "Great Britain's capital is London. Japan's capital is Tokyo. China's capital is [Z]."
+
+Leverages ability of strong LMs to learn repetitive patterns (Brown et al., 2020).
+
+Two key challenges:
+
+1. Sample Selection:
+   - Choice of examples can result in very different performance (near SOTA to near random — Lu et al., 2021)
+   - Gao et al. (2021); Liu et al. (2021a): Use sentence embeddings to sample examples close to input
+   - Mishra et al. (2021): Provide positive and negative samples (highlighting things to avoid)
+
+2. Sample Ordering:
+   - Lu et al. (2021): Order of answered prompts plays important role in performance; propose entropy-based methods to score different candidate permutations
+   - Kumar & Talukdar (2021): Search for good permutation of training examples; learn separator token between prompts
+
+Relation to retrieval-based methods:
+- Retrieval provides more textual context to improve performance (Guu et al., 2018)
+- Prompt augmentation also leverages template and answer (not just larger context)
+
+--------------------------------------------------------------------------------
+PAGE 16 — Section 6.3, 6.4
+--------------------------------------------------------------------------------
+
+SECTION 6.3: PROMPT COMPOSITION
+
+Definition: For composable tasks, use multiple sub-prompts (one per subtask), then define a composite prompt.
+
+Illustration (Figure 4c):
+- Relation extraction = entity recognition + relation classification
+- Create sub-prompts for entity types, then compose via logic rules
+- Han et al. (2021) — PTR: multiple manually created sub-prompts for entity recognition and relation classification; composed via logic rules for relation extraction; also incorporates entity type information
+
+SECTION 6.4: PROMPT DECOMPOSITION
+
+Definition: For tasks requiring multiple predictions per sample (e.g., sequence labeling), break holistic prompt into sub-prompts and answer each separately.
+
+Example — NER (Cui et al., 2021):
+- Input converted into set of text spans
+- Model prompted to predict entity type per span (including "Not an Entity")
+- Different prompt per span; each predicted separately
+- Difficult to predict all span types simultaneously due to large number of spans
+
+FIGURE 4 SUMMARY — Four multi-prompt strategies:
+(a) Prompt Ensembling: multiple prompts → aggregate predictions
+(b) Prompt Augmentation: add answered prompts as demonstrations before actual prompt
+(c) Prompt Composition: combine sub-prompts for sub-tasks into composite prompt
+(d) Prompt Decomposition: break single complex prompt into independent sub-prompts
+
+--------------------------------------------------------------------------------
+PAGE 17 — Section 7: Training Strategies for Prompting Methods
+--------------------------------------------------------------------------------
+
+SECTION 7: TRAINING STRATEGIES FOR PROMPTING METHODS
+
+SECTION 7.1: TRAINING SETTINGS
+
+Zero-shot: No training data for the task; LM applied as-is using prompt.
+Few-shot: Small number of training examples.
+Full-data: Large number of training examples.
+
+NOTE: Many prompt engineering methods (§4) use annotated training samples for constructing/validating prompts even in "zero-shot" settings — Perez et al. (2021) argue this is not true zero-shot.
+
+SECTION 7.2: PARAMETER UPDATE METHODS
+
+Two types of parameters:
+1. Pre-trained model parameters (LM)
+2. Prompt-related parameters
+
+TABLE 6 — Five Tuning Strategies:
+
+Strategy | LM Params | Additional Prompt Params? | Prompt Params Tuned? | Example
+---------|-----------|--------------------------|---------------------|--------
+Promptless Fine-tuning | Tuned | No | — | ELMo, BERT, BART
+Tuning-free Prompting | Frozen | No | — | GPT-3, AutoPrompt, LAMA
+Fixed-LM Prompt Tuning | Frozen | Yes | Tuned | Prefix-Tuning, Prompt-Tuning
+Fixed-prompt LM Tuning | Tuned | No | — | PET-TC, PET-Gen, LM-BFF
+Prompt+LM Fine-tuning | Tuned | Yes | Tuned | PADA, P-Tuning, PTR
+
+SECTION 7.2.1: PROMPTLESS FINE-TUNING
+
+- Pre-train and fine-tune WITHOUT prompts
+- All (or some) LM parameters updated via gradients from downstream samples
+- Examples: BERT [32], RoBERTa [105]
+- Advantages: Simplicity, no prompt design needed; can fit larger training datasets
+- Disadvantages: May overfit or learn unstably on small datasets; prone to catastrophic forgetting (McCloskey & Cohen, 1989)
+
+SECTION 7.2.2: TUNING-FREE PROMPTING
+
+- Directly generates answers WITHOUT changing LM parameters; based only on prompt
+- Can combine with prompt augmentation (in-context learning; Brown et al., 2020)
+- Examples: LAMA [133], GPT-3 [16]
+- Advantages: Efficient (no parameter update); no catastrophic forgetting; applicable in zero-shot settings
+- Disadvantages: Heavy prompt engineering needed for high accuracy; in-context learning is slow at test time with many demonstrations; can't use large training datasets easily
+
+SECTION 7.2.3: FIXED-LM PROMPT TUNING
+
+- Introduces additional prompt-relevant parameters
+- Updates ONLY prompt parameters using downstream supervision
+- Entire pre-trained LM UNCHANGED
+- Examples: Prefix-Tuning [96], WARP [55]
+- Advantages: Retains LM knowledge; suitable for few-shot scenarios; often superior to tuning-free
+- Disadvantages: Not applicable in zero-shot; limited representation power in large-data settings; requires prompt engineering via hyperparameter/seed prompt choice; prompts usually not human-interpretable
+
+SECTION 7.2.4: FIXED-PROMPT LM TUNING
+
+- Tunes LM parameters (standard pre-train and fine-tune style) but uses FIXED prompt parameters
+- Most natural: discrete textual template applied to every training/test example
+- Examples: PET-TC [153], PET-Gen [152], LM-BFF [46]
+- Logan IV et al. (2021): Null prompt — directly concatenate input and mask "[X][Z]" without template words; competitive accuracy
+- Advantages: Prompt/answer engineering specifies task more completely; efficient learning, especially few-shot
+- Disadvantages: Prompt/answer engineering still required; LM fine-tuned on one task may not generalize to another
+
+--------------------------------------------------------------------------------
+PAGE 18 — Section 7.2.5, Section 8 intro, 8.1, 8.2 start
+--------------------------------------------------------------------------------
+
+SECTION 7.2.5: PROMPT+LM TUNING
+
+- Prompt-relevant parameters fine-tuned TOGETHER with all or some LM parameters
+- Examples: PADA [8], P-Tuning [103]
+- Similar to standard pre-train/fine-tune, but prompt provides additional bootstrapping
+- Advantages: Most expressive; likely suitable for high-data settings
+- Disadvantages: Requires training and storing all parameters; may overfit to small datasets
+
+SECTION 8: APPLICATIONS
+
+SECTION 8.1: KNOWLEDGE PROBING
+
+Factual Probing (a.k.a. fact retrieval):
+- One of earliest prompt applications
+- Goal: Quantify how much factual knowledge LM's internal representations contain
+- LM parameters usually fixed; knowledge retrieved by transforming input to cloze prompt
+- Datasets: LAMA (Petroni et al., 2019), X-FACTR (Jiang et al., 2020a)
+- Both discrete (Petroni et al., 2019, 2020; Jiang et al., 2020c, a; Haviv et al., 2021; Shin et al., 2020; Perez et al., 2021) and continuous (Qin & Eisner, 2021; Liu et al., 2021b; Zhong et al., 2021b) template methods explored
+- Also prompt ensemble learning (Jiang et al., 2020c; Qin & Eisner, 2021)
+
+Linguistic Probing:
+- Probe capabilities: analogies, negations, semantic role sensitivity, semantic similarity, rare word understanding
+- Elicited by presenting tasks as natural language sentences for LM completion
+- Sources: Brown et al. (2020), Ettinger (2020), Sun et al. (2021), Schick & Schütze (2020)
+
+SECTION 8.2: CLASSIFICATION-BASED TASKS
+
+Overview:
+- Widely explored; prompt templates relatively easy to construct
+- Key: reformulating task as appropriate prompt
+- Example: Yin et al. (2019) — "the topic of this document is [Z]." fed into masked LM
+
+Text Classification:
+- Most work uses cloze prompts
+- Both prompt engineering and answer engineering extensively explored
+- Most explore few-shot setting with "fixed-prompt LM Tuning" strategy (§7.2.4)
+
+Natural Language Inference (NLI):
+- Goal: Predict relationship (e.g., entailment) between two sentences
+- Cloze prompts commonly used (Schick & Schütze, 2021a)
+- Template search in few-shot setting; answer space Z manually pre-selected from vocabulary
+
+--------------------------------------------------------------------------------
+PAGE 19 — Section 8.2 (Tables 7 partial)
+--------------------------------------------------------------------------------
+
+TABLE 7 — Organization of Prompting Works (Part 1):
+
+KEY ABBREVIATIONS:
+- Task: CR=Commonsense Reasoning, QA=Question Answering, SUM=Summarization, MT=Machine Translation, LCP=Linguistic Capacity Probing, GCG=General Conditional Generation, CKM=Commonsense Knowledge Mining, FP=Fact Probing, TC=Text Classification, MR=Mathematical Reasoning, SR=Symbolic Reasoning, AR=Analogical Reasoning, IE=Information Extraction, D2T=Data-to-text, TAG=Sequence Tagging, SEMP=Semantic Parsing, EVALG=Evaluation of Text Generation
+- Shape: Clo=Cloze, Pre=Prefix
+- Tuning: TFP=Tuning-free Prompting, LMT=Fixed-prompt LM Tuning, PT=Fixed-LM Prompt Tuning, LMPT=LM+Prompt Tuning
+- Mul-Pr: PA=Prompt Augmentation, PE=Prompt Ensembling, PC=Prompt Composition, PD=Prompt Decomposition
+- Auto: Disc=Discrete search, Cont=Continuous search
+
+Selected key works from Table 7:
+
+Work | Task | PLM | Setting | Prompt Shape | Tuning | Multi-Prompt
+-----|------|-----|---------|-------------|--------|-------------
+GPT-2 | SUM,MT,CR,QA | GPT-2 | Zero,Few | Clo,Pre (Manual) | TFP | PA
+LAMA | FP | ELMo,BERT | Zero | Clo (Manual) | TFP | —
+T5 | TC,SUM,QA,MT | T5 | Full | Pre (Manual) | LMT | —
+PET-TC | TC | RoBERTa,XLM-R | Few | Pre (Manual) | LMT | PE
+GPT-3 | QA,MT,GCG,CR,TC,LCP,MR,SR,AR | GPT-3 | Zero,Few | Clo,Pre (Manual) | TFP | PA
+AutoPrompt | TC,FP,IE | BERT,RoBERTa | Full | Clo (Disc) | TFP | —
+LM-BFF | TC | RoBERTa | Few | Clo (Disc) | LMT | PE,PA
+WARP | TC | RoBERTa | Few,Full | Clo,Pre (Manual+Cont) | PT | PE
+Prefix-Tuning | D2T,SUM | GPT-2,BART | Full | Pre (Cont) | PT | —
+P-Tuning | FP,TC | GPT-2,BERT,ALBERT | Few,Full | Clo,Pre (Manual+Cont) | TFP,LMPT | —
+
+--------------------------------------------------------------------------------
+PAGE 20 — Table 7 Part 1 (extended), Part 2 Table 8 start
+--------------------------------------------------------------------------------
+
+Additional Table 7 entries (continued):
+
+Work | Task | PLM | Setting | Prompt Shape | Tuning | Multi-Prompt
+-----|------|-----|---------|-------------|--------|-------------
+LMComm | CR | L2R | Zero | Clo (Manual) | TFP | —
+WNLaMPro | LCP | BERT | Zero | Clo (Manual) | TFP | —
+AdvTrigger | GCG | GPT-2 | Full | Pre (Disc) | TFP | —
+PET-SGLUE | TC | ALBERT | Few | Clo (Manual) | LMT | PE
+Petal | TC | RoBERTa | Few | Clo (Manual) | LMT | PE
+CTRLsum | SUM | BART | Full | Pre (Manual) | LMT | —
+PET-Gen | SUM | PEGASUS | Few | Pre (Manual) | LMT | PE
+Prefix-Tuning | D2T,SUM | GPT-2,BART | Full | Pre (Cont) | PT | —
+KATE | TC,D2T,QA | GPT-3 | Few | Pre (Manual) | TFP | PA
+PADA | TC,TAG | T5 | Full | Pre (Disc) | LMPT | —
+GLM | TC | GLM | Full | Clo (Manual) | LMT | —
+
+TABLE 8 ABBREVIATIONS (full list):
+Task abbreviations:
+- CR: Commonsense Reasoning
+- QA: Question Answering
+- SUM: Summarization
+- MT: Machine Translation
+- LCP: Linguistic Capacity Probing
+- GCG: General Conditional Generation
+- CKM: Commonsense Knowledge Mining
+- FP: Fact Probing
+- TC: Text Classification
+- MR: Mathematical Reasoning
+- SR: Symbolic Reasoning
+- AR: Analogical Reasoning
+- Theory: Theoretical Analysis
+- IE: Information Extraction
+- D2T: Data-to-text
+- TAG: Sequence Tagging
+- SEMP: Semantic Parsing
+- EVALG: Evaluation of Text Generation
+- VQA: Visual Question Answering
+- VFP: Visual Fact Probing
+- MG: Multimodal Grounding
+- CodeGen: Code generation
+
+--------------------------------------------------------------------------------
+PAGE 21 — Table 8 (Part 2)
+--------------------------------------------------------------------------------
+
+TABLE 8 — Organization of Prompting Works (Part 2):
+
+Work | Task | PLM | Setting | Prompt Shape | Tuning | Multi-Prompt
+-----|------|-----|---------|-------------|--------|-------------
+ADAPET | TC | ALBERT | Few | Clo (Manual) | LMT | —
+Meta | TC | T5 | Full | Pre (Manual) | LMT | —
+OptiPrompt | FP | BERT | Full | Clo (Cont) | PT | —
+Soft | FP | BERT,BART,RoBERTa | Full | Clo (Cont) | PT | PE
+DINO | GCG | GPT-2 | Zero | Pre (Manual) | TFP | —
+AdaPrompt | IE | BERT | Few,Full | Clo (Manual) | LMT | —
+PMIDC | GCG,QA,TC | GPT-2,GPT-3 | Zero | Pre (Manual) | TFP | —
+Prompt-Tuning | TC | T5 | Full | Pre (Cont) | PT | PE
+Natural-Instr | GCG | GPT-3,BART | Few,Full | Pre (Manual) | TFP,LMT | PA
+OrderEntropy | TC | GPT-2,GPT-3 | Few | Pre (Manual) | TFP | PA
+FewshotSemp | SEMP | GPT-3 | Few | Pre (Manual) | TFP | PA
+PanGu-α | QA,CR,TC,SUM,GCG | PanGu-α | Zero,Few | Clo,Pre (Manual) | TFP | PA
+TrueFewshot | TC,FP | GPT-2,GPT-3,ALBERT | Few | Clo,Pre (Manual+Disc) | TFP,LMT | —
+PTR | IE | RoBERTa | Full | Clo (Manual+Cont) | LMPT | PC
+TemplateNER | TAG | BART | Few,Full | Clo,Pre (Manual) | LMT | PD
+PERO | TC,FP | BERT,RoBERTa | Few | Pre (Manual) | TFP | PA
+PromptAnalysis | Theory | BERT | Full | Clo (Cont) | PT | —
+CPM-2 | QA,MR,SUM,TC,GCG,MT | CPM-2 | Full | Pre (Cont) | PT,LMPT | —
+BARTScore | EVALG | BART | Zero | Pre (Manual+Disc) | TFP | PE
+NullPrompt | TC | RoBERTa,ALBERT | Few | Pre (Manual) | LMPT | —
+Frozen | VQA,VFP,MG | GPT-like | Full | Pre (Cont) | PT | PA
+ERNIE-B3 | TC,LCP,NLI,CR,QA,SUM,GCG | ERNIE-B3 | Zero | Clo,Pre (Manual) | TFP | —
+Codex | CodeGen | GPT | Zero,Few | Pre (Manual+Disc) | TFP,LMT | PA
+HTLM | TC,SUM | BART | Full | Clo (Disc) | LMT | PA
+FLEX | TC | T5 | Zero,Few | Pre (Manual) | LMT | —
+
+--------------------------------------------------------------------------------
+PAGE 22 — Section 8.3, 8.4
+--------------------------------------------------------------------------------
+
+SECTION 8.3: INFORMATION EXTRACTION
+
+Relation Extraction:
+- Goal: Predict relation between two entities in a sentence
+- Chen et al. (2021b): First explored fixed-prompt LM Tuning for relation extraction
+- Key challenges vs. classification:
+  1. Larger label space (e.g., 80 relations vs. 2 for binary sentiment) → harder answer engineering
+  2. Different input tokens have different importance (entity mentions more salient) → not reflected in standard templates
+- Solutions:
+  - Adaptive answer selection for label space challenge
+  - Task-oriented prompt template with special markers [E] to highlight entity mentions
+- Han et al. (2021): Incorporate entity type information via multiple prompt composition techniques (PTR)
+
+Semantic Parsing:
+- Goal: Generate structured meaning representation from natural language
+- Shin et al. (2021): Few-shot semantic parsing via:
+  1. Framing as paraphrasing task (Berant & Liang, 2014)
+  2. Constraining decoding to only allow valid output according to grammar
+- In-context learning setting; choose answered prompts semantically close to test example
+- Effective for semantic parsing using pre-trained LMs
+
+Named Entity Recognition (NER):
+- Goal: Identify named entities (person, location, etc.) in a sentence
+- Challenges for prompt-based learning:
+  1. Each prediction unit is a token/span (not entire input like classification)
+  2. Latent relationships between token labels in context
+- Cui et al. (2021): Template-based NER using BART
+  - Enumerate text spans
+  - Consider generation probability of each type within manually crafted templates
+  - Example: "Mike went to New York yesterday" → to determine "Mike" type: "Mike is a [Z] entity"
+  - Answer space: "person", "organization", etc.
+
+SECTION 8.4: "REASONING" IN NLP
+
+Debate: Whether neural networks truly reason or only memorize patterns (Arpit et al., 2017; Niven & Kao, 2019).
+
+Commonsense Reasoning:
+- Datasets: Winograd Schemas (Levesque et al., 2012), etc.
+- Winograd Schema example: "The trophy doesn't fit into the brown suitcase because it is too large." — identify antecedent of "it"
+- Approach: Replace "it" with candidates in sentence; calculate probability; choose highest (Trinh & Le, 2018)
+- Sentence completion example: "Eleanor offered coffee. She realized she didn't have a clean [Z]." Choices: "cup", "bowl", "spoon"
+- Approach: Score generation probability of each candidate (Ettinger, 2020)
+
+Mathematical Reasoning:
+- Pre-trained embeddings can perform simple operations (addition, subtraction for small digits)
+- Fail with larger numbers (Naik et al., 2019; Wallace et al., 2019b; Brown et al., 2020)
+- Reynolds & McDonell (2021): Improve LM performance on complex math via serializing reasoning
+
+--------------------------------------------------------------------------------
+PAGE 23 — Section 8.5–8.9
+--------------------------------------------------------------------------------
+
+SECTION 8.5: QUESTION ANSWERING
+
+Formats:
+- Extractive QA: Identify content from context (e.g., SQuAD — Rajpurkar et al., 2016)
+- Multiple-choice QA: Pick from several choices (e.g., RACE — Lai et al., 2017)
+- Free-form QA: Arbitrary text response (e.g., NarrativeQA — Kočiský et al., 2018)
+
+Benefit of LM+prompting: Different QA formats solved within same framework.
+
+Key work:
+- Khashabi et al. (2020) — UnifiedQA: Reformulate many QA tasks as text generation, fine-tuning seq2seq models (T5) with appropriate prompts
+- Jiang et al. (2020b): Observe that probabilities from pre-trained models on QA tasks are not very predictive of correctness
+
+SECTION 8.6: TEXT GENERATION
+
+- Prefix prompts + autoregressive LMs
+- Radford et al. (2019): Impressive generation performance (summarization, translation) using prompts like "translate to french, [X], [Z]"
+- Brown et al. (2020): In-context learning (§7.2.2) for text generation — manual templates + multiple answered prompts
+- Schick & Schütze (2020): Fixed-prompt LM tuning (§7.2.4) for few-shot text summarization with manual templates
+- Li & Liang (2021): Fixed-LM prompt tuning (§7.2.3) for summarization and data-to-text — learnable prefix tokens, frozen LM
+- Dou et al. (2021): Prompt+LM tuning (§7.2.5) for summarization — learnable prefix prompts initialized by guidance signals; both prompt and LM parameters updated
+
+SECTION 8.7: AUTOMATIC EVALUATION OF TEXT GENERATION
+
+- Yuan et al. (2021b) — BARTScore: Prompt learning for automated evaluation of generated texts
+- Conceptualize evaluation as text generation problem
+- Use pre-trained seq2seq model with prefix prompts
+- Adding "such as" to translated text improves correlation significantly on German-English MT evaluation
+
+SECTION 8.8: MULTI-MODAL LEARNING
+
+- Tsimpoukelli et al. (2021) — Frozen: Extends prompt learning to vision-and-language
+- Strategy: Fixed-LM prompt tuning + prompt augmentation
+- Represent each image as sequence of continuous embeddings
+- Frozen pre-trained LM prompted with image prefix to generate captions
+- Demonstrates few-shot learning ability: learn words for new objects and novel visual categories with few demonstrations
+
+SECTION 8.9: META-APPLICATIONS
+
+Domain Adaptation:
+- Ben-David et al. (2021) — PADA: Self-generated domain-related features (DRFs) concatenated with input
+- Train T5 to generate unique domain-relevant keywords per input
+- Perform sequence tagging as seq2seq problem
+
+Debiasing:
+- Schick et al. (2021): LMs perform self-diagnosis and self-debiasing via instructions
+- Self-diagnosis: "The following text contains violence. [X][Z]" → fill [X] with text → check P("Yes") vs P("No")
+- Self-debiasing: Combine original P(xt|x<t; θ) with diagnosis-conditioned P(xt|[x<t; x_diagnosis]; θ) to suppress undesired attribute
+
+Dataset Construction:
+- Schick & Schütze (2021): Pre-trained LMs generate datasets from instructions
+- Example: "Write two sentences that mean the same thing. [X][Z]" → generate semantically similar sentence pairs
+
+--------------------------------------------------------------------------------
+PAGE 24 — Section 8.10, Section 9 start
+--------------------------------------------------------------------------------
+
+SECTION 8.10: RESOURCES
+
+TABLE 9 — Few-shot and Zero-shot Datasets for Prompt-based Learning:
+
+Task | Dataset | Setting | URL/Source
+-----|---------|---------|----------
+Commonsense Reasoning | Pronoun Disambiguation Problems | Zero | cs.nyu.edu/davise/papers/...
+Commonsense Reasoning | Winograd Schema Challenge | Zero | cs.nyu.edu/davise/papers/...
+Linguistic Capacity Probing | CPRAG-102 | Zero | github.com/aetting/lm-diagnostics
+Linguistic Capacity Probing | WNLaMPro | Zero | github.com/timoschick/...
+Linguistic Capacity Probing | ROLE-88 | Zero | github.com/aetting/lm-diagnostics
+Linguistic Capacity Probing | NEG-136 | Zero | github.com/aetting/lm-diagnostics
+Fact Probing | LAMA | Zero | dl.fbaipublicfiles.com/LAMA/...
+Fact Probing | Negated LAMA | Zero | github.com/norakassner/LAMA...
+Fact Probing | Misprimed LAMA | Zero | github.com/norakassner/LAMA...
+Fact Probing | X-FACTR | Zero | x-factr.github.io/
+Fact Probing | LAMA-TREx-easy-hard | Zero | github.com/princeton-nlp/...
+Text Classification | FLEX | Zero,Few | github.com/allenai/flex
+Text Classification | FewGLUE | Few | github.com/timoschick/fewglue
+General Conditional Gen. | REALTOXICITYPROMPTS | Zero | allenai.org/data/...
+General Conditional Gen. | Natural-Instructions | Few,Full | instructions.apps.allenai.org/
+
+TABLE 10 — Commonly Used Prompts (selected entries):
+
+FACT PROBING:
+- "Adolphe Adam died in [Z]." → V (full vocabulary) | Source: LAMA, LPAQA
+- "iPod Touch is produced by [Z]." → V | Source: X-FACTR
+- "The official language of Mauritius is [Z]." → V
+
+TEXT CLASSIFICATION:
+- "Which of these choices best describes the following document? '[Class A]', '[Class B]', '[Class C]'. [X][Z]" → Classes | Source: Meta
+- "How is the text best described? : '[Class A]', '[Class B]', or '[Class C]'. [X][Z]" → Classes
+- "This passage is about [Z]: [X]" → Classes
+- "[X]. Is this review positive? [Z]" → Yes, No
+- "[X] It was [Z]." → great, terrible
+
+NATURAL LANGUAGE INFERENCE:
+- "[X1]? [Z], [X2]" → Yes, No, Maybe
+- "[X1] [Z], [X2]" → Yes, No, Maybe
+
+COMMONSENSE REASONING:
+- "The trophy doesn't fit into the brown suitcase because [Z] is too large." → trophy, suitcase | Sources: PDP, WSC, CPRAG-102
+- "Ann asked Mary what time the library closes, because [Z] had forgotten." → Ann, Mary
+
+LINGUISTIC KNOWLEDGE PROBING:
+- "A robin is a [Z]." → bird, tree | Sources: WNLaMPro, ROLE-88, NEG-136
+- "A robin is not a [Z]." → bird, tree
+- "New is the opposite of [Z]." → old, young, current
+
+NAMED ENTITY RECOGNITION:
+- Positive: "[X] [Span] is a [Z] entity." → person, location, organization, miscellaneous | Source: TemplateNER
+- Negative: "[X] [Span] is not a named entity."
+- Positive: "The entity type of Span is [Z]." → person, location, organization, miscellaneous
+- Negative: "[X] The entity type of [Span] is none entity."
+
+QUESTION ANSWERING:
+- "[Question] [Passage] [Z]"
+- "[Passage] According to the passage, [Question] [Z]"
+- "Based on the following passage, [Question] [Z]. [Passage]"
+
+SUMMARIZATION:
+- "Text: [X] Summary: [Z]" | Source: BARTScore
+- "[X] TL;DR: [Z]"
+- "[X] In summary, [Z]"
+
+MACHINE TRANSLATION:
+- "French: [French sentence] English:"
+- "A French sentence is provided: [French sentence] The French translator translates the sentence into English: [Z]"
+- "[French sentence] = [Z]"
+
+SECTION 9: PROMPT-RELEVANT TOPICS
+
+--------------------------------------------------------------------------------
+PAGE 25 — Section 9 (continued)
+--------------------------------------------------------------------------------
+
+TABLE 11 — Other Research Topics Relevant to Prompting:
+
+Prompt Concept | Relevant Topic | Commonality | Peculiarity
+--------------|---------------|-------------|------------
+Prompt Ensembling [68; 153] | Ensemble Learning [171; 204] | Combine results of multiple systems for better performance | In prompt ensembling, multiple predictions result from different prompt variants; doesn't require separate training
+Prompt Augmentation [16; 46] | Few-shot Learning [160; 42] | Use few examples to learn generalized rules | Prompt augmentation is a specific subset of few-shot learning
+Prompt Augmentation | Larger-context Learning [18; 53] | Introduce larger context to aid learning | Additional information in larger-context learning is not necessarily labeled data
+Discrete Prompt Search [68; 159] | Query reformulation [123] | Reformulate input into a query form | Query reformulation focuses on information extraction and QA; prompting applies to variety of NLP tasks
+Discrete Prompt Fine-tuning [46] | QA-based multitask learning [115; 97] | Reformulate tasks into QA form | Prompting additionally targets full use of pre-trained models
+Continuous Prompt Fine-tuning [103; 36] | Controlled Text Generation [191; 77; 156] | Input augmented with additional inputs to control generation | Controlled generation targets particular type of text; prompt learning uses prompts to specify task itself
+Prompt-based downstream task learning | Supervised Attention [101; 165] | Require external hint to remind model which information to focus on | Supervised attention targets salient information from image/text; prompt learning targets pre-trained model knowledge
+Any prompting | Data augmentation [40; 144] | Improve downstream performance with additional samples | Data augmentation introduces additional training samples explicitly; prompts can be highly-condensed training samples [88]
+
+DETAILED TOPIC CONNECTIONS:
+
+Ensemble Learning:
+- Prompt ensembling doesn't require retraining the model multiple times
+- Discrete prompts can be changed during inference stage (Jiang et al., 2020c)
+
+Few-shot Learning:
+- Methods: model-agnostic meta-learning (Finn et al., 2017b), embedding learning (Bertinetto et al., 2016), memory-based learning (Kaiser et al., 2017)
+- Prompt augmentation = priming-based few-shot learning (Kumar & Talukdar, 2021)
+- Advantage: directly prepends labeled samples to current sample; elicits knowledge from pre-trained LMs even without parameter tuning
+
+Larger-context Learning:
+- Cao et al. (2018): Augment input with retrieved training set context
+- Guu et al. (2020): External data sources
+- Prompt augmentation adds relevant labeled samples; larger-context learning does not necessarily use labeled data
+
+Query Reformulation:
+- Commonalities: Both aim to better use existing knowledge bases; knowledge base is often black-box
+- Differences: Traditional knowledge base = search engine or QA system; prompt-based = language model
+- Prompt learning changes form of task (classification → cloze problem), adding complexity
+- Methodologies borrowable: decomposing query into sub-queries (Nogueira et al., 2019) ≈ prompt decomposition
+
+QA-based Task Formulation:
+- Kumar et al. (2016), McCann et al. (2018): Earlier works unifying NLP tasks into QA framework
+- Explored in IE (Li et al., 2020; Wu et al., 2020) and text classification (Chai et al., 2020)
+- Similar to prompting but key difference: prompting focuses on how to better use knowledge in pre-trained LMs
+
+--------------------------------------------------------------------------------
+PAGE 26 — Section 9 (continued)
+--------------------------------------------------------------------------------
+
+Controlled Generation (continued):
+- Guidance signals: style tokens (Sennrich et al., 2016b; Fan et al., 2018), length specifications (Kikuchi et al., 2016), domain tags (Chu et al., 2017), keywords (Saito et al., 2020), relation triples (Zhu et al., 2020), highlighted phrases/sentences (Grangier & Auli, 2018; Liu et al., 2021c)
+- Commonalities with prompting:
+  (1) Both add extra information to input; additional signals are often learnable parameters
+  (2) If controlled generation uses seq2seq LMs (e.g., BART) → can be seen as prompt learning with input-dependent prompts + prompt+LM fine-tuning strategy (e.g., GSum — Dou et al., 2021)
+- Differences:
+  (1) Controlled generation controls style/content while task stays same; prompting specifies the task itself
+  (2) Most prompt learning uses dataset/task-level prompts; controlled generation commonly uses input-dependent ones → opportunity for cross-pollination
+
+Supervised Attention:
+- Liu et al. (2017b): Provides explicit supervision over attention to avoid overfitting to artifacts
+- Both prompt learning and supervised attention: extract salient information with clues provided separately
+- Supervised attention uses additional loss functions to predict gold attention on manually labeled corpus
+- Prompt learning could borrow ideas from this literature
+
+Data Augmentation:
+- Scao & Rush (2021): Adding prompts ≈ adding 100s of data points on average across classification tasks
+- Suggests prompt usage for downstream task ≈ implicit data augmentation
+
+FIGURE 5: Multi-prompt learning for multi-task/multi-domain/multi-lingual:
+- Movie Review (X1), Product Review (X2)
+- Template: "[Domain_name]: This is [MASK]."
+- Prompt 1: "Movie: [X1] This is [MASK]."
+- Prompt 2: "Product: [X2] This is [MASK]."
+- Templates partially shared across tasks/domains
+
+--------------------------------------------------------------------------------
+PAGE 27 — Section 10: Challenges (10.1, 10.2)
+--------------------------------------------------------------------------------
+
+SECTION 10: CHALLENGES
+
+SECTION 10.1: PROMPT DESIGN
+
+Tasks beyond Classification and Generation:
+- Most existing work revolves around text classification or generation
+- Information extraction and text analysis tasks: prompt design is less straightforward
+- Future approach: Either reformulate as classification/generation, or design effective answer engineering for structured outputs in textual format
+
+Prompting with Structured Information:
+- Inputs with tree, graph, table, or relational structure — how to express in prompt/answer engineering is a major challenge
+- Chen et al. (2021b): Prompts with additional marks to encode lexical information (e.g., entity markings)
+- Aghajanyan et al. (2021) — HTLM: Structured prompts based on HTML for fine-grained web text generation
+- Moving beyond this to more complicated structure: largely unexplored
+
+Entanglement of Template and Answer:
+- Performance depends on BOTH template and answer
+- How to simultaneously search/learn best combination remains challenging
+- Current works: typically select answers BEFORE selecting template (Gao et al., 2021; Shin et al., 2020)
+- Hambardzumyan et al. (2021): Initial potential of simultaneously learning both
+
+SECTION 10.2: ANSWER ENGINEERING
+
+Many-class and Long-answer Classification:
+(a) Many classes → selecting appropriate answer space = difficult combinatorial optimization problem
+(b) Multi-token answers → how to best decode using LMs remains unknown (some methods: Jiang et al., 2020a)
+
+Multiple Answers for Generation Tasks:
+- Qualified answers can be semantically equivalent but syntactically diverse
+- Almost all works use single answer for generation; few exceptions (Jiang et al., 2020c)
+- How to guide learning with multiple references: largely open research problem
+
+--------------------------------------------------------------------------------
+PAGE 28 — Section 10 (continued), 10.3–10.9
+--------------------------------------------------------------------------------
+
+SECTION 10.3: SELECTION OF TUNING STRATEGY
+
+- Wide variety of methods for tuning prompts, LMs, or both
+- Still lack systematic understanding of tradeoffs between methods
+- Field could benefit from systematic explorations (cf. Peters et al., 2019 for pre-train/fine-tune paradigm)
+
+SECTION 10.4: MULTIPLE PROMPT LEARNING
+
+Prompt Ensembling:
+- Space and time complexity increase with more prompts
+- How to distill knowledge from different prompts: underexplored
+- Schick & Schütze (2020, 2021a,b): Ensemble model annotates large dataset; final model distills
+- How to select ensemble-worthy prompts: under-explored
+- For text generation: prompt ensemble learning not performed; ensemble in generation itself is complicated
+- Potential: neural ensembling methods like Refactor (Liu et al., 2021c)
+
+Prompt Composition and Decomposition:
+- How to choose between them: crucial
+- Empirically: Token/span prediction tasks (NER) → prompt decomposition; span relation prediction (entity coreference) → prompt composition
+- General idea of de-/composing: can be explored in more scenarios
+
+Prompt Augmentation:
+- Limited by input length (too many demonstrations infeasible)
+- How to select informative demonstrations and order appropriately: interesting challenge (Kumar & Talukdar, 2021)
+
+Prompt Sharing (multi-task/domain/language):
+- Key issues: how to design individual prompts for different tasks; how to modulate interactions
+- So far this field has not been explored
+- Figure 5: Illustrates simple strategy with partially shared templates
+
+SECTION 10.5: SELECTION OF PRE-TRAINED MODELS
+
+- Many pre-trained LMs to choose from (§3)
+- How to select LM to better leverage prompt-based learning: interesting and difficult
+- Few/no systematic comparisons of benefits of prompt-based learning across different pre-trained LMs
+
+SECTION 10.6: THEORETICAL AND EMPIRICAL ANALYSIS
+
+- Theoretical analysis and guarantees: scarce
+- Wei et al. (2021): Soft-prompt tuning relaxes non-degeneracy assumptions needed for downstream recovery (extraction of task-specific information)
+- Saunshi et al. (2021): Verified that text classification tasks can be reformulated as sentence completion tasks, making language modeling a meaningful pre-training objective
+- Scao & Rush (2021): Empirically show prompting is often worth 100s of data points on average across classification tasks
+
+SECTION 10.7: TRANSFERABILITY OF PROMPTS
+
+- Understanding extent to which prompts are model-specific and improving transferability: important
+- Perez et al. (2021):
+  - Tuned few-shot learning (larger validation set): Prompts generalize well across similar-sized models
+  - True few-shot learning (only a few samples): Prompts do NOT generalize effectively
+  - Transferability is poor when model sizes differ significantly in both scenarios
+
+SECTION 10.8: COMBINATION OF DIFFERENT PARADIGMS
+
+- Much prompt-based success built on pre-trained models from pre-train/fine-tune paradigm (e.g., BERT)
+- Open question: Are pre-training methods effective for fine-tuning also effective for prompting as-is?
+- Or should pre-training methods be re-designed entirely for prompting-based learning?
+- Important research question; not extensively covered in literature
+
+SECTION 10.9: CALIBRATION OF PROMPTING METHODS
+
+- Calibration: ability of model to make good probabilistic predictions
+- Jiang et al. (2020b): Observed BART, T5, GPT-2 probabilities on QA tasks are well calibrated
+- Zhao et al. (2021): Three calibration pitfalls with answered prompts:
+  1. Majority label bias: Model biased toward majority label in examples
+  2. Recency bias: Model biased toward answer from most recent example
+  3. Common token bias: Model biased toward common tokens
+- Zhao et al. (2021) solution:
+  1. Use context-free input (e.g., "Input: N/A. Sentiment:") → get initial distribution P0
+  2. Use real input → get distribution P1
+  3. Combine P0 and P1 for calibrated distribution
+  - Drawbacks: (1) overhead finding proper context-free input; (2) underlying LM still uncalibrated
+
+- Holtzman et al. (2021): Surface form competition problem
+  - All surface forms of same object compete for finite probability mass
+  - Example: "Whirlpool bath" has low probability because "Bathtub" takes probability mass
+  - Solutions: (i) Answer engineering with comprehensive gold answer set via paraphrasing; (ii) Calibrate word probability based on prior likelihood in context
+
+--------------------------------------------------------------------------------
+PAGE 29 — Section 11: Meta Analysis
+--------------------------------------------------------------------------------
+
+SECTION 11: META ANALYSIS
+
+SECTION 11.1: TIMELINE
+
+(Full timeline in Table 12 — see page 30 content below)
+
+SECTION 11.2: TREND ANALYSIS
+
+Year:
+- Prompt-based learning increasingly active with emergence of pre-trained LMs
+- Huge surge in 2021, likely due to GPT-3 popularizing prompting in few-shot multi-task setting
+
+Tasks (Figure 6b):
+- Most common: Text Classification (TC) and Factual Probing (FP)
+- Likely because: template/answer engineering is easier; experiments computationally inexpensive
+
+Prompt vs. Answer Search (Figure 6c):
+- Current research mainly focuses on template search rather than answer search
+- Reasons:
+  1. For generation tasks (summarization, translation): gold references can be used directly as answers; multi-reference learning is non-trivial
+  2. For classification: label words are relatively easy to select via domain knowledge
+
+Discrete vs. Continuous Search (Figure 6d):
+- Shift over time from discrete to continuous search for prompt engineering
+- Reasons:
+  1. Discrete search harder to optimize
+  2. Soft prompts have greater representation ability
+
+--------------------------------------------------------------------------------
+PAGE 30 — Table 12: Timeline of Prompt-based Learning
+--------------------------------------------------------------------------------
+
+TABLE 12 — TIMELINE OF PROMPT-BASED LEARNING
+(Based on first arXiv version or estimated submission time)
+Color coding: Red=NLU tasks, Blue=NLG tasks, Green=both NLU and NLG
+
+2018:
+2018.06.07 — LMComm (Trinh & Le, 2018)
+
+2019:
+2019.02.14 — GPT-2 (Radford et al., 2019)
+2019.04.14 — WNLaMPro (Schick & Schütze, 2020)
+2019.07.31 — LMDiagnose (Ettinger, 2020)
+2019.08.20 — AdvTrigger (Wallace et al., 2019a)
+2019.09.02 — CohRank (Davison et al., 2019)
+2019.09.03 — LAMA (Petroni et al., 2019)
+2019.09.11 — CTRL (Keskar et al., 2019)
+2019.10.23 — T5 (Raffel et al., 2020)
+2019.11.08 — Neg & Misprim (Kassner & Schütze, 2020)
+2019.11.28 — LPAQA (Jiang et al., 2020c)
+2019.12.10 — ZSC (Puri & Catanzaro, 2019)
+
+2020:
+2020.01.21 — PET-TC (Schick & Schütze, 2021a)
+2020.03.10 — ContxFP (Petroni et al., 2020)
+2020.05.02 — UnifiedQA (Khashabi et al., 2020)
+2020.05.22 — RAG (Lewis et al., 2020b)
+2020.05.28 — GPT-3 (Brown et al., 2020)
+2020.09.08 — CommS2S (Yang et al., 2020)
+2020.09.15 — PET-SGLUE (Schick & Schütze, 2021b)
+2020.09.24 — ToxicityPrompts (Gehman et al., 2020)
+2020.10.07 — WhyLM (Saunshi et al., 2021)
+2020.10.13 — X-FACTR (Jiang et al., 2020a)
+2020.10.26 — Petal (Schick et al., 2020)
+2020.10.29 — AutoPrompt (Shin et al., 2020)
+2020.12.08 — CTRLsum (He et al., 2020a)
+2020.12.22 — PET-Gen (Schick & Schütze, 2020)
+2020.12.31 — LM-BFF (Gao et al., 2021)
+
+2021 (Jan–Mar):
+2021.01.01 — WARP (Hambardzumyan et al., 2021)
+2021.01.01 — Prefix-Tuning (Li & Liang, 2021)
+2021.01.17 — KATE (Liu et al., 2021a)
+2021.02.15 — PromptProg (Reynolds & McDonell, 2021)
+2021.02.19 — ContxCalibrate (Zhao et al., 2021)
+2021.02.24 — PADA (Ben-David et al., 2021)
+2021.02.27 — SD (Schick et al., 2021)
+2021.03.09 — BERTese (Haviv et al., 2021)
+2021.03.15 — Prompt2Data (Scao & Rush, 2021)
+2021.03.18 — P-Tuning (Liu et al., 2021b)
+2021.03.18 — GLM (Du et al., 2021)
+2021.03.22 — ADAPET (Tam et al., 2021)
+2021.04.10 — Meta (Zhong et al., 2021a)
+2021.04.12 — OptiPrompt (Zhong et al., 2021b)
+
+2021 (Apr–Jul):
+2021.04.14 — Soft (Qin & Eisner, 2021)
+2021.04.15 — DINO (Schick & Schütze, 2021)
+2021.04.15 — AdaPrompt (Chen et al., 2021b)
+2021.04.16 — PMIDC (Holtzman et al., 2021)
+2021.04.18 — Prompt-Tuning (Lester et al., 2021)
+2021.04.18 — Natural-Instr (Mishra et al., 2021)
+2021.04.18 — OrderEntropy (Lu et al., 2021)
+2021.04.18 — FewshotSemp (Shin et al., 2021)
+2021.04.26 — PanGu-α (Zeng et al., 2021)
+2021.05.24 — TrueFewshot (Perez et al., 2021)
+2021.05.24 — PTR (Han et al., 2021)
+2021.06.03 — TemplateNER (Cui et al., 2021)
+2021.06.03 — PERO (Kumar & Talukdar, 2021)
+2021.06.16 — PromptAnalysis (Wei et al., 2021)
+2021.06.20 — CPM-2 (Zhang et al., 2021)
+2021.06.21 — BARTScore (Yuan et al., 2021b)
+2021.06.24 — NullPrompt (Logan IV et al., 2021)
+2021.06.25 — Frozen (Tsimpoukelli et al., 2021)
+2021.07.05 — ERNIE-B3 (Sun et al., 2021)
+2021.07.07 — Codex (Chen et al., 2021a)
+2021.07.14 — HTLM (Aghajanyan et al., 2021)
+2021.07.15 — FLEX (Bragg et al., 2021)
+
+--------------------------------------------------------------------------------
+PAGE 31 — Section 11.2 (Trend Analysis figures), Section 12: Conclusion
+--------------------------------------------------------------------------------
+
+SECTION 11.2: TREND ANALYSIS (FIGURES)
+
+Figure 6 — Meta-analyses:
+(a) Year: Increasing number of papers, huge surge in 2021
+(b) Task distribution: TC and FP most common (>25 works each); GCG, QA, CR, SUM next
+(c) Automatic Search: Template search consistently more studied than answer search; both growing
+(d) Search Space: Shift from discrete search to continuous search over 2019-2021
+
+SECTION 12: CONCLUSION
+
+Key points:
+- Surveyed and analyzed several paradigms in statistical NLP development
+- Argued that prompt-based learning represents another major potential paradigm shift
+- Hope: Survey helps researchers understand paradigm and grasp core challenges
+
+Looking back at the four paradigms:
+1. Feature engineering (traditional ML)
+2. Architecture engineering (neural networks)
+3. Objective engineering (pre-train and fine-tune)
+4. Prompt engineering (pre-train, prompt, and predict)
+
+Final note: Highlighting commonalities/differences between paradigms may catalyze work toward the NEXT paradigm shift.
+
+ACKNOWLEDGEMENTS:
+Chunting Zhou for constructive comments.
+
+--------------------------------------------------------------------------------
+PAGES 32–43 — References
+--------------------------------------------------------------------------------
+
+KEY REFERENCES (selected, formatted for lookup):
+
+[1] Aghajanyan et al. (2021) — HTLM: Hyper-text pre-training and prompting. arXiv:2107.06955
+[6] Bao et al. (2020) — UniLMv2. ICML 2020.
+[8] Ben-David et al. (2021) — PADA: Prompt-based adaptation to unseen domains.
+[16] Brown et al. (2020) — GPT-3: Language models are few-shot learners. arXiv:2005.14165
+[20] Chen et al. (2021a) — Codex: Evaluating LLMs trained on code. arXiv:2107.03374
+[21] Chen et al. (2021b) — AdaPrompt: Adaptive prompt-based finetuning for relation extraction.
+[29] Cui et al. (2021) — Template-based NER using BART.
+[32] Devlin et al. (2019) — BERT. NAACL 2019.
+[35] Dong et al. (2019) — UniLM1. NeurIPS 2019.
+[36] Dou et al. (2021) — GSum: Guided neural abstractive summarization. NAACL 2021.
+[37] Du et al. (2021) — GLM: All NLP tasks are generation tasks.
+[39] Ettinger (2020) — What BERT is not. TACL.
+[41] Fan et al. (2018) — Controllable abstractive summarization.
+[42/43] Finn et al. (2017) — MAML. ICML 2017.
+[44] Fu et al. (2021) — SpanNER. arXiv:2106.00641
+[46] Gao et al. (2021) — LM-BFF: Better few-shot learners. ACL 2021.
+[47] Gehman et al. (2020) — RealToxicityPrompts. EMNLP 2020.
+[55] Hambardzumyan et al. (2021) — WARP. arXiv:2101.00121
+[56] Han et al. (2021) — PTR: Prompt Tuning with Rules.
+[58] Haviv et al. (2021) — BERTese: Learning to speak to BERT. EACL 2021.
+[62] Holtzman et al. (2021) — Surface form competition.
+[63] Howard & Ruder (2018) — ULMFiT. ACL 2018.
+[66] Jiang et al. (2020a) — X-FACTR. EMNLP 2020.
+[67] Jiang et al. (2020b) — When do LMs know? CoRR:2012.00955
+[68] Jiang et al. (2020c) — LPAQA: What language models know. TACL.
+[76] Khashabi et al. (2020) — UnifiedQA. EMNLP Findings.
+[83] Kumar & Talukdar (2021) — PERO: Reordering examples during priming.
+[87] Lan et al. (2020) — ALBERT. ICLR 2020.
+[88] Le Scao & Rush (2021) — How many data points is a prompt worth? NAACL 2021.
+[91] Lester et al. (2021) — Prompt-Tuning: Power of scale for parameter-efficient prompt tuning.
+[94] Lewis et al. (2020a) — BART. ACL 2020.
+[95] Lewis et al. (2020b) — RAG. NeurIPS 2020.
+[96] Li & Liang (2021) — Prefix-Tuning. arXiv:2101.00190
+[100] Liu et al. (2021a) — KATE: What makes good in-context examples for GPT-3?
+[103] Liu et al. (2021b) — P-Tuning: GPT understands, too. CoRR:2103.10385
+[105] Liu et al. (2019) — RoBERTa. arXiv:1907.11692
+[109] Logan IV et al. (2021) — NullPrompt: Cutting down on prompts and parameters.
+[111] Lu et al. (2021) — OrderEntropy: Fantastically ordered prompts.
+[120] Mishra et al. (2021) — Natural-Instructions. CoRR:2104.08773
+[129] Perez et al. (2021) — TrueFewshot: True few-shot learning with language models.
+[132] Petroni et al. (2020) — Context affects factual predictions.
+[133] Petroni et al. (2019) — LAMA: Language models as knowledge bases. EMNLP-IJCNLP 2019.
+[137] Qin & Eisner (2021) — Soft: Learning how to ask. NAACL 2021.
+[139] Radford & Narasimhan (2018) — GPT-1.
+[140] Radford et al. (2019) — GPT-2. Language models are unsupervised multitask learners.
+[141] Raffel et al. (2020) — T5. JMLR 21(140):1–67.
+[145] Reynolds & McDonell (2021) — PromptProg: Prompt programming for LLMs. CHI 2021.
+[148] Scao & Rush (2021) — Prompt2Data. arXiv:2103.08493
+[149/150/151/152/153/154/155] Schick & Schütze — PET-TC, PET-Gen, PET-SGLUE, DINO, WNLaMPro, Self-diagnosis. Various.
+[156] Sennrich et al. (2016a) — Controlling politeness in NMT.
+[158] Shin et al. (2021) — FewshotSemp: Constrained LMs for semantic parsing.
+[159] Shin et al. (2020) — AutoPrompt. EMNLP 2020.
+[167] Sun et al. (2021) — ERNIE 3.0. CoRR:2107.02137
+[170] Tam et al. (2021) — ADAPET: Improving pattern exploiting training.
+[174] Tsimpoukelli et al. (2021) — Frozen: Multimodal few-shot with frozen LMs.
+[176] Vaswani et al. (2017) — Attention is all you need. NeurIPS.
+[177] Wallace et al. (2019a) — AdvTrigger: Universal adversarial triggers. EMNLP-IJCNLP 2019.
+[181] Wei et al. (2021) — PromptAnalysis: Why pretrained LMs help in downstream tasks.
+[193] Yuan et al. (2021b) — BARTScore: Evaluating generated text as text generation.
+[194] Zeng et al. (2021) — PanGu-α: Large-scale autoregressive pretrained Chinese LMs.
+[198] Zhang et al. (2021) — CPM-2. CoRR:2106.10715
+[201] Zhao et al. (2021) — ContxCalibrate: Calibrate before use.
+[202] Zhong et al. (2021a) — Meta: Meta-tuning LMs to answer prompts better.
+[203] Zhong et al. (2021b) — OptiPrompt: Factual probing is [MASK].
+
+--------------------------------------------------------------------------------
+PAGE 44 — Appendix A.1, A.2
+--------------------------------------------------------------------------------
+
+APPENDIX A: PRE-TRAINED LANGUAGE MODELS
+
+A.1: EVOLUTION OF PRE-TRAINED LM PARAMETERS (Figure 7)
+
+Model parameter sizes (billions), ordered roughly by size:
+- ERNIE-T: 0.11B
+- MASS: 0.12B
+- ALBERT: 0.24B
+- UniLM: 0.3B
+- MT5, MT6: 0.3B
+- RoBERTa: 0.3B
+- BERT: 0.34B
+- BART: 0.34B
+- XLM: 0.4B
+- XNLG: 0.8B
+- GPT2: 0.8B (actually up to 1.5B)
+- CPM1: 2.6B
+- ERNIE-3: 10B
+- T5: 11B
+- CODEX: 12B
+- M6: 100B
+- GPT3: 175B
+- CPM2: 198B
+- PanGu-α: 200B
+
+Top 3 largest: GPT3, CPM2, PanGu-α (all >150B parameters)
+
+A.2: AUXILIARY OBJECTIVES
+
+- Next Sentence Prediction (NSP) [Devlin et al., 2019]: Binary classification — do two segments appear consecutively or are they random?
+- Sentence Order Prediction (SOP) [Lan et al., 2020]: Binary — are two sentences in natural or swapped order?
+- Capital Word Prediction (CWP) [Liu et al., 2020b]: Binary — is each word capitalized?
+- Sentence Deshuffling (SDS) [Liu et al., 2020b]: Multi-class — reorganize permuted segments
+- Sentence Distance Prediction (SDP) [Liu et al., 2020b]: Three-class — adjacent in same doc / not adjacent but same doc / different docs
+- Masked Column Prediction (MCP) [Yin et al., 2020]: Given table, recover names and data types of masked columns
+- Linguistic-Visual Alignment (LVA) [Lu et al., 2019]: Binary — can text content be aligned to visual content?
+- Image Region Prediction (IRP) [Su et al., 2020]: Given image with masked features, predict masked regions
+- Replaced Token Detection (RTD) [Xiao et al., 2021]: Binary — was each token replaced by generative sample or not?
+- Discourse Relation Prediction (DRP) [Sun et al., 2020]: Predict semantic/rhetorical relation between two sentences
+- Translation Language Modeling (TLM) [Lample & Conneau, 2019]: Parallel sentences; randomly mask words in both source and target
+- Information Retrieval Relevance (IRR) [Sun et al., 2020]: Predict information retrieval relevance of two sentences
+- Token-Passage Prediction (TPP) [Liu et al., 2020b]: Identify keywords of passage appearing in segment
+- Universal Knowledge-Text Prediction (UKTP) [Sun et al., 2021]: Incorporate knowledge into one pre-trained LM
+- Machine Translation (MT) [Chi et al., 2021a]: Translate source language sentence to target
+- Translation Pair Span Corruption (TPSC) [Chi et al., 2021a]: Predict masked spans from a translation pair
+- Translation Span Corruption (TSC) [Chi et al., 2021a]: Mask and predict spans in one language only
+
+--------------------------------------------------------------------------------
+PAGE 45 — Appendix A.2 (continued), A.3 intro
+--------------------------------------------------------------------------------
+
+A.2 ADDITIONAL AUXILIARY OBJECTIVES (continued):
+
+- Multilingual Replaced Token Detection (MRTD) [Chi et al., 2021b]: Distinguish real input tokens from corrupted multilingual sentences via GAN; generator and discriminator shared across languages
+- Translation Replaced Token Detection (TRTD) [Chi et al., 2021b]: Distinguish real and masked tokens in translation pair via GAN
+- Knowledge Embedding (KE) [Wang et al., 2021]: Encode entities and relations in knowledge graphs as distributed representations
+- Image-to-text transfer (ITT) [Wang et al., 2021]: Generate description for input image (similar to image captioning)
+- Multimodality-to-text transfer (MTT) [Wang et al., 2021]: Generate target text based on both visual and noised linguistic information
+
+A.3: PRE-TRAINED LANGUAGE MODEL FAMILIES
+
+Overview: Clusters mainstream pre-training models and characterizes from diverse dimensions.
+
+--------------------------------------------------------------------------------
+PAGE 46 — Table 13: Pre-trained Language Model Families (complete)
+--------------------------------------------------------------------------------
+
+TABLE 13 — DETAILED ILLUSTRATION OF PRE-TRAINED MODELS
+
+Family | Models | LM | Main Obj | Auxiliary | Parallel | Corruption (Mask/Replace/Delete/Permute) | Application
+-------|--------|----|---------|-----------|---------|-----------------------------------------|------------
+
+GPT family:
+GPT [139] | L2R | SLM | — | No | — | NLG
+GPT-2 [140] | L2R | SLM | — | No | — | NLG
+GPT-3 [16] | L2R | SLM | — | No | — | NLG
+Codex [20] | L2R | SLM | — | No | — | NLG
+
+ELMo:
+ELMo [130] | L2R | SLM | — | No | — | NLU, NLG
+
+BERT family:
+BERT [32] | Mask | CTR | NSP | No | Tok | NLU
+RoBERTa [105] | Mask | CTR | — | No | Tok | NLU
+SpanBERT [70] | Mask | CTR | — | No | Span | NLU
+DeBERTa [60] | Mask | CTR | — | No | Tok | NLU
+SciBERT [7] | Mask | CTR | NSP | No | Tok | Sci-NLU
+BioBERT [89] | Mask | CTR | NSP | No | Tok | Bio-NLU
+ALBERT [87] | Mask | CTR | SOP | No | Tok | mSent
+FinBERT [108] | Mask | CTR | CWP, SDS, SDP, TPP | No | Span, Sent | Fin-NLU
+VLBERT [164] | Mask | CTR | IRP | Yes | Tok, Region | VLU
+ViLBERT [110] | Mask | CTR | IRP, LVA | Yes | Tok, Region | VLU
+BEIT [5] | Mask | CTR+FTR | — | No | Visual "Tok" | VLU
+VideoBERT [166] | Mask | CTR | LVA | Yes | Tok, Frame | VLU
+TaBERT [189] | Mask | CTR | MCP | Yes | Tok, Column | Tab2Text
+mBERT [32] | Mask | CTR | NSP | No | Tok | XLU
+TinyBERT [69] | Mask | CTR | NSP | No | Tok | XLU
+
+ERNIE family:
+ERNIE-T [199] | Mask | CTR | NSP | No | Tok, Entity | NLU
+ERNIE-B [169] | Mask | CTR | — | No | Tok, Entity, Phrase | NLU
+ERNIE-NG [183] | Mask | CTR | RTD | No | N-gram Tok | NLU
+ERNIE-B2 [168] | Mask | CTR | CWP, SDS, SOP, SDP, DRP, IRR | No | Entity, Phrase, Sent | NLU
+ERNIE-M [126] | LPM | CTR | — | Yes | Tok | XLU, XLG
+ERNIE-B3 [167] | Mask | CTR | SOP, SDP, UKTP | No | Entity, Phrase | NLU
+
+BART family:
+BART [94] | En-De | FTR | — | No | Tok/Span/Tok/Sent,Doc | NLU, NLG
+mBART [104] | En-De | FTR | — | No | Span, Sent | NLG
+
+UniLM family:
+UniLM1 [35] | LPM | SLM+CTR | NSP | No | Tok | NLU, NLG
+UniLM2 [6] | LPM | SLM+CTR | — | No | Tok, Tok | NLU, NLG
+
+T5 family:
+T5 [141] | En-De | CTR | — | No | Span | NLU, NLG
+mT5 [186] | En-De | CTR | — | No | Span | XLU, XLG
+mT6 [22] | En-De | CTR | MT, TPSC, TSC | Yes | Span | XLU, XLG
+ByT5 [185] | En-De | CTR | — | No | byte-span | XLU, XLG
+
+XLM family:
+XLM [86] | LPM | CTR | TLM | Yes | Tok | XLU, XLG
+XLM-R [28] | Mask | CTR | — | No | Tok | XLU
+XLM-E [23] | Mask | CTR | MRTD, TRTD | No | Tok | XLU, XLG
+
+CPM family:
+CPM [200] | L2R | SLM | — | No | — | NLG
+CPM-2 [198] | En-De | CTR | — | No | Span | NLU, NLG
+
+Other:
+XLNet [188] | L2R | SLM | — | No | Tok (permuted) | NLU
+PanGu-α [194] | L2R | SLM | — | No | — | NLG
+ELECTRA [26] | Mask | CTR | RTD | No | Tok, Tok | NLU, NLG
+MASS [162] | En-De | CTR | — | No | Span | NLG
+PEGASUS [195] | En-De | CTR | — | No | Tok, Sent | Summarization
+M6 [179] | En-De | CTR | ITT, MTT | No | Span | NLG
+
+KEY:
+- LM types: L2R=Left-to-right, Mask=Masked LM, En-De=Encoder-Decoder, LPM=Left-Prefix Model
+- Main Objectives: SLM=Standard Language Model, CTR=Corrupted Text Reconstruction, FTR=Full Text Reconstruction
+- Application domains: NLU=Natural Language Understanding, NLG=Natural Language Generation, XLU=Cross-lingual Understanding, XLG=Cross-lingual Generation, VLU=Vision-Language Understanding, Sci=Scientific, Bio=Biomedical, Fin=Financial
+- Corruption units: Tok=Token, Sent=Sentence, Doc=Document, Region=Image region, Frame=Video frame
+
+================================================================================
+END OF DOCUMENT
+================================================================================

@@ -1,0 +1,76 @@
+SOURCE: Agentic_AI___2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+URL: https://nmsu.instructure.com/courses/1731641/pages/agentic-ai?module_item_id=40398380
+COURSE: 2026 Spring-CSCI-4440-M01/CSCI-5440-M01-GENERATIVE AI
+DATE CAPTURED: 3/22/26, 6:19 PM
+
+================================================================================
+PAGE 1
+================================================================================
+
+Module: Agentic AI
+
+--- SECTION: Overview ---
+
+In this module, we will discuss Agentic AI Agents. Focus will be on understanding the motivation of this type of agents and discussing about architectures, characteristics, and applications of agentic AI.
+
+--- SECTION: Learning Objectives ---
+
+Content
+
+By the end of this module, you should be able to:
+
+MLO 1: Understand the notion of an autonomous agent, how to evaluate an agent
+MLO 2: Understand the architectures of agents
+MLO 3: Understand the difference between agentic AI Agents and classical autonomous agents
+MLO 4: Be able to develop an agentic AI agent
+
+--- SECTION: Learning Materials ---
+
+Presentations and videos:
+
+1. Classical Agents - presentation
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/281402978?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/281402978/download?download_frd=1
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F8fc1712b-a9aa-4862-91b3-b79f6e461456%2F07-genai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQyMTcwNTksInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzhmYzE3MTJiLWE5YWEtNDg2Mi05MWIzLWI3OWY2ZTQ2MTQ1Ni8wNy1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiY2U5M2EzNTUtMjc2MC00ZjUwLWJkNzQtZTZlNTY5ZTUzNzM2IiwiZXhwIjoxNzc0MzAzNDU5fQ.js7LfcKwKgjMoc0-sCIUdN_fiS9c9QJs4qbxIJJHTZFaPtfeQJ0xtmZ9HzBGo3cGn2hroRtBEGcvXFzPi_7aw
+
+================================================================================
+PAGE 2
+================================================================================
+
+2. Agentic AI Agents - presentation
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/281402987?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/281402987/download?download_frd=1
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F62fbbc08-0726-45f6-9bd4-252ec7ec5dc7%2F08-genai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQyMDg2NTEsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzYyZmJiYzA4LTA3MjYtNDVmNi05YmQ0LTI1MmVjN2VjNWRjNy8wOC1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiZjU1OWE2MzAtNzNlYi00MjkyLWE3NzAtNjQ2MjhhMTZjYzRjIiwiZXhwIjoxNzc0Mjk1MDUxfQ.HJcGGOl7jGrsl0UNbTRD5cEfaog5ndJYsQfTAoNlIXv7UyCRO8tytxUbZvidDoG8N53vX4lTG2DJRubfdUCCA
+
+Activities
+
+Assignments
+
+--- SECTION: Reading Materials ---
+
+The following papers are assigned for reading:
+
+First paper: PersonaAgent: When Large Language Model Agents Meet Personalization at Test Time
+
+================================================================================
+PAGE 3
+================================================================================
+
+First paper (continued): PersonaAgent: When Large Language Model Agents Meet Personalization at Test Time
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/281403249?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/281403249/download?download_frd=1
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F7977c5ea-917e-491d-a6c7-0d2ba7ff5d79%2FPersonaAgent.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQyMDYyOTksInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzc5NzdjNWVhLTkxN2UtNDkxZC1hNmM3LTBkMmJhN2ZmNWQ3OS9QZXJzb25hQWdlbnQucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiMDYyYWQyNDQtMGE1MC00NGUzLWIxM2MtODA2NmUxNTIxMmRjIiwiZXhwIjoxNzc0MjkyNjk5fQ.GiJWSQA02fYHVCaEUhHGkFWx8hihYGYgernBNZin8TizMyOqlcrU3l4FagHcGOPTPbnFbdMDUu3rH1gWivcPQ
+
+Second paper: Agent Q: Advanced Reasoning and Learning for Autonomous AI Agents
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/281403259?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/281403259/download?download_frd=1
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F9bfca41f-ed57-4748-8bde-af83b6065672%2FAgentQ.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQxOTM4MjIsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzliZmNhNDFmLWVkNTctNDc0OC04YmRlLWFmODNiNjA2NTY3Mi9BZ2VudFEucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiODI0NTEyMWMtMzA3OC00MDY2LTgyOGItNTgzMTNmMzhjNTY0IiwiZXhwIjoxNzc0MjgwMjIyfQ.ZeEIuLsyklcVa1V5b_cKYwEKepHK3VMHMhjZwZbWQZm4qwhPKg23aqy1JEZe6_OdaqIh0V4ji_KOwpRhlCbm-w
+
+Third paper: EvoAgentX: An Automated Framework for Evolving Agentic Workflows
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/281403260?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/281403260/download?download_frd=1
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F62a5274d-0261-4e86-8629-5dc1955312d9%2FEvoAgentX.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQyMjQ1NDAsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzYyYTUyNzRkLTAyNjEtNGU4Ni04NjI5LTVkYzE5NTUzMTJkOS9Fdm9BZ2VudFgucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiOTM5NTBhMWItYTEyYy00M2NkLWJmMDUtMTJmNWY1MGZjOGRkIiwiZXhwIjoxNzc0MzEwOTQwfQ.LB6791QzM5qamh--g8eGas_8KB143LENfRDgdqYvMWJUOXy3yFASY9MNo0KobjWuTFlEqUmSSrqenOutfyang
+
+================================================================================
+END OF DOCUMENT
+================================================================================

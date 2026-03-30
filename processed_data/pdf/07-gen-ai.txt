@@ -1,0 +1,440 @@
+SOURCE: 07-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 7 — Agentic AI
+
+================================================================================
+PAGE 1 — Title Slide
+================================================================================
+Course: Generative Artificial Intelligence
+Week: Week 7
+Topic: Agentic AI
+
+================================================================================
+PAGE 2 — The τ²-bench (Discussion Questions)
+================================================================================
+Topic: The τ²-bench (tau-squared bench) — Discussion Questions
+
+- What are the domains and test models in the tau^2 bench?
+- What is τ²-bench and why is it necessary to test AI and the user working together, instead of just letting AI do everything alone?
+- How can this be used for our project scenario to train any AI chatbot agent?
+- Why would the model's performance drop whenever the user asks for more performed actions for a task?
+- Are Reasoning and Coordination Really Separate Skills? The paper tries to separate the two using different evaluation modes. But, if the agent reasons poorly, its instructions may be unclear. If its instructions are unclear, coordination breaks down. So does coordination failure actually reflect reasoning weaknesses?
+- How may an agent be different with human users when it comes to user reliability? For example, a user forgetting to tell the agent that some setting has been turned off.
+- How reliable are the simulated users compared to the real-world users?
+- How does it do with users that don't know or misunderstand the answer?
+
+================================================================================
+PAGE 3 — Classical AI Agent (Sources)
+================================================================================
+Topic: Classical AI Agent — Source References
+
+Materials sourced from:
+- Book: "AI – A Modern Approach" by Russell and Norvig
+- Wikipedia
+- Images from Internet
+
+================================================================================
+PAGE 4 — Deep Blue vs. Kasparov (1997)
+================================================================================
+Topic: Historical AI Milestone — Deep Blue vs. Kasparov (1997)
+
+On May 11, 1997, the computer Deep Blue (IBM) won against world chess champion Garry Kasparov.
+This was a landmark event in AI history — the first time a computer defeated a reigning world chess champion in a formal match.
+Source credit: Reuters / Kyodo News
+
+================================================================================
+PAGE 5 — Mathematical Challenges Solved by AI/Computers
+================================================================================
+Topic: Mathematical Problems Solved by Computers / AI Agents
+
+1. Kepler Conjecture (1611–2017, approximately 400 years)
+   - About the optimal packing of spheres
+   - Reference: https://en.wikipedia.org/wiki/Kepler_conjecture
+
+2. Boolean Pythagorean Triples Problem
+   - Reference: https://en.wikipedia.org/wiki/Boolean_Pythagorean_triples_problem
+
+3. Robbins Algebra (1933–1996, 63 years)
+   - Reference: https://en.wikipedia.org/wiki/Robbins_algebra#History
+
+4. Four Coloring Problem (1852–1976)
+   - About coloring maps such that no two adjacent regions share a color, using only four colors
+   - Reference: https://en.wikipedia.org/wiki/Four_color_theorem
+
+================================================================================
+PAGE 6 — IBM Watson
+================================================================================
+Topic: IBM Watson — AI in Knowledge Work
+
+IBM has claimed that Watson's question-answering skills extend beyond game shows to fields like medical diagnosis, business analytics, and tech support, which could be automated by question-answering software like Watson.
+
+Quote from Ken Jennings (one of the losing Jeopardy! contestants):
+"Just as factory jobs were eliminated in the 20th century by new assembly-line robots, Brad and I were the first knowledge-industry workers put out of work by the new generation of 'thinking' machines. 'Quiz show contestant' may be the first job made redundant by Watson, but I'm sure it won't be the last."
+
+Key insight: AI began replacing knowledge-industry workers, not just manual labor.
+Reference: http://en.wikipedia.org/wiki/Watson_(computer)
+
+================================================================================
+PAGE 7 — Self-Driving Car
+================================================================================
+Topic: Self-Driving Car — Early Example of Autonomous Agent
+
+Example: Autonomos Labs self-driving car (Berlin, Germany, September 16, 2011)
+- Developed by the Artificial Intelligence Group of the Free University Berlin
+- The car is driven by a computer that starts and stops itself
+- Uses a 360-degree laser scanner on the roof, a GPS system, and other sensors to monitor surrounding traffic
+- A human driver sits behind the steering wheel only for safety/security reasons
+- The vehicle uses perception (sensors) and actuation (steering, acceleration) — classic agent architecture
+
+================================================================================
+PAGE 8 — Robot That Flies Like a Bird
+================================================================================
+Topic: SmartBird — Bio-inspired Autonomous Robot
+
+- Created by Markus Fischer and his team at Festo
+- SmartBird is a large, lightweight robot modeled on a seagull
+- It flies by flapping its wings — mimicking real bird flight
+- Demonstrated at TEDGlobal 2011
+- Illustrates physical autonomous agents operating in complex dynamic environments
+- Reference: https://www.ted.com/talks/markus_fischer_a_robot_that_flies_like_a_bird
+
+================================================================================
+PAGE 9 — Google Duplex AI
+================================================================================
+Topic: Google Duplex AI — Agentic AI in Real-World Tasks
+
+- Google Duplex was an AI system designed to perform mundane human activities (e.g., making restaurant reservations by phone call)
+- Generated significant media attention in 2018
+- Was not widely adopted by 2019
+- Key takeaway: Mundane human activities are not easy to automate correctly
+- Lesson: Even simple-seeming tasks require robust agent design
+- YouTube demo: https://www.youtube.com/watch?v=-RHG5DFAjp8
+- Review/critique: https://www.theverge.com/2019/5/9/18538194/google-duplex-ai-restaurants-experiences-review-robocalls
+
+================================================================================
+PAGE 10 — Autonomous Agent
+================================================================================
+Topic: Autonomous Agent — Key Concepts
+
+An autonomous agent lives in and interacts with an environment.
+
+Environment types:
+- Most intelligent agents are designed for specific task environments
+- They may not survive or function well in unknown environments
+- Examples of specialized agents: cleaning robots, harvesting robots, flying robots
+
+Environment dimensions (key classifications):
+- Dynamic vs. Static
+- Fully observable vs. Partially observable
+- Single-agent vs. Multi-agent
+- Deterministic vs. Non-deterministic (stochastic)
+- Discrete vs. Continuous
+- Episodic vs. Sequential
+
+Core components of an autonomous agent:
+- Actuators: what the agent can DO to change the environment
+- Sensors: what the agent can PERCEIVE from the environment
+- Performance measure: how we evaluate the agent's success
+
+Key distinction: Specialized agents vs. General-purpose agents
+
+================================================================================
+PAGE 11 — Agents and Environments
+================================================================================
+Topic: Agent Function and Agent-Environment Interaction
+
+The agent function maps from percept histories to actions:
+  f : P* → A
+
+- The agent program runs on the physical architecture to produce f
+- Agents include: humans, robots, softbots, thermostats, and more
+- Key question: Where does the function f come from? How to design it?
+
+Design considerations:
+- What is the right function? (e.g., how to limit the length of the percept sequence)
+- Can it be implemented in a small agent program?
+- Answer: Rationality
+
+Diagram components:
+- Environment → Sensors → Percepts → Agent (with function f) → Actions → Actuators → Environment (cycle)
+
+================================================================================
+PAGE 12 — Rationality: Idea
+================================================================================
+Topic: Rationality in AI Agents — Definition and Concept
+
+A rational agent is one that does "the right things."
+
+Definition of "right thing": Agents execute actions to change their surrounding environments. The right action is evaluated by looking at the consequences of the agent's actions.
+
+Performance measure: Captures what "good" consequences look like by evaluating possible action sequences.
+
+Formal Definition:
+For each possible percept sequence, a rational agent should select an action that is expected to maximize its performance measure, given:
+1. The evidence provided by the percept sequence
+2. Whatever built-in knowledge the agent has
+
+================================================================================
+PAGE 13 — Determining Rationality
+================================================================================
+Topic: Four Factors That Determine Rationality
+
+What is rational at any given time depends on:
+
+1. The performance measure — defines the criterion of success
+2. The agent's prior knowledge of the environment
+3. The actions that the agent can perform
+4. The agent's percept sequence to date
+
+================================================================================
+PAGE 14 — Designing Rationality (PEAS Framework)
+================================================================================
+Topic: PEAS Framework — Designing a Rational Agent
+
+PEAS stands for: Performance measure, Environment, Actuators, Sensors
+
+To design a rational agent, you must specify all four:
+
+- Performance measure: What criteria evaluate the agent's performance?
+- Environment: 
+    - Fully observable vs. Partially observable
+    - Single-agent vs. Multi-agent (competitive, cooperative, etc.)
+    - Deterministic vs. Stochastic
+    - Episodic vs. Sequential
+- Actuators: What can the agent DO to change the environment?
+- Sensors: What can the agent PERCEIVE from the environment?
+
+================================================================================
+PAGE 15 — PEAS for Self-Driving Taxi
+================================================================================
+Topic: PEAS Example — Self-Driving Taxi
+
+Applying PEAS to a self-driving taxi agent:
+
+- Performance measure: safety, reaching destination, profits, legality, passenger comfort
+- Environment: US streets and freeways, traffic, pedestrians, weather conditions
+- Actuators: steering wheel, accelerator, brake, horn, speaker/display
+- Sensors: video cameras, accelerometers, gauges, engine sensors, keyboard input, GPS
+
+================================================================================
+PAGE 16 — Other PEAS Examples
+================================================================================
+Topic: PEAS Framework Applied to Various Domains
+
+1. Medical Diagnosis System
+   - Performance: Healthy patient, reduced cost
+   - Environment: Patient, hospital
+   - Actuators: Display of questions, tests, diagnoses, treatments, referrals
+   - Sensors: Keyboard entry of symptoms, findings, patient's answers
+
+2. Satellite Image System
+   - Performance: Correct image categorization
+   - Environment: Downlink from orbiting satellite
+   - Actuators: Display of scene categorization
+   - Sensors: Color pixel arrays
+
+3. Part-Picking Robot
+   - Performance: Percentage of parts in correct bins
+   - Environment: Conveyor belt with parts, bins
+   - Actuators: Jointed arm and hand
+   - Sensors: Camera, joint angle sensors
+
+4. Refinery Controller
+   - Performance: Purity, yield, safety
+   - Environment: Refinery, operators
+   - Actuators: Valves, pumps, heaters, displays
+   - Sensors: Temperature, pressure, chemical sensors
+
+5. Interactive English Tutor
+   - Performance: Student's score on test
+   - Environment: Set of students, testing agency
+   - Actuators: Display of exercises, suggestions, corrections
+   - Sensors: Keyboard entry
+
+================================================================================
+PAGE 17 — Agent Architectures (Header Slide)
+================================================================================
+Topic: Agent Architectures — Overview Section Header
+
+Four major types of agent architectures are covered in this section.
+
+================================================================================
+PAGE 18 — Agent Architectures: Simple Reflex Agents
+================================================================================
+Topic: Simple Reflex Agents
+
+Description:
+- The simplest type of agent
+- Selects actions based solely on the current percept (current state of the world), ignoring history
+
+Rule format — Condition-Action Rule:
+  IF <condition is true> THEN DO <action>
+
+Example:
+  IF dark THEN DO (turn_on_light)
+
+Diagram flow:
+  Sensors → "What the world is like now" → Condition-action rules → "What action I should do now" → Actuators
+
+Limitation: Cannot handle partially observable environments (no memory of past percepts)
+
+================================================================================
+PAGE 19 — Agent Architectures: Model-Based Reflex Agents
+================================================================================
+Topic: Model-Based Reflex Agents
+
+Description:
+- Extends simple reflex agents by maintaining an internal state (model of the world)
+- Uses knowledge of how the world evolves and what its actions do
+
+Additional components beyond simple reflex:
+- State: internal memory of the world
+- How the world evolves: transition model
+- What my actions do: effect model
+
+Diagram flow:
+  Sensors → "What the world is like now" (informed by State, world evolution model, action model) → Condition-action rules → "What action I should do now" → Actuators
+
+Advantage: Can handle partially observable environments by tracking state over time
+
+================================================================================
+PAGE 20 — Agent Architectures: Goal-Based Agents
+================================================================================
+Topic: Goal-Based Agents
+
+Description:
+- Extends model-based agents by adding explicit goals
+- The agent reasons about what future states will be like and whether they satisfy its goals
+
+Additional component: Goals
+  - "How happy I will be in such a state" — goal evaluation
+
+Diagram flow:
+  Sensors → "What the world is like now" → "What it will be like if I do action A" → Goals → "How happy I will be in such a state" → "What action I should do now" → Effectors
+
+Advantage: More flexible than reflex agents; can plan sequences of actions to achieve goals
+
+================================================================================
+PAGE 21 — Agent Architectures: Utility-Based Agents
+================================================================================
+Topic: Utility-Based Agents
+
+Description:
+- Extends goal-based agents by replacing binary goal satisfaction with a utility function
+- Utility allows the agent to choose among competing goals or partial goal achievement
+
+Utility definition:
+  Utility = Rewards obtained when achieving a certain situation
+  Example: utility = 100 if reaching goal
+
+Additional component: Utility function (replaces Goals from goal-based agent)
+
+Diagram flow:
+  Sensors → "What the world is like now" → "What it will be like if I do action A" → Utility → "How happy I will be in such a state" → "What action I should do now" → Actuators
+
+Advantage: Handles trade-offs; can optimize across multiple competing objectives
+
+================================================================================
+PAGE 22 — Summary
+================================================================================
+Topic: Summary of Classical AI Agent Concepts
+
+Key points:
+
+1. Agents interact with environments through actuators (output) and sensors (input).
+   - Performance measure evaluates the environment sequence.
+   - PEAS descriptions define the full task environment.
+
+2. PEAS defines:
+   - What is the environment (observable? deterministic? episodic? static? discrete? single-agent?)
+   - How the agent changes the environment via actuators
+   - How the agent perceives changes via sensors
+   - How the agent is evaluated via performance measure
+
+3. The agent function describes what the agent does in all circumstances.
+
+4. A perfectly rational agent maximizes expected performance.
+
+5. Agent programs implement (some) agent functions.
+
+6. Four basic agent architectures:
+   - Simple reflex
+   - Model-based reflex
+   - Goal-based
+   - Utility-based
+
+================================================================================
+PAGE 23 — What Does Classical AI Have to Do with Agentic AI?
+================================================================================
+Topic: Bridging Classical AI Agents and Modern Agentic AI
+
+Key point: There is a common misunderstanding about what AI agents were in the past vs. what Agentic AI is now.
+
+A diagram from current literature contrasts:
+
+Traditional AI Agents / GenAI:
+- Requires step-by-step human prompts
+- Reactive: responds to explicit user instructions
+
+Agentic AI:
+- Understands high-level intent
+- Coordinates specialized sub-agents
+- Executes complex multi-step tasks autonomously
+- Example: user says "I want to book a trip" → agent handles Flights, Hotels, Shareable Plan, Calendar sync
+
+The slide notes this comparison may oversimplify or misrepresent classical AI agent capabilities.
+
+================================================================================
+PAGE 24 — Distinguishing the Paradigms: GenAI vs. MAS vs. Agentic AI
+================================================================================
+Topic: Three Paradigms Compared — Generative AI, Multi-Agent Systems (MAS), Agentic AI
+
+Generative AI:
+- Focuses on pattern-based content generation from a single prompt
+- No persistent memory
+- Requires moderate human intervention
+
+Multi-Agent Systems (MAS):
+- Focuses on distributed coordination and complex task division
+- Agents rely on static rules or individual learning
+- Varies in human intervention; often requires coordination oversight
+
+Agentic AI:
+- Focuses on goal-oriented autonomous decision-making
+- Features sophisticated memory, tool integration, and interactive learning loops
+- Minimal human supervision required
+
+================================================================================
+PAGE 25 — Agentic AI = Classical Autonomous Agents + LLM
+================================================================================
+Topic: Anatomy of Agentic AI — Core Functional Components
+
+Formula: Agentic AI = Classical Autonomous Agents + Large Language Models (LLM)
+
+Core functional components of Agentic AI (cycle):
+
+1. Perception & World Modeling
+   - Ingesting multimodal data, sensors, and APIs into structured observations
+
+2. Memory
+   - Short-term (episode context) and Long-term (knowledge histories)
+
+3. Planning & Reasoning
+   - Decomposing high-level goals into actionable, evaluated steps
+
+4. Execution & Actuation
+   - Invoking external tools, monitoring, and replanning on the fly
+
+5. Reflection
+   - Self-critique, verification, and output refinement
+
+6. Orchestration
+   - Coordinating sub-agents and managing the workflow graph
+
+These six components form a continuous loop that enables autonomous, goal-directed behavior.
+
+================================================================================
+END OF DOCUMENT
+Source File: 07-gen-ai.pdf
+Total Pages Extracted: 25
+================================================================================

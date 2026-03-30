@@ -1,0 +1,70 @@
+SOURCE: Generative_Adversarial_Networks__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+COURSE: 2026 Spring - CSCI-4440-M01 / CSCI-5440-M01 - GENERATIVE AI
+MODULE: Module #5 - Generative Adversarial Networks
+URL: https://nmsu.instructure.com/courses/1731641/pages/generative-adversarial-networks?module_item_id=40318144
+DATE CAPTURED: 3/22/26, 6:18 PM
+
+================================================================================
+PAGE 1
+================================================================================
+
+MODULE TITLE: Module #5 - Generative Adversarial Networks
+
+--- SECTION: Overview ---
+
+We will discuss Generative Adversarial Networks (GAN) in this module. We will build different types of GANs from the scratch using Keras, discuss their advantages, and disadvantages.
+
+--- SECTION: Learning Objectives ---
+
+By the end of this course, you should be able to:
+- CLO 1: [content not yet populated]
+- ... [additional CLOs not yet listed]
+
+By the end of this module, you should be able to:
+
+MLO 1: Learn about the architectural design of a generative adversarial network (GAN).
+
+MLO 2: Build and train various types of GAN (deep convolutional GAN (DCGAN), Wasserstein GAN (WGAN), conditional GAN (CGAN)) from scratch using Keras, and use them to generate new images.
+
+MLO 3: Understand the strengths and weaknesses of each type of GAN.
+
+--- SECTION: Learning Materials ---
+
+- Presentation on GAN
+  URL: https://nmsu.instructure.com/courses/1731641/files/281030546?wrap=1
+  Download URL: https://nmsu.instructure.com/courses/1731641/files/281030546/download?download_frd=1
+  ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Fa55a0475-346f-4cf0-b585-d65118acdd0b%2F06-genai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQxODgxNTMsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzL2E1NWEwNDc1LTM0NmYtNGNmMC1iNTg1LWQ2NTExOGFjZGQwYi8wNi1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiYjMwZTYyOWEtZWZjNC00M2MyLTg0YWYtZGY1YjQ5YzhiNTdiIiwiZXhwIjoxNzc0Mjc0NTUzfQ.kWjjgnHO9-Z9mLyLag1_AsGTRPQQHD4Wzr3ONMxFbEMcPoLBhEePUegFtTCDDCzg1gGID3nHKQrr1lkEkIAMeg
+
+================================================================================
+PAGE 2
+================================================================================
+
+--- SECTION: Learning Materials (continued) ---
+
+- Video
+  URL: https://nmsu.instructure.com/media_attachments_iframe/281030582
+  NOTE: Instructor note — "I forgot the AirPods so the sound is not great"
+
+--- SECTION: Activities ---
+
+- List activities [content not yet populated]
+
+--- SECTION: Assignments ---
+
+- Assignment description(s) [content not yet populated]
+
+--- SECTION: Supplemental Materials ---
+
+- Insert supplemental content here. [content not yet populated]
+
+================================================================================
+METADATA NOTES
+================================================================================
+
+- This is a Canvas LMS course page exported as PDF.
+- The page was captured from NMSU (New Mexico State University) Canvas instance.
+- Module number: 5
+- GAN types covered: GAN (vanilla), DCGAN (Deep Convolutional GAN), WGAN (Wasserstein GAN), CGAN (Conditional GAN)
+- Framework used: Keras
+- Task type: Image generation
+- Several sections (CLO list, Activities, Assignments, Supplemental Materials) appear as placeholder/template text and were not yet populated at time of capture.

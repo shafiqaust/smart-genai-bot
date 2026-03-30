@@ -1,0 +1,72 @@
+================================================================================
+SOURCE: Class Information and Introduction to AI/GenAI
+COURSE: 2026 Spring - CSCI-4440-M01 / CSCI-5440-M01 - GENERATIVE AI
+PLATFORM: NMSU Canvas (nmsu.instructure.com)
+DATE CAPTURED: 3/22/26
+PAGE COUNT: 3
+================================================================================
+
+--------------------------------------------------------------------------------
+PAGE 1
+--------------------------------------------------------------------------------
+
+MODULE: Module 1
+TITLE: Class Information and Brief Introduction to GenAI
+
+MODULE COMPONENTS:
+- A brief discussion about the syllabus
+- A brief description of AI and GenAI
+
+COURSE OBJECTIVES:
+- Understand about AI and GenAI
+
+MODULE OBJECTIVES:
+1. Understand the difference between AI and GenAI
+
+LEARNING MATERIALS:
+1. The two presentations
+2. The three videos
+
+ACTIVITIES - Read the Presentations:
+1. Class Information (Presentation)
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/279531888?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/279531888/download?download_frd=1
+   - File: 01-gen-ai-class-information.pdf
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Fc43cc20b-6734-4619-8e15-1d4aceb04e33%2F01-gen-ai-class-information.pdf
+
+--------------------------------------------------------------------------------
+PAGE 2
+--------------------------------------------------------------------------------
+
+2. AI and GenAI (Presentation)
+   - Canvas URL: https://nmsu.instructure.com/courses/1731641/files/279532735?wrap=1
+   - Download URL: https://nmsu.instructure.com/courses/1731641/files/279532735/download?download_frd=1
+   - File: AI and GenAI - Intro.pdf
+   - ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Fbccfdc7c-3fdf-4d62-94e6-d56d1e485e74%2FAI%2520and%2520GenAI%2520-%2520Intro.pdf
+
+ACTIVITIES - Listen to the Videos:
+1. Class Information (Video)
+   - URL: https://nmsu.instructure.com/media_attachments_iframe/279536696
+
+2. AI and GenAI - Video 1
+   - URL: https://nmsu.instructure.com/media_attachments_iframe/279536693
+
+3. AI and GenAI - Video 2
+   - URL: https://nmsu.instructure.com/media_attachments_iframe/279538049
+
+ASSIGNMENTS:
+- Complete Quiz 1
+  - URL: https://nmsu.instructure.com/courses/1731641/quizzes/4915281
+
+SUPPLEMENTAL MATERIALS:
+
+--------------------------------------------------------------------------------
+PAGE 3
+--------------------------------------------------------------------------------
+
+SUPPLEMENTAL MATERIALS:
+- None
+
+================================================================================
+END OF DOCUMENT
+================================================================================

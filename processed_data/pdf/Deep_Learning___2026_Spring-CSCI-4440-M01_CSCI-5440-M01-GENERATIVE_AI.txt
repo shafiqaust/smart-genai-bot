@@ -1,0 +1,86 @@
+SOURCE: Deep_Learning___2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+URL: https://nmsu.instructure.com/courses/1731641/pages/deep-learning?module_item_id=40244574
+EXTRACTED: 2026-03-29
+
+================================================================================
+PAGE 1
+================================================================================
+
+Module: Introduction to Deep Learning
+
+--- SECTION: Overview ---
+
+In this module, we will discuss two examples of Deep Learning Neural Networks. Focus will be on setting up your machines to work with the code of the book "Generative Deep Learning" and discussing an example of a Multilayer Perceptron and an example of a Convolutional Network.
+
+--- SECTION: Learning Objectives ---
+
+Content
+
+By the end of this module, you should be able to:
+
+MLO 1: Understand the basics of neural networks
+MLO 2: Be able to use Tensorflow and Keras
+MLO 3: Understand the differences between types of layers
+MLO 4: Be able to identify suitable architecture for a given application
+
+--- SECTION: Learning Materials ---
+
+Presentations and videos:
+- Presentation for 2/11
+  - File URL: https://nmsu.instructure.com/courses/1731641/files/279898413?wrap=1
+  - Presentation download URL: https://nmsu.instructure.com/courses/1731641/files/280507266?wrap=1
+  - Direct download URL: https://nmsu.instructure.com/courses/1731641/files/280507266/download?download_frd=1
+  - ReadSpeaker/DocReader URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Ff5903aab-3a68-4c12-bec9-9ae03a15c3d4%2F04-genai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzQyMjM2MzgsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzL2Y1OTAzYWFiLTNhNjgtNGMxMi1iZWM5LTlhZTAzYTE1YzNkNC8wNC1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiZmYzODViZDQtZjMzNi00ODIwLTg5ZWQtMTkwOTkzNjdjMDhkIiwiZXhwIjoxNzc0MzEwMDM4fQ.O9DENO7XxCk80zj6vgl9MdcYWu7I8_HeNvhEvfUQDzaPa5BkhMj2kA4vDuyXqBAbrA67d6YIupEjAGkGx18KFg
+
+================================================================================
+PAGE 2
+================================================================================
+
+  - Video URL: https://nmsu.instructure.com/media_attachments_iframe/280529017
+
+--- SECTION: Activities ---
+
+1. Clone the code base from the book:
+   Repository URL: https://github.com/davidADSP/Generative_Deep_Learning_2nd_Edition/tree/main
+
+2. Please check out the setup on your cs account (NOTE: this is different from the NMSU account). If you have never used the machines in the lab of the department, it is likely that you might have forgotten about the cs account and need to talk with Ivan or Mike to obtain it. After obtaining the email, you can check out the types of machines we have via the intranet of the department:
+   Intranet URL: https://intranet.cs.nmsu.edu/wp
+
+3. Docker availability notes:
+   - Docker is running on all of the machines in the graduate lab.
+   - Docker is also running on the Dell and Supermicro machines in the undergraduate lab.
+   - These are basically the tower machines in room 118, except for the older Acer machines.
+
+4. If you use your own machine, please try to follow the instructions from the README file to install the necessary software to run it.
+
+5. Mac-specific instruction: If you use Mac, before running the command "docker compose up" (or the one with GPU), run "open -a Docker".
+
+--- SECTION: Assignments ---
+
+(No assignment details listed on this page.)
+
+--- SECTION: Supplemental Materials ---
+
+(No supplemental material details listed on this page.)
+
+================================================================================
+PAGE 3
+================================================================================
+
+(Page 3 contains no extractable content — blank page or footer/navigation only.)
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
+METADATA SUMMARY:
+- Course: CSCI-4440-M01 / CSCI-5440-M01 — Generative AI, Spring 2026
+- Institution: New Mexico State University (NMSU)
+- Module Title: Introduction to Deep Learning
+- Book referenced: "Generative Deep Learning" (2nd Edition) by David Foster
+- Book GitHub repo: https://github.com/davidADSP/Generative_Deep_Learning_2nd_Edition/tree/main
+- Tools/Frameworks covered: TensorFlow, Keras, Docker
+- Network architectures covered: Multilayer Perceptron (MLP), Convolutional Neural Network (CNN)
+- Contact persons for cs account access: Ivan, Mike
+- Lab rooms mentioned: Graduate lab, Undergraduate lab (room 118)
+- Hardware mentioned: Dell machines, Supermicro machines, Acer machines (older, no Docker)

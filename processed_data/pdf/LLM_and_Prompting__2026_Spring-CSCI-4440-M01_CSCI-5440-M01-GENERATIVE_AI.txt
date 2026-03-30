@@ -1,0 +1,192 @@
+SOURCE: LLM_and_Prompting__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+URL: https://nmsu.instructure.com/courses/1731641/pages/llm-and-prompting?module_item_id=40110820
+COURSE: 2026 Spring-CSCI-4440-M01 / CSCI-5440-M01 - GENERATIVE AI
+MODULE TITLE: LLM and Prompting
+RETRIEVED: 3/22/26, 6:34 PM
+
+================================================================================
+PAGE 1
+================================================================================
+
+SECTION: Overview
+
+In this week and the following week, we will play with Large Language Model (LLM) and learn about prompting.
+
+---
+
+SECTION: Learning Objectives
+
+Content
+
+By the end of this module, you should be able to:
+
+MLO 1: Understand the basic of LLM
+MLO 2: Familiar with different prompting techniques
+MLO 3: Understand the differences between different prompting techniques
+MLO 4: Be able to identify suitable prompting techniques for a given task
+
+---
+
+SECTION: Learning Materials
+
+- Learn from the Microsoft Generative AI for Beginners courses
+  URL: https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/
+  Note: Please listen to five episodes
+
+  Episodes to watch:
+  1. Introduction to Generative AI and LLMS
+     URL: https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/introduction-to-generative-ai-and-llms-generative-ai-for-beginners
+
+================================================================================
+PAGE 2
+================================================================================
+
+  2. Exploring and comparing different LLMS
+     URL: https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/exploring-and-comparing-different-llms-generative-ai-for-beginners
+
+  3. Using Generative AI Responsibly
+     URL: https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/using-generative-ai-responsibly-generative-ai-for-beginners
+
+  4. Understanding Prompt Engineering Fundamentals
+     URL: https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/understanding-prompt-engineering-fundamentals-generative-ai-for-beginners
+
+  5. Creating Advanced Prompts
+     URL: https://learn.microsoft.com/en-us/shows/generative-ai-for-beginners/creating-advanced-prompts-generative-ai-for-beginners
+
+- Reading: The survey on prompting techniques
+  Canvas URL: https://nmsu.instructure.com/courses/1731641/files/279736395?wrap=1
+  Direct download: https://nmsu.instructure.com/courses/1731641/files/279736395/download?download_frd=1
+  Underlying file: 2402.07927v2.pdf
+
+- Reading: The survey on prompt engineering in natural language processing (*)
+  URL: https://arxiv.org/pdf/2107.13586
+
+- Reading: Google Prompt Engineering guidelines
+  URL: https://www.kaggle.com/whitepaper-prompt-engineering
+
+- Reading: A short history of AI
+  URL: https://www.youtube.com/watch?v=9AkXmkPkvjM
+
+- Presentations and videos:
+
+  1. LLM and Prompt Engineering 1
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/279898413?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/279898413/download?download_frd=1
+     Underlying file: 02-genai.pdf
+
+================================================================================
+PAGE 3
+================================================================================
+
+  2. Some approaches to prompt engineering (*)
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280055947?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280055947/download?download_frd=1
+     Underlying file: 02-gen-ai-prompt-engineering-approaches.pdf
+     Video: https://nmsu.instructure.com/media_attachments_iframe/280056742
+
+  3. Other approaches to prompt engineering
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280183071?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280183071/download?download_frd=1
+     Underlying file: 02-gen-ai-prompt-engineering-approaches2.pdf
+     Video (available 4/2/2026): https://nmsu.instructure.com/media_attachments_iframe/280184931
+
+================================================================================
+PAGE 4
+================================================================================
+
+  4. Coding with Gemini (*)
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280439222?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280439222/download?download_frd=1
+     Underlying file: 03-genai.pdf
+     Video (available 4/2/2026): https://nmsu.instructure.com/media_attachments_iframe/280056742
+
+---
+
+SECTION: Activities
+
+- Please check out the five episodes of the course from Microsoft (listed above).
+
+- Checkout the video on how to use Google AI Studio (*)
+  URL: https://www.youtube.com/watch?v=qfWpPEgea2A&t=89s
+
+- Obtain a free GEMINI_API_KEY and set up your computer to run the following programs:
+
+  1. Example of auto-chain-of-thought (*)
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280056073?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280056073/download?download_frd=1
+     Underlying file: gauto.py
+
+================================================================================
+PAGE 5
+================================================================================
+
+  2. Example of self-consistency (*)
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280056083?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280056083/download?download_frd=1
+     Underlying file: gemini-self-consistent.py
+
+---
+
+SECTION: Assignments
+
+- Complete Quiz 2 (due Jan 30)
+  URL: https://nmsu.instructure.com/courses/1731641/quizzes/4914877
+
+- Complete Assignment 1 (due February 5)
+  URL: https://nmsu.instructure.com/courses/1731641/assignments/19397866
+
+---
+
+SECTION: Supplemental Materials
+
+Some scripts:
+
+  1. TOT script
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280183097?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280183097/download?download_frd=1
+     Underlying file: tot.txt
+
+  2. Another code generation example
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280184579?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280184579/download?download_frd=1
+     Underlying file: gen-code.txt
+
+================================================================================
+PAGE 6
+================================================================================
+
+Sample files for creating transcripts:
+
+  1. courses.csv
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280398901?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280398901/download?download_frd=1
+
+  2. students.csv
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280398902?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280398902/download?download_frd=1
+
+  3. classes.csv
+     Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280398899?wrap=1
+     Direct download: https://nmsu.instructure.com/courses/1731641/files/280398899/download?download_frd=1
+
+- Gemini conversation (example of generating different code versions and working with roster):
+  URL: https://gemini.google.com/share/41a8d5645eee
+
+- roster.csv
+  Canvas URL: https://nmsu.instructure.com/courses/1731641/files/280439236?wrap=1
+  Direct download: https://nmsu.instructure.com/courses/1731641/files/280439236/download?download_frd=1
+
+================================================================================
+PAGE 7
+================================================================================
+
+  (Continuation of supplemental materials — roster.csv file listing, no additional text content beyond page 6.)
+
+================================================================================
+METADATA NOTES
+================================================================================
+
+- Items marked (*) are likely required or priority materials (instructor-marked).
+- Assignment due dates: Quiz 2 = Jan 30 | Assignment 1 = Feb 5
+- Some videos listed with date 4/2/2026 may not have been available at time of capture.
+- The (*) marker appears on: survey on prompt engineering in NLP, Some approaches to prompt engineering, Coding with Gemini, Google AI Studio video, auto-chain-of-thought example, self-consistency example.

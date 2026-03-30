@@ -1,0 +1,300 @@
+FILE: 06-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 6 - Generative Adversarial Networks (GAN)
+
+================================================================================
+PAGE 1 - Title Slide
+================================================================================
+Course: Generative Artificial Intelligence
+Week 6: Generative Adversarial Networks (GAN)
+
+================================================================================
+PAGE 2 - An Illustration
+================================================================================
+Title: An Illustration
+
+Two core components of a GAN:
+- Generator: tries to produce fake pictures
+- Discriminator: tries to detect fake pictures
+
+The generator and discriminator are in an adversarial relationship, each improving through competition with the other.
+
+================================================================================
+PAGE 3 - Schema
+================================================================================
+Title: Schema
+
+Generator Pipeline:
+- Input: Random noise
+- Process: Generator (neural network)
+- Output: Generated image
+
+Discriminator Pipeline:
+- Input: Image (either real or fake)
+- Process: Discriminator (neural network)
+- Output: Prediction value (e.g., 0.1) representing how likely the image is to be real
+
+================================================================================
+PAGE 4 - Deep Convolutional GAN (DCGAN)
+================================================================================
+Title: Deep Convolutional GAN (DCGAN)
+
+Components:
+1. Dataset - Brick Dataset (images of LEGO-style bricks)
+2. Discriminator
+3. Generator
+
+New elements introduced in DCGAN code:
+- The Reshape Layer: transforms shape from 100x1 to 1x1x100, enabling use of Conv2DTranspose
+- UpSampling2D: increases spatial size of feature maps
+
+Code examples:
+  x = layers.UpSampling2D(size=2)(x)
+  x = layers.Conv2D(256, kernel_size=4, strides=1, padding="same")(x)
+
+================================================================================
+PAGE 5 - Training DCGAN
+================================================================================
+Title: Training DGAN (Deep Convolutional GAN)
+
+Key concept:
+- The loss functions of the generator and discriminator are updated separately
+
+Training process (Discriminator):
+- Receives a batch of fake images (from generator) → Discriminator → Predictions compared to labels (0 = fake) → Loss
+- Receives a batch of real images → Discriminator → Predictions compared to labels (1 = real) → Loss
+
+Training process (Generator):
+- Random noise → Generator → Fake training batch → Discriminator → Predictions compared to labels (1 = target for generator) → Loss
+
+Note: See the last six lines in code block #10 for implementation.
+
+Example discriminator outputs for fake images: 0.2, 0.1, 0.3, 0.6 (labels: 0)
+Example discriminator outputs for real images: 0.8, 0.9, 0.4, 0.7 (labels: 1)
+Example generator training outputs: 0.4, 0.5, 0.6, 0.2 (target labels: 1)
+
+================================================================================
+PAGE 6 - Accuracy vs Loss Function
+================================================================================
+Title: Accuracy vs Loss Function
+
+Four training metrics tracked across ~160 epochs:
+
+1. epoch_g_loss (Generator Loss):
+   - Starts around 2.0, rises and stabilizes around 2.8-3.0
+   - Shows high variance throughout training
+
+2. epoch_g_acc (Generator Accuracy):
+   - Starts around 0.16-0.20, drops sharply toward 0
+   - Near-zero accuracy by epoch 80+, indicating discriminator successfully detects fakes
+
+3. epoch_d_loss (Discriminator Loss):
+   - Starts around 0.55, drops sharply and stabilizes around 0.25-0.30
+   - Indicates discriminator improves quickly
+
+4. epoch_d_acc (Discriminator Accuracy):
+   - Starts around 0.80, rises toward ~0.96-1.0
+   - Discriminator becomes very accurate at detecting real vs fake images
+
+================================================================================
+PAGE 7 - Analysis (DCGAN)
+================================================================================
+Title: Analysis
+
+Key findings:
+1. Generator improves with the number of epochs
+   - Epoch 1: noisy, unrecognizable outputs
+   - Epoch 10: slight improvement, vague shapes
+   - Epoch 50: more defined shapes
+   - Epoch 100: clearer brick-like shapes
+   - Epoch 175: visually coherent brick images
+
+2. Generator can produce images NOT in the training set
+   - Generated images are novel (not copies of training examples)
+   - Closest training set examples are shown for comparison
+   - The model generalizes beyond memorization
+
+================================================================================
+PAGE 8 - Difficulties in GAN Training (1)
+================================================================================
+Title: Difficulties in GAN Training (1)
+
+Problem 1: Discriminator overpowers the generator
+- Solution: Weaken the discriminator
+  * Increase the Dropout layer rate parameter in the discriminator
+  * Dampen the amount of information flowing through the network
+  * Reduce the learning rate of the discriminator
+  * Reduce the number of convolutional filters in the discriminator
+  * Add noise to the labels when training the discriminator
+  * Flip the labels of some images at random when training the discriminator
+
+Problem 2: Generator overpowers the discriminator
+- Solution: Do the reverse of the above
+
+Problem 3: Uninformative loss (for generator)
+- Generator loss does not correlate well with output quality
+
+Problem 4: High number of hyperparameters
+- GANs are sensitive to hyperparameter choices, making tuning difficult
+
+================================================================================
+PAGE 9 - The Problem of Vanishing Gradient
+================================================================================
+Title: The Problem of Vanishing Gradient
+
+Definition:
+- Occurs when gradients (signals used to update weights) become so small during backpropagation that they effectively vanish
+
+Mathematical cause - Chain rule during backpropagation:
+  ∂Loss/∂w₁ = (∂Loss/∂y) · (∂y/∂h_n) · ... · (∂h₂/∂h₁) · (∂h₁/∂w₁)
+
+When many small values are multiplied together, the gradient approaches zero.
+
+Activation function limitations:
+- Sigmoid: maximum gradient is 0.25
+- Tanh: maximum gradient is 1
+
+Fixes:
+1. ReLU (Rectified Linear Unit) and LeakyReLU activation functions
+   - Do not saturate for positive inputs, preserving gradient magnitude
+2. Batch Normalization
+   - Normalizes layer inputs to prevent extreme activation values
+
+================================================================================
+PAGE 10 - Wasserstein GAN with Gradient Penalty (WGAN-GP)
+================================================================================
+Title: Wasserstein GAN with Gradient Penalty (WGAN-GP)
+
+Motivation:
+- Provides a meaningful loss metric that correlates with generator convergence and sample quality
+- Improves stability of the optimization process
+
+Key innovation:
+- Replaces binary cross-entropy with the Wasserstein loss function for both the discriminator and generator
+- Using Wasserstein loss instead of binary cross-entropy results in more stable GAN convergence
+
+================================================================================
+PAGE 11 - Wasserstein Loss Function
+================================================================================
+Title: Wasserstein Loss Function
+
+--- Binary Cross-Entropy Loss ---
+
+Formula:
+  -(1/n) * Σᵢ₌₁ⁿ [yᵢ log(pᵢ) + (1 - yᵢ) log(1 - pᵢ)]
+
+Discriminator loss function (binary cross-entropy):
+  min_D -( E_{x ~ p_X}[log D(x)] + E_{z ~ p_Z}[log(1 - D(G(z)))] )
+         ^ Real image                ^ Fake image
+
+Generator loss function (binary cross-entropy):
+  min_G -( E_{z ~ p_Z}[log D(G(z))] )
+
+Labels: yᵢ ∈ {0 (fake), 1 (real)}
+Output: pᵢ = discriminator probability ∈ [0, 1]
+
+--- Wasserstein Loss Function ---
+
+Formula:
+  -(1/n) * Σᵢ₌₁ⁿ (yᵢ · pᵢ)
+
+Discriminator (Critic) loss function (Wasserstein):
+  min_D -( E_{x ~ p_X}[D(x)] - E_{z ~ p_Z}[D(G(z))] )
+          ^ Real image          ^ Fake image
+
+Generator loss function (Wasserstein):
+  min_G -( E_{z ~ p_Z}[D(G(z))] )
+
+Labels: yᵢ ∈ {-1 (fake), 1 (real)}
+Output: pᵢ = critic score (unbounded, not a probability)
+
+Note: In WGAN, the discriminator is renamed "critic" because its output is no longer a probability but a real-valued score.
+
+================================================================================
+PAGE 12 - The Lipschitz Constraint
+================================================================================
+Title: The Lipschitz Constraint
+
+Problem:
+- Wasserstein loss function can produce very large output values
+- Large values are not good for ML optimization in general
+
+Solution:
+- Enforce the 1-Lipschitz continuity constraint on the critic function
+
+Mathematical definition of 1-Lipschitz continuity:
+  |D(x₁) - D(x₂)| / |x₁ - x₂| ≤ 1
+
+Meaning: The critic's output cannot change faster than the rate of change of its input.
+
+Implementation (weight clipping):
+- Clip the weights of the critic to the range [-0.01, 0.01] after each gradient update
+
+Note: Weight clipping is the original WGAN approach. WGAN-GP replaces weight clipping with gradient penalty for a better enforcement of the constraint.
+
+================================================================================
+PAGE 13 - Training WGAN-GP
+================================================================================
+Title: Training WGAN-GP
+
+Two key differences from standard GAN training:
+1. Gradient Penalty (GP)
+2. Wasserstein Loss Function
+
+Training pipeline:
+- Random noise → Generator → Fake images → Critic → Predictions (e.g., -3.2, -4.3), Response: -1
+- Interpolated images (between real and fake) → Critic → Predictions (e.g., 1.3, -1.2) → Gradient Penalty
+- Real images → Critic → Predictions (e.g., 0.8, 3.5), Response: 1
+- Gradient Penalty + Wasserstein Loss → combined critic loss
+
+Gradient Penalty enforces the Lipschitz constraint more effectively than weight clipping by penalizing the norm of the critic's gradient with respect to interpolated samples.
+
+================================================================================
+PAGE 14 - Analysis (WGAN-GP)
+================================================================================
+Title: Analysis
+
+Results:
+- Generated face images after 25 epochs are sharper compared to VAE (Variational Autoencoder) output
+
+Training metrics (4 charts across ~25 epochs):
+1. epoch_c_loss (Critic Total Loss):
+   - Starts near 0, dips negative, then rises and stabilizes around -2 to -6 range
+
+2. epoch_g_loss (Generator Loss):
+   - Starts around 0, drops sharply to ~-50, then recovers and stabilizes around 10
+
+3. epoch_c_wass_loss (Wasserstein component of Critic Loss):
+   - Stabilizes in the -4 to -24 range (negative values are expected)
+
+4. epoch_c_gp (Gradient Penalty component):
+   - Starts high (~0.5), drops quickly and stabilizes near 0 after ~5 epochs
+   - Indicates the Lipschitz constraint is being enforced effectively
+
+================================================================================
+PAGE 15 - Conditional GAN (CGAN)
+================================================================================
+Title: Conditional GAN (CGAN)
+
+Purpose:
+- Control the output of a GAN
+- Example: generate only images of people with blond hair
+
+Architecture modification:
+- Add a one-hot encoded label channel as additional input to both the generator and critic/discriminator
+
+Generator input:
+- Random noise vector
+- One-hot encoded label (e.g., blond / not blond)
+- Output: Generated image conditioned on the label
+
+Critic input:
+- Image (RGB)
+- One-hot encoded label channels
+- Output: Realness score (e.g., 1.4)
+
+Example results:
+- Same random noise vector + "Not Blond" label vector → generated faces without blond hair
+- Same random noise vector + "Blond" label vector → generated faces with blond hair
+
+Key advantage: The CGAN allows steering generation toward specific attributes without changing the underlying noise, enabling controlled image synthesis.

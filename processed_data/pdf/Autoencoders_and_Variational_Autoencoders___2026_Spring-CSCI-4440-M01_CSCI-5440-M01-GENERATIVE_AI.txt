@@ -1,0 +1,100 @@
+SOURCE: Autoencoders_and_Variational_Autoencoders___2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+COURSE: 2026 Spring-CSCI-4440-M01 / CSCI-5440-M01 - GENERATIVE AI
+MODULE: Variational Autoencoders
+URL: https://nmsu.instructure.com/courses/1731641/pages/autoencoders-and-variational-autoencoders?module_item_id=40286038
+RETRIEVED: 3/22/26, 6:18 PM
+
+================================================================================
+PAGE 1
+================================================================================
+
+MODULE TITLE: Variational Autoencoders
+
+SECTION: Overview
+
+In this module, we will discuss Autoencoders and Variational Autoencoders Neural Networks. Focus will be on understanding the motivation of this type of networks and discussing different examples presented in the book.
+
+SECTION: Learning Objectives
+
+Content
+
+By the end of this module, you should be able to:
+
+MLO 1: Understand the motivation behind autoencoders and variational autoencoders
+
+MLO 2: Be able to build and train autoencoders and variational autoencoders neural networks using Keras API
+
+MLO 3: Understand the advantages/disadvantages of using this type of NN to generate images
+
+MLO 4: Be able to manipulate the latent space
+
+SECTION: Learning Materials
+
+Subsection: Presentations and Videos
+
+- Presentation for 2/16
+  URL: https://nmsu.instructure.com/courses/1731641/files/279898413?wrap=1
+  Download URL: https://nmsu.instructure.com/courses/1731641/files/280678551/download?download_frd=1
+
+================================================================================
+PAGE 2
+================================================================================
+
+- ReadSpeaker / DocReader URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F1445d05a-8511-4bce-9afa-3a9586fb66f1%2F05-genai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9...
+
+- Video URL: https://nmsu.instructure.com/media_attachments_iframe/280767841
+  Note: Marked with (*) indicating required/important material
+
+SECTION: Activities
+
+Note: Make sure that you have done the following (From previous module)
+
+Activity 1: Clone the code base from the book
+  Repository URL: https://github.com/davidADSP/Generative_Deep_Learning_2nd_Edition/tree/main
+  Book: Generative Deep Learning, 2nd Edition by David Foster (davidADSP)
+
+Activity 2: Setup on CS account
+  - The CS account is different from the NMSU account.
+  - If you have never used machines in the department lab, you may have forgotten about your CS account.
+  - Contact Ivan or Mike to obtain the CS account.
+  - After obtaining email/credentials, check machine types via the department intranet: https://intranet.cs.nmsu.edu/wp
+
+Activity 3: Docker environment
+  - Docker is running on all machines in the graduate lab.
+  - Docker is also running on Dell and Supermicro machines in the undergraduate lab.
+  - These are tower machines in room 118, except for the older Acer machines.
+
+Activity 4: Personal machine setup
+  - If using your own machine, follow instructions from the README file to install necessary software.
+
+Activity 5: Mac-specific instruction
+  - If using Mac, before running the command "docker compose up" (or the GPU variant), run: open -a Docker
+
+SECTION: Assignments
+
+(No assignment details listed on this page)
+
+================================================================================
+PAGE 3
+================================================================================
+
+SECTION: Supplemental Materials
+
+(No supplemental materials listed on this page)
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
+METADATA SUMMARY:
+- Total Pages: 3
+- Course IDs: CSCI-4440-M01, CSCI-5440-M01
+- Semester: Spring 2026
+- Institution: New Mexico State University (NMSU)
+- Department: Computer Science
+- Module Topic: Autoencoders and Variational Autoencoders
+- Framework/API Referenced: Keras API
+- External Codebase: Generative Deep Learning 2nd Edition (GitHub)
+- Key Concepts: Autoencoders, Variational Autoencoders (VAEs), Latent Space, Generative AI, Neural Networks, Image Generation
+- Lab Location Referenced: Room 118
+- Lab Contact Persons: Ivan, Mike

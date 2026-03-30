@@ -1,0 +1,530 @@
+========================================
+DOCUMENT: Generative AI - Week 2: LLM and Prompt Engineering
+SOURCE: 02-gen-ai.pdf
+TOTAL PAGES: 24
+COURSE: Generative Artificial Intelligence
+========================================
+
+----------------------------------------
+PAGE 1 - Title Slide
+----------------------------------------
+Title: Generative AI
+Subtitle: Week 2: LLM and Prompt Engineering
+Course: Generative Artificial Intelligence
+
+----------------------------------------
+PAGE 2 - Quick Discussion of Week 1
+----------------------------------------
+Title: Quick Discussion of Week 1
+
+Topics reviewed from Week 1:
+- Syllabus
+- AI and GenAI
+
+Announcements:
+- Quiz 1 needs to be completed by the end of today
+- Topic covered: AI vs. GenAI
+
+----------------------------------------
+PAGE 3 - Modern AI Systems (Timeline)
+----------------------------------------
+Title: Modern AI Systems
+
+Timeline of notable AI milestones (with images from the Internet):
+- 1972: Early AI/robotics (industrial robots)
+- 1997: Deep Blue defeats Garry Kasparov at chess (IBM Deep Blue)
+- 2000: Honda ASIMO humanoid robot
+- 2011: IBM Watson wins Jeopardy; autonomous vehicle research (VW Passat self-driving car at Berlin)
+
+Note: Photos sourced from the Internet.
+
+----------------------------------------
+PAGE 4 - AI Systems (Types)
+----------------------------------------
+Title: AI Systems
+
+Category 1: Symbolic Reasoners
+- Systems that can perform symbolic reasoning
+- Examples:
+  - Proving mathematical theorems (e.g., the four-color theorem, the Robbins conjecture — unsolved for many years until automated)
+  - Automated planning and scheduling systems
+  - Chess-playing systems and more generally game-playing systems
+- Key characteristic: Created from human knowledge about the subject (facts, rules, etc.)
+
+Category 2: Expert Systems
+- Systems that behave like a subject matter expert; typically Q&A systems
+- Examples:
+  - Medical diagnosis
+  - Car diagnosis
+  - Jeopardy (IBM Watson)
+- Key characteristic: Created from human knowledge about the subject (facts, rules, etc.)
+
+Category 3: Machine Learning Systems
+- Examples:
+  - Face recognition system
+  - Traffic violation determination
+- Key characteristic: Created from data (ML Systems)
+
+----------------------------------------
+PAGE 5 - Discriminative vs Generative Models (Recall Slide)
+----------------------------------------
+Title: Recall the slide (Different Types of Machine Learning Models)
+
+Discriminative Model:
+- Input: image (e.g., airplane, apple, parrot)
+- Question asked: "What is in the input image?"
+- Output: a label/class (e.g., airplane, apple, parrot)
+- Maps input to a discrete class
+
+Generative Model:
+- Input: a concept or request (e.g., "airplane", "poet", "answer for my homework")
+- Question asked: "Can you do/create/... for me?"
+- Output: generated content (text, images, etc.) — represented as dotted lines indicating open-ended output
+- Generates new content based on the input prompt
+
+----------------------------------------
+PAGE 6 - Predictive (Discriminative) Model — Detail
+----------------------------------------
+Title: Predictive (Discriminative) Model
+
+How it works:
+- Input images are fed into a model that answers: "What is in the input image?"
+- The model outputs a probability distribution over classes:
+  - Airplane image → (airplane, 0.99), (apple, 0.001), ...
+  - Apple image → (apple, 0.99), (airplane, 0.001), ...
+  - Parrot image → (parrot, 0.98), (airplane, 0.002), ...
+
+Source of the model:
+- Training data: Examples in the form of (image, class) pairs
+- Process: Examples → ML Algorithm → Model
+- Key point: Each ML system is trained for a specific purpose
+
+Diagram label: Discriminative Model
+
+----------------------------------------
+PAGE 7 - Machine Learning Model
+----------------------------------------
+Title: Machine Learning Model
+
+Core idea:
+- Most machine learning tasks reduce to estimating a mapping f from x to y, i.e., a function y = f(x)
+
+Types of ML problems:
+
+1. Classification (y is categorical):
+   - Loan approval: given information about an individual, output yes (loan approved) or no (denied)
+   - Classifying an image: whether an image is an airplane, a bird, or an apple, etc.
+   - Face recognition: matching a photo with someone in a database
+
+2. Regression (y is continuous):
+   - Weather forecast: the temperature of tomorrow given weather history
+   - Car speed: what will be the speed of the car at a point given its trajectory
+   - Function value: what will be the value of a function given some of its points
+
+Current trend:
+- There are many approaches to creating an ML model — the current dominant trend is neural networks
+
+----------------------------------------
+PAGE 8 - Neural Network (Section Header)
+----------------------------------------
+Title: Neural Network
+
+[Section divider slide — introduces the neural network topic section]
+
+----------------------------------------
+PAGE 9 - General Idea of ML / Neural Networks
+----------------------------------------
+Title: General Idea
+
+Concept:
+- Data consists of pairs of (input, output): (x1, y1), (x2, y2), ..., (xn, yn)
+- Example inputs 1–5 mapped to outputs 1–5 (shown as a direct mapping)
+- Question: given some x (often different from x1, ..., xn), what would y be?
+- Example: x = 3.5, what is y? (interpolation/generalization)
+
+This is the fundamental supervised learning framing: learn from examples, generalize to new inputs.
+
+----------------------------------------
+PAGE 10 - Perceptron – Step Function
+----------------------------------------
+Title: Perceptron – Step Function
+
+Structure:
+- A perceptron has multiple inputs: in1, in2, in3, in4, in5
+- Each input has an associated weight: w1, w2, w3, w4, w5
+- The perceptron computes a weighted sum of inputs, then applies an activation function
+
+Step Function definition:
+  h(in) = 1   if  Σ(k=1 to n) in_k * w_k  >  th
+  h(in) = 0   if  Σ(k=1 to n) in_k * w_k  ≤  th
+
+where:
+  - in_k = input k
+  - w_k  = weight for input k
+  - th   = threshold
+
+Output graph: step function — output is 0 below threshold, jumps to 1 above it.
+
+Key question: What should w_i and th be? → These values are learned during training.
+
+----------------------------------------
+PAGE 11 - Perceptron – Sigmoid Function
+----------------------------------------
+Title: Perceptron – Sigmoid Function
+
+Structure:
+- Same multi-input perceptron structure as Step Function (in1–in5 with weights w1–w5)
+- Adds a bias term
+
+Sigmoid Function definition:
+  h(in) = 1 / (1 + e^(-(Σ(k=1 to n) in_k * w_k + bias)))
+
+Simplified form:
+  g(in) = 1 / (1 + e^(-in))
+
+Advantage of sigmoid over step function:
+- A small change in the input or a small change in the bias causes only a small change in the output.
+- This property (smoothness/differentiability) makes it suitable for gradient-based learning (backpropagation).
+
+Output graph: S-shaped curve — output smoothly transitions from 0 to 1.
+
+Key question: What should w_i and th be? → These values are learned during training.
+
+----------------------------------------
+PAGE 12 - Example: AND Gate with Perceptron (Setup)
+----------------------------------------
+Title: Example
+
+Truth table for AND gate:
+  Input1 | Input2 | Output
+  -------|--------|-------
+    1    |   1    |   1
+    1    |   0    |   0
+    0    |   1    |   0
+    0    |   0    |   0
+
+Task: Find weights w1, w2 and threshold th for a perceptron using the step function to implement AND.
+
+Perceptron structure: 2 inputs (in1, in2), weights w1 and w2, one output.
+
+----------------------------------------
+PAGE 13 - Example: AND Gate with Perceptron (Step Function)
+----------------------------------------
+Title: Example (continued)
+
+Step function used:
+  h(in) = 1   if  Σ(k=1 to n) in_k * w_k  >  th
+  h(in) = 0   if  Σ(k=1 to n) in_k * w_k  ≤  th
+
+Same AND truth table as page 12.
+Goal: derive constraints on w1, w2, and th from the truth table.
+
+----------------------------------------
+PAGE 14 - Example: AND Gate Solution
+----------------------------------------
+Title: Example (continued — solution)
+
+AND gate truth table:
+  Input1 | Input2 | Output
+  -------|--------|-------
+    1    |   1    |   1
+    1    |   0    |   0
+    0    |   1    |   0
+    0    |   0    |   0
+
+Derived constraints from truth table:
+  - w1 + w2 > th    (from row: 1,1 → output 1)
+  - w1 ≤ th         (from row: 1,0 → output 0)
+  - w2 ≤ th         (from row: 0,1 → output 0)
+  - 0 ≤ th          (from row: 0,0 → output 0)
+
+A possible solution:
+  w1 = 1
+  w2 = 1
+  th = 1.5
+
+Verification: 1+1=2 > 1.5 ✓ (output 1); 1 ≤ 1.5 ✓ (output 0); 0 ≤ 1.5 ✓ (output 0)
+
+----------------------------------------
+PAGE 15 - Examples: AND, OR, NOT Logic Gates
+----------------------------------------
+Title: Examples
+
+Exercise: Find weights and thresholds for OR and NOT logic gates using the perceptron step function.
+
+AND gate (given/filled in):
+  w1 = 1, w2 = 1, th = 1.5
+
+OR gate:
+  [weights and threshold to be determined — marked with "?"]
+
+NOT gate:
+  [weight and threshold to be determined — marked with "?"]
+
+Note: This is a student exercise — values for OR and NOT are left blank for students to derive.
+
+Hint structure:
+  - OR truth table: output 1 when at least one input is 1
+  - NOT truth table: single input, output is its complement
+
+----------------------------------------
+PAGE 16 - Do We Need More Than a Single Perceptron? (XOR Problem)
+----------------------------------------
+Title: Do We Need More Than a Single Perceptron?
+
+XOR truth table:
+  Input1 | Input2 | Output
+  -------|--------|-------
+    1    |   1    |   0
+    1    |   0    |   1
+    0    |   1    |   1
+    0    |   0    |   0
+
+Attempt to solve with a single perceptron (step function):
+  - w1 + w2 ≤ th   (from row: 1,1 → output 0)
+  - w1 > th         (from row: 1,0 → output 1)
+  - w2 > th         (from row: 0,1 → output 1)
+  - 0 ≤ th          (from row: 0,0 → output 0)
+
+Result: No solution! — The constraints are contradictory.
+  - If w1 > th and w2 > th, then w1 + w2 > th — which contradicts the requirement w1 + w2 ≤ th.
+
+Conclusion: XOR cannot be represented by a single perceptron. Multiple perceptrons (a network) are required.
+
+----------------------------------------
+PAGE 17 - Linear Separability
+----------------------------------------
+Title: Linear Separability
+
+Definition:
+- A function is linearly separable if there exists a hyperplane (line in 2D) that separates the 1-outputs from the 0-outputs in input space.
+- A single perceptron can only solve linearly separable problems.
+
+Visual representation (2D plots of input space):
+
+AND:
+  Points: (0,0)=0, (1,0)=0, (0,1)=0, (1,1)=1
+  → Linearly separable (a diagonal line separates the single "1" from the "0"s)
+
+OR:
+  Points: (0,0)=0, (1,0)=1, (0,1)=1, (1,1)=1
+  → Linearly separable (a diagonal line separates the single "0" from the "1"s)
+
+XOR:
+  Points: (0,0)=0, (1,0)=1, (0,1)=1, (1,1)=0
+  → NOT linearly separable (no single line can separate 1s from 0s)
+
+Key insight: A single perceptron can only learn linearly separable functions. XOR requires a network of perceptrons.
+
+----------------------------------------
+PAGE 18 - Network of Perceptrons (XOR Solution)
+----------------------------------------
+Title: Network of Perceptron
+
+XOR truth table (same as page 16).
+
+Solution using a network of 3 perceptrons with step functions:
+
+Network architecture:
+  - 2 input nodes
+  - 2 hidden layer perceptrons (perceptron 1 and perceptron 2)
+  - 1 output perceptron
+
+Weights and thresholds:
+  - w11 = 1,  w12 = -1  (first hidden perceptron)
+  - w21 = -1, w22 = 1   (second hidden perceptron)
+  - th1 = 0.5, th2 = 0.5 (thresholds for hidden layer)
+  - w31 = 1,  w32 = 1   (output perceptron)
+  - th3 = 0.5
+
+Verification examples:
+  - in1=1, in2=1: 1*1 + (-1)*1 = 0 ≤ 0.5 → hidden1 = 0; 0*1 + 0*1 ≤ 0.5 → output = 0 ✓
+  - in1=1, in2=0: 1*1 + (-1)*0 = 1 > 0.5 → hidden1 = 1; 1*1 + 0*1 > 0.5 → output = 1 ✓
+
+Logical conditions:
+  - If (w11 + w21 > th1) AND (w12 + w22 > th2), then (w31 + w32 ≤ th3)
+  - If (w11 + w21 > th1) AND (w12 + w22 ≤ th2), then w31 ≤ th3
+
+Key takeaway: Networks of perceptrons can solve non-linearly separable problems.
+
+----------------------------------------
+PAGE 19 - Neural Network: More Than a Single Perceptron
+----------------------------------------
+Title: Neural Network: More Than a Single Perceptron
+
+Structure of a neural network:
+  - k ≥ 2 layers
+  - First layer is the input layer (receives input variables x1, x2, ..., xn)
+  - Last layer is the output layer
+  - Middle layers are called hidden layers
+  - Each node at layer t connects to ALL nodes at layer t+1 (fully connected / dense)
+  - Can have more than one output node
+
+Parameters:
+  - Each connection has an associated weight
+  - Each weight is a parameter of the model
+  - The model learns these weights during training
+
+Diagram: Fully connected multi-layer network with:
+  - Input layer: x1, x2, ..., xn
+  - 2 hidden layers
+  - Output layer
+
+Key insight: Each weight is a parameter of the model — neural network training is the process of finding optimal values for all weights.
+
+----------------------------------------
+PAGE 20 - Large Language Model (LLM)
+----------------------------------------
+Title: Large Language Model (LLM)
+
+Definition:
+- A machine learning model trained to predict the next word given a sequence of words.
+
+How it works:
+  - Uses a corpus of sentences (large text dataset)
+  - Derives a probability distribution of the next word: p(x | y)
+    where x = the next word and y = the sequence of words (context)
+
+Example — predicting the next word after "The man is":
+  Training corpus 1:
+    - "The man is hungry."
+    - "The man is fast."
+    - "The man is clumsy."
+    - "The man is hungry and wet."
+  Result:
+    - hungry: 0.5
+    - fast:   0.25
+    - slow:   0.0
+
+  Training corpus 2 (different data):
+    - "The man is hungry."
+    - "The man is not fast."
+    - "The man is clumsy."
+    - "The man is hungry and wet."
+  Result:
+    - hungry: 0.5
+    - fast:   0.0
+    - slow:   0.0
+
+Key point:
+- The answer is stochastic (probabilistic, not deterministic)
+- The answer depends on the training set — different training data yields different probability distributions
+
+----------------------------------------
+PAGE 21 - Landscape of LLMs
+----------------------------------------
+Title: Landscape of LLMs
+
+Table of major LLM developers and their models:
+
+Developer/Organization | Large Language Model(s)  | Website(s)
+-----------------------|--------------------------|-------------------------------------------
+Google                 | Gemini Family            | https://ai.google/, https://deepmind.google/
+OpenAI                 | GPT-xx                   | https://openai.com/
+Meta AI                | Llama 3, Llama 2         | https://ai.meta.com/llama/
+Anthropic              | Claude 3 Family          | https://www.anthropic.com/
+Cohere                 | Command, Rerank          | https://cohere.com/
+DeepSeek               | DeepSeek                 | https://www.deepseek.com/en/
+Mistral AI             | Mistral models           | https://mistral.ai/
+AI21 Labs              | Jurassic-2 Family        | https://www.ai21.com/
+
+Additional resources:
+- Many more models available at: https://huggingface.co/models
+- Different types of models exist based on: focus on output (what we want), training data, and budget
+
+Types of LLM outputs:
+  - Text and speech
+  - Video
+  - Image
+  - Multi-modality (combination of above)
+
+----------------------------------------
+PAGE 22 - Basic Concepts (LLM Concepts and Deployment)
+----------------------------------------
+Title: Basic Concepts
+
+Video reference guide (with timestamps):
+
+1. Tokenization (Video #1 at 5:38)
+
+2. Prompt and completion (Video #1 at 8:19)
+
+3. Different types of LLMs in the current landscape (Video #2 at 0:37):
+   - Foundation model (Video #2 at 1:38)
+   - LLM as Foundation model (Video #2 at 3:45)
+   - Open source vs. Proprietary models
+   - Embedding (Video #2 at 7:07)
+
+4. Testing, iterating, and comparing different models for your use case in Azure AI Studio (Video #2 at 11:04)
+
+5. How to deploy an LLM (Video #2 at 15:58):
+   - Prompt engineering with context (easiest/cheapest)
+   - RAG — Retrieval Augmented Generation
+   - Fine-tuned model
+   - Trained model (most difficult/expensive, highest quality)
+
+Deployment difficulty/quality spectrum (inverted triangle diagram):
+  Top (easy and cheap):
+    → Prompt engineering with context (e.g., Prompt Engineered OpenAI call)
+  Middle:
+    → Retrieval Augmented Generation / RAG (e.g., OpenAI call with doc)
+  Lower:
+    → Fine-tuned model
+  Bottom (difficult and expensive, higher quality):
+    → Trained model
+
+----------------------------------------
+PAGE 23 - Basic Concepts (Responsible AI and Prompt Engineering)
+----------------------------------------
+Title: Basic Concepts
+
+Topic: Using GenAI Responsibly (Video #3):
+  - Why prioritize Responsible AI when building Generative AI applications (Video #3 at 1:39)
+  - Hallucination (Video #3 at 2:45)
+  - Harmful outputs (Video #3 at 3:04)
+  - Fairness (Video #3 at 23:00)
+  - Core principles of Responsible AI and how they relate to Generative AI
+  - How to put Responsible AI principles into practice through strategy and tooling
+
+Topic: Core Concepts in Prompt Engineering (Video #4):
+  - Prompt engineering (Video #4 at 2:28)
+  - Stochastic answer & Fabrication (hallucination)
+  - Clear instruction (Video #4 at 12:11), refining, context
+  - Iteration, evaluation, template (Video #4 at 21:35)
+
+Prompt Engineering Fundamentals image (referenced in slide):
+  Sections of the visual diagram include:
+    - Core Concepts: Prompt & Tokenization, Base LLM Behavior, Instruction-Tuned LLM, Chat Completion Example
+    - Core Challenges: Stochastic Model Response, Model Response Fabrication, Model Capability Validation, Model Token Limits & Cost
+    - GitHub Copilot: Base Model / Text Generation, Fine-Tuned / Code Generation, GitHub Copilot / LLM Application, Insights for Prompt Design
+    - Prompt Construction: Basic Prompt / Completion, Complex Prompt / Multi-Turn, Instruction Prompt / Set Task, System Context / Set Persona
+    - Primary Content: Design Pattern for Action, As Examples → Few Shot Learning, As Clues → Prime the Response, "As Templates" → Reusable Recipes
+    - Advanced Techniques: Chain-of-Thought (Pattern), Self-Refine (Critiquing), Generated Knowledge (Your Data), Vary Parameters (Temperature)
+    - Best Practices: Domain Understanding, Model Understanding, Iteration & Validation, Streamlined Workflow
+
+Topic: Prompt Engineering Techniques (Video #5):
+  - Context, limiting output, specificity
+  - Zero-shot / Few-shot prompting
+  - Chain-of-thought prompting
+  - Least-to-most prompting
+  - Self-refine prompting
+  - Maieutic prompting (Video #5 at 3:05)
+
+----------------------------------------
+PAGE 24 - Applications of LLM
+----------------------------------------
+Title: Applications of LLM
+
+All applications listed are achievable via prompt engineering:
+
+1. Information extraction
+2. Chat application
+3. Text generation
+4. Image generation
+5. Code generation
+6. Summarization
+7. (Additional applications implied by "...")
+
+========================================
+END OF DOCUMENT
+========================================

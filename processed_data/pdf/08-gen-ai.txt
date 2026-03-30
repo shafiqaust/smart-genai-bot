@@ -1,0 +1,372 @@
+SOURCE: 08-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 7 – Agentic AI
+BASED ON: A Comprehensive Survey of Self-Evolving AI Agents (https://arxiv.org/pdf/2508.07407)
+
+================================================================================
+PAGE 1 – Title Slide
+================================================================================
+Title: Generative Artificial Intelligence
+Subtitle: Week 7: Agentic AI
+Reference Paper: A Comprehensive Survey of Self-Evolving AI Agents
+Paper URL: https://arxiv.org/pdf/2508.07407
+
+================================================================================
+PAGE 2 – Self-Evolving Agents (Definition)
+================================================================================
+Topic: Self-Evolving AI Agents – Definition
+
+Self-evolving AI agents are autonomous systems that continuously and systematically optimize their internal components through interaction with environments, with the goal of adapting to changing tasks, contexts and resources while preserving safety and enhancing performance.
+
+================================================================================
+PAGE 3 – Three Laws of Self-Evolving AI Agents
+================================================================================
+Topic: Three Laws of Self-Evolving AI Agents
+
+LAW 1 – Endure (Safety Adaptation):
+Self-evolving AI agents must maintain safety and stability during any modification.
+
+LAW 2 – Excel (Performance Preservation):
+Subject to the First Law, self-evolving AI agents must preserve or enhance existing task performance.
+
+LAW 3 – Evolve (Autonomous Evolution):
+Subject to the First and Second Law, self-evolving AI agents must be able to autonomously optimize their internal components in response to changing tasks, environments, or resources.
+
+Note: The three laws follow a priority order — safety first, performance second, autonomous evolution third.
+
+================================================================================
+PAGE 4 – Classification of AI Agent Paradigms
+================================================================================
+Topic: Classification of AI Agent Paradigms
+
+Four main paradigms:
+
+1. Model Offline Pretraining (MOP)
+   - Interaction & Feedback: Model ↔ Static data (loss/backprop)
+   - Key Techniques:
+     * Transformer Pretraining (Causal LM, Masked LM, NSP)
+     * BPE / SentencePiece
+     * MoE & Pipeline Parallelism
+
+2. Model Online Adaptation (MOA)
+   - Interaction & Feedback: Model ↔ Supervision (labels/scores/rewards)
+   - Key Techniques:
+     * Task Fine-tuning
+     * Instruction Tuning
+     * LoRA / Adapters / Prefix-Tuning
+     * RLHF (RLAIF, DPO, PPO)
+     * Multi-Modal Alignment
+     * Human Alignment
+
+3. Multi-Agent Orchestration (MAO)
+   - Interaction & Feedback: Agent₁ ↔ Agent₂ (message exchange)
+   - Key Techniques:
+     * Multi-Agent Systems
+     * Self-Reflection
+     * Multi-Agent Debate
+     * Chain-of-Thought Ensemble
+     * Function / Tool Calling / MCP
+
+4. Multi-Agent Self-Evolving (MASE)
+   - Interaction & Feedback: Agents ↔ Environment (signals from env.)
+   - Key Techniques:
+     * Behaviour Optimisation
+     * Prompt Optimisation
+     * Memory Optimisation
+     * Tool Optimisation
+     * Agentic Workflow Optimisation
+
+================================================================================
+PAGE 5 – The Evolution Landscape of AI Agents (Timeline Diagram)
+================================================================================
+Topic: Evolution Landscape of AI Agents (2023–2025)
+
+Three major branches of development:
+
+BRANCH 1 – Single-Agent Optimisation (agent-centric)
+Sub-branches: Prompt optimisation, Memory optimisation, Tool optimisation
+Representative systems (examples): TEMPERA, GRIPS, APE, MemChat, MemGPT, Mem0, G-Memory, Mem1, MemAgent, StraGO, MIPRO, APOHF, OPRO, Prompt Agent, Prompt Breeder, ChatDB, GPT4 Tool, MoT, Reflection, Retro former, COMEDY, AWM, Read Agent, HippoRAG, Graph Reader, StrucRAG, A-Mem, AWESOME, CRAFT, Play2, Prompt, Nem atron, EasyTool, LATM, Creator, Agent Optimizer, Tool LLM, ReTool, ToolRL, PyCVision, SwIRL, TextGrad, Evo Prompt
+
+BRANCH 2 – Multi-Agent Optimisation (agent-centric)
+Representative systems (examples): DyLAN, Auto Agents, Hetero Swarms, Agent Square, Evo Agent, Morph Agent, Flow Reasoner, MAS-Zero, AgentGroupChat, Agent Orchestra, Workforce, ScoreFlow, MaAS, MAS-GPT, MASS, AFlow, ADAS, GPT Swarm, Topology & Workflow, Agent Prune, G-Designer, G-Safe guard, EvoFlow, MAS Router, Mermaid Flow, MDTeam GPT, MacNet, AutoFlow
+
+BRANCH 3 – Domain-specific Optimisation
+Sub-fields: Medical, Science & Tech Research
+Representative systems (examples): MMedAgent, CACTUS, SPFL LLM-RDF, Drug Agent, OSDA Agent, LIDDIA, MedAgentSim, MedAgentPro, Chem Agent, MD Agents, Agent Hospital, UniDebug, Self Debugging, FinCon, FinRobot, PEER, Code Agent, Agent Coder, Agent Courts, LawLuo, Open Devin, Agent Courts, Code CoR, PyCap sule, Path Finder
+
+Timeline: 2023 → 2024 → 2025
+
+================================================================================
+PAGE 6 – Single Agent System (Classical vs. LLM-Centric View)
+================================================================================
+Topic: Single Agent System – Classical vs. Agentic (LLM-Centric) View
+
+CLASSICAL VIEW components:
+- Actuators and sensors
+- Environment
+- Perception and actions
+
+LLM-CENTRIC (RECENT) VIEW components:
+- Perception
+- Planning
+- Memory
+- Tool use
+
+Diagram: Agent receives percepts from sensors, processes them, sends actions via actuators to the environment, which feeds back to sensors (closed loop).
+
+================================================================================
+PAGE 7 – Multi-Agent System (Classical vs. LLM-Centric View)
+================================================================================
+Topic: Multi-Agent System – Classical vs. Agentic (LLM-Centric) View
+
+CLASSICAL VIEW components:
+- Collection of single agents within a shared environment
+- Dedicated communication language and protocol
+- Collaboration mechanism
+- Agent topology
+
+LLM-CENTRIC (RECENT) VIEW:
+- Same structure as classical, but each individual agent is an agentic AI agent (LLM-based)
+
+Diagram: Two agents each with sensors, percepts, actions, and actuators, sharing a common environment.
+
+================================================================================
+PAGE 8 – Multi-Agent Architecture Types
+================================================================================
+Topic: Multi-Agent System Architectures
+
+Three architecture types:
+
+1. Centralized (Centralize):
+   - All agents connect directly to a single Control Center
+   - Hub-and-spoke topology
+
+2. Hierarchical:
+   - Control Center → Region Agents → Zone Agents → Switch Agents → Sub-agents
+   - Tree-structured topology with multiple levels
+
+3. Decentralized (Distributed):
+   - Control Center exists but agents have cross-connections
+   - Switch Agents interconnect with multiple peers
+   - Mesh-like topology
+
+================================================================================
+PAGE 9 – Communication Mechanisms
+================================================================================
+Topic: Agent Communication Mechanisms
+
+Three types of agent-to-agent communication:
+
+1. Structured Output:
+   - Example: JSON (JSONasPerl format)
+   - Agents exchange machine-readable structured data
+
+2. Natural Language:
+   - Example: "Hello, this is something you need to know"
+   - Agents communicate using free-form human language
+
+3. Standardized Protocols:
+   - Example: ask(for_something) – get(something)
+   - Formal request-response protocol primitives
+
+Note: Slide ends with "Let have a short quiz" (in-class activity indicator)
+
+================================================================================
+PAGE 10 – Limitations of Current Systems and Introduction to MASE
+================================================================================
+Topic: Limitations of MOP/MOA/MAO and Motivation for MASE
+
+Current limitation:
+The trajectory from Model Offline Pretraining (MOP) through Model Online Adaptation (MOA) and Multi-Agent Orchestration (MAO) has steadily reduced manual configuration in LLM-based systems. Yet even the most advanced multi-agent frameworks today often depend on:
+- Handcrafted workflows
+- Fixed communication protocols
+- Human-curated toolchains
+
+Solution – Multi-Agent Self-Evolving (MASE) systems:
+- Agents autonomously refine their prompts, memory, tool-use strategies, and interaction topology
+- Guided by feedback from the environment and higher-level meta-rewards
+- Continuous optimization enables agents not merely to adapt once, but to evolve over their lifetime
+- Adapts to shifting tasks, domains, and operational constraints
+
+Key concept: Lifelong, self-evolving agentic systems embed a continuous improvement loop into the core of the architecture.
+
+================================================================================
+PAGE 11 – Overview: Key Components of Self-Evolving Agent Systems
+================================================================================
+Topic: Key Components of Self-Evolving Agent Framework
+
+Component 1 – System Inputs (T):
+- Task-level: Task (T), Training data (D_train), Test data (D_test)
+- Instance-level: Input (x), Output (y), Context (C), forming Instance set (I)
+
+Component 2 – Agent System (A):
+- Single-agent: Prompt, Tools, Memory
+- Multi-agent: Agents, Communication, Topology
+
+Component 3 – Environment:
+- Scenarios: Coding, Legal, Research, Medicine
+- Proxy Metrics: Accuracy, F1, Success rate
+- Evaluation: LLM-based Evaluators
+
+Component 4 – Optimizer (P):
+- Search Space (S):
+  * Prompt Template
+  * Tool Selection
+  * LLM Parameters
+  * Architectural choices
+- Optimisation Algorithm (H):
+  * Rule-base Heuristics
+  * Gradient Descent
+  * Bayesian & MCTS & RL
+  * Learning-based Policy
+
+Process flow: Setup → Mutation → Execution → Feedback → Refine (continuous loop)
+
+================================================================================
+PAGE 12 – Single-Agent Optimization
+================================================================================
+Topic: Single-Agent Optimization Categories
+
+Four optimization areas:
+
+1. LLM Behavior Optimization:
+   - Goal: Improve LLM's reasoning and planning capabilities
+   - Methods: Parameter tuning OR test-time scaling techniques
+   - Sub-types:
+     * Reasoning Behaviour Optimisation
+     * Test-Time Scaling Optimisation
+       - Feedback-based Strategy
+       - Search-based Strategy
+
+2. Prompt Optimization:
+   - Goal: Adapt prompts to guide LLM toward more accurate and task-relevant outputs
+   - Sub-types:
+     * Edit-Based Optimisation
+     * Generative Optimisation
+     * Text Gradient-Based Optimisation
+     * Evolutionary Optimisation
+
+3. Memory Optimization:
+   - Goal: Enhance agent's ability to store, retrieve, and reason over historical information or external knowledge
+   - Sub-types:
+     * Short-term Memory Optimisation
+     * Long-term Memory Optimisation
+
+4. Tool Optimization:
+   - Goal: Enhance agent's ability to effectively leverage existing tools, or autonomously create or configure new tools to accomplish complex tasks
+   - Sub-types:
+     * Training-Based Optimisation
+     * Inference-Time Optimisation
+     * Prompt-Based Tool Optimisation
+     * Reasoning-Based Tool Optimisation
+
+================================================================================
+PAGE 13 – Multi-Agent Optimization
+================================================================================
+Topic: Multi-Agent Optimization
+
+Core concept: Self-evolving systems that automatically discover effective collaboration strategies.
+
+Multi-Agent Optimisation Elements:
+
+Optimisation Space:
+- Text
+- Code
+- Graph
+- Distribution
+
+Optimisation Method:
+- LLM
+- Tree Search
+- RL (Reinforcement Learning)
+- Gradient
+
+Optimisation Target:
+- Accuracy
+- Efficiency
+- Safety
+
+Multi-Agent Optimisation Dimensions:
+
+1. Prompt:
+   - Prompt Optimisation
+
+2. Topology:
+   - Code-level Workflows
+   - Communication-graphs
+   - Topologies
+
+3. Unified:
+   - Code-based Approaches
+   - Search-based Approaches
+   - Learning-based Approaches
+
+4. LLM Backbone:
+   - Reasoning-oriented Optimisation
+   - Collaboration-oriented Optimisation
+
+================================================================================
+PAGE 14 – Domain-Specific Optimization
+================================================================================
+Topic: Domain-Specific Optimization
+
+Concept: Specific domains have unique requirements that demand tailored optimization strategies.
+
+Domains covered:
+
+1. Biomedicine:
+   - Challenge: Aligning agents' behavior with the procedural and operational requirements of real-world clinical settings.
+
+2. Programming:
+   - Challenge: Following established software engineering workflow (code refinement & debugging).
+
+3. Financial Reasoning:
+   - Challenge: Handling uncertain and rapidly changing conditions, reasoning over volatile market dynamics, and integrating heterogeneous information sources such as numerical indicators, news sentiment, and expert knowledge.
+
+4. Legal Reasoning:
+   - Challenge: Interpreting structured legal rules, analyzing case-specific evidence, and producing outputs that are consistent with institutional regulations and judicial standards.
+
+================================================================================
+PAGE 15 – Evaluation
+================================================================================
+Topic: Evaluation of Self-Evolving AI Agents
+
+Core need: Rigorous, multidimensional evaluation frameworks.
+
+Three evaluation approaches:
+
+1. Benchmark-based Evaluation:
+   - Variety of agents tested
+   - Benchmarks in corresponding domain groups
+
+2. LLM-based Evaluation:
+   - LLM as judge
+   - Agent as judge
+
+3. Safety, Alignment, and Robustness Evaluation:
+   - Specific focus on lifelong self-evolving agents
+   - Evaluating safety and robustness over time
+
+================================================================================
+PAGE 16 – Challenges
+================================================================================
+Topic: Challenges in Self-Evolving AI Agents
+
+Organized by the Three Laws:
+
+ENDURE (Safety Adaptation) Challenges:
+- Safety, Regulation, and Alignment
+- Reward Modelling and Optimization Instability
+
+EXCEL (Performance Preservation) Challenges:
+- Evaluation in Scientific and Domain-Specific Scenarios
+- Balancing Efficiency and Effectiveness in MAS Optimization
+- Transferability of Optimized Prompts and Topologies
+
+EVOLVE (Autonomous Optimization) Challenges:
+- Optimization in Multimodal and Spatial Environments
+- Tool Use and Creation
+
+================================================================================
+END OF DOCUMENT
+================================================================================
