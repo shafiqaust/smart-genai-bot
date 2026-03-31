@@ -27,6 +27,7 @@ This project was tested in a Conda environment named `tau2` and can also be used
 ---
 
 ## Requirements
+- Conda
 - Python 3.12
 - OpenAI API key
 - uv installed
