@@ -1,8 +1,15 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from smart_chatbot.rag_bot import app as rag_app
 
 server = FastAPI()
+
+
+@server.get("/")
+async def root():
+    return FileResponse("static/index.html")
 
 class Request(BaseModel):
     message: str
@@ -16,3 +23,6 @@ def chat(req: Request):
         "answer": "",
     })
     return {"response": result["answer"]}
+
+
+server.mount("/static", StaticFiles(directory="static"), name="static")
