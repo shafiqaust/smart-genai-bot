@@ -43,7 +43,7 @@ This project was tested in a Conda environment named `tau2` and can also be used
  - cp .env.example .env
 
 ## Run the Server
- - PYTHONPATH=$(pwd) uv run uvicorn smart_chatbot.server:server --host 127.0.0.1 --port 8000
+ - uv run uvicorn server:server --host 127.0.0.1 --port 8000 --reload
 
 ## Test
  - curl -X POST http://127.0.0.1:8000/chat  -H "Content-Type: application/json" -d '{"message":"Who is building the chatbot?"}'
