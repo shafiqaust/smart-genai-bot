@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from smart_chatbot.rag_bot import app as rag_app
+from rag_bot import app as rag_app
 
 server = FastAPI()
 
