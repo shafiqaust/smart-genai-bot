@@ -25,7 +25,7 @@ class ChatState(TypedDict):
 
 def build_index():
     docs = SimpleDirectoryReader(
-        input_dir="clean_data",
+        input_dir="processed_data",
         recursive=True,
         required_exts=[".pdf", ".txt", ".md"],
         file_extractor={".pdf": PDFReader()},
@@ -39,7 +39,7 @@ def build_index():
         print(f"Preview {i}: {preview}")
 
     if not docs:
-        raise ValueError("No documents found in clean_data/")
+        raise ValueError("No documents found in processed_data/")
 
     index = VectorStoreIndex.from_documents(docs)
     return index.as_query_engine(similarity_top_k=4)
