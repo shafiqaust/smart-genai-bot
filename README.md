@@ -48,6 +48,14 @@ This project was tested in a Conda environment named `tau2` and can also be used
 ## Test
  - curl -X POST http://127.0.0.1:8000/chat  -H "Content-Type: application/json" -d '{"message":"Who is building the chatbot?"}'
 
+## Start Front Server
+ - cd frontend
+ - python -m http.server 5500
+ - open http://127.0.0.1:5500
+
+## Test
+ - In the prompt type "Give me two components of GAN"
+
 ## Project Structure
 
 ```bash
@@ -59,6 +67,8 @@ smart-genai-bot/
 ├── processed_data/
 │   ├── pdf/
 │   └── video/
+├── frontend/
+│   └── index.html
 ├── .env
 ├── .gitignore
 ├── pyproject.toml

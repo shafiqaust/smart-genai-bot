@@ -1,11 +1,12 @@
 import os
-from typing import TypedDict, List
-from dotenv import load_dotenv
+from typing import List, TypedDict
 
-from openai import OpenAI
-from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
-from langgraph.graph import StateGraph, END
+from dotenv import load_dotenv
+from langgraph.graph import END, StateGraph
+from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
 from llama_index.readers.file import PDFReader
+from openai import OpenAI
+
 load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
@@ -24,10 +25,10 @@ class ChatState(TypedDict):
 
 def build_index():
     docs = SimpleDirectoryReader(
-        input_dir="processed_data",
+        input_dir="clean_data",
         recursive=True,
         required_exts=[".pdf", ".txt", ".md"],
-        file_extractor={".pdf":PDFReader()}
+        file_extractor={".pdf": PDFReader()},
     ).load_data()
 
     print(f"Loaded {len(docs)} documents")
@@ -38,7 +39,7 @@ def build_index():
         print(f"Preview {i}: {preview}")
 
     if not docs:
-        raise ValueError("No documents found in data/")
+        raise ValueError("No documents found in clean_data/")
 
     index = VectorStoreIndex.from_documents(docs)
     return index.as_query_engine(similarity_top_k=4)
@@ -55,7 +56,7 @@ def retrieve(state: ChatState) -> ChatState:
     citations = []
     seen_files = set()
 
-    for node in source_nodes:
+    for i, node in enumerate(source_nodes, start=1):
         text = node.node.get_content().strip()
         if not text:
             continue
@@ -89,7 +90,7 @@ def answer(state: ChatState) -> ChatState:
         }
 
     evidence = "\n\n".join(
-        f"[{i+1}] {chunk}" for i, chunk in enumerate(state["retrieved_chunks"])
+        f"[{i + 1}] {chunk}" for i, chunk in enumerate(state["retrieved_chunks"])
     )
 
     prompt = f"""
@@ -119,8 +120,9 @@ Rules:
 
     if state["citations"]:
         final_text += "\n\nSources:\n" + "\n".join(
-            f"[{i+1}] {name}" for i, name in enumerate(state["citations"])
-    )
+            f"[{i + 1}] {name}" for i, name in enumerate(state["citations"])
+        )
+
     return {
         **state,
         "answer": final_text,
