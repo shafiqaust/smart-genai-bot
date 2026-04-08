@@ -1,28 +1,16 @@
 # Smart GenAI Bot
 
-Citation-aware Agentic RAG chatbot built with LangGraph, LlamaIndex, OpenAI Responses API, and FastAPI. Answers questions strictly from your documents with inline citations and source references.
-
-## Features
-
-- Document-based question answering with inline citations
-- Source list at the end of every answer
-- Polished chat frontend with typing indicator, suggestion chips, and responsive layout
-- Recursive document loading (PDF, TXT, Markdown)
-- Local FastAPI endpoint for testing and integration
-- Ready to connect with `tau2-bench`
+Citation-aware Agentic RAG chatbot that answers questions strictly from your documents, with inline citations and source references.
 
 ## Project Structure
 
 ```
 smart-genai-bot/
-├── server.py           → FastAPI backend (POST /chat + static file serving)
+├── index.html          → Chat frontend (single-page UI)
+├── server.py           → FastAPI backend (POST /chat endpoint)
 ├── rag_bot.py          → RAG pipeline (LlamaIndex + LangGraph + OpenAI)
-├── static/
-│   ├── index.html      → Chat frontend (single-page UI)
-│   ├── style.css       → Responsive styling, citation badges, source cards
-│   └── app.js          → API calls, response parsing, chat logic
 ├── processed_data/     → Place your documents here
-│   ├── pdf/            → PDF / TXT documents
+│   ├── pdf/            → PDF documents
 │   └── video/          → Video-related documents
 ├── .env                → OpenAI API key
 ├── pyproject.toml      → Python dependencies
@@ -31,43 +19,50 @@ smart-genai-bot/
 
 ## Tech Stack
 
-| Component     | Technology                                     |
-|---------------|------------------------------------------------|
-| Frontend      | HTML5, CSS3, vanilla JavaScript (no framework) |
-| Backend       | FastAPI + Uvicorn                              |
-| RAG Engine    | LlamaIndex (vector index, top-k=4 retrieval)  |
-| Orchestration | LangGraph (retrieve → answer state graph)      |
-| LLM           | OpenAI GPT-4.1 (Responses API)                |
-| Runtime       | Python 3.12                                    |
+| Component  | Technology                                    |
+|------------|-----------------------------------------------|
+| Frontend   | HTML5, CSS3, vanilla JavaScript (no framework)|
+| Backend    | FastAPI + Uvicorn                             |
+| RAG Engine | LlamaIndex (vector index, top-k=4 retrieval) |
+| Orchestration | LangGraph (retrieve → answer state graph)  |
+| LLM        | OpenAI GPT-4.1 (Responses API)               |
+| Runtime    | Python 3.12                                   |
 
-## Requirements
+## Prerequisites
 
-- Conda
-- Python 3.12
-- OpenAI API key
-- uv installed
+- **Python 3.12+** with `uv` or `pip`
+- **OpenAI API key**
+- **A modern web browser** (Chrome, Firefox, Safari, Edge)
+- Documents (PDF, TXT, or Markdown) in the `processed_data/` directory
 
-## Installation
+## Setup
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/shafiqaust/smart-genai-bot.git
 cd smart-genai-bot
-git checkout frontend
-conda create -n tau2 python=3.12
-conda activate tau2
-pip install uv
-uv add openai langgraph langchain llama-index llama-index-readers-file pypdf python-dotenv fastapi uvicorn
-uv sync
-cp .env.example .env
 ```
 
-Edit `.env` and add your OpenAI API key:
+### 2. Install Python dependencies
+
+```bash
+# Using uv (recommended)
+uv sync
+
+# Or using pip
+pip install -r requirements.txt
+```
+
+### 3. Set your OpenAI API key
+
+Create a `.env` file in the project root:
 
 ```
 OPENAI_API_KEY=sk-your-key-here
 ```
 
-## Add Your Documents
+### 4. Add your documents
 
 Place PDF, TXT, or Markdown files into the `processed_data/` directory. The RAG engine indexes all files recursively at startup.
 
@@ -77,23 +72,70 @@ cp /path/to/your/documents/*.pdf processed_data/pdf/
 
 ## Running the Application
 
-Start the server:
+### Step 1: Start the backend
 
 ```bash
-PYTHONPATH=$(pwd) uv run uvicorn smart_chatbot.server:server --host 127.0.0.1 --port 8000
+uvicorn server:server --host 127.0.0.1 --port 8000 --reload
 ```
 
-Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
+The API will be available at `http://127.0.0.1:8000`.
 
-The frontend is served automatically from `static/` — no separate frontend server needed.
+> **Important:** Before starting, add CORS middleware to `server.py` so the frontend can connect from a different port. Add this after the FastAPI app is created:
+>
+> ```python
+> from fastapi.middleware.cors import CORSMiddleware
+>
+> server.add_middleware(
+>     CORSMiddleware,
+>     allow_origins=["*"],
+>     allow_methods=["*"],
+>     allow_headers=["*"],
+> )
+> ```
 
-## Test via CLI
+### Step 2: Serve the frontend
+
+Use any static file server. Pick one of the options below:
+
+#### Option A: Python (recommended — no install needed on macOS/Linux)
 
 ```bash
-curl -X POST http://127.0.0.1:8000/chat \
-  -H "Content-Type: application/json" \
-  -d '{"message":"Who is building the chatbot?"}'
+# From the project root, serve on a different port
+python3 -m http.server 3000
 ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+#### Option B: Node.js (npx)
+
+```bash
+npx serve . -l 3000
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+#### Option C: VS Code Live Server
+
+1. Install the **Live Server** extension (`ritwickdey.LiveServer`) in VS Code.
+2. Open the project folder in VS Code.
+3. Right-click `index.html` → **"Open with Live Server"**.
+
+The site opens automatically with live reload on file changes.
+
+#### Option D: Same-origin setup (no CORS needed)
+
+Mount the frontend as a static file inside FastAPI. Add this to `server.py`:
+
+```python
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+@server.get("/")
+async def serve_frontend():
+    return FileResponse("index.html")
+```
+
+Then just open [http://127.0.0.1:8000](http://127.0.0.1:8000) — no separate frontend server needed.
 
 ## Frontend Features
 
@@ -133,10 +175,10 @@ The response text contains inline citation markers (`[1]`, `[2]`) and a `Sources
 
 | Problem | Fix |
 |---------|-----|
+| CORS error in browser console | Add CORS middleware to `server.py` (see Step 1 above) |
 | "Error: Failed to fetch" in chat | Make sure the backend is running on port 8000 |
 | Empty answers / "I don't know" | Check that `processed_data/` contains documents and restart the backend |
 | Backend won't start | Verify `.env` has a valid `OPENAI_API_KEY` |
-| Module not found errors | Run `uv sync` to install dependencies |
 
 ## Browser Support
 
