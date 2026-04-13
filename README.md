@@ -11,7 +11,7 @@ Citation-aware Agentic RAG chatbot (LangGraph + LlamaIndex + OpenAI Responses AP
 ## 1. Install
 
 ```bash
-git clone https://github.com/shafiqaust/smart-genai-bot.git
+git clone -b working https://github.com/shafiqaust/smart-genai-bot.git
 cd smart-genai-bot
 uv sync
 ```
