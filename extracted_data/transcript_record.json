@@ -1,0 +1,161 @@
+{
+  "student_name": "Albert Smith",
+  "program": null,
+  "completed_courses": [
+    {
+      "course": "Honors Eng 9: World Lit",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Alg II/Trig (gr 8)",
+      "credits": 2,
+      "grade": "A"
+    },
+    {
+      "course": "Honors Precalculus (gr 9)",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Honors Environmental Science",
+      "credits": 2,
+      "grade": "A"
+    },
+    {
+      "course": "US History II",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Piano lessons",
+      "credits": 0.5,
+      "grade": "A"
+    },
+    {
+      "course": "Spanish 1",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Physical Education",
+      "credits": 0.5,
+      "grade": "P"
+    },
+    {
+      "course": "Advanced Writing",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Statistics",
+      "credits": 1,
+      "grade": "B"
+    },
+    {
+      "course": "Chemistry",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Issues in American History",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Piano lessons",
+      "credits": 0.5,
+      "grade": "A"
+    },
+    {
+      "course": "El Spanish 1",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Physical Education",
+      "credits": 0.5,
+      "grade": "P"
+    },
+    {
+      "course": "British Lit",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Precalculus 1",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Precalculus 2",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Psychology",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Piano lessons",
+      "credits": 0.5,
+      "grade": "A"
+    },
+    {
+      "course": "El Spanish II",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Edu 101/Field Observe",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Physical Education",
+      "credits": 0.5,
+      "grade": "P"
+    },
+    {
+      "course": "Driver's Ed",
+      "credits": 0.5,
+      "grade": "P"
+    },
+    {
+      "course": "Eng Comp 1",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Eng Comp 2",
+      "credits": 1,
+      "grade": "B"
+    },
+    {
+      "course": "Physics 1",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Physics 2",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "History of Western Civ",
+      "credits": 1,
+      "grade": "A"
+    },
+    {
+      "course": "Physical Education",
+      "credits": 0.5,
+      "grade": "P"
+    },
+    {
+      "course": "Work/study",
+      "credits": 1,
+      "grade": "P"
+    }
+  ]
+}

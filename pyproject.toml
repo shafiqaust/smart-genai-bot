@@ -1,7 +1,7 @@
 [project]
 name = "smart-genai-bot"
 version = "0.1.0"
-description = "Citation-aware Agentic RAG chatbot built with LangGraph, LlamaIndex, OpenAI Responses API, FastAPI, and Uvicorn."
+description = "Dynamic academic assistant with retrieval, catalog parsing, transcript parsing, file upload, and reasoning."
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
 license = { text = "MIT" }
@@ -16,7 +16,9 @@ keywords = [
   "openai",
   "fastapi",
   "chatbot",
-  "citations"
+  "citations",
+  "academic-advising",
+  "transcript-parser"
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
@@ -26,8 +28,8 @@ classifiers = [
 ]
 
 dependencies = [
+  "beautifulsoup4>=4.12.0",
   "fastapi>=0.115.0",
-  "langchain>=0.3.0",
   "langgraph>=0.2.0",
   "llama-index>=0.12.0",
   "llama-index-readers-file>=0.4.0",
@@ -35,7 +37,9 @@ dependencies = [
   "pydantic>=2.9.0",
   "pypdf>=5.0.0",
   "python-dotenv>=1.0.1",
-  "uvicorn>=0.30.0"
+  "python-multipart>=0.0.9",
+  "requests>=2.32.0",
+  "uvicorn>=0.30.0",
 ]
 
 [project.optional-dependencies]
@@ -56,5 +60,28 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["."]
-only-include = ["rag_bot.py", "server.py", "__init__.py"]
+include = [
+  "server.py",
+  "rag_bot.py",
+  "__init__.py",
+  "frontend/**",
+  "processed_data/**",
+  "extracted_data/**",
+  "uploads/**",
+  "README.md",
+  "LICENSE"
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "server.py",
+  "rag_bot.py",
+  "__init__.py",
+  "frontend/**",
+  "processed_data/**",
+  "extracted_data/**",
+  "uploads/**",
+  "README.md",
+  "LICENSE",
+  "pyproject.toml"
+]

@@ -1,0 +1,62 @@
+{
+  "program_name": "Computer Science (All Undergraduate Degrees, NMSU)",
+  "required_credits": null,
+  "minimum_cgpa_for_graduation": null,
+  "tracks": [
+    {
+      "track_name": "Algorithm Theory",
+      "required_credits": null,
+      "notes": "Available as both a concentration for majors and as a minor for non-majors."
+    },
+    {
+      "track_name": "Artificial Intelligence",
+      "required_credits": null,
+      "notes": "Available as a B.S. degree, B.S. concentration, and as a separate B.S. degree in Artificial Intelligence."
+    },
+    {
+      "track_name": "Big Data and Data Science",
+      "required_credits": null,
+      "notes": "Available as a B.S. concentration."
+    },
+    {
+      "track_name": "Computer Networking",
+      "required_credits": null,
+      "notes": "Available as a B.S. concentration."
+    },
+    {
+      "track_name": "Cybersecurity",
+      "required_credits": null,
+      "notes": "Available as a B.S. degree and a B.S. concentration."
+    },
+    {
+      "track_name": "Human Computer Interaction",
+      "required_credits": null,
+      "notes": "Available as a B.S. concentration."
+    },
+    {
+      "track_name": "Software Development",
+      "required_credits": null,
+      "notes": "Available as a B.S. concentration and as a minor for non-majors."
+    },
+    {
+      "track_name": "Bioinformatics",
+      "required_credits": null,
+      "notes": "Available as a minor for non-majors."
+    },
+    {
+      "track_name": "Computer Systems",
+      "required_credits": null,
+      "notes": "Available as a minor for non-majors."
+    }
+  ],
+  "required_courses": [],
+  "elective_credit_requirement": null,
+  "exceptions_and_notes": [
+    "The Bachelor of Science (B.S.) is ABET accredited.",
+    "The Bachelor of Arts (B.A.) offers a more flexible plan for combining with other studies.",
+    "There are four minor tracks: algorithm theory, bioinformatics, computer systems, and software development, which are only for non-CS majors.",
+    "There are seven concentrations for CS majors, which correspond to specialized areas.",
+    "Students interested in the Master’s Accelerated Program (MAP) can apply to take up to 12 graduate credits during their undergraduate studies for dual application to undergraduate and subsequent MS degree; admission requires at least 3.3 GPA and completion of two out of three required 300-level CS courses."
+  ],
+  "source_url": "https://catalogs.nmsu.edu/nmsu/arts-sciences/computer-science/"
+}

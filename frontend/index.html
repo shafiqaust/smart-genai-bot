@@ -3,159 +3,564 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Chatbot</title>
+  <title>Smart Chat Bot</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 0;
+    :root {
+      --bg: #FFFC;
+      --panel: #171717;
+      --border: #3f3f46;
+      --text: #FFF;
+      --muted: #a1a1aa;
+      --user: #303030;
+      --composer: #2f2f2f;
+      --accent: #10a37f;
+      --accent-hover: #0e8f70;
+      --shadow: rgba(0, 0, 0, 0.28);
     }
 
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: var(--panel);
+    }
+
+    .brand {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .ghost-btn {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .ghost-btn:hover {
+      color: var(--text);
+      border-color: #5a5a62;
+    }
+
+    .chat-shell {
+      flex: 1;
+      display: flex;
+      justify-content: center;
       overflow: hidden;
     }
 
-    .header {
-      background: #1f2937;
-      color: white;
-      padding: 18px 24px;
-      font-size: 22px;
-      font-weight: bold;
+    .chat-column {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     .chat-box {
-      height: 500px;
+      flex: 1;
       overflow-y: auto;
-      padding: 20px;
-      background: #fafafa;
+      padding: 24px 20px 140px;
+      scroll-behavior: smooth;
+    }
+
+    .welcome {
+      max-width: 760px;
+      margin: 60px auto 0;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .welcome h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .welcome p {
+      margin: 0;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .message-row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .message-wrap {
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .message-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      padding: 0 6px;
     }
 
     .message {
-      margin-bottom: 16px;
-      line-height: 1.5;
+      border-radius: 16px;
+      line-height: 1.7;
       white-space: pre-wrap;
+      word-break: break-word;
+      box-shadow: 0 1px 0 var(--shadow);
+      padding: 14px 16px;
+      font-size: 15px;
     }
 
-    .user {
-      text-align: right;
+    .message.user {
+      background: var(--user);
     }
 
-    .user .bubble {
-      display: inline-block;
-      background: #2563eb;
-      color: white;
-      padding: 10px 14px;
-      border-radius: 14px 14px 4px 14px;
-      max-width: 75%;
+    .message.assistant {
+      background: transparent;
+      color:#000;
+      border: 1px solid #2a2a2f;
     }
 
-    .bot .bubble {
-      display: inline-block;
-      background: #e5e7eb;
-      color: #111827;
-      padding: 10px 14px;
-      border-radius: 14px 14px 14px 4px;
-      max-width: 75%;
+    .attachment-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: #3b3b42;
+      border: 1px solid #4a4a52;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 10px;
     }
 
-    .input-area {
-      display: flex;
-      gap: 10px;
-      padding: 16px;
-      border-top: 1px solid #ddd;
-      background: #fff;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .input-area button {
-      padding: 12px 18px;
-      background: #2563eb;
-      color: white;
+    .attachment-chip button {
+      background: transparent;
       border: none;
-      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 0;
+    }
+
+    .attachment-chip button:hover {
+      color: white;
+    }
+
+    .typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border: 1px solid #2a2a2f;
+      border-radius: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: blink 1.4s infinite both;
+    }
+
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.25; }
+      40% { opacity: 1; }
+    }
+
+    .composer-area {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      padding: 16px 20px 20px;
+      background: linear-gradient(to top, var(--bg) 65%, rgba(33,33,33,0));
+    }
+
+    .composer-wrap {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    .attachment-bar {
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .composer {
+      background: var(--composer);
+      border: 1px solid #4a4a52;
+      border-radius: 28px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+      padding: 10px 12px 10px 10px;
+    }
+
+    .composer-inner {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      background: #3a3a3f;
+      color: var(--text);
+    }
+
+    .composer textarea {
+      flex: 1;
+      resize: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
+      max-height: 220px;
+      min-height: 24px;
+      padding: 8px 2px;
+      font-family: inherit;
+    }
+
+    .composer textarea::placeholder {
+      color: var(--muted);
+    }
+
+    .send-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: white;
       cursor: pointer;
       font-size: 16px;
+      font-weight: 700;
     }
 
-    .input-area button:hover {
-      background: #1d4ed8;
+    .send-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .composer-help {
+      margin-top: 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .status-line {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      min-height: 16px;
+    }
+
+    input[type="file"] {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">Smart Chatbot</div>
-    <div id="chatBox" class="chat-box"></div>
-    <div class="input-area">
-      <input
-        type="text"
-        id="messageInput"
-        placeholder="Ask something about your documents..."
-      />
-      <button onclick="sendMessage()">Send</button>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">Smart Chat Bot</div>
+      <button class="ghost-btn" onclick="clearChat()">Clear chat</button>
+    </div>
+
+    <div class="chat-shell">
+      <div class="chat-column">
+        <div id="chatBox" class="chat-box">
+          <div id="welcome" class="welcome">
+            <h1>How can I help with your academics?</h1>
+            <p>
+              Type a question, paste a program catalog URL, or upload a transcript file with the + button.
+              You can ask things like “What is my CGPA?”, “How many credits do I still need?”, or
+              “Can I graduate now?”
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer-area">
+      <div class="composer-wrap">
+        <div id="attachmentBar" class="attachment-bar"></div>
+
+        <div class="composer">
+          <div class="composer-inner">
+            <label class="icon-btn" title="Upload file">
+              +
+              <input type="file" id="fileInput" onchange="handleFileSelected()" />
+            </label>
+
+            <textarea
+              id="messageInput"
+              rows="1"
+              placeholder="Ask anything, paste a URL, or upload a file..."
+            ></textarea>
+
+            <button id="sendBtn" class="send-btn" onclick="sendMessage()">↑</button>
+          </div>
+        </div>
+
+        <div class="composer-help">Enter to send • Shift + Enter for new line</div>
+        <div id="statusLine" class="status-line"></div>
+      </div>
     </div>
   </div>
 
   <script>
-    async function sendMessage() {
-      const input = document.getElementById("messageInput");
-      const chatBox = document.getElementById("chatBox");
-      const message = input.value.trim();
+    const chatBox = document.getElementById("chatBox");
+    const messageInput = document.getElementById("messageInput");
+    const fileInput = document.getElementById("fileInput");
+    const attachmentBar = document.getElementById("attachmentBar");
+    const sendBtn = document.getElementById("sendBtn");
+    const statusLine = document.getElementById("statusLine");
 
-      if (!message) return;
+    let selectedFile = null;
 
-      appendMessage("user", message);
-      input.value = "";
+    function autoResizeTextarea() {
+      messageInput.style.height = "auto";
+      messageInput.style.height = Math.min(messageInput.scrollHeight, 220) + "px";
+    }
 
-      try {
-        const response = await fetch("http://127.0.0.1:8000/chat", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ message })
-        });
+    function hideWelcome() {
+      const welcome = document.getElementById("welcome");
+      if (welcome) welcome.remove();
+    }
 
-        const data = await response.json();
-        appendMessage("bot", data.response || "No response received.");
-      } catch (error) {
-        appendMessage("bot", "Error: Could not connect to the server.");
-      }
+    function setStatus(text = "") {
+      statusLine.textContent = text;
+    }
 
+    function scrollToBottom() {
       chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    function appendMessage(sender, text) {
-      const chatBox = document.getElementById("chatBox");
-      const messageDiv = document.createElement("div");
-      messageDiv.className = `message ${sender}`;
+    function appendMessage(role, text) {
+      hideWelcome();
 
-      const bubble = document.createElement("div");
-      bubble.className = "bubble";
-      bubble.textContent = text;
+      const row = document.createElement("div");
+      row.className = "message-row";
 
-      messageDiv.appendChild(bubble);
-      chatBox.appendChild(messageDiv);
+      const wrap = document.createElement("div");
+      wrap.className = "message-wrap";
+
+      const label = document.createElement("div");
+      label.className = "message-label";
+      label.textContent = role === "user" ? "You" : "Assistant";
+
+      const msg = document.createElement("div");
+      msg.className = `message ${role}`;
+      msg.textContent = text;
+
+      wrap.appendChild(label);
+      wrap.appendChild(msg);
+      row.appendChild(wrap);
+      chatBox.appendChild(row);
+      scrollToBottom();
     }
 
-    document.getElementById("messageInput").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
+    function showTyping() {
+      hideWelcome();
+
+      const row = document.createElement("div");
+      row.className = "message-row";
+      row.id = "typingRow";
+
+      const wrap = document.createElement("div");
+      wrap.className = "message-wrap";
+
+      const label = document.createElement("div");
+      label.className = "message-label";
+      label.textContent = "Assistant";
+
+      const typing = document.createElement("div");
+      typing.className = "typing";
+      typing.innerHTML = `
+        <span>Thinking</span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      `;
+
+      wrap.appendChild(label);
+      wrap.appendChild(typing);
+      row.appendChild(wrap);
+      chatBox.appendChild(row);
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      const row = document.getElementById("typingRow");
+      if (row) row.remove();
+    }
+
+    function clearChat() {
+      chatBox.innerHTML = `
+        <div id="welcome" class="welcome">
+          <h1>How can I help with your academics?</h1>
+          <p>
+            Type a question, paste a program catalog URL, or upload a transcript file with the + button.
+            You can ask things like “What is my CGPA?”, “How many credits do I still need?”, or
+            “Can I graduate now?”
+          </p>
+        </div>
+      `;
+      selectedFile = null;
+      fileInput.value = "";
+      renderAttachment();
+      setStatus("");
+      messageInput.value = "";
+      autoResizeTextarea();
+    }
+
+    function handleFileSelected() {
+      selectedFile = fileInput.files[0] || null;
+      renderAttachment();
+    }
+
+    function removeAttachment() {
+      selectedFile = null;
+      fileInput.value = "";
+      renderAttachment();
+    }
+
+    function renderAttachment() {
+      attachmentBar.innerHTML = "";
+
+      if (!selectedFile) return;
+
+      const chip = document.createElement("div");
+      chip.className = "attachment-chip";
+      chip.innerHTML = `
+        <span>📎 ${selectedFile.name}</span>
+        <button type="button" onclick="removeAttachment()">✕</button>
+      `;
+      attachmentBar.appendChild(chip);
+    }
+
+    function setSendingState(isSending) {
+      sendBtn.disabled = isSending;
+      messageInput.disabled = isSending;
+      fileInput.disabled = isSending;
+    }
+
+    async function sendMessage() {
+      const message = messageInput.value.trim();
+
+      if (!message && !selectedFile) return;
+
+      let userPreview = message;
+      if (selectedFile && !message) {
+        userPreview = `[Uploaded file: ${selectedFile.name}]`;
+      } else if (selectedFile && message) {
+        userPreview = `${message}\n\n[Attached file: ${selectedFile.name}]`;
+      }
+
+      appendMessage("user", userPreview);
+      showTyping();
+      setSendingState(true);
+      setStatus("Processing...");
+
+      const formData = new FormData();
+      if (message) formData.append("message", message);
+      if (selectedFile) formData.append("file", selectedFile);
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+        hideTyping();
+
+        if (!response.ok) {
+          appendMessage("assistant", data.response || `Server error (${response.status}).`);
+        } else {
+          appendMessage("assistant", data.response || "No response received.");
+        }
+
+        setStatus("");
+      } catch (error) {
+        hideTyping();
+        appendMessage("assistant", "Error: Could not connect to the server.");
+        setStatus("Connection failed.");
+      } finally {
+        messageInput.value = "";
+        autoResizeTextarea();
+        selectedFile = null;
+        fileInput.value = "";
+        renderAttachment();
+        setSendingState(false);
+      }
+    }
+
+    messageInput.addEventListener("input", autoResizeTextarea);
+
+    messageInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
         sendMessage();
       }
     });
+
+    autoResizeTextarea();
   </script>
 </body>
 </html>
