@@ -69,7 +69,7 @@ If the backend is not on `127.0.0.1:8000`, edit the `fetch(...)` call in [fronte
 
 ## Project layout
 
-```
+
 smart-genai-bot/
 ├── rag_bot.py          # LangGraph retrieve → answer pipeline
 ├── server.py           # FastAPI app exposing POST /chat
@@ -78,5 +78,4 @@ smart-genai-bot/
 │   └── index.html      # Self-contained chat UI
 ├── .env                # OPENAI_API_KEY (not committed)
 └── pyproject.toml
-```
 
