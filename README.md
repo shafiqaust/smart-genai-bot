@@ -30,6 +30,8 @@ From the repo root:
 
 ```bash
 uv run uvicorn server:server --host 127.0.0.1 --port 8000
+
+in another termial
 ssh -L 8000:127.0.0.1:8000 <user>@<host>
 
 On first boot the server indexes every file under `processed_data/` (PDF, TXT, MD). When you see:
