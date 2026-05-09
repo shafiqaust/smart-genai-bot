@@ -1,0 +1,485 @@
+SOURCE: 13-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 13 - Transformer (With GenAI Help!)
+
+================================================================================
+PAGE 1 - Title Slide
+================================================================================
+Title: Generative AI
+Subtitle: Week 13: Transformer
+Note: With GenAI Help!
+
+================================================================================
+PAGE 2 - Transformer Overview
+================================================================================
+Title: Transformer
+
+Key Points:
+- Key architecture behind language models such as GPT, and others.
+- Key concept in the development of Transformer: n-gram language model ~ probabilistic model.
+- LSTM implements the n-grams.
+
+The Sequential Bottleneck:
+
+The Recurrent Relay Race (RNN/LSTM):
+- Generative models process sequences one token at a time, updating a hidden vector.
+- By the end of a long sentence, the hidden state struggles to retain context from the beginning.
+- Information degrades.
+- Parallelization is impossible.
+
+The Web of Instant Access (Transformers):
+- Introduced in 'Attention Is All You Need'.
+- Transformers abandon recurrent mechanics.
+- They process entire sequences in parallel.
+- Rely solely on an attention mechanism to understand relationships across any distance.
+
+================================================================================
+PAGE 3 - N-Grams
+================================================================================
+Title: N-Grams
+
+Key Concepts:
+- P(w | h): the probability of a word w given some history h.
+  Example: P(the | its water is so transparent that)
+
+- How to get the probability value? Counting.
+  P(the | its water is so transparent that) = C(its water is so transparent that the) / C(its water is so transparent that)
+
+Chain Rule Formula:
+  P(w_1:n) = P(w_1) * P(w_2 | w_1) * P(w_3 | w_1:2) * ... * P(w_n | w_1:n-1)
+           = Product from k=1 to n of P(w_k | w_1:k-1)
+
+================================================================================
+PAGE 4 - Bigrams, Trigrams, N-Grams
+================================================================================
+Title: Bigrams, Trigrams, N-Grams
+
+Key Concepts:
+- Bigram: P(w_n | w_1:n-1) ≈ P(w_n | w_n-1)  [Approximation]
+- N-gram: P(w_n | w_1:n-1) ≈ P(w_n | w_n-N+1:n-1)
+- Markov assumption: independence of a unit (w_n) from elements that are far into the past (w_n-2, ..., w_1).
+- This is an approximation.
+
+Example corpus:
+  <s>I am Sam</s>
+  <s>Sam I am</s>
+  <s>I do not like green eggs and ham</s>
+
+Sample probabilities from the example:
+  P(I | <s>) = 2/3
+  P(Sam | am) = 1/2
+
+Bigram probability formula:
+  P(w_n | w_n-1) = C(w_n-1, w_n) / sum_w C(w_n-1, w) = C(w_n-1, w_n) / C(w_n-1)
+
+================================================================================
+PAGE 5 - Summary of N-Gram Language Models
+================================================================================
+Title: Summary
+
+Key Points:
+- N-gram language model is a probabilistic model that provides the probability of a word w given a history h (a sequence of words).
+- Using the chain rule: probability of a sentence.
+
+Example:
+  P(<s> i want English food </s>)
+  = P(i | <s>) * P(want | i) * P(English | want) * P(food | English) * P(</s> | food)
+  = 0.25 * 0.33 * 0.0011 * 0.5 * 0.68
+  = 0.000031
+
+- In practice, trigram, 4-gram, or 5-gram is often used.
+
+================================================================================
+PAGE 6 - Evaluating Language Models
+================================================================================
+Title: Evaluating Language Models
+
+Extrinsic Evaluation:
+- Embed the model in an application and see how the application improves.
+- Good idea, but difficult to execute and expensive.
+
+Intrinsic Evaluation:
+- Test set: usual ML training/test set split.
+- Measure for comparing a Language Model (LM) against a test set: Perplexity.
+
+Test set: W = w_1 w_2 ... w_N
+
+Perplexity Formula:
+  perplexity(W) = P(w_1 w_2 ... w_N)^(-1/N)
+               = N-th root of [ 1 / P(w_1 w_2 ... w_N) ]
+               = N-th root of [ Product from 1 to N of 1 / P(w_i | w_1 ... w_i-1) ]
+
+================================================================================
+PAGE 7 - LSTM (Repeat of Sequential Bottleneck Diagram)
+================================================================================
+Title: LSTM
+
+The Sequential Bottleneck:
+
+The Recurrent Relay Race (RNN/LSTM):
+- Generative models process sequences one token at a time, updating a hidden vector.
+- By the end of a long sentence, the hidden state struggles to retain context from the beginning.
+- Information degrades. Parallelization is impossible.
+
+The Web of Instant Access (Transformers):
+- Introduced in 'Attention Is All You Need'.
+- Transformers abandon recurrent mechanics.
+- They process entire sequences in parallel, relying solely on an attention mechanism to understand relationships across any distance.
+
+================================================================================
+PAGE 8 - Attention Mechanism Introduction
+================================================================================
+Title: Paying Attention to the Attention Mechanism
+
+Example sentence: "The pink elephant tried to get into the car but it was too <?>"
+
+Attention Head:
+- Designed to "pay attention."
+- Acts as a retrieval task — a query such as "what follows too" retrieves the key/value pairs from the context.
+
+================================================================================
+PAGE 9 - Defining Context Through Selective Focus
+================================================================================
+Title: Defining Context Through Selective Focus
+
+Technical Insight:
+- An attention mechanism decides where in the input it wants to pull information from.
+- To predict the next word, the model dynamically extracts useful information without being clouded by irrelevant grammatical filler.
+
+Visual Example:
+- Sentence: "The pink elephant tried to get into the car but it was too..."
+- Highlighted (attended) tokens: "pink", "elephant", "get", "into", "the", "car"
+- Task: [PREDICT NEXT TOKEN] after "too..."
+- Dim/ignored tokens: "The", "tried", "to", "but", "it", "was"
+
+================================================================================
+PAGE 10 - Attention(Q, K, V) - The Atomic Units
+================================================================================
+Title: The Atomic Units of Information Retrieval
+
+Query (Q):
+- Represents the current task.
+- Example: "What word follows too?"
+
+Key (K):
+- Properties of preceding words.
+- Example: "I am elephant, I describe size."
+
+Value (V):
+- The raw, unweighted meaning of the word.
+- Example: The semantic embedding of "elephant."
+
+The Mechanic:
+- An attention head compares a Query against all available Keys.
+- The output is a sum of the Values, weighted heavily by how strongly the Query resonated with each Key.
+- Notation: Attention(Q, K, V)
+
+================================================================================
+PAGE 11 - Calculating the Resonance Map (Attention Formula)
+================================================================================
+Title: Calculating The Resonance Map
+
+Attention Formula:
+  Attention(Q, K, V) = softmax( Q * K^T / sqrt(d_k) ) * V
+
+Components:
+- Q: Query matrix
+- K^T: Key matrix transposed
+- Q * K^T: Dot Product Resonance — measures alignment between queries and keys
+- / sqrt(d_k): Scaling factor — keeps variance stable
+- softmax(): Converts scores to attention weights (probability distribution)
+- * V: Multiplies attention weights by Value matrix to produce Context Vector (blended opinion of all words)
+
+Output: Context Vector — a blended opinion of all words, weighted by relevance.
+
+Question posed: What about multiple heads?
+
+================================================================================
+PAGE 12 - Multihead Attention
+================================================================================
+Title: Multihead Attention: Parallel Perspectives
+
+Why use multiple heads?
+- Each attention head learns a distinct, complex relationship (e.g., grammar, semantic meaning, modifiers).
+- The outputs are concatenated and projected.
+
+Architecture:
+- Multiple attention heads run in parallel, each with its own Q, K, V matrices.
+- All head outputs are concatenated.
+- Concatenated output is passed through W_O (Projection layer).
+- Final output: Output vector.
+
+Flow:
+  Input → [Attention Head 1 (Q, K, V)] ↘
+  Input → [Attention Head 2 (Q, K, V)] →  Concatenate → W_O (Projection) → Output vector
+  Input → [Attention Head 3 (Q, K, V)] ↗
+  Input → [Attention Head 4 (Q, K, V)] ↗
+
+================================================================================
+PAGE 13 - Causal Masking
+================================================================================
+Title: Causal Masking: Preserving the Arrow of Time
+
+The Challenge:
+- Linear algebra allows models to "cheat" by looking at future tokens during training.
+
+The Solution:
+- A causal mask forcefully hides keys that are not yet available to the query.
+- Only past and current tokens are visible to each position.
+
+Causal Mask Matrix (lower triangular, size 10x10 example):
+  array([
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+  ], dtype=tf.int32)
+
+Visual: Attention weight matrix shown with upper triangle masked (hidden).
+- Rows = Query positions
+- Columns = Key positions
+- Each query can only attend to keys at its position or earlier.
+
+================================================================================
+PAGE 14 - Deconstructing the Generative Engine (Diagram)
+================================================================================
+Title: Deconstructing the Generative Engine
+Subtitle: A First-Principles Schematic of Modern Large Language Models
+
+Components labeled in the schematic:
+- Data Ingestion Pipeline (01/4)
+- Neural Transformer Block (T5/8)
+- Neural Transformer Block (T5/6)
+- Attention Head Array (A2/6)
+- Context Window Buffer (C8/7)
+- Query Mechanism (Cyan): Input Processing & Feature Extraction
+- Key Mechanism (Magenta): Memory Addressing & Context Comparison
+- Value Mechanism (Yellow-Ochre): Output Generation & Information Synthesis
+- Output Distribution Nozzle (09/10) and (09/16)
+- Loss Function Feedback Loop (L4/5)
+- Parameters Reservoir (P11/12)
+
+Project ID: LLM DECONSTRUCTION, SCHEMATIC-801
+
+================================================================================
+PAGE 15 - Transformer Block
+================================================================================
+Title: Transformer Block
+
+Definition:
+- A single component (repeated block) that forms the core of the Transformer architecture.
+
+Sub-components:
+1. Multihead attention layer (takes Query, Key, Value as inputs)
+2. Skip connection (residual connection) after multihead attention
+3. Layer normalization
+4. Feed-forward layers
+5. Skip connection (residual connection) after feed-forward
+6. Layer normalization (output of the block)
+
+Architecture (bottom to top):
+  Input (token embeddings) →
+  Multihead Attention Layer (Q, K, V) →
+  [Skip connection: Add input to output] →
+  Layer Normalization →
+  Feed-Forward Layers →
+  [Skip connection: Add to output] →
+  Layer Normalization →
+  Output (passed to next block or final layer)
+
+================================================================================
+PAGE 16 - Layer Normalization vs Batch Normalization
+================================================================================
+Title: Normalizing the Flow: Layer vs. Batch
+
+Batch Normalization:
+- Calculates statistics across the batch and spatial dimensions.
+- Normalizes across the batch dimension for each feature position.
+
+Layer Normalization:
+- Normalizes each position of each sequence individually across the feature channels.
+- Prevents dangerous dependencies across different text sequences in a batch.
+- Preferred for NLP/Transformer models because sequences have variable lengths.
+
+Dimensions involved: Sentence length, Feature, Batch dimension.
+
+Key difference:
+- Layer Norm: normalizes across features for one sample (one row/position).
+- Batch Norm: normalizes across samples for one feature (one column/channel).
+
+================================================================================
+PAGE 17 - Positional Encoding
+================================================================================
+Title: Positional Encoding: Mapping Sequence to Space
+
+Problem:
+- Because Transformers process all tokens in parallel, the network has no inherent concept of order.
+- Word meaning and exact position in time must be fused into a single spatial coordinate.
+
+Solution: Positional Encoding
+
+Formula (conceptual):
+  Final Token Representation = Token Embedding + Positional Encoding
+
+Components:
+- Token Embedding: Encodes the semantic meaning of the word (dense, noisy pattern).
+- Positional Encoding: Encodes the position of the token using sinusoidal functions (wave pattern).
+- Token and Positional Encoding: Combined representation fed into the Transformer (merged pattern).
+
+Note: Sinusoidal positional encodings use sine and cosine functions of different frequencies for each dimension, creating a unique fingerprint for each position.
+
+================================================================================
+PAGE 18 - Anatomy of a GPT Model
+================================================================================
+Title: The Master Schematic: Anatomy of a GPT Model
+Subtitle: The 'black box' is an elegant assembly of positional spatial math and heavily parallelized key-value retrieval.
+
+Full Architecture (bottom to top):
+1. Inputs (padded)
+   - Example: "the pink elephant tried to get into the car but it was too"
+2. Text and positional embedding layer
+3. Transformer Block (repeated x12):
+   a. Multi-Head Attention
+   b. Feed-Forward Network
+   (with skip/residual connections between each)
+4. Dense layer
+5. Softmax layer → Output probabilities (probability distribution over vocabulary)
+   - Example output: predicts "big"
+
+Key note: The Transformer block is stacked 12 times (x12) in this GPT configuration.
+
+================================================================================
+PAGE 19 - The Autoregressive Loop and Temperature
+================================================================================
+Title: The Autoregressive Loop and Temperature
+
+The Autoregressive Loop:
+1. Feed network a sequence of words.
+2. Model outputs a probability distribution over the vocabulary.
+3. Sample a word from the distribution.
+4. Append the new word to the sequence.
+5. Repeat (loop back to step 1).
+
+Controlling Output: Temperature
+
+Temperature = 1.0 (High / Stochastic):
+- High variance output.
+- More adventurous, less predictable.
+- Example output (wine review): "wine review : us : washington : chenin blanc : a light, medium-bodied wine, this ight-bodied expression is not a lot of enjoyment. it's simple with butter and vanilla flavors that frame mixed with expressive fruit. it's juicy and tangy with a lemon lingers on the finish."
+
+Temperature = 0.5 (Low / Deterministic):
+- Stylistically consistent and precise.
+- Lower variance, more predictable.
+- Example output (wine review): "wine review : italy : piedmont : nebbiolo : this opens with aromas of french oak, menthol and a whiff of toast. the straightforward palate offers red cherry, black raspberry jam and a hint of star anise alongside firm but rather fleeting tannins, drink through 2026."
+
+================================================================================
+PAGE 20 - Visualizing Attention
+================================================================================
+Title: X-Raying the Engine: Visualizing Attention
+Subtitle: How the model accesses data across distance without signal degradation.
+
+Attention Visualization Examples (next-word prediction):
+
+Example 1:
+  Input: "wine review : germany : ..."
+  Attended token: "germany" (highlighted)
+  Next word prediction: [pfalz]
+
+Example 2:
+  Input: "wine review : germany : rheingau : riesling : this is a ripe, full-bodied ..."
+  Attended tokens: "germany", "rheingau", "riesling" (highlighted, varying intensity)
+  Next word prediction: [riesling]
+
+Example 3:
+  Input: "... with a touch of residual sugar. it's a slightly ..."
+  Attended token: "slightly" (highlighted)
+  Next word prediction: [sweet]
+
+Key insight: The model attends to the most semantically relevant tokens, regardless of how far back they appear in the sequence, without signal degradation.
+
+================================================================================
+PAGE 21 - The Transformer Ecosystem Matrix
+================================================================================
+Title: The Transformer Ecosystem Matrix
+
+Three main Transformer variants:
+
+1. Encoder (e.g., BERT):
+   - Architecture: Bidirectional (No causal masking)
+   - Behavior: Attends to the entire input string in all directions to extract deep context.
+   - Use cases: Sentence classification, named entity recognition, extractive QA.
+
+2. Decoder (e.g., GPT-3, GPT-4):
+   - Architecture: Causal Masking (Strictly forward-facing)
+   - Behavior: Autoregressive. Generates tokens sequentially based only on previous context.
+   - Use cases: Text generation, open-ended conversational agents.
+
+3. Encoder-Decoder (e.g., T5):
+   - Architecture: Hybrid (Unmasked Encoder → Cross-referential Decoder)
+   - Behavior: Reframes tasks into text-to-text. Encoder builds representation, Decoder translates.
+   - Use cases: Translation, summarization.
+
+================================================================================
+PAGE 22 - Scaling the Architecture: Evolution of GPT
+================================================================================
+Title: Scaling the Architecture: The Evolution of GPT
+Note: The core architecture remained remarkably stable; revolutionary capabilities were unlocked through massive scaling.
+
+GPT Evolution Table:
+
+| Model | Date     | Context Window | Parameters        | Training Data                                                  |
+|-------|----------|----------------|-------------------|----------------------------------------------------------------|
+| GPT-1 | Jun 2018 | 512            | 120,000,000       | 4.5 GB of text from unpublished books                         |
+| GPT-2 | Feb 2019 | 1,024          | 1,500,000,000     | 40 GB of text from outbound Reddit links                      |
+| GPT-3 | May 2020 | 2,048          | 175,000,000,000   | CommonCrawl, WebText, English Wikipedia, book corpora and others: 570 GB |
+| GPT-4 | Mar 2023 | -              | -                 | Scale data unpublished. Architecture becomes multimodal.       |
+
+================================================================================
+PAGE 23 - From Predictor to Assistant: The RLHF Loop
+================================================================================
+Title: From Predictor to Assistant: The RLHF Loop
+
+RLHF = Reinforcement Learning from Human Feedback
+
+Three-Step Process:
+
+Step 1: Supervised Fine-Tuning (SFT)
+- Humans write perfect conversational prompts and desired outputs.
+- The raw (pre-trained) model is trained to mimic this format.
+
+Step 2: Reward Modeling
+- The SFT model generates multiple answers to prompts.
+- Human labelers rank these outputs (e.g., A > B > C).
+- A separate Reward Model learns to predict what humans consider a high-quality answer.
+
+Step 3: Reinforcement Learning (PPO - Proximal Policy Optimization)
+- The model answers a new prompt.
+- The Reward Model scores the answer.
+- The policy (model weights) is updated using Proximal Policy Optimization (PPO) to maximize the reward.
+- Loop: SFT model → Reward Modeling → RL (PPO) → improved model → repeat.
+
+================================================================================
+PAGE 24 - The UI Over the Engine (Summary / Conclusion)
+================================================================================
+Title: The UI Over the Engine
+
+Three Key Takeaways:
+
+1. An Information Retrieval Engine:
+   - The perceived magic of GPT is a highly parallelized retrieval system using Queries, Keys, and Values to extract exact context from vast distances.
+
+2. Spatial Mathematics:
+   - By fusing semantic embeddings with positional encodings, Transformers map the concept of time into navigable, multi-dimensional space.
+
+3. The Power of Alignment:
+   - The Transformer architecture is the engine; alignment techniques like RLHF are the steering wheel — converting raw statistical predictors into highly capable, conversational agents.
+
+================================================================================
+END OF DOCUMENT
+================================================================================

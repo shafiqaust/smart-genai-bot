@@ -1,0 +1,365 @@
+SOURCE: 10-gen-ai.pdf
+TOPIC: Generative Artificial Intelligence - Week 10: Normalizing Flow Models
+PREPARED WITH: NotebookML
+
+================================================================================
+PAGE 1
+================================================================================
+Title: Generative Artificial Intelligence
+Subtitle: Generative AI
+Week: Week 10 - Normalizing Flow Models
+Prepared with help of NotebookML
+
+================================================================================
+PAGE 2
+================================================================================
+Title: GenAI
+
+Diagram description: Autoencoder architecture showing:
+- Input image (handwritten digit "2") → Input layer (x) → Encoder (multiple layers, blue/teal) → Latent vector (z) → Decoder (multiple layers, green/blue) → Reconstructed output layer (x-hat) → Reconstructed image (blurry "2")
+- Label: "Encoder calculates internal vector Z" | "Decoder reconstructs input from Z"
+
+================================================================================
+PAGE 3
+================================================================================
+Title: What we have learned (last week slide)
+
+Key concepts covered previously:
+1. Variational Autoencoders (VAE)
+2. Generative Adversarial Networks (GANs)
+
+Core insight: In both cases, a new variable is introduced with a distribution that is easy to sample from, and the model learns how to decode this variable back into the original domain.
+
+Limitation: One piece of data at a time – the image. Text data might not work well.
+
+Diagram 1 (VAE): Shows encoder-decoder structure with:
+- Input Layer → x → h (latent code) → x' → Output Layer
+- Labeled: ENCODER (top dashed box), DECODER (bottom dashed box)
+- Second diagram: Input → Encoder → Latent Space → Decoder → Output
+
+Diagram 2 (GAN): Shows:
+- Discriminator training process: Random noise → Generator → fake batch → Discriminator → Predictions/Labels → Loss
+- Real training batch → Discriminator → Predictions/Labels → Loss
+- Generator training process: Random noise → Generator → fake batch → Discriminator → Predictions/Labels → Loss
+
+================================================================================
+PAGE 4
+================================================================================
+Title: So Far
+
+Models covered so far:
+1. Variational Autoencoders (VAE)
+2. Generative Adversarial Networks (GANs)
+3. Autoregressive models
+
+Each addresses the challenge of modeling the distribution p(x) either by:
+a) Introducing a latent variable that can be easily sampled (and transformed using the decoder in VAEs or generator in GANs)
+b) Tractably modeling the distribution as a function of the values of preceding elements (autoregressive models)
+
+Normalizing Flow Models (new topic):
+- Similar to autoregressive models, normalizing flows are able to explicitly and tractably model the data-generating distribution p(x)
+- Like VAEs, normalizing flows attempt to map the data into a simpler distribution, such as a Gaussian distribution
+- Key difference from VAEs: Normalizing flows place a constraint on the form of the mapping function so that it is INVERTIBLE, and can therefore be used to generate new data points
+
+================================================================================
+PAGE 5
+================================================================================
+Title: Normalizing Flows — Three Paths to Generating Reality
+
+Comparison table of three generative model families:
+
+| Property    | GANs                                | VAEs                                             | Normalizing Flows                                                        |
+|-------------|-------------------------------------|--------------------------------------------------|--------------------------------------------------------------------------|
+| Type        | Implicit / Adversarial              | Approximate / Latent                             | Explicit / Exact                                                         |
+| Mechanism   | Generator vs. Discriminator game    | Encoder maps to a latent space, decoder approximates reconstruction | A sequence of invertible transformations mapping data to a tractable distribution |
+| Formula     | —                                   | —                                                | p(x) = f^{-1}(p(z)) + det|J|                                            |
+| Drawback    | Cannot evaluate the exact probability density of the data | (approximate)                             | —                                                                        |
+| Advantage   | —                                   | —                                                | Explicitly and tractably models the precise data-generating distribution p(x) |
+
+================================================================================
+PAGE 6
+================================================================================
+Title: The Goal: A Perfect, Invertible Mapping Between Complex Reality (X) and Simple Statistics (Z)
+
+Diagram:
+- Left plane: Data Space X — complex, scattered distribution labeled P_x(x) (pink/magenta scattered dots forming a heart-like shape)
+- Right plane: Latent Space Z — simple Gaussian distribution labeled P_z(z) (smooth bell curve)
+- Forward mapping: z = f(x) — arrow from Data Space X to Latent Space Z (blue arrow, top)
+- Inverse mapping: x = g(z) — arrow from Latent Space Z back to Data Space X (purple arrow, bottom)
+
+Key statement: The generative goal is to find an invertible function f(x) that maps complex reality into simple statistics, and an exact inverse g(z) that maps it back.
+
+================================================================================
+PAGE 7
+================================================================================
+Title: Change of Variables
+
+Concept: Probability distribution p_x(x) defined over a rectangle X in two dimensions where x = (x_1, x_2)
+
+Properties:
+- This function integrates to 1 over the domain of the distribution
+- Domain: x_1 in the range [1, 4] and x_2 in the range [0, 2]
+- Represents a well-defined probability distribution
+
+Formula: p_x(x) = (x_1 - 1) * x_2 / 9
+
+Integral: ∫_0^2 ∫_1^4 p_X(x) dx_1 dx_2 = 1
+
+Diagrams:
+- Left: 2D plot of the rectangle domain in x_1 (range 1–4) and x_2 (range 0–2) space, colored gradient showing p_x(x)
+- Right: 3D surface plot of the probability distribution p(x) over the domain
+
+================================================================================
+PAGE 8
+================================================================================
+Title: Shift and Scale
+
+Concept: Defining the mapping function f over the unit square of z
+
+Key properties:
+- The function is invertible — there is a function g that maps each point of z back to its corresponding x
+
+Forward mapping (z = f(x)):
+  z_1 = (x_1 - 1) / 3
+  z_2 = x_2 / 2
+
+Inverse mapping (x = g(z)):
+  x_1 = 3*z_1 + 1
+  x_2 = 2*z_2
+
+Diagram:
+- Left: rectangle domain p_x(x) in x-space (x_1 range [1,4], x_2 range [0,2])
+- Middle: transformation box showing Z=f(X) forward and X=g(Z) inverse, with formulas
+- Right: unit square domain p_z(z) in z-space (z_1 range [0,1], z_2 range [0,1])
+
+================================================================================
+PAGE 9
+================================================================================
+Title: Equation 6-1 — The Change of Variables Equation
+
+Core equation:
+  p_X(x) = p_Z(z) * |det(dz/dx)|
+
+Breakdown:
+- Left side — p_X(x): The complex, unknown probability we want to model
+- Middle — p_Z(z): The simple, known probability (our Gaussian) we can easily sample from
+- Right side — |det(dz/dx)|: The determinant — the scaling factor; the mathematical price we pay for stretching space
+
+================================================================================
+PAGE 10
+================================================================================
+Title: The Jacobian Determinant — The Scaling Factor of Space
+
+The Problem:
+If we transform a probability distribution into a simpler one, we must ensure it still integrates exactly to 1.
+
+The Jacobian Determinant:
+It calculates the relative change in area (or volume in higher dimensions). In the illustrated example, the domain has grown six times larger, requiring a scaling factor to maintain valid probabilities.
+
+Takeaway: The Jacobian determinant is simply the scaling factor of space.
+
+Diagram:
+- Small blue grid (Area = 1) → Transformation arrow → Large pink/magenta irregular shape (Area = 6)
+- Illustrates that stretching space requires compensating the probability density
+
+================================================================================
+PAGE 11
+================================================================================
+Title: The Engineering Reality — Two Hurdles in Normalizing Flows
+
+Hurdle 1: The Invertibility Problem
+- Standard neural networks are strictly one-way streets
+- We cannot natively run them in reverse
+- Diagram: Standard feedforward neural network with one-directional arrows and a lock icon
+
+Hurdle 2: The Computational Wall
+- Calculating the determinant of a high-dimensional Jacobian matrix costs O(n^3) time
+- For a tiny 32×32 image, the Jacobian is a 1024 × 1024 matrix
+- Computing this at every training step is computationally explosive
+- Diagram: Large matrix of numbers with a warning/error icon
+
+================================================================================
+PAGE 12
+================================================================================
+Title: Enter RealNVP — Real-valued Non-volume Preserving Transformations (Dinh et al., 2017)
+
+The Solution: Force the math to be easy by design.
+
+RealNVP introduces a specific architecture guaranteed to be:
+1. Perfectly invertible
+2. Featuring a practically free (computationally cheap) Jacobian determinant calculation
+
+Core architectural concept: Coupling Layer (illustrated in blueprint-style diagram)
+
+================================================================================
+PAGE 13
+================================================================================
+Title: Coupling Layer
+
+Definition:
+A coupling layer produces a scale and translation factor for each element of the input.
+
+Output:
+It produces two tensors that are exactly the same size as the input:
+1. Scale factor tensor (s)
+2. Translation factor tensor (t)
+
+Diagram:
+- Input x → Coupling layer → outputs: s (scale) and t (translation)
+
+================================================================================
+PAGE 14
+================================================================================
+Title: Split, Bypass, and Transform — RealNVP Architecture
+
+Architecture diagram — three components:
+
+Stream 1 (Top):
+- The first d elements (x_{1:d}) flow completely undisturbed through to output z_{1:d}
+- These elements are passed through unchanged
+
+The Intervention:
+- Stream 1 (x_{1:d}) serves as input to standard neural networks inside the coupling layer
+- These networks generate a Scale factor (s) and Translation factor (t)
+
+Stream 2 (Bottom):
+- The remaining elements (x_{d+1:D}) are scaled and translated using s and t
+- Output: z_{d+1:D}
+
+Key Insight: Half the data acts as the control dial to transform the other half, but remains entirely untouched itself.
+
+Forward transformation formula:
+  z_{1:d} = x_{1:d}                                (identity for stream 1)
+  z_{d+1:D} = x_{d+1:D} * exp(s) + t               (scale and translate for stream 2)
+
+================================================================================
+PAGE 15
+================================================================================
+Title: Effortless Inversion — Forward Math = Backward Math
+
+The Mechanics of Reversal:
+
+Step 1: Because Stream 1 was passed through unchanged, x_{1:d} is instantly known (x_{1:d} = z_{1:d})
+
+Step 2: We run the exact same Scale (s) and Translate (t) networks forward using x_{1:d} — no inversion of the neural network needed
+
+Step 3: We simply reverse the algebra on Stream 2:
+  x_{d+1:D} = (z_{d+1:D} - t) * exp(-s)
+
+Takeaway: We never have to invert the complex dense networks; we only evaluate them in the forward direction.
+
+Diagram: Same coupling layer architecture shown in reverse, with arrows going from z back to x.
+
+================================================================================
+PAGE 16
+================================================================================
+Title: RealNVP Model
+
+Basic components:
+1. Usual layers
+2. Stacking coupling layers
+3. Loss function
+
+Loss function formula:
+  -log p_X(x) = -log p_Z(z) - log |det(∂z/∂x)|
+
+Explanation: Training minimizes the negative log-likelihood, which consists of:
+- The negative log probability under the simple (Gaussian) distribution
+- Minus the log absolute Jacobian determinant (accounting for the volume change)
+
+Reference: See notebook and the program execution for implementation details.
+
+================================================================================
+PAGE 17
+================================================================================
+Title: RealNVP Works, But Hardcoded Permutations Limit Flexibility
+
+Limitation 1:
+RealNVP relies on manually hardcoded permutations (binary masking with [0, 1] and [1, 0]) to ensure all data dimensions are transformed.
+
+Limitation 2:
+This rigid routing is suboptimal for highly complex, high-dimensional data like photorealistic images, where relationships between channels are intricate and unpredictable.
+
+Open question: What if the neural network could learn the optimal way to mix and route the data before each coupling layer?
+
+Illustration: Checkerboard binary mask pattern (black and white squares), representing the hardcoded permutation strategy used in RealNVP.
+
+================================================================================
+PAGE 18
+================================================================================
+Title: GLOW (2018) — Letting the Network Learn the Permutation
+
+The Upgrade:
+Replaces the hardcoded reverse masking setup with invertible 1×1 convolutional layers.
+
+The Mechanism:
+Instead of a rigid binary split, the 1×1 convolution acts as a general method to produce any learned permutation of the input channels.
+
+The Result:
+The model dynamically chooses how to mix the data channels, yielding high-quality, high-dimensional latent spaces suitable for complex image manipulation.
+
+Reference: Dinh et al. → GLOW (Kingma & Dhariwal, 2018)
+
+Diagram:
+- Checkerboard input → Invertible 1×1 Convolution (learned mixing) → Coupling Layer
+- Sample output: Grid of high-quality, realistic generated face images (diverse in age, gender, ethnicity)
+
+================================================================================
+PAGE 19
+================================================================================
+Title: FFJORD — From Discrete Layers to Continuous Flows
+
+Full name: Free-Form Continuous Dynamics (2019)
+
+Core innovation: From Discrete to Continuous
+- RealNVP and GLOW take discrete layers as steps
+- FFJORD models the transformation as a continuous time process using Ordinary Differential Equations (ODEs)
+
+Governing equation:
+  dz(t)/dt = f_θ(x(t), t)
+
+The Mechanism:
+A black-box ODE solver is used to calculate the state of the data particles at any exact point in time, removing the concept of hard architectural layers entirely and allowing for free-form dynamics.
+
+Diagram:
+- Y-axis: time t (from 0 to 1)
+- X-axis: z (latent variable)
+- Bottom: complex multi-modal distribution p(z(t_0)) — irregular, colorful
+- Top: smooth Gaussian distribution p(z(t_1)) — clean bell curve
+- Lines show continuous particle trajectories flowing from complex to simple distribution over time
+
+================================================================================
+PAGE 20
+================================================================================
+Title: The Evolution of Flow Models
+
+Summary comparison table:
+
+| Model       | Year | Architecture | Key Innovation                                                                 |
+|-------------|------|--------------|--------------------------------------------------------------------------------|
+| RealNVP     | 2017 | Discrete     | Coupling Layers + Hardcoded Alternating Masks; Proved the viability of easily computed Jacobian determinants |
+| GLOW        | 2018 | Discrete     | Coupling Layers + Invertible 1×1 Convolutions; Replaced hardcoded permutations with learned channel mixing, scaling flows to high-res images |
+| FFJORD      | 2019 | Continuous   | Ordinary Differential Equations (ODEs); Moved from stacked layers to smooth, free-form fluid dynamics governed by time |
+
+Diagrams: Architecture visualizations for each model showing data flow and transformation strategy.
+
+================================================================================
+PAGE 21
+================================================================================
+Title: Summary — Three Key Takeaways
+
+1. The Objective Realized:
+Normalizing Flows achieve what other models cannot: exact density estimation via the Change of Variables equation, allowing direct modeling of the data probability space.
+
+2. The Architectural Hack:
+The computationally explosive O(n^3) Jacobian determinant was bypassed using Coupling Layers, forcing complex neural networks into mathematically trivial lower-triangular matrices.
+
+3. The Generative Frontier:
+From the rigid masks of RealNVP to the continuous fluid dynamics of FFJORD, invertible neural networks provide a uniquely tractable foundation for modern generative AI.
+
+================================================================================
+END OF DOCUMENT
+Total Pages: 21
+Key Models Covered: VAE (recap), GAN (recap), Normalizing Flows, RealNVP (2017), GLOW (2018), FFJORD (2019)
+Key Mathematical Concepts: Change of Variables, Jacobian Determinant, Coupling Layers, Invertible Transformations, ODEs
+================================================================================

@@ -1,0 +1,544 @@
+SOURCE: 14-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 13 - Advanced GANs
+TOTAL PAGES: 29
+
+================================================================================
+PAGE 1 - TITLE SLIDE
+================================================================================
+Title: Generative Artificial Intelligence
+Subtitle: Generative AI
+Week: Week 13: Advanced GANs
+Note: Created with GenAI Help
+
+================================================================================
+PAGE 2 - GAN OVERVIEW / RECAP
+================================================================================
+Title: Remember this?
+
+Core GAN Architecture:
+- Generator (Neural Network): Tries to produce fake pictures
+- Discriminator (Neural Network): Tries to detect fake pictures
+- The two networks compete adversarially in a feedback loop
+
+Reference: GAN Zoo repository at https://github.com/hindupuravinash/the-gan-zoo
+
+================================================================================
+PAGE 3 - INFLUENTIAL GAN ARCHITECTURES
+================================================================================
+Title: Some Influential Architectures
+
+Category 1: GAN for Image Generation (NVIDIA)
+- ProGAN
+- StyleGAN
+- StyleGAN2
+
+Category 2: GAN with Self-Attention
+- SAGAN (Self-Attention GAN)
+- BigGAN
+
+Category 3: GAN with Ideas from Variational Autoencoders and Transformers
+- VQ-GAN
+- ViT VQ-GAN
+
+================================================================================
+PAGE 4 - THE HIGH-RESOLUTION DEADLOCK PROBLEM
+================================================================================
+Title: The High-Resolution Deadlock (Problem)
+
+Target: 1024x1024 resolution
+
+Problem Description:
+- Generator Behavior: The generator operates over complex, high-res data spaces before understanding basic structures. It attempts to produce complex outputs without foundational clarity.
+- Discriminator Dominance: The discriminator identifies blatant fakes, instantly overpowering the generator. It effortlessly rejects flawed high-resolution attempts.
+- System Failure: Gradient signals vanish. The model collapses. No effective learning signal reaches the generator, leading to stagnation and structural breakdown.
+
+Symptoms: Mode collapse, pixelated data, structural failure
+
+================================================================================
+PAGE 5 - PROGAN STRATEGY
+================================================================================
+Title: Conquering Resolution: The ProGAN Strategy
+
+Core Insight: Instead of starting at full resolution, train a lightweight GAN to output 4x4 pixel images, then incrementally add layers.
+
+Training Phases:
+- Phase 1: Master fundamental features at extreme low resolution (4x4)
+- Phase 2: Bolt new convolutional layers onto the architecture
+- Phase 3: Gradually scale to high fidelity (8x8 to 16x16 to 1024x1024)
+
+Resolution Progression: 4x4 → 8x8 → 16x16 → 32x32 → 64x64 → 128x128 → 256x256 → 512x512 → 1024x1024
+
+================================================================================
+PAGE 6 - WHY PROGRESSIVE TRAINING IS POSSIBLE
+================================================================================
+Title: Why is it possible?
+
+Key Insight: Images can be compressed to lower resolution using interpolation.
+
+Visual Demonstration: Face images shown at multiple resolutions:
+- 4x4: Very blocky, basic color patches
+- 8x8: Still very blocky, slightly more detail
+- 16x16: Rough facial structure visible
+- 32x32: Recognizable faces, significant detail
+- 64x64: Clear faces with good detail
+
+This confirms that structural and semantic content is preserved even at low resolution, justifying the progressive training approach.
+
+================================================================================
+PAGE 7 - PROGAN FADE-IN MECHANISM (TRAINING THE GENERATOR)
+================================================================================
+Title: The Fade-In: Injecting New Layers (Training the Generator)
+
+Problem: Suddenly adding untrained layers causes a "shock" that destroys learned weights.
+Solution: A residual connection masks new layers with a transition parameter (Alpha).
+
+Transition Parameter (Alpha): Ranges from 0 to 1
+
+Three Stages (example: 4x4 to 8x8 transition):
+1. Existing: Network operates fully at 4x4 resolution. New 8x8 layer has weight (1-alpha), effectively bypassed (alpha=0).
+2. Transition: Alpha scales from 0 to 1. New 8x8 layers fade in, gradually taking over output generation. Output is weighted blend: (1-alpha)*old_output + alpha*new_output.
+3. Stabilization: Old layers are bypassed completely; network fine-tunes the new resolution. Alpha=1, new toRGB layer fully active.
+
+Architecture Details:
+- Latent noise vector dimension: 512
+- Transition goes from 4x4 to 8x8
+- Each block uses Conv layers with toRGB conversion heads
+
+================================================================================
+PAGE 8 - PROGAN GENERATOR AND DISCRIMINATOR ARCHITECTURE
+================================================================================
+Title: Generator and Discriminator (Architecture Diagram)
+
+Generator Architecture (3 states):
+1. Existing 4x4 Generator: Input Z → 4x4x512 → Existing toRGB → 4x4x3 image
+2. Transition: Input Z → 4x4x512 → Upsample → 8x8x512 → Conv block → 8x8x512 → New toRGB; blended with upsampled existing toRGB using alpha
+3. Stabilization: Input Z → 4x4x512 → Upsample → 8x8x512 → Conv block → New toRGB → 8x8x3 image
+
+Discriminator Architecture (3 states):
+1. Existing 4x4 Discriminator: Input 4x4x3 → Existing fromRGB → 4x4x512 → score 0.2
+2. Transition: Input 8x8x3 → Downsample to 4x4x3 → Existing fromRGB; also 8x8x3 → New fromRGB → Conv block → 8x8x512 → Downsample → 4x4x512; blended with alpha → score 0.2
+3. Stabilization: Input 8x8x3 → New fromRGB → Conv block → Downsample → 4x4x512 → score 0.2
+
+================================================================================
+PAGE 9 - PROGAN RESULTS
+================================================================================
+Title: After 800,000 Images
+
+Training Progression Visualization:
+- At early stages: 4x4 resolution, blocky faces
+- At mid stages: 8x8 resolution, slightly clearer
+- At final stage: Full 1024x1024 resolution
+
+Final Output: 6 photorealistic human face images at 1024x1024 resolution, indistinguishable from real photographs.
+
+Architecture at full training:
+- Generator (G): Latent → 4x4 → 8x8 → ... → 1024x1024
+- Discriminator (D): 1024x1024 → ... → 8x8 → 4x4
+- Both trained on real face images (shown as "Reals" in diagram)
+
+================================================================================
+PAGE 10 - PROGAN ADVANCED STABILIZATION TECHNIQUES
+================================================================================
+Title: Stabilizing the Growing Network (Advanced Techniques of ProGAN)
+
+Technique 1: Minibatch Standard Deviation
+- Mechanism: Appends the standard deviation of feature values across the minibatch as a constant feature layer in the discriminator.
+- Effect: Punishes the generator if it lacks variety, strictly preventing mode collapse.
+
+Technique 2: Equalized Learning Rates
+- Mechanism: Dynamically scales weights by a factor from the He initializer during runtime, rather than at initialization.
+- Effect: Prevents modern optimizers from creating speed imbalances between layers with different dynamic ranges.
+
+Technique 3: Pixelwise Normalization
+- Mechanism: Normalizes the feature vector in each pixel to a unit length after every convolutional layer in the generator.
+- Effect: Prevents signal magnitudes from spiraling out of control as they propagate through the growing network.
+
+================================================================================
+PAGE 11 - PROGAN ON LSUN DATASET
+================================================================================
+Title: On Another Set of Data (Large Scale Scene Understanding, LSUN)
+
+Dataset: LSUN (Large Scale Scene Understanding)
+Classes shown: Pottedplant, Horse, Sofa, Bus, Churchoutdoor, Bicycle, TVMonitor
+
+Result: ProGAN successfully generates realistic images across diverse object categories, not just faces, demonstrating generalizability.
+
+================================================================================
+PAGE 12 - STYLEGAN: THE CONTROL PROBLEM
+================================================================================
+Title: StyleGAN - The Control Problem: Entangled Latent Spaces
+
+Problem: Standard GAN latent spaces are entangled.
+
+Entangled Space (Standard GAN):
+- Features are locked together.
+- Attempting to isolate and alter hair color inadvertently manipulates gender, face shape, or background.
+- Cannot control individual attributes independently.
+
+Disentangled Space (The Goal):
+- Image synthesis requires feature isolation.
+- Hierarchical control demands that attributes can be manipulated entirely independently.
+- Each attribute (hair, face shape, eye color, etc.) is independently controllable.
+
+================================================================================
+PAGE 13 - STYLEGAN ARCHITECTURE: ENGINEERING DISENTANGLEMENT
+================================================================================
+Title: StyleGAN: Engineering Disentanglement
+
+Innovation 1: The Mapping Network
+- An 8-layer feed-forward network (FC layers) explicitly separates the input noise (z) into an intermediate latent space (w).
+- Breaks the restriction of matching the training data's probability density.
+- Allows z (from Z space) to be transformed into w (from W space) which is more disentangled.
+
+Innovation 2: Adaptive Instance Normalization (AdaIN)
+- The vector w is injected into the synthesis network at multiple resolutions.
+- AdaIN forcefully adjusts the mean and variance of each feature map to match a specific layer style.
+- Prevents style information from leaking across scales.
+
+Architecture Details:
+- Input: Latent z ∈ Z → Normalize → 8 FC layers → w ∈ W
+- Synthesis Network: Starts from Const 4x4x512
+- Noise (B) added at multiple points
+- Style vector (A, derived from w) injected at each resolution block via AdaIN
+- Conv 3x3 operations at each resolution level
+- Upsample operations between resolution levels
+
+================================================================================
+PAGE 14 - STYLEGAN HIERARCHICAL CONTROL VIA STYLE MIXING
+================================================================================
+Title: Hierarchical Control via Style Mixing
+
+Mechanism: By sampling two latent vectors (w1, w2) and randomly switching between them at specific layer crossover points, StyleGAN isolates stylistic control.
+
+Three Levels of Style Control:
+
+Coarse Styles (4x4 to 8x8):
+- Controls high-level geometry: face shape, pose, and presence of eyeglasses.
+
+Middle Styles (16x16 to 32x32):
+- Controls distinct facial features: hairstyle, facial hair, and eye state (open/closed).
+
+Fine Styles (64x64 to 1024x1024):
+- Controls micro-details: hair color, skin microstructure, and localized lighting variations.
+
+================================================================================
+PAGE 15 - STYLEGAN OUTPUT / STYLE MIXING RESULTS
+================================================================================
+Title: StyleGAN Output (Merging Styles Between Two Generated Images at Different Levels of Detail)
+
+Demonstration: Grid of synthesized faces showing style mixing.
+- Source A: Column images (face identity/coarse structure)
+- Source B: Row images (style donor)
+
+Style mixing results:
+- Coarse styles from source B: Takes on high-level geometry from B (face shape, pose), retains fine details from A
+- Middle styles from source B: Hairstyle, facial hair from B; geometry from A
+- Fine styles from source B: Skin tone, hair color, lighting from B; identity structure from A
+
+All faces shown are synthetically generated (not real people).
+
+================================================================================
+PAGE 16 - STYLEGAN CRITICAL FLAWS
+================================================================================
+Title: The Breaking Point of StyleGAN
+
+Critical Flaw 1: The AdaIN Artifacts
+- Symptom: Unexplained 'water-droplet' artifacts appear consistently across generated outputs.
+- Cause: The AdaIN operation forces the network to unnaturally bypass information in the feature maps, creating localized activation spikes that manifest as physical image defects.
+
+Critical Flaw 2: Phase Artifacts ("Stuck" Features)
+- Symptom: When animating a latent walk, certain micro-features like teeth or eyes remain unnaturally locked in place.
+- Cause: Progressive growing anchors high-frequency details to absolute pixel coordinates during early low-resolution phases, destroying fluid movement.
+
+================================================================================
+PAGE 17 - STYLEGAN2 FIX #1: WEIGHT MODULATION AND DEMODULATION
+================================================================================
+Title: StyleGAN2 Fix #1: Weight Modulation & Demodulation
+
+The Shift: Remove AdaIN entirely. Apply style directly to the weights of the convolutional layers, rather than operating on the image tensor at runtime.
+
+StyleGAN vs. StyleGAN2 Style Block Comparison:
+
+StyleGAN Style Block (with AdaIN):
+- Upsample → Conv 3x3 (with w) → AdaIN (with A) → Conv 3x3 (with w) → AdaIN (with A)
+- Noise B added before each AdaIN
+
+StyleGAN2 Style Block (Mod/Demod):
+- Upsample → Conv 3x3 → Mod + Demod (with A and w) → Conv 3x3 → Mod + Demod (with A and w)
+- No AdaIN layer
+
+Two Weight Operations:
+1. Modulation:
+   - Scales the convolutional weights using the incoming style vector.
+   - Amplifies specific features.
+   
+2. Demodulation:
+   - Normalizes the styled weights to ensure a unit standard deviation.
+   - Preserves stylistic control while eradicating the water-droplet artifacts.
+
+Result: Eliminates AdaIN artifacts (water-droplets) by operating at weight level rather than tensor/activation level.
+
+================================================================================
+PAGE 18 - STYLEGAN2 FIX #2: RETIRING PROGRESSIVE GROWING
+================================================================================
+Title: StyleGAN2 Fix #2: Retiring Progressive Growing
+
+The Structural Overhaul:
+- StyleGAN2 abandons stage-by-stage progressive growing.
+- Instead, it utilizes skip connections in the generator and residual connections in the discriminator.
+- Allows the entire network to be trained fluidly as a single entity from day one.
+- Eliminates phase artifacts caused by progressive growing anchoring high-frequency features to pixel coordinates.
+
+Path Length Regularization:
+- A penalty term minimizing the Jacobian is added to the loss function.
+- Forces the latent space to be perfectly smooth.
+- A fixed-size step in latent space now results in a fixed-magnitude visual change.
+- Ensures stable, fluid animations without "stuck" anatomical features.
+
+Generator Architecture: Latent vector → Upsample → Conv 3x3 → Upsample → Conv 3x3 → ... → Mod/Demod → Conv 3x3 → Mod/Demod → (+skip connection)
+
+Discriminator Architecture: Score ← Conv 3x3 ← Conv 3x3 ← Downsample ← Conv 1x1 ← Conv 3x3 ← Downsample ← Conv 1x1 ← Conv 1x1 ← (+residual connection)
+
+================================================================================
+PAGE 19 - GENERATIVE LINEAGE MATRIX (ProGAN / StyleGAN / StyleGAN2 COMPARISON)
+================================================================================
+Title: The Generative Lineage Matrix
+
+Comparison Table:
+
+Dimension         | ProGAN              | StyleGAN                    | StyleGAN2
+------------------+---------------------+-----------------------------+---------------------------
+Core Innovation   | Conquered High-Res  | Latent Disentanglement      | Artifact Eradication
+Latent Structure  | Entangled (z)       | Mapped (z to w)             | Mapped + Path Length Regularized
+Normalization     | Pixelwise           | AdaIN (Tensor-level)        | Mod/Demod (Weight-level)
+Growth Mechanism  | Progressive Layers  | Progressive Layers          | Skip/Residual Connections
+Artifact Status   | Mode Collapse Solved| Water Droplets & Rigid Phases| Clean & Smooth Interpolation
+
+================================================================================
+PAGE 20 - STYLEGAN2 IN ACTION
+================================================================================
+Title: StyleGAN2 in Action
+
+Datasets Demonstrated:
+1. FFHQ (Flickr-Faces-HQ): High-quality photorealistic human face generation
+   - Diverse ages, ethnicities, lighting conditions
+   - No visible artifacts
+
+2. LSUN Car: Car image generation
+   - Multiple viewpoints and car types
+   - Clean, photorealistic results
+
+================================================================================
+PAGE 21 - SAGAN (SELF-ATTENTION GAN)
+================================================================================
+Title: SAGAN
+
+Problem with standard GAN: Only able to process information locally (through convolutional filters with limited receptive fields).
+
+SAGAN Solution:
+- Paying attention to long-range dependencies across the image
+- Uses Transformer architecture (self-attention mechanism)
+
+Self-Attention Mechanism:
+- Input: Convolution feature maps (x)
+- Three parallel 1x1 convolution branches: f(x), g(x), h(x)
+- f(x) and g(x) are transposed/multiplied and passed through Softmax to produce Attention Map
+- Attention map is applied (via matrix multiply) to h(x) to produce Self-attention feature maps (o)
+
+Attention Map Visualization:
+- Bird image shown with attention map highlighting specific body parts
+- Demonstrates that SAGAN captures long-range spatial relationships (e.g., bird beak to tail, wing symmetry)
+
+Key Innovation: Allows the discriminator and generator to efficiently model long-range, multi-level dependencies across image regions using self-attention.
+
+================================================================================
+PAGE 22 - BIGGAN
+================================================================================
+Title: Era 3: Conquering Scale & Diversity with BigGAN
+
+The New Challenge: Generating diverse, class-conditional images across hundreds of completely different categories simultaneously, tackling the massive ImageNet dataset.
+
+The Engine:
+- Built on the Self-Attention GAN (SAGAN) framework.
+- Equips the network to capture long-range pixel dependencies (like a dog's tail matching its head) without relying solely on local convolutions.
+
+The Scale Overhaul:
+1. Massive batch sizes deployed at 2,048 (8x larger than prior models).
+2. Channel capacities increased by 50% per layer.
+3. Shared embeddings and orthogonal regularization injected into every layer of the generator.
+
+Capabilities Demonstrated:
+- Class-conditional Dog Generation (photorealistic)
+- Diverse Landscape Synthesis
+- Complex Object Generation (e.g., burger)
+
+================================================================================
+PAGE 23 - BIGGAN: THE TRUNCATION TRICK
+================================================================================
+Title: The Truncation Trick: Variance vs. Fidelity
+
+Concept: During sampling, BigGAN resamples latent vectors (z) that fall outside a specific magnitude threshold, effectively trading structural diversity for absolute visual fidelity.
+
+Distribution: Latent vectors sampled from N(0, I) (standard normal)
+
+Threshold Settings and Effects:
+- Threshold = 2 (High): Model attempts extreme variability but collapses into mutated, bizarre artifacts (low fidelity). Dogs look distorted.
+- Threshold = 1.5: Highly varied but some artifacts present
+- Threshold = 1.0: Good balance, some diversity
+- Threshold = 0.5: Clear, recognizable dogs
+- Threshold = 0.25: Very realistic, less diverse
+- Threshold = 0.1: Highly photorealistic
+- Threshold = 0.04 (Low): Model produces highly believable, photorealistic samples, but suffers reduced diversity. All dogs look similar (e.g., golden retriever type).
+
+Trade-off: Fidelity ↑ as threshold ↓, but Diversity ↓ as threshold ↓.
+
+================================================================================
+PAGE 24 - VQ-GAN: THE PARADIGM SHIFT
+================================================================================
+Title: The Continuous Ceiling: A Paradigm Shift (Vector Quantized GAN)
+
+The Continuous Paradigm (CNNs) — The Problem:
+- The Wall: Traditional continuous latent spaces eventually become uninformative or suffer posterior collapse when scaled infinitely.
+- Limitation: Pure Convolutional Neural Networks struggle to fundamentally understand the global "grammar" and distinct object boundaries of an image.
+
+The Discrete Paradigm (Transformers) — The Solution:
+- The Pivot: Stop treating images as continuous waves of blending pixels. Start treating them like discrete, immutable words in a sentence.
+- The Solution: To model complex, massive structures, the field pivots entirely to discrete sequence modeling, laying the groundwork for VQ-GAN.
+
+Key Insight: Image tokens can be treated like text tokens, enabling the use of powerful autoregressive transformer models for image generation.
+
+================================================================================
+PAGE 25 - VQ-GAN PHASE 1: THE DISCRETE CODEBOOK
+================================================================================
+Title: VQ-GAN Phase 1: The Discrete Codebook
+
+Process Pipeline:
+
+Step 1 - Encoder:
+- The VAE encoder collapses an image into a grid of continuous vectors.
+
+Step 2 - Quantization (Codebook / Sieve):
+- Each vector is measured against a learned 'Codebook' — a finite dictionary of specific, known vector states.
+- The continuous vector is forcefully snapped (quantized) to the closest matching Codebook vector via Euclidean distance.
+
+Step 3 - Output:
+- The image is no longer a continuous gradient; it is a discrete sequence of integer tokens, ready to be read like a sentence.
+- Output is a sequence of colored "Lego blocks" representing codebook indices.
+
+Step 4 - Decoder:
+- Reconstructs image from the discrete token sequence.
+
+Key Properties:
+- Codebook: Finite dictionary of learned visual primitives
+- Quantization: Nearest-neighbor lookup in embedding space
+- Output: Integer token sequence (like words in NLP)
+
+================================================================================
+PAGE 26 - VQ-GAN ENGINE: TRI-PARTITE SYSTEM
+================================================================================
+Title: The VQ-GAN Engine: A Tri-Partite System
+
+Component 1: The Quantized VAE
+- Encodes the raw image into discrete codebook tokens, sidestepping posterior collapse entirely.
+- Pipeline: Real Images → Encoder → Output Vector Grid → Q (Quantization with Codebook) → Decoder → Fake Images
+- Trained jointly with perceptual loss.
+
+Component 2: The PatchGAN Discriminator
+- Instead of evaluating the whole image, PatchGAN predicts if small patches are real or fake based on local style.
+- Employs a perceptual loss mechanism to force the VAE decoder to output razor-sharp, photorealistic images rather than blurry approximations.
+- Output: Grid of real/fake decisions per patch (adversarial loss on patches).
+
+Component 3: The Autoregressive Transformer
+- Replacing PixelCNN, an autoregressive Transformer is trained in a separate phase to predict the next discrete token in the sequence.
+- Literally reads the image patch-by-patch like text.
+- Pipeline: token 1 → token 2 → ... → Autoregressive Transformer → token 3
+- Enables text-conditioned or class-conditioned image generation.
+
+Training Strategy:
+- Phase 1: Train VAE + PatchGAN discriminator to learn codebook and decoder.
+- Phase 2: Freeze VAE. Train Transformer on codebook token sequences.
+
+================================================================================
+PAGE 27 - ViT VQ-GAN
+================================================================================
+Title: ViT VQ-GAN: The Convolutional Eradication
+
+The Final Leap:
+- Yu et al. (2021) demonstrated that the convolutional encoder and decoder of the VQ-GAN can be entirely replaced by pure Vision Transformers (ViT).
+- Impact: The generative pipeline is now fully attention-based, seamlessly uniting image generation with the architecture of natural language processing.
+
+Mechanism:
+- The image is sliced into non-overlapping 8x8 patches.
+- Patches are flattened, projected into a low-dimensional space, assigned positional embeddings, and fed into a standard Transformer encoder as a 1D text-like sequence.
+
+Two-Stage Pipeline:
+Stage 1 - Image Quantization:
+  - Image → Transformer encoder → Quantization (snap to Codebook) → discrete token grid
+
+Stage 2 - Vector-Quantized Image Modeling:
+  - Token sequence (with class labels like Dog, Cat, Pig) → Transformer decoder → Image generation
+
+Mini-gallery Results: Successfully generates dogs, birds, bears, cats, pigs using only transformer operations — no convolutions.
+
+================================================================================
+PAGE 28 - BIGGAN vs VQ-GAN COMPARISON
+================================================================================
+Title: Architectural Schism: Continuous vs. Discrete
+
+Comparison Table:
+
+Dimension              | BigGAN (Continuous Paradigm)                          | VQ-GAN (Discrete Paradigm)
+-----------------------+-------------------------------------------------------+--------------------------------------------------
+Latent Representation  | Continuous Vectors (z sampled from normal distribution)| Discrete Codebook (Finite dictionary of exact integer tokens)
+Core Engine            | Pure Attention-Augmented CNN (built entirely on SAGAN base) | Hybrid Triad: Quantized VAE + PatchGAN + Autoregressive Transformer
+Generation Style       | One-shot holistic synthesis: entire image tensor generated simultaneously | Sequential prediction: image generated token-by-token in a patch sequence
+
+================================================================================
+PAGE 29 - THE GREAT CONVERGENCE
+================================================================================
+Title: The Great Convergence
+
+Overarching Narrative:
+"The story of Advanced GANs is not just about building a better discriminator — it is the narrative of the GAN framework being systematically subsumed and enhanced by the architecture of Natural Language Processing."
+
+Three Phases of GAN Evolution:
+
+Phase A: The CNN Peak
+- Models: ProGAN & StyleGAN
+- Achievement: Pushing pure convolutional networks to their absolute limit to conquer high resolution and latent control.
+- Architectural DNA: Pure CNN
+
+Phase B: The Attention Injection
+- Models: BigGAN & VQ-GAN
+- Achievement: Introducing self-attention and discrete tokenization to manage massive scale, long-range dependencies, and codebook architectures.
+- Architectural DNA: CNN + Attention + Tokenization
+
+Phase C: The Transformer Takeover
+- Models: ViT VQ-GAN
+- Achievement: Dismantling the CNN entirely. Image generation becomes structurally identical to sequence modeling and text synthesis.
+- Architectural DNA: Pure Transformer → Sequence Modeling
+
+Axes of Progression:
+- X-axis: Time & Model Progression
+- Y-axis: Architectural DNA (Pure CNN → Pure Transformer)
+- Diagonal trends: Increasing Sequence Dependency (upward), Decreasing Inductive Bias (rightward)
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+Key Concepts Summary for RAG:
+- GAN: Generative Adversarial Network — Generator vs Discriminator adversarial training
+- ProGAN: Progressive Growing GAN — trains from 4x4 up to 1024x1024 incrementally
+- StyleGAN: Adds Mapping Network (z→w) and AdaIN for disentangled latent control
+- StyleGAN2: Replaces AdaIN with weight Mod/Demod; removes progressive growing; adds path length regularization
+- SAGAN: Self-Attention GAN — adds attention mechanism for long-range spatial dependencies
+- BigGAN: Scales SAGAN with 2048 batch size, 50% wider channels, class-conditional generation, truncation trick
+- VQ-GAN: Replaces continuous latent with discrete codebook tokens; uses PatchGAN + Autoregressive Transformer
+- ViT VQ-GAN: Replaces CNN encoder/decoder with Vision Transformers — fully attention-based pipeline
+- Mode Collapse: Generator produces limited variety; solved by minibatch standard deviation in ProGAN
+- Truncation Trick: Clipping latent vectors to trade diversity for fidelity in BigGAN
+- AdaIN: Adaptive Instance Normalization — injects style by adjusting feature map mean/variance
+- Disentanglement: Ability to control individual image attributes (hair, pose, etc.) independently
+- Codebook: Finite learned dictionary of discrete visual tokens used in VQ-GAN
+- PatchGAN: Discriminator that evaluates local patches rather than full images

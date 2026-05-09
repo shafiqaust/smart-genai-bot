@@ -1,0 +1,60 @@
+DOCUMENT METADATA
+=================
+Title: Autoregressive Models : 2026 Spring-CSCI-4440-M01/CSCI-5440-M01-GENERATIVE AI
+Course: CSCI-4440-M01 / CSCI-5440-M01 - Generative AI
+Semester: 2026 Spring
+Pages: 2
+Created: 2026-05-09
+Institution: New Mexico State University (NMSU)
+
+---
+
+PAGE 1
+======
+
+MODULE: Autoregressive Models
+
+OVERVIEW
+--------
+In this module, we will study a different type of GenAI model, called Autoregressive Models. We will discuss the motivation behind this type of models, the typical architecture of such a model, and implementations for different applications.
+
+LEARNING OBJECTIVES
+-------------------
+Section: Content
+
+By the end of this module, you should be able to:
+
+MLO 1: Understand why autoregressive models are well suited to generating sequential data such as text.
+
+MLO 2: Understand the architectural design of recurrent neural networks (RNNs).
+
+MLO 3: Build and train a long short-term memory network (LSTM) from scratch using Keras.
+
+MLO 4: Understand how image data can be treated as a sequence of pixels.
+
+MLO 4: Build a PixelCNN from scratch using Keras.
+
+LEARNING MATERIALS
+------------------
+Subsection: Presentations and Videos
+
+- Autoregressive Models - presentation
+  URL: https://nmsu.instructure.com/courses/1731641/files/282125944?wrap=1
+  Download URL: https://nmsu.instructure.com/courses/1731641/files/282125944/download?download_frd=1
+  ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F6932c306-ec28-48e0-9545-f60ff560263c%2F09-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzNDEzOTUsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzY5MzJjMzA2LWVjMjgtNDhlMC05NTQ1LWY2MGZmNTYwMjYzYy8wOS1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiYzFlZjY4MzAtYmRlOS00Nzc2LThmYzktNjQ2OGZiYjQ3MTM2IiwiZXhwIjoxNzc4NDI3Nzk1fQ.p-d_499kC50i_nfd30AtoU0bvaZ9a82gK7QTFR5xtl06osbcNoGZJaFC1AzWDKJ15vrKcXBjKN0PlaRAvKYjw
+
+---
+
+PAGE 2
+======
+
+ACTIVITIES
+----------
+
+ASSIGNMENTS
+-----------
+Please train and experiment with the LSTM and PixelCNN examples from the GitHub repository.
+
+READING MATERIALS
+-----------------
+(No reading materials listed in document.)

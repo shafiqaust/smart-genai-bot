@@ -1,0 +1,576 @@
+SOURCE: 17-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 16 — Multimodal Models
+================================================================================
+
+PAGE 1
+--------------------------------------------------------------------------------
+TITLE: Generative AI — Week 16: Multimodal Models
+
+LEARNING OBJECTIVES:
+- Learn what is meant by a multimodal model
+- Understand the inner workings of different text-to-image models (DALL-E 2, Imagen) and visual language models (Flamingo), including their architectures, similarities, and differences
+- Learn about DrawBench, a benchmarking suite for evaluating text-to-image models
+- Summarize the class
+
+================================================================================
+
+PAGE 2
+--------------------------------------------------------------------------------
+TITLE: What is a Multimodal Model?
+
+DEFINITION: Models that work with different kinds of data (text, image, video).
+
+EXAMPLES:
+- DALL-E: https://www.dall-efree.com
+- Imagen: https://deepmind.google/models/imagen/
+- Stable Diffusion: https://huggingface.co/CompVis/stable-diffusion
+- Runway: runwayml.com
+- Flamingo: https://deepmind.google/blog/tackling-multiple-tasks-with-a-single-visual-language-model/
+
+KEY TECHNIQUE: Multimodal models take advantage of Diffusion Models.
+
+================================================================================
+
+PAGE 3
+--------------------------------------------------------------------------------
+TITLE: The Task
+
+TASKS COVERED:
+- Text-to-image generation
+- Text-to-video generation
+
+================================================================================
+
+PAGE 4
+--------------------------------------------------------------------------------
+TITLE: Blueprint of Multimodality
+
+GOAL: Understand how multimodal models work at the architecture level.
+
+MODELS COVERED: DALL-E 2, Imagen, Stable Diffusion, Flamingo.
+
+ARCHITECTURAL SUMMARY:
+- Architectural foundations are built on vector schematics and interconnected layers.
+- Deep learning structures orchestrate data flow through specialized modules for language processing and visual synthesis.
+- Components include: Input Modality Layer, Text Encoder (Terracotta), Latent Embedding Space, Diffusion Blocks, Cross-Attention, U-Net Decoder (Indigo), Image Decoder (Indigo), Visual Output, Latent Embedder (Dimisor), Synthesis Node.
+
+================================================================================
+
+PAGE 5
+--------------------------------------------------------------------------------
+TITLE: The Multimodal Challenge
+
+CORE PROBLEM:
+Text understanding and image generation are highly difficult domains in isolation. Multimodal models must bridge these two domains.
+
+SOLUTION — LATENT SPACE:
+Models learn a shared representation called a latent space, which allows them to convert a block of text to a high-fidelity image without loss of information.
+
+PIPELINE:
+LANGUAGE → THE NEXUS (LATENT SPACE) → VISION
+
+EXAMPLE:
+- Input text: "A head of broccoli made out of modeling clay, smiling in the sun."
+- Output: A photorealistic clay broccoli figure with a smiley face.
+
+================================================================================
+
+PAGE 6
+--------------------------------------------------------------------------------
+TITLE: DALL-E 2
+
+KEY FOUNDATION: DALL-E 2 takes advantage of CLIP (Contrastive Language-Image Pre-training).
+CLIP URL: https://openai.com/index/clip/
+
+HOW CLIP WORKS:
+- CLIP pre-trains an image encoder and a text encoder to predict which images were paired with which texts in the dataset.
+- This behavior is used to turn CLIP into a zero-shot classifier.
+- All dataset classes are converted into captions (e.g., "a photo of a dog") and CLIP predicts which caption best pairs with a given image.
+
+================================================================================
+
+PAGE 7
+--------------------------------------------------------------------------------
+TITLE: The Rosetta Stone — OpenAI's CLIP
+
+MODEL NAME: Contrastive Language-Image Pre-training (CLIP)
+UNVEILED: February 2021
+
+TRAINING DATA: 400 million text-image pairs scraped from the internet.
+
+ARCHITECTURE:
+- Text Encoder → Shared Representation Space ← Image Encoder
+- Both a text encoder and an image encoder map inputs into a shared representation space.
+
+FUNCTION:
+- CLIP is NOT a generative model.
+- It is a highly robust discriminative model.
+- It efficiently learns visual concepts from natural language supervision.
+- It creates a shared vocabulary for text and images.
+
+EXAMPLE TEXT INPUTS: "a cute banana made from modeling clay", "a television studio about to broadcast", "a satellite photo of maps and fields", "a pup called Rex sitting on the grass", "a wildlife park in the sun"
+
+================================================================================
+
+PAGE 8
+--------------------------------------------------------------------------------
+TITLE: Contrastive Learning
+
+HOW CLIP TRAINS:
+- CLIP trains two Transformers simultaneously: a text encoder and a Vision Transformer (ViT) image encoder.
+- It maximizes the cosine similarity between matching text-image pairs.
+- It minimizes the score for all incorrect combinations in a given batch.
+
+TRAINING OBJECTIVE (Matchmaker Grid):
+- Maximize N real (matching) pairs on the diagonal.
+- Minimize N² - N incorrect (non-matching) pairs off the diagonal.
+
+EXAMPLE PAIRS: "a photo of a dog" ↔ dog image, "a banana" ↔ banana image, "text" ↔ text-page image.
+
+================================================================================
+
+PAGE 9
+--------------------------------------------------------------------------------
+TITLE: DALL-E 2 — The Pioneer Blueprint (Modality Engine v1.0)
+
+PIPELINE:
+Text Input → Text Encoder (Frozen CLIP) → The Prior (Diffusion Model) → The Decoder (GLIDE U-Net) → Generated Image
+
+KEY CONCEPT — "FROZEN":
+- "Frozen" means the weights of the pre-trained model are fixed and NOT updated during training of subsequent components.
+- DALL-E 2 utilizes the pre-trained, frozen weights of CLIP to understand the prompt.
+- This ensures rich conceptual understanding without retraining CLIP.
+
+THE BREAKTHROUGH:
+Using frozen CLIP weights allows DALL-E 2 to leverage CLIP's powerful text-image alignment without the cost of retraining it.
+
+================================================================================
+
+PAGE 10
+--------------------------------------------------------------------------------
+TITLE: Prior Training
+
+PURPOSE OF THE PRIOR:
+- The Prior is a diffusion model that learns to map from text embeddings to CLIP image embeddings.
+
+TRAINING PHASE:
+- Input: Text embedding + CLIP image embedding
+- Process: Iteratively add noise (forward diffusion) starting from the CLIP image embedding down to random noise.
+- The Prior model learns to reverse this process.
+
+GENERATION PHASE:
+- Input: Text embedding + Random noise
+- Process: The Prior iteratively denoises (reverse diffusion) to predict the image embedding from just the text embedding.
+- Output: Predicted image embedding (used by the decoder to generate the final image).
+
+================================================================================
+
+PAGE 11
+--------------------------------------------------------------------------------
+TITLE: The GLIDE Decoder & Upsampling
+
+DECODER ORIGIN:
+- The decoder in DALL-E 2 borrows from an earlier OpenAI model called GLIDE.
+- It uses a U-Net architecture.
+
+TRAINING EFFICIENCY:
+- To ensure efficient upstream training, DALL-E 2 avoids handling high-dimensional images initially.
+
+UPSAMPLING PIPELINE:
+1. CLIP image embedding → U-Net Decoder (GLIDE) → 64×64 pixel image
+2. 64×64 → Upsampler 1 → 256×256 image
+3. 256×256 → Upsampler 2 → 1024×1024 final image
+
+KEY DETAIL: Two separate diffusion-based Upsampler models transform the initial 64×64 output into a final, crisp 1024×1024 image.
+
+================================================================================
+
+PAGE 12
+--------------------------------------------------------------------------------
+TITLE: Limitations of DALL-E
+
+LIMITATION 1 — ATTRIBUTE BINDING:
+- Prompt example: "a red cube is on top of a blue cube"
+- Problem: The model struggles to correctly assign attributes (like color) to specific objects in a scene.
+- Result: Generated images often mix up which color belongs to which cube.
+
+LIMITATION 2 — REPRODUCING TEXT:
+- Prompt example: "Deep Learning"
+- Problem: The model cannot reliably generate legible, correctly spelled text within images.
+- Result: Text appears garbled, misspelled, or incoherent (e.g., "Deep" rendered as "Deeinp", "Diep Deep", "DONEEL").
+
+================================================================================
+
+PAGE 13
+--------------------------------------------------------------------------------
+TITLE: The Frontier of Limitations
+
+ATTRIBUTE BINDING DETAIL:
+- Models relying on CLIP embeddings (like DALL-E 2) struggle to bind specific attributes (like color) to distinct objects in complex scenes.
+- Prompt: "A red cube on top of a blue cube" → Output has color confusion across objects.
+
+TEXT GENERATION DETAIL:
+- Because CLIP creates a high-level conceptual representation rather than capturing exact spelling, early models struggle to generate legible, compositionally correct text.
+- Prompt: "A sign that says deep learning" → Output produces garbled text variations.
+
+================================================================================
+
+PAGE 14
+--------------------------------------------------------------------------------
+TITLE: Imagen — Architecture
+
+ORGANIZATION: Google Brain (now Google DeepMind)
+
+PIPELINE:
+Text → Frozen text encoder → Text embedding → Text-to-image diffusion model → 64×64 image → Super-resolution diffusion model → 256×256 image → Super-resolution diffusion model → 1024×1024 image
+
+KEY DESIGN:
+- Uses a frozen text encoder (not CLIP, but a large language model — see Page 15).
+- Cascaded diffusion: starts at 64×64 and upsamples twice using dedicated super-resolution diffusion models.
+
+EXAMPLE:
+Prompt: "A golden retriever dog wearing a blue checkered beret and red dotted turtleneck"
+
+================================================================================
+
+PAGE 15
+--------------------------------------------------------------------------------
+TITLE: Imagen — The Language Expert (Modality Engine v2.0)
+
+THE SWAP:
+- Google Brain discarded CLIP entirely in favor of a massive, pre-trained text-only model: T5-XXL.
+
+TEXT ENCODER: T5-XXL (pre-trained text-only model)
+
+IMAGE GENERATION: Cascaded Text-to-Image Diffusion Models
+- Base Model (64×64) → Super-Resolution Diffusion Model (256×256) → Super-Resolution Diffusion Model (1024×1024)
+
+THE PHILOSOPHY:
+- The Imagen team discovered that scaling a pure text encoder has a greater impact on overall image generation performance than scaling the diffusion model decoder itself.
+- This is the core insight differentiating Imagen from DALL-E 2.
+
+================================================================================
+
+PAGE 16
+--------------------------------------------------------------------------------
+TITLE: Benchmarking Fidelity — The DrawBench Suite
+
+WHAT IS DRAWBENCH:
+- A custom benchmark suite of 200 text prompts.
+- Designed to test complex attributes such as spelling text and counting objects.
+- Used to evaluate text-to-image models on two axes: Alignment and Fidelity.
+
+METRICS:
+1. Alignment: Does the generated image match the caption/prompt?
+2. Fidelity: Does the generated image look realistic?
+
+CATEGORIES TESTED: Color, Conflicting, Count, Position, Text.
+
+RESULT:
+- Imagen was evaluated against DALL-E 2 using DrawBench.
+- Imagen outperformed DALL-E 2 significantly across both human-rated alignment and fidelity on all tested categories.
+
+================================================================================
+
+PAGE 17
+--------------------------------------------------------------------------------
+TITLE: Stable Diffusion — Architecture
+
+KEY DISTINCTION:
+- Stable Diffusion operates in latent space rather than pixel space, making it computationally efficient enough to run on consumer hardware.
+
+ARCHITECTURE (two phases):
+
+TRAINING PHASE (used for training only, not generation):
+- Input image → Encoder → Latent representation → Diffusion process (adds noise)
+
+GENERATION PHASE:
+- Random noise + Text embedding (from Text encoder / Text caption) → Denoising UNet → Predicted latent representation → Decoder → Predicted image
+
+EXAMPLE:
+- Text caption: "a close up photo of a cat"
+- Output: A predicted cat image
+
+================================================================================
+
+PAGE 18
+--------------------------------------------------------------------------------
+TITLE: Compressing Reality — The Latent Autoencoder (Stable Diffusion)
+
+CONCEPT: Pixel Space vs. Latent Space
+
+HOURGLASS METAPHOR:
+- Pixel Space (Heavy & Slow) → Encoder → Latent Space (small) → Decoder → Reconstructed Pixel Space
+- The Denoising U-Net Loop operates exclusively in the tiny latent space.
+
+KEY INSIGHT:
+- By wrapping the diffusion model inside an autoencoder, the U-Net denoiser operates exclusively on a tiny latent representation rather than a full image.
+- This drastically reduces memory usage.
+- This allows the model to run on standard consumer hardware instead of proprietary supercomputers.
+
+WHY THIS MATTERS: Stable Diffusion's computational efficiency is its defining breakthrough.
+
+================================================================================
+
+PAGE 19
+--------------------------------------------------------------------------------
+TITLE: Flamingo — The Paradigm Shift
+
+CONTEXT:
+- DALL-E 2, Imagen, and Stable Diffusion are all text-to-image generation models.
+- Flamingo represents a fundamentally different direction.
+
+FLAMINGO DETAILS:
+- Created by: DeepMind
+- Released: April 2022
+- Type: Vision-Language Model (VLM)
+
+CORE DIFFERENCE:
+- Instead of generating pixels from text, Flamingo is designed to UNDERSTAND interleaved streams of text, images, and video.
+- It takes mixed-media input and outputs text.
+
+HOW IT WORKS:
+- Acts as a bridge, fusing pre-trained vision-only models with massive pre-trained language-only models.
+- Processes unstructured mixed media (text + images + video interleaved together).
+
+================================================================================
+
+PAGE 20
+--------------------------------------------------------------------------------
+TITLE: Flamingo's Interleaved Architecture (Modality Engine v4.0)
+
+COMPONENTS:
+
+1. VISION ENCODER:
+   - Architecture: Normalizer-Free ResNet (NFNet)
+   - Pre-trained via contrastive learning (similar to CLIP's approach)
+   - Processes: Video frames and images
+
+2. THE PERCEIVER RESAMPLER:
+   - Compresses variable-length visual data into a fixed-size representation
+   - Bridges vision encoder output to the language model
+
+3. LANGUAGE MODEL:
+   - Chinchilla (70B parameters)
+   - Optimized for token volume over parameter size
+
+FUSION MECHANISM:
+- Gated Cross-Attention Dense (XATTN-DENSE) layers are inserted between the frozen Chinchilla language model blocks.
+- These layers inject visual information into the language model's processing stream.
+
+OUTPUT: Interleaved Output (text conditioned on both text and visual inputs)
+
+================================================================================
+
+PAGE 21
+--------------------------------------------------------------------------------
+TITLE: The Perceiver Resampler — Taming Video
+
+PROBLEM:
+- Traditional Transformers scale quadratically with input length.
+- Variable-length video input makes standard Transformers computationally impossible.
+
+SOLUTION — THE PERCEIVER RESAMPLER:
+- Operates independently of input length.
+- Compresses a variable number of input features into a strictly fixed-length latent vector.
+- This fixed-length vector is what the language model receives and processes.
+
+INPUT: Variable-length video frames (sampled at 1 fps)
+OUTPUT: Fixed-length latent vector → Language Model
+
+KEY PROPERTY: The Perceiver Resampler's output size is always constant regardless of how long the video is.
+
+================================================================================
+
+PAGE 22
+--------------------------------------------------------------------------------
+TITLE: Masked Cross-Attention — Fusing the Streams
+
+MECHANISM: Gated XATTN-DENSE Layer
+
+HOW IT WORKS:
+
+1. DATA CHUNKING:
+   - Text is divided into chunks separated by <image> tags.
+
+2. MASKING MECHANISM:
+   - Text tokens can ONLY cross-attend to the image tokens that immediately precede them in the sequence.
+   - This prevents text from attending to irrelevant future image tokens.
+
+3. GATED INITIALIZATION:
+   - The cross-attention layers are initialized with gate values of zero.
+   - This ensures the model initially behaves exactly like the original language model (before visual training).
+   - Vision data contribution gradually increases during training.
+
+INPUTS: Vision Data (X: V1, V2, V3...) + Language Data (Y: L1, L2, L3, L4, L5...)
+OUTPUT: Unified Interleaved Stream
+
+================================================================================
+
+PAGE 23
+--------------------------------------------------------------------------------
+TITLE: Multimodal Dialogue in Action (Flamingo)
+
+EXAMPLE INTERACTION:
+- User provides: Image of two teddy bears in astronaut suits on the moon
+- User asks: "What are they doing?"
+- Flamingo responds: "They are having a conversation."
+- User asks: "What objects are they using?"
+- Flamingo responds: "It looks like a computer."
+
+TAKEAWAY:
+- Flamingo doesn't just label images; it sustains context over a multi-turn conversation.
+- It utilizes images in place of words to complete prompts.
+- It accurately identifies consequences of actions in video frames.
+- It proves its flexibility across zero-shot benchmarks.
+
+CAPABILITY TYPE: Conversational visual understanding (not image generation).
+
+================================================================================
+
+PAGE 24
+--------------------------------------------------------------------------------
+TITLE: The Modality Matrix — Model Comparison
+
+| Attribute         | DALL-E 2          | IMAGEN              | STABLE DIFFUSION     | FLAMINGO              |
+|-------------------|-------------------|---------------------|----------------------|-----------------------|
+| Organization      | OpenAI            | Google Brain        | Stability AI         | DeepMind              |
+| Direction         | Text → Image      | Text → Image        | Text → Image         | Interleaved → Text    |
+| Key Text Engine   | CLIP              | T5-XXL              | OpenCLIP             | Chinchilla 70B        |
+| Generation Engine | Pixel Diffusion   | Cascaded Diffusion  | Latent Autoencoder   | NFNet + Perceiver     |
+| The Breakthrough  | The Prior         | Pure Text Scaling   | Computational Efficiency | Variable Visual Fusing |
+
+================================================================================
+
+PAGE 25
+--------------------------------------------------------------------------------
+TITLE: The Frontier of Limitations (Repeated Slide)
+
+ATTRIBUTE BINDING:
+- Models relying on CLIP embeddings (like DALL-E 2) struggle to bind specific attributes (like color) to distinct objects in complex scenes.
+- Prompt: "A red cube on top of a blue cube" → Color confusion in output.
+
+TEXT GENERATION:
+- CLIP creates a high-level conceptual representation rather than capturing exact spelling.
+- Early models struggle to generate legible, compositionally correct text.
+- Prompt: "A sign that says deep learning" → Garbled text in output.
+
+================================================================================
+
+PAGE 26
+--------------------------------------------------------------------------------
+TITLE: Building the General Agent
+
+BIG PICTURE SUMMARY:
+- From CLIP's initial Rosetta Stone to Flamingo's conversational fusion, generative modeling is rapidly moving beyond isolated tasks.
+- By successfully bridging modalities (language and vision), these architectural blueprints pave the way for true, interactive AI agents capable of navigating the complexity of the human world.
+
+APPLICATIONS SUGGESTED:
+- Robotics / physical agents
+- Medical / diagnostic tools
+- Conversational AI
+- Web-connected agents
+
+TRAJECTORY: Single-modal models → Multimodal generators → Interactive general agents.
+
+================================================================================
+
+PAGE 27
+--------------------------------------------------------------------------------
+TITLE: Summary
+
+(Slide title only — summary content distributed across the following slides.)
+
+================================================================================
+
+PAGE 28
+--------------------------------------------------------------------------------
+TITLE: Approaches to Generative Models
+
+GENERAL IDEA:
+- Learning phase: Learn a probability distribution function of the data.
+- Generation phase: Sample from the learned distribution and generate the data.
+
+THREE TYPES OF DISTRIBUTION LEARNING METHODS:
+
+1. IMPLICIT / ADVERSARIAL (GANs):
+   - Do not explicitly model the distribution.
+   - Learn through adversarial training between generator and discriminator.
+
+2. APPROXIMATE / LATENT (VAEs, Diffusion Models):
+   - Model an approximate distribution in a compressed latent space.
+   - Includes encoder-latent space-decoder architectures.
+
+3. EXPLICIT / EXACT (Normalizing Flows):
+   - Explicitly model the exact probability density using invertible transformations.
+   - Formula: p(x) = f⁻¹(p(z)), where z = f(x).
+
+================================================================================
+
+PAGE 29
+--------------------------------------------------------------------------------
+TITLE: Architectures Covered in the Course
+
+ARCHITECTURES REVIEWED:
+
+1. FEEDFORWARD NEURAL NETWORK (MLP):
+   - Input layer → Hidden layers → Output layer
+   - Fully connected layers
+
+2. CONVOLUTIONAL NEURAL NETWORK (CNN):
+   - Conv Layer 1: 10 filters, 4×4×3, stride=2, padding=same → output (?×16×16×10)
+   - Conv Layer 2: 20 filters, 3×3×10, stride=2, padding=same → output (?×8×8×20)
+   - Flatten Layer → Dense Layer (1280 nodes → 10 nodes output)
+
+3. RECURRENT ARCHITECTURES:
+   - RNN: Basic recurrent unit with tanh activation
+   - LSTM: Input gate, Output gate, Forget gate with tanh and sigmoid activations
+   - GRU: Reset gate, Update gate
+
+4. U-NET:
+   - Encoder path (DownBlock) with skip connections → ResidualBlock → Decoder path (UpBlock)
+   - Used for denoising in diffusion models
+
+5. ATTENTION MECHANISM:
+   - Formula: Attention(Q, K, V) = softmax(Q × K^T / sqrt(d_k)) × V
+   - Q = Query, K^T = Key Transpose, V = Value
+   - Process: Dot Product → scale by 1/sqrt(d_k) → softmax → multiply by V → Context Vector
+
+NOTE: Dropout Layer also mentioned as a regularization technique.
+
+================================================================================
+
+PAGE 30
+--------------------------------------------------------------------------------
+TITLE: What Can We Do With It? — Text Generation Example
+
+CAPABILITY: Text generation using generative AI
+
+EXAMPLE PROMPT: Generate a graduation speech for a graduating class.
+
+EXAMPLE OUTPUT — OPTION 1 (Emphasizing Impact and Growth):
+As you stand on the threshold of your next great chapter, take a moment to look back at how far you have come. Your time here has been about more than just mastering complex systems or passing exams; it has been about developing the resilience and curiosity required to solve the challenges of tomorrow. The world you are entering is evolving at an incredible pace, and you are now equipped with the tools to not only keep up but to lead that change. Be bold as you move forward. Don't be afraid to pursue the questions that don't have easy answers yet. Remember that success is rarely a straight line — it is built through persistence, collaboration, and a willingness to keep learning. We are incredibly proud of everything you've achieved here, and we cannot wait to see the unique mark you will make on the world. Congratulations!
+
+EXAMPLE OUTPUT — OPTION 2 (Focused on Connection and the Future):
+Commencement is a beautiful word because it doesn't signify an end, but a beginning. Today, you transition from being students to being our colleagues and peers. You have spent years building a foundation of knowledge, and now you have the opportunity to apply that expertise toward meaningful work. Whether you are heading into industry, research, or a path entirely of your own making, carry with you the spirit of inquiry that defined your time on this campus. As you look toward the horizon, remember that the connections you've made here — with your mentors and your fellow graduates — are lifelong. Stay curious, stay kind, and remain open to the unexpected opportunities that will surely come your way. The future belongs to those who see possibilities where others see obstacles. Go out there and build something wonderful. Congratulations to the Class of 2026!
+
+================================================================================
+
+PAGE 31
+--------------------------------------------------------------------------------
+TITLE: What Can We Do With It? — Image Generation & Editing Examples
+
+CAPABILITY 1 — IMAGE GENERATION:
+- Prompt: "Could you create a photo of a group of students graduating from university?"
+- Output: A photorealistic image of diverse students in graduation gowns and caps celebrating outdoors near a university building.
+
+CAPABILITY 2 — IMAGE EDITING (Background Swap):
+- Prompt: "Could you change the background to be a New Mexico State University background?"
+- Output: Same student group, background replaced with NMSU campus (Organ Mountains visible, NMSU signage reading "COMMENCEMENT 2026 - GO AGGIES!", red and white branding).
+
+KEY INSIGHT: Generative AI can not only create images from scratch but also edit and contextualize existing generated images based on follow-up prompts.
+
+================================================================================
+END OF DOCUMENT: 17-gen-ai.pdf
+================================================================================

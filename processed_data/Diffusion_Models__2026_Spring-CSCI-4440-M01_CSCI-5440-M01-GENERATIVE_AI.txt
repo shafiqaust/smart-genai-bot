@@ -1,0 +1,75 @@
+SOURCE: Diffusion Models: 2026 Spring-CSCI-4440-M01/CSCI-5440-M01-GENERATIVE AI
+COURSE: CSCI-4440-M01 / CSCI-5440-M01 — Generative AI (Spring 2026)
+TOTAL PAGES: 2
+FILE: Diffusion_Models__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+CREATED: 2026-05-09
+
+================================================================================
+PAGE 1
+================================================================================
+
+SECTION: Module Title
+Module: Diffusion Models
+
+---
+
+SECTION: Overview
+In this module, we will learn about Diffusion Models, the type of models behind all the famous image generation systems such as DALL-E, Stable Diffusion, etc. We will discuss the motivation behind this type of models, its architecture, and an implementation of a diffusion model that generates images of flowers.
+
+---
+
+SECTION: Learning Objectives
+By the end of this module, you should be able to:
+
+MLO 1: Learn the underlying principles and components that define a diffusion model.
+
+MLO 2: Understand the reparameterization trick and why it is important.
+
+MLO 3: Explore different forms of forward diffusion scheduling. Understand the reverse diffusion process and how it relates to the forward noising process.
+
+MLO 4: Explore the architecture of the U-net, which is used to parameterize the reverse diffusion process.
+
+MLO 5: Build your own denoising diffusion model (DDM) images of flowers using Keras to generate flowers, sample new images of flowers from your model.
+
+MLO 6: Explore the effect of the number of diffusion steps on image quality and interpolate between two images in the latent space.
+
+---
+
+SECTION: Content
+[This section serves as a label/anchor for the content that follows.]
+
+---
+
+SECTION: Learning Materials
+Subsection: Presentations and videos
+
+================================================================================
+PAGE 2
+================================================================================
+
+SECTION: Learning Materials (continued)
+Subsection: Presentations and videos (continued)
+
+Item: Diffusion Models - presentation
+  - View link: https://nmsu.instructure.com/courses/1731641/files/282525847?wrap=1
+  - Download link: https://nmsu.instructure.com/courses/1731641/files/282525847/download?download_frd=1
+  - ReadSpeaker accessibility link: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Fb25c53de-3d63-47ec-a897-07b2046b6055%2F12-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMzEyNzIsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzL2IyNWM1M2RlLTNkNjMtNDdlYy1hODk3LTA3YjIwNDZiNjA1NS8xMi1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiZjhjOWM0YzEtNjI5MC00ZjRhLWE4Y2UtZDgyNGUzMDk3Y2ZjIiwiZXhwIjoxNzc4NDE3NjcyfQ.H4Yp4HzgA8-H5-6irRRoX6SIoA6HMNXiv60yco36PHvxMXDeZFVhMPTK_JDgJD6Z7VfQczoV_LQTefNsc1brw
+
+---
+
+SECTION: Activities
+[No specific activity content listed beyond the label.]
+
+---
+
+SECTION: Assignments
+Please train the diffusion model from the GitHub repository.
+
+---
+
+SECTION: Reading Materials
+[No specific reading materials listed beyond the section label. Content may be available via the course LMS.]
+
+================================================================================
+END OF DOCUMENT
+================================================================================

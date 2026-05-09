@@ -1,0 +1,75 @@
+================================================================================
+DOCUMENT METADATA
+================================================================================
+Title:         World Model: 2026 Spring-CSCI-4440-M01/CSCI-5440-M01-GENERATIVE AI
+Course:        CSCI-4440-M01 / CSCI-5440-M01 - Generative AI
+Term:          Spring 2026
+Institution:   New Mexico State University (NMSU)
+Total Pages:   2
+Created:       Sat May 9, 2026 (UTC)
+PDF Version:   1.4
+File Size:     96,536 bytes
+
+================================================================================
+PAGE 1
+================================================================================
+
+MODULE: World Model
+
+--------------------------------------------------------------------------------
+SECTION: Overview
+--------------------------------------------------------------------------------
+In this module, we will learn about reinforcement learning, world model, and the
+architecture for creating an agent that can act optimally in a real-world domain.
+
+--------------------------------------------------------------------------------
+SECTION: Learning Objectives
+--------------------------------------------------------------------------------
+By the end of this module, you should be able to:
+
+MLO 1: Understand the basics of reinforcement learning (RL).
+
+MLO 2: Understand how generative modeling can be used within a world model approach.
+
+MLO 3: Understand the architecture used in training an agent using reinforcement learning.
+
+MLO 4: Learn the steps of the training process.
+
+--------------------------------------------------------------------------------
+SECTION: Content
+--------------------------------------------------------------------------------
+[Content section header — subsections listed below]
+
+--------------------------------------------------------------------------------
+SUBSECTION: Learning Materials
+--------------------------------------------------------------------------------
+Category: Presentations and Videos
+
+  Item: Transformer - presentation
+  URL 1 (wrap):     https://nmsu.instructure.com/courses/1731641/files/283682226?wrap=1
+  URL 2 (download): https://nmsu.instructure.com/courses/1731641/files/283682226/download?download_frd=1
+  URL 3 (ReadSpeaker / DocReader):
+    https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Ffb51db84-5d63-497f-a871-ea78aa076b37%2F16-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMTA1NDAsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzL2ZiNTFkYjg0LTVkNjMtNDk3Zi1hODcxLWVhNzhhYTA3NmIzNy8xNi1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiN2NlYjI3NWQtYjU2Ni00ODk2LWI3MjMtMDcyYzAzYjEyNTY4IiwiZXhwIjoxNzc4Mzk2OTQwfQ.hHfzSXfftWzxEHDuB3qJx2FcmqNh8dnz76FAj4f48WPH1tApNok4wL3FIItvQ82-ErDtgxr7UbpqLEPmJW4kxA
+
+================================================================================
+PAGE 2
+================================================================================
+
+--------------------------------------------------------------------------------
+SUBSECTION: Activities
+--------------------------------------------------------------------------------
+[Activities section — no detail provided in document]
+
+--------------------------------------------------------------------------------
+SUBSECTION: Assignments
+--------------------------------------------------------------------------------
+[Assignments section — no detail provided in document]
+
+--------------------------------------------------------------------------------
+SUBSECTION: Reading Materials
+--------------------------------------------------------------------------------
+[Reading Materials section — no detail provided in document]
+
+================================================================================
+END OF DOCUMENT
+================================================================================

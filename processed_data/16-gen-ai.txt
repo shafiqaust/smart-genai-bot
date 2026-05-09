@@ -1,0 +1,445 @@
+SOURCE: 16-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 15 – World Model
+SUBTITLE: World Models: AI That Dreams to Learn — Demystifying the architecture of agents that train inside their own hallucinated realities.
+TOOL USED: NotebookLM (for editorial technical drafts)
+
+================================================================================
+PAGE 1 — TITLE SLIDE
+================================================================================
+Title: Generative Artificial Intelligence
+Week: Week 15
+Topic: World Model
+Note: Created With GenAI Help!
+
+================================================================================
+PAGE 2 — SECTION TITLE
+================================================================================
+Title: World Models: AI That Dreams to Learn
+Subtitle: Demystifying the architecture of agents that train inside their own hallucinated realities.
+
+================================================================================
+PAGE 3 — TOPICS OVERVIEW
+================================================================================
+Topics covered in this lecture:
+1. Reinforcement Learning
+2. World Model
+3. The Architecture
+4. Training
+
+================================================================================
+PAGE 4 — REINFORCEMENT LEARNING (DEFINITION)
+================================================================================
+Definition: Reinforcement learning (RL) is a field of machine learning that aims to train an agent to perform optimally within a given environment, with respect to a particular goal.
+
+Key RL components (from diagram):
+- AGENT: the entity that takes actions
+- ENVIRONMENT: the world the agent operates in
+- State (s ∈ S): current situation
+- Action (a ∈ A): move taken by agent
+- Reward (r): value returned by environment after action
+- New State (s' ∈ S): state after action
+
+Diagram 1 description: Agent interacts with Environment. Agent takes action, receives reward r, transitions to new state s'.
+Diagram 2 description: Loop — state and reward go into Agent; Agent outputs action; action goes into Environment; Environment feeds back state and reward.
+
+================================================================================
+PAGE 5 — ENVIRONMENT
+================================================================================
+Definition: The environment is the world in which the agent operates. It defines the set of rules that govern the game state update process and reward allocation, given the agent's previous action and current game state.
+
+Example — Chess:
+- Environment = rules governing how an action (e.g., pawn move e2e4) affects the next game state (new positions of pieces on board).
+- Specifies how to assess if a given position is checkmate.
+- Allocates a reward of 1 after the winning move.
+
+================================================================================
+PAGE 6 — OTHER ELEMENTS (GLOSSARY)
+================================================================================
+Agent: The entity that takes actions in the environment.
+
+Game State (also just "state"): The data representing a particular situation the agent may encounter. Example: a particular chessboard configuration with accompanying game information such as which player will make the next move.
+
+Action: A feasible move that an agent can make.
+
+Reward: The value given back to the agent by the environment after an action has been taken. The agent aims to maximize the long-term sum of its rewards. Examples:
+  - Chess: checkmate opponent's king = reward of 1; every other move = reward of 0.
+  - Space Invaders: rewards constantly awarded throughout the episode (points).
+
+Episode: One run of an agent in the environment. Also called a "rollout."
+
+Timestep: For a discrete event environment, all states, actions, and rewards are often subscripted to show their value at timestep t.
+
+================================================================================
+PAGE 7 — HOW THE AGENT LEARNS (RL LOOP)
+================================================================================
+Question posed: "We know about all the elements. But how does the agent learn?"
+
+Learning loop sequence:
+1. Start with a state s₀
+2. Decide what action to take
+3. Execute the action
+4. Get the reward
+5. Observe the environment (new state s₁)
+6. Return to action selection
+7. Repeat...
+
+================================================================================
+PAGE 8 — TRADITIONAL REINFORCEMENT LEARNING (BASELINE)
+================================================================================
+Title: The Baseline: Traditional Reinforcement Learning
+
+Description: The standard RL loop requires the agent to interact directly with the environment at every timestep, calculating optimal policies through sheer trial and error in the external world.
+
+Example used: CarRacing Gym environment
+
+State (S_t):
+- 64x64x3 RGB image (bird's-eye view)
+
+Reward (R_t):
+- +1000/N for new track tiles visited
+- -0.1 penalty per timestep
+
+Action (A_t):
+- 3 values: Steering (−1 to 1), Acceleration (0 to 1), Braking (0 to 1)
+
+Diagram: Standard loop — State and Reward feed into AGENT; AGENT outputs ACTION; ACTION feeds into ENVIRONMENT (CarRacing Gym); ENVIRONMENT produces new State and Reward.
+
+================================================================================
+PAGE 9 — WORLD MODEL / MENTAL MODEL
+================================================================================
+Title: World Model or Mental Model
+
+Definition: A world model is an abstract view of reality.
+
+Capabilities of a world model:
+1. Predict effects of actions
+2. Come up with a plan to achieve a goal
+3. Recognize a problem when reality is not as expected
+
+Mathematical characterization:
+- A world model is characterized by a set of features.
+- World model = a set of (feature, value) pairs.
+
+Diagram description (Reality vs. Mental Model):
+- Left side (REALITY): RAW SENSORY INPUT (PHOTONS) — Unfiltered, high-density data stream.
+- Right side (MENTAL MODEL): INTERNAL WORLD MODEL (REPRESENTATION) — Simplified, structured cognitive map.
+- The brain (shown in middle) transforms raw sensory input into an internal world model.
+- Visual context: busy urban road (reality) → simplified road schematic (mental model).
+
+================================================================================
+PAGE 10 — WORLD MODEL ARCHITECTURE OVERVIEW (THE ANATOMY OF A DREAMER)
+================================================================================
+Title: High-level overview of the entire world model architecture and training process
+Subtitle: THE ANATOMY OF A DREAMER
+
+Description: The World Model architecture splits the agent's brain into three distinct functional organs.
+
+Table of components:
+
+| COMPONENT | ARCHITECTURE             | HUMAN ANALOGY | INPUT → OUTPUT                              |
+|-----------|--------------------------|---------------|---------------------------------------------|
+| V         | Variational Autoencoder  | Vision        | 64x64x3 Pixels → Latent Vector (z)          |
+| M         | MDN-RNN                  | Foresight     | z + action + hidden state (h) → Next z & Reward |
+| C         | Controller               | Reflexes      | z + h → Action (Steer, Accel, Brake)        |
+
+================================================================================
+PAGE 11 — MASTER ARCHITECTURE DIAGRAM
+================================================================================
+Title: THE MASTER ARCHITECTURE
+
+Caption: Observation becomes Representation (z). Representation and Memory (h) dictate Action. Action and Representation update Memory.
+
+Flow description:
+- ENVIRONMENT → sends Observation → VAE (V)
+- VAE (V) → encodes observation into latent vector z
+- z → feeds into MDN-RNN (M) and CONTROLLER (C)
+- MDN-RNN (M) → produces hidden state h
+- h → feeds into CONTROLLER (C)
+- CONTROLLER (C) → outputs ACTION (red arrow)
+- ACTION → feeds back into ENVIRONMENT and MDN-RNN (M)
+
+Component roles:
+- VAE (V): perception / vision component — compresses raw observation into z
+- MDN-RNN (M): memory / foresight component — maintains temporal context h
+- CONTROLLER (C): decision-making component — maps z + h to actions
+
+================================================================================
+PAGE 12 — TRAINING OVERVIEW
+================================================================================
+Title: Training
+
+Training steps (sequential):
+1. Collect random rollout data
+2. Train the VAE
+3. Collect data to train MDN-RNN
+4. Train the MDN-RNN
+5. Train the Controller
+
+Diagram: Same master architecture diagram — Environment → VAE (V) → MDN-RNN (M) → Controller (C), with action feedback loop.
+
+================================================================================
+PAGE 13 — STEP 1: COLLECTING REALITY VIA RANDOM ROLLOUTS
+================================================================================
+Title: Step 1: Collecting Reality via Random Rollouts
+Mini-map position: ENVIRONMENT → VAE (V) → MDN-RNN (M) → CONTROLLER (C) [Environment highlighted]
+
+Description: Before the agent can learn to drive, it must learn to see. Parallel environments are spun up and an untrained agent thrashes around with random actions. This generates thousands of episodes of physical environment data — capturing how the physics of the world operate.
+
+Figure reference: Figure 12-5. Frames 40 to 59 of one episode.
+
+Frame data shown:
+- Action: a=[0.27, 0., 0.] (consistent across frames)
+- Reward values (r): varies per frame — e.g., r=−0.1, r=3.21, r=3.22, r=0.43, r=3.66, r=3.68
+- Bird's-eye view of car racing track shown across 12 frames in a 3×4 grid
+
+Key insight: Negative rewards (e.g., −0.1) occur when the car is off-track; positive rewards (e.g., 3.22) occur when traversing new track tiles.
+
+================================================================================
+PAGE 14 — STEP 2: TRAINING THE VAE (COMPRESSION)
+================================================================================
+Title: Step 2: Training the VAE (Compression)
+Mini-map position: VAE (V) [highlighted]
+
+Description: The Variational Autoencoder condenses 12,288 raw pixels into just 32 numbers. This latent vector (z) contains the distilled essence of the scene — the straightness of the road, the sharpness of upcoming bends, and the car's position.
+
+Architecture:
+- Input: 64×64×3 image = 12,288 pixels
+- Process: 4 convolutional layers (Conv Layer 1 → Conv Layer 2 → Conv Layer 3 → Conv Layer 4)
+- Output: 32-Dimensional Latent Vector (z) = "Distilled Essence of Scene"
+
+Diagram description: Funnel-shaped convolutional compression — wide input image narrows through successive conv layers to produce the compact latent vector z. Inset shows Encoder → z (latent) → Decoder structure with x (input), h (latent), x' (reconstruction).
+
+================================================================================
+PAGE 15 — PROOF OF VISION: CONTINUOUS LATENT SPACE
+================================================================================
+Title: Proof of Vision: A Continuous Latent Space
+Mini-map position: VAE (V) [highlighted]
+
+Description: By sampling and shifting the latent variables, the VAE is proven to understand the environment mathematically. Smoothly adjusting a single variable seamlessly morphs a straight track into a sharp left turn. The agent now "understands" geometry.
+
+Figure reference: Figure 12-9. A linear interpolation of two dimensions of z.
+
+Grid visualization:
+- Rows: z[4] values from −2.0 to +2.0 (steps: −2.0, −1.0, 0.0, +1.0, +2.0)
+- Columns: z[7] values from −2.0 to +2.0 (steps: −2.0, −1.0, 0.0, +1.0, +2.0)
+- Each cell shows the decoded track image for that (z[4], z[7]) combination
+- Continuous interpolation demonstrates smooth transitions between track geometries (straight → curved)
+
+Key insight: The latent space is continuous and semantically meaningful — each dimension encodes a real geometric property of the track.
+
+================================================================================
+PAGE 16 — STEP 3: MEMORY & PREDICTION (THE RNN)
+================================================================================
+Title: Step 3: Memory & Prediction (The RNN)
+Mini-map position: MDN-RNN (M) [highlighted]
+
+Description: If you turn the wheel to the left, you expect the next frame to show you aligning with the curve. The Recurrent Neural Network tracks the sequence of events over time, storing the context in a 256-dimensional hidden state (h).
+
+Architecture:
+- Inputs:
+  1. Current z vector (length 32) — green
+  2. Current Action (length 3) — red
+  3. Previous Reward (length 1) — yellow/gold
+- Process: LSTM Layer with 256 hidden units
+- Output: Hidden State h (length 256) — blue
+
+Diagram: Three colored input streams feed into the LSTM Layer box, which outputs the hidden state h. Inset shows standard stacked RNN architecture (RNN Layer 1, RNN Layer 2) with recurrent connections across timesteps.
+
+Total input dimensions: 32 (z) + 3 (action) + 1 (reward) = 36 inputs to LSTM.
+
+================================================================================
+PAGE 17 — HANDLING UNCERTAINTY: THE MIXTURE DENSITY NETWORK (MDN)
+================================================================================
+Title: Handling Uncertainty: The Mixture Density Network
+Mini-map position: MDN-RNN (M) [highlighted]
+
+Description: The future is probabilistic. The MDN doesn't predict one definitive next state; it models multiple potential outcomes. It outputs parameters for five overlapping normal distributions, allowing the agent to anticipate varied outcomes and avoid catastrophic overfitting.
+
+Output parameters:
+- logpi (mixing coefficients) — blue
+- mu (means) — green
+- logvar (log variances) — red
+- Reward — yellow/gold
+
+Formula: 5 mixtures × 3 parameters × 32 dimensions + 1 reward = 481 Parameters
+
+Diagram description: A car moving forward with multiple overlapping probability distribution "lobes" (blue and gold/tan) projecting ahead of it — representing the multiple possible future states the MDN models.
+
+Key insight: Instead of predicting one deterministic next state, MDN outputs a probability distribution over possible next states — critical for handling the inherent uncertainty of real-world dynamics.
+
+================================================================================
+PAGE 18 — STEP 4: THE CONTROLLER (REFLEXES)
+================================================================================
+Title: Step 4: The Controller (Reflexes)
+Mini-map position: CONTROLLER (C) [highlighted]
+
+Description: The actual decision-making brain is astonishingly simple. It is a densely connected network with zero hidden layers. It maps the current vision (z) and the predictive memory (h) directly to physical actions.
+
+Architecture:
+- Inputs: z (length 32) + h (length 256) = 288 Total Inputs
+- Network: fully connected, no hidden layers (single-layer linear network)
+- Outputs: 3 action values:
+  1. Turn (steering)
+  2. Accelerate
+  3. Brake
+
+Parameter count: 288 inputs × 3 outputs = 864 weights + 3 biases = 867 Total Parameters
+
+Diagram: 288 input nodes (green = z, blue = h) all connect directly to 3 output nodes (red circles: Turn, Accelerate, Brake).
+
+Key insight: Despite the controller being the "decision brain," it is intentionally kept minimal (linear, no hidden layers) because all the complex representation is already encoded in z and h.
+
+================================================================================
+PAGE 19 — STEP 5: EVOLUTIONARY TRAINING (CMA-ES)
+================================================================================
+Title: Step 5: Evolutionary Training (CMA-ES)
+Mini-map position: CONTROLLER (C) [highlighted]
+
+Context: This is a reinforcement learning problem — there is no labeled data of what a "good" action is — therefore supervised learning cannot be used.
+
+Algorithm: Covariance Matrix Adaptation Evolution Strategy (CMA-ES)
+Goal: Evolve the optimal 867 controller parameters over generations.
+
+CMA-ES Loop (4 stages):
+1. Spawn Population → Randomly initialize parameters
+2. Evaluate in Environment → Test average reward
+3. Breed Best Performers → Combine top 25%
+4. Add Randomness & Update → Generate next generation
+→ Loop back to Spawn Population
+
+================================================================================
+PAGE 20 — COVARIANCE MATRIX ADAPTATION VISUALIZED
+================================================================================
+Title: Covariance Matrix Adaptation Visualized
+
+Description: The algorithm evaluates a population of agents, identifies the top performers, and mathematically shifts the "search area" toward their parameters. With each generation, the covariance matrix adapts, naturally creating momentum toward the optimal driving strategy without calculating costly gradients.
+
+Visualization — 3 stages shown:
+- Generation 1: Large, diffuse, oval-shaped distribution of candidate solutions (black dots) spread across parameter space. Search area (dashed ellipse) is wide and not well-aligned with the optimum.
+- Generation 3: Distribution has rotated and elongated, narrowing toward the region of higher performance (brighter/yellow zones on contour map).
+- Generation 6: Distribution has collapsed to a tight cluster near the optimal parameter region (center of the bright yellow target zone).
+
+Key insight: CMA-ES doesn't use gradients. It learns the shape (covariance) of good solutions and adapts the search distribution accordingly, generation by generation.
+
+================================================================================
+PAGE 21 — THE PRE-DREAM STATE: TRAINING IN REALITY
+================================================================================
+Title: The Pre-Dream State: Training in Reality
+
+Description: Up to this point, the Controller has been evaluated inside the actual Gym environment. The agent interacts with the simulation, waits for the simulation to render the next frame, encodes that frame, and decides its next move.
+
+Environment: CarRacing (OpenAI Gym)
+
+Full system flow (training in reality):
+- ENVIRONMENT → Observation → VAE (V) [Encoder → z → Decoder]
+- Decoder receives sample from MDN-RNN output
+- VAE Encoder outputs z
+- z → MDN-RNN and Controller (C)
+- MDN-RNN → MDN → outputs h
+- MDN-RNN also receives action feedback (red arrow from environment)
+- MDN-RNN has recurrent self-loop (h feeds back into itself)
+- Controller (C) receives z and h → outputs ACTION
+- ACTION → fed back to ENVIRONMENT (red arrow) → ENVIRONMENT returns reward
+- reward also flows back to Controller
+
+Diagram label: "Training the controller in the Gym environment"
+
+================================================================================
+PAGE 22 — THE SYNTHESIS: IN-DREAM TRAINING
+================================================================================
+Title: The Synthesis: In-Dream Training
+
+Description: The MDN-RNN has learned the physics of the world so perfectly that the real environment can be replaced entirely. The agent feeds an action to its own memory, which hallucinates the next latent state (z) and reward. The agent learns to drive purely by thinking about driving.
+
+Key change: The CarRacing (OpenAI Gym) Environment is CROSSED OUT — eliminated from the training loop.
+
+Dream Environment components and flow:
+- Controller (C): receives z and h → outputs ACTION (red) and reward (red)
+- MDN-RNN (M): receives action from Controller → outputs next z → feeds z to VAE Decoder; also maintains recurrent h loop (blue arrows)
+- VAE (V) Decoder: receives z from MDN-RNN → decodes to visual representation
+- MDN (M): outputs sample (probability distribution)
+- VAE Encoder: shown grayed out (optional, for initial state encoding only)
+
+Diagram label: "Training the controller in the MDN-RNN dream environment"
+
+Key insight: The MDN-RNN acts as a generative world model — it simulates the entire physics of the environment internally, allowing training without ever touching the real environment.
+
+================================================================================
+PAGE 23 — REALITY VS. THE DREAM (COMPARISON TABLE)
+================================================================================
+Title: Reality vs. The Dream
+
+Context: Training in the hallucinated z-space eliminates the need to render graphics or decode vectors back into recognizable images. The evolutionary process can iterate orders of magnitude faster.
+
+Comparison Table:
+
+| Dimension          | Reality (Gymnasium)             | The Dream (MDN-RNN)                     |
+|--------------------|---------------------------------|-----------------------------------------|
+| Engine             | External 2D Game Engine         | Internal Neural Network                 |
+| Input Space        | 12,288 dimensions (Pixels)      | 32 dimensions (z-space)                 |
+| Computational Speed| Bottlenecked by rendering       | Exponentially faster (Matrix multiplication) |
+| Safety             | Agent crashes in the environment| Agent crashes safely in its own mind    |
+
+Key insight: By moving training from the real environment to the dream (MDN-RNN), the system achieves massive computational speedup (12,288 → 32 dimensions) and safety (failures have no real-world consequences).
+
+================================================================================
+PAGE 24 — CONTROLLING THE DREAM (VOLATILITY & TEMPERATURE)
+================================================================================
+Title: Controlling the Dream (Volatility & Temperature)
+
+Problem: An overly predictable dream creates an overconfident agent (overfitting to the dream).
+
+Solution: Introduce a temperature parameter (tau) when sampling z, forcing the hallucination to be slightly more chaotic than reality.
+
+Temperature dial: tau = 1.15 (highlighted as optimal)
+
+Results table:
+
+| Temperature tau | Virtual Score  | Actual Score   |
+|-----------------|----------------|----------------|
+| 0.10            | 2086 ± 140     | 193 ± 58       |
+| 0.50            | 2060 ± 277     | 196 ± 50       |
+| 1.00            | 1145 ± 690     | 868 ± 511      |
+| 1.15 ★          | 918 ± 546      | 1092 ± 556     |
+| 1.30            | 732 ± 269      | 753 ± 139      |
+
+Key observations:
+- At low tau (0.10, 0.50): Virtual score is high but actual score is very low → severe overfitting to dream; agent fails in reality.
+- At tau = 1.15: Virtual score and actual score are closely aligned; actual score = 1092 ± 556, which is a SUPERHUMAN score.
+- At tau = 1.30: Both scores drop, suggesting too much chaos degrades learning.
+
+Key insight: tau = 1.15 is the sweet spot — slightly more chaotic than reality — enabling the agent to generalize from the dream back to the real world with superhuman performance.
+
+================================================================================
+PAGE 25 — THE WORLD MODELS PARADIGM (SUMMARY)
+================================================================================
+Title: The World Models Paradigm
+
+Description: By combining generative models with evolutionary strategies, agents are no longer bound by the speed of their environment. They can observe, build an internal universe, and master complex tasks through the sheer speed of thought.
+
+Three pillars:
+
+1. CONDENSE REALITY (green)
+   - Component: VAE
+   - Function: Extracts the latent z
+   - Analogy: Compresses high-dimensional sensory input into compact, meaningful representation
+
+2. SIMULATE THE FUTURE (blue)
+   - Component: MDN-RNN
+   - Function: Hallucinates probabilities
+   - Analogy: Predicts multiple possible future states, enabling planning without real-world interaction
+
+3. EVOLVE THE SOLUTION (red)
+   - Component: CMA-ES
+   - Function: Optimizes reflexes purely in the mind
+   - Analogy: Evolutionary optimization of the controller using only the dream environment — no real environment needed
+
+Overall paradigm: Generative model (VAE + MDN-RNN) + Evolutionary optimizer (CMA-ES) = agent that learns entirely inside its own hallucinated reality, then transfers that learning to the real world.
+
+================================================================================
+END OF DOCUMENT
+Source file: 16-gen-ai.pdf
+Total pages: 25
+Extraction: Complete, page-by-page, including all diagrams described textually, all tables, all formulas, and all key insights.
+================================================================================

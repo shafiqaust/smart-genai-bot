@@ -1,0 +1,66 @@
+SOURCE: Normalizing_Floow_Models__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+COURSE: CSCI-4440-M01 / CSCI-5440-M01 - Generative AI (Spring 2026)
+TOTAL_PAGES: 2
+
+================================================================================
+PAGE 1
+================================================================================
+
+MODULE TITLE: Normalizing Floow Models
+
+--- SECTION: Overview ---
+
+In this module, we will learn about Normalizing Floow Models, especially the RealNVP model. We will discuss the motivation behind this type of models, its architecture, and an implementation of RealNVP.
+
+--- SECTION: Learning Objectives ---
+
+CATEGORY: Content
+
+By the end of this module, you should be able to:
+
+MLO 1: Understand the motivation for normalizing flow models and the difference between the three types of models (VAE, GAN, and normalizing flow)
+
+MLO 2: Learn about the Jacobian determinant
+
+MLO 3: Build a RealNVP model using Keras and Tensorflow
+
+--- SECTION: Learning Materials ---
+
+SUBSECTION: Presentations and Videos
+
+- Normalizing Flow Models - presentation
+  URL: https://nmsu.instructure.com/courses/1731641/files/282422162?wrap=1
+  Download URL: https://nmsu.instructure.com/courses/1731641/files/282422162/download?download_frd=1
+  ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F4df1a5e4-6c78-47c5-a61c-cd65551881d5%2F10-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMzc2N
+
+================================================================================
+PAGE 2
+================================================================================
+
+  [Continuation of ReadSpeaker token]
+  DYsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzRkZjFhNWU0LTZjNzgtNDdjNS1hNjFjLWNkNjU1NTE4ODFkNS8xMC1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiZDRhMmIwZTQtOGExOC00MjgzLWJhZDAtNjA0ZjVkNzk1YzY3IiwiZXhwIjoxNzc4NDI0MDQ2fQ.fV79eUCLnTUDcjabIKUAD0lfYERrDKtJwaVSQlbcZpqrl4t__nZQCTJ_gTSurz8YGRhe8pFoePqB_ojYWfReQ
+
+--- SECTION: Activities ---
+
+--- SUBSECTION: Assignments ---
+
+Please train and experiment with the RealNVP example from the GitHub repository.
+
+--- SUBSECTION: Reading Materials ---
+
+[No reading materials listed]
+
+================================================================================
+KEY CONCEPTS INDEX (for RAG retrieval)
+================================================================================
+
+- Normalizing Flow Models
+- RealNVP (Real-valued Non-Volume Preserving)
+- Variational Autoencoders (VAE)
+- Generative Adversarial Networks (GAN)
+- Jacobian determinant
+- Keras
+- TensorFlow
+- Generative AI models comparison (VAE vs GAN vs Normalizing Flow)
+- Model architecture
+- GitHub repository (RealNVP example)

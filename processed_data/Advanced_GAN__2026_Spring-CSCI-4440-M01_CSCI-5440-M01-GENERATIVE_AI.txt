@@ -1,0 +1,72 @@
+================================================================================
+SOURCE: Advanced_GAN__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+COURSE: CSCI-4440-M01 / CSCI-5440-M01 - Generative AI (2026 Spring)
+MODULE: Advanced GAN
+TOTAL PAGES: 2
+================================================================================
+
+--------------------------------------------------------------------------------
+PAGE 1
+--------------------------------------------------------------------------------
+
+MODULE TITLE: Advanced GAN
+
+--- SECTION: Overview ---
+
+In this module, we will learn about different GAN models that are behind state-of-the-art image generation software. We will discuss ProGAN, StyleGAN, StylGAN2, BigGAN, and how Transformer is used in training ViT VQ-GAN.
+
+--- SECTION: Learning Objectives ---
+
+By the end of this module, you should be able to:
+
+MLO 1: See how a ProGAN model progressively trains a GAN to generate high resolution images.
+
+MLO 2: Understand how ProGAN was adapted to build StyleGAN, a high-performing GAN for image synthesis, and how this was adjusted to create StyleGAN2, a state-of-the-art model that improves further upon the original work.
+
+MLO 3: Understand the architecture of the Self-Attention GAN (SAGAN), which incorporates the attention mechanism into the GAN framework and how BigGAN expands upon the ideas in the SAGAN paper to produce high quality images.
+
+MLO 4: Learn how VQ-GAN uses a codebook to encode images into a discrete sequence of tokens that can be modeled using a Transformer and how was it adapted to create ViT VQ-GAN using Transformers instead of convolutional layers in the encoder and decoder.
+
+--- SECTION: Content ---
+
+(Content listing placeholder — links to embedded media in LMS)
+
+--- SECTION: Learning Materials ---
+
+(See Page 2)
+
+--------------------------------------------------------------------------------
+PAGE 2
+--------------------------------------------------------------------------------
+
+--- SECTION: Learning Materials > Presentations and Videos ---
+
+Resource: Advanced GAN - presentation
+URL (view): https://nmsu.instructure.com/courses/1731641/files/283092812?wrap=1
+URL (download): https://nmsu.instructure.com/courses/1731641/files/283092812/download?download_frd=1
+URL (ReadSpeaker/DocReader): https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F13eb8607-af28-4b6d-8a50-0a18b460acea%2F14-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMjc4MzQsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzEzZWI4NjA3LWFmMjgtNGI2ZC04YTUwLTBhMThiNDYwYWNlYS8xNC1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiNjEyNDNmNzItMWQ5ZC00MDk4LTk3MzEtZTRlZDExNzZiY2U2IiwiZXhwIjoxNzc4NDE0MjM0fQ.kY5cR0D6YQyw5XAno_7t6p9mETlmOZhzEbyrFulK_Tth9t46UzlWFOhBPqIfkwcpxhG4FodjEZOjA0lxJMNniw
+
+--- SECTION: Activities ---
+
+(No activity details listed beyond section header)
+
+--- SECTION: Assignments ---
+
+Please train the transformer from the GitHub repository.
+
+--- SECTION: Reading Materials ---
+
+(No reading materials listed beyond section header)
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
+--- METADATA FOR RAG INDEXING ---
+
+Key Models Covered: ProGAN, StyleGAN, StyleGAN2, BigGAN, SAGAN (Self-Attention GAN), VQ-GAN, ViT VQ-GAN
+Key Concepts: Progressive GAN training, image synthesis, attention mechanism, self-attention, codebook encoding, discrete token sequences, Transformer-based image modeling, convolutional vs Transformer encoder/decoder
+Course Level: Undergraduate (CSCI-4440) / Graduate (CSCI-5440)
+Institution: New Mexico State University (NMSU)
+LMS: Canvas (instructure.com)
+Semester: Spring 2026

@@ -1,0 +1,70 @@
+================================================================================
+DOCUMENT METADATA
+================================================================================
+Title: Multimodal Model : 2026 Spring-CSCI-4440-M01/CSCI-5440-M01-GENERATIVE AI
+Course: CSCI-4440-M01 / CSCI-5440-M01 - Generative AI (Spring 2026)
+Institution: New Mexico State University (NMSU)
+Total Pages: 2
+PDF Version: 1.4
+Creation Date: May 9, 2026
+File: Multimodal_Model___2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+
+================================================================================
+PAGE 1
+================================================================================
+
+--- SECTION: Module Title ---
+Module: Multimodal Model
+
+--- SECTION: Overview ---
+In this module, we will learn about the architecture of several multimodal models such as DALL-E, Imagen, Stable Diffusion, or Flamingo.
+
+--- SECTION: Learning Objectives ---
+By the end of this module, you should be able to:
+
+MLO 1: Learn what is meant by a multimodal model.
+MLO 2: Understand the inner workings of different text-to-image model (DALL-E, Imagen) or visual language model (Flamingo).
+MLO 3: Understand the architecture of them, the similarities and differences between these models.
+MLO 4: Learn about DrawBench, a benchmarking suite for evaluating text-to-image.
+
+[Sub-section label: Content]
+
+--- SECTION: Learning Materials ---
+
+Sub-section: Presentations and Videos
+
+Item: Multimodal Model - presentation
+  URL (view): https://nmsu.instructure.com/courses/1731641/files/283826831?wrap=1
+  URL (download): https://nmsu.instructure.com/courses/1731641/files/283826831/download?download_frd=1
+  URL (ReadSpeaker/DocReader): https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F28ac454a-ddfe-44ab-bba0-dd3db84f9a0e%2F17-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMTU4OTksInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzI4YWM0NTRhLWRkZmUtNDRhYi1iYmEwLWRkM2RiODRmOWEwZS8xNy1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiYWY4YmMzMDQtNDU0OC00MWY2LWFiYjYtYWNiODI0YTcwODk4IiwiZXhwIjoxNzc4NDAyMjk5fQ.cplCkMh8LxpQfW8V3aZh6UWP2hKzwyGZybGYVrud5jxSqWxMHYTcCrpo-z2UYqcupnxlTaRtTPJ0999kCIc7-A
+
+================================================================================
+PAGE 2
+================================================================================
+
+[Continuation of presentation URL token from Page 1 — full URL assembled above]
+
+--- SECTION: Activities ---
+[Section header present; no activity items listed in the document]
+
+--- SECTION: Assignments ---
+[Section header present; no assignment items listed in the document]
+
+--- SECTION: Reading Materials ---
+[Section header present; no reading material items listed in the document]
+
+================================================================================
+KEY CONCEPTS EXTRACTED (for RAG indexing)
+================================================================================
+- Multimodal model: a model that processes or generates content across multiple modalities (e.g., text and images)
+- DALL-E: text-to-image generative model (OpenAI)
+- Imagen: text-to-image generative model (Google)
+- Stable Diffusion: text-to-image generative model (Stability AI)
+- Flamingo: visual language model (VLM) — processes both images and text
+- DrawBench: a benchmarking suite specifically designed for evaluating text-to-image models
+- Text-to-image models: models that generate images from natural language text prompts
+- Visual language model (VLM): models that understand and generate both visual and language content
+
+================================================================================
+END OF DOCUMENT
+================================================================================

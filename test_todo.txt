@@ -1,0 +1,22 @@
+Check for failures:
+hallucination (answering beyond retrieved context), 
+retrieval misses (right answer exists but wasn't retrieved), 
+wrong-chunk selection (retrieved irrelevant passages)
+
+To judge, use LLM as a judge
+
+Test:
+hallucination (answering beyond retrieved context)
+- embedded the context that is somewhat lacking and ask the LLM the lacking part
+- embedded the context that is not in there and ask the LLM that
+
+retrieval misses (right answer exists but wasn't retrieved):
+- make up questions that does have answer, test to see if those chunks are retrieved or not, yes/no
+
+wrong-chunk selection (retrieved irrelevant passages)
+- make up questions that does have answer, test to see if those chunks are retrieved are related
+	related percentage (relevant/total K)
+
+Tools like RAGAS, DeepEval, or LangSmith automate many of these metrics
+still need to build human curated dataset
+

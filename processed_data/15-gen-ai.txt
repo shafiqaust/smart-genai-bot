@@ -1,0 +1,448 @@
+FILE: 15-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 14 - Music Generation With GenAI Help
+
+================================================================================
+PAGE 1
+================================================================================
+TITLE: Generative Artificial Intelligence
+SUBTITLE: Generative AI
+WEEK: Week 14: Music Generation
+NOTE: With GenAI Help!
+DESCRIPTION: Title slide featuring a wireframe human head graphic on a dark background, representing AI concepts.
+
+================================================================================
+PAGE 2
+================================================================================
+TITLE: Generative Deep Learning for Symbolic Music
+SUBTITLE: Bridging the gap between sequence prediction and spatial synthesis.
+TOOL USED: NotebookLM
+DESCRIPTION: Slide featuring an illustrated treble clef transitioning into a 3D isometric diagram of neural network components. Technical annotations visible include: SEQ-LEN: 512, TENSOR[16, 768, 4], MIDI_NOTE: C#2, MIDI_NOTE: C#4, ATTN_HEADS: 12. Represents the intersection of music notation and deep learning architecture.
+
+================================================================================
+PAGE 3
+================================================================================
+TITLE: The Challenge of Computational Composition
+CONTENT:
+  LEFT COLUMN - Text Generation:
+    - Represented as: The → quick → brown → fox
+    - Description: Linear, one-dimensional sequence. One word at a time.
+
+  RIGHT COLUMN - Music Generation:
+    - Description: A multipart, interwoven tapestry. Polyphony, parallel instrument streams, and varying durations.
+    - Visual: Complex multi-staff orchestral score showing multiple simultaneous note streams.
+
+KEY INSIGHT: Text generation is a linear 1D sequence problem. Music generation is fundamentally more complex due to polyphony, parallel instrument streams, and varying note durations.
+
+================================================================================
+PAGE 4
+================================================================================
+TITLE: ML Pipeline Overview (Diagram Only)
+CONTENT: Visual pipeline showing the standard machine learning workflow:
+  1. Data collection
+  2. Data preparation
+  3. Choose an ML model
+  4. Train the model
+  5. Evaluate the model
+  6. Parameter tuning
+  7. Make predictions
+
+================================================================================
+PAGE 5
+================================================================================
+TITLE: Steps
+CONTENT:
+  CHECKLIST OF STEPS:
+    - Collecting data
+    - Convert to "structured data" => string
+    - Tokenization
+    - Training set
+    - Causal attention mask
+    - Transformer block
+    - Token and position embedding
+    - Transformer model
+
+  ML PIPELINE (repeated from Page 4):
+    1. Data collection
+    2. Data preparation
+    3. Choose an ML model
+    4. Train the model
+    5. Evaluate the model
+    6. Parameter tuning
+    7. Make predictions
+
+  RIGHT SIDE ANNOTATIONS (from slide imagery):
+    Notes string example:
+      START G:major 4/4TS rest B3 B3 B3 A3 G3 F#3 G3 D3 E3 F#3 G
+      3 A3 B3 C4 D4 B3 G3 F#3 G3 E3 D3 C3 B2 C3 D3 E3 F#3 G3 A3 B
+      3 C4 A3 G3 F#3 G3 E3 F#3 G3 A2 D3 F#3 G3 A3 B3 C4 A3 B3 ...
+
+    Duration string example:
+      0.0 0.0 0.0 3.75 0.25 1.0 0.25 0.25 0.25 0.25 0.25 0.25 0.
+      25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25
+      0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25
+      0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 0.25 ...
+
+    Parser metadata annotation:
+      "The midi file starts with some metadata around the instrumentation, tempo, key, and time signature of the piece."
+      Example output: <music21.metadata.Metadata object at 0x7ff2b150b28>
+      Includes: instrument.Violoncello 'Solo Cello: Solo', key.Key of G major, tempo.MetronomeMark Quarter=250.0, meter.TimeSignature 4/4
+
+    Note annotation 1:
+      "This note starts on beat 4 of the piece (zero-indexed). It has duration of 1 beat (as the next note starts on beat 5) and consists of a chord of low G, D, and B."
+      Example: (4.0) <music21.stream.Measure 1 offset=4.0>
+        (0.0) <music21.chord.Chord G2 D3 B3>
+        (1.25) <music21.chord.Chord A3>
+        (1.5) <music21.chord.Chord G3>
+        (1.75) <music21.chord.Chord F#3>
+
+    Note annotation 2:
+      "This note starts on beat 6 of the piece. It has duration of a quarter of a beat (as the next note starts on beat 6.25) and consists of a single note - G."
+      Example: (2.0) <music21.chord.Chord G3>
+        (2.25) <music21.chord.Chord D3>
+        (2.5) <music21.chord.Chord E3>
+        (2.75) <music21.chord.Chord F#3>
+        (3.0) <music21.chord.Chord G3>
+        (3.25) <music21.chord.Chord A3>
+        (3.5) <music21.chord.Chord B3>
+
+    Note annotation 3:
+      "This note starts a quarter of a beat before beat 8 of the piece. It has the duration of a quarter of a beat and consists of a single note - high C."
+      Example: (3.75) <music21.chord.Chord C4>
+
+================================================================================
+PAGE 6
+================================================================================
+TITLE: Two Paradigms of Musical Generative AI
+PARENT CATEGORY: Symbolic Music
+
+  PARADIGM 1 - Music as Language (Transformers):
+    - Approach: Sequential, autoregressive prediction.
+    - Representation: Treats notes and durations as a vocabulary.
+    - Strength: Ideal for modeling long-term structural coherence.
+    - Visual: Token chain showing [Note: C4] → [Duration: 1/4] → [Note: E4] → [Duration: 1/8] → [Note: F8] → [Duration: 1/8]
+
+  PARADIGM 2 - Music as Canvas (MuseGAN):
+    - Approach: Simultaneous generation using 2D/3D convolutions.
+    - Representation: Treats time and pitch as spatial dimensions.
+    - Strength: Ideal for multi-track synchronization.
+    - Visual: Grid/piano roll matrix showing colored blocks representing notes across time and pitch axes.
+
+================================================================================
+PAGE 7
+================================================================================
+TITLE: Parsing the MIDI Signal into Dual Vocabularies
+TOOL: music21 Parser
+INPUT: Sheet music / MIDI files (4 staves shown)
+
+OUTPUT 1 - Notes String:
+  - Sequence: START → G:major → G2 → D3 → B3 → ...
+  - Represents pitch and key information
+
+OUTPUT 2 - Duration String:
+  - Sequence: 0.0 → 0.0 → 0.25 → 0.25 → 0.25 → ...
+  - Represents timing/duration of each note event
+
+KEY CONCEPT: MIDI data is parsed into two parallel token streams — one for pitch/note identity and one for duration — creating "dual vocabularies" for the model.
+
+================================================================================
+PAGE 8
+================================================================================
+TITLE: Framing the Sequence Prediction Task
+CONTENT:
+  TASK SETUP:
+    - Window Size: 4 Notes (Input Window)
+    - Prediction Target: Next Note & Duration (Target Output)
+
+  MECHANISM:
+    "The model is trained to predict the note and duration of the element one timestep into the future, given previous elements in the sliding window."
+
+  METHOD: Sliding window autoregressive prediction.
+  - Input: Fixed-size window of preceding notes
+  - Output: Single predicted next note + duration
+
+================================================================================
+PAGE 9
+================================================================================
+TITLE: Overcoming the Maximum Length Barrier
+CONTENT:
+  THE PROBLEM:
+    "Standard learned embeddings enforce a hard maximum sequence length (N). It is impossible to extrapolate beyond N without clipping the sequence—a fatal flaw for long-form music generation."
+
+  THE SOLUTION: Sine Positional Encoding
+    - Library: keras_nlp.layers.SinePositionEncoding()
+    - Mechanism: Uses sinusoidal functions at multiple frequencies to encode position.
+    - Key Property: "A vertical slice at any point creates a deterministic, unique positional barcode, allowing infinite extrapolation."
+    - Benefit: Unlike learned embeddings, sine encoding is not bounded by a maximum sequence length, enabling generation of arbitrarily long musical sequences.
+
+================================================================================
+PAGE 10
+================================================================================
+TITLE: Dual-Stream Transformer Architecture
+CONTENT:
+  ARCHITECTURE DIAGRAM (top to bottom):
+
+  INPUT LAYER:
+    - Note Input: shape [b, l]
+    - Duration Input: shape [b, l]
+
+  EMBEDDING LAYER:
+    - Note: Text and positional embedding [b, l, 128]
+    - Duration: Text and positional embedding [b, l, 128]
+
+  MERGE:
+    - Concatenate: [b, l, 256]
+    (Both streams combined into a single 256-dim representation)
+
+  PROCESSING:
+    - Transformer block: [b, l, 256]
+
+  OUTPUT LAYER (split back into two heads):
+    - Dense → Next note predictions: [b, l, 59]   (59 possible notes)
+    - Dense → Next duration predictions: [b, l, 24] (24 possible durations)
+
+  KEY INSIGHT:
+    "Concatenation allows the model to learn the complex interplay between pitch and rhythm without interleaving a single stream."
+
+  NOTATION: b = batch size, l = sequence length
+
+================================================================================
+PAGE 11
+================================================================================
+TITLE: Decoding the Attention Matrix
+CONTENT:
+  VISUALIZATION: Heatmap of attention weights. X-axis = Attention Position (0–50+). Y-axis = Musical tokens: START, D:minor, 3/4TS, rest, A3, B-3, G3, F3, E3, D3, A2, G2, F2.
+
+  ANNOTATION 1 - The Phrase Arc (right side):
+    "The model learns Bach's stylistic signature—dropping to a low cello note to end a phrase, and bouncing back up to start the next."
+    - Observation: Attention weights show periodic peaks at phrase boundaries, corresponding to low bass notes followed by high melodic jumps.
+
+  ANNOTATION 2 - Key Signature Look-Back (left side):
+    "To resolve harmonic ambiguity (e.g., choosing E-natural over E-flat), the network places massive attention specifically on early key signature tokens like START and D:minor."
+    - Observation: Strong attention from later tokens back to the START and D:minor tokens at positions 0–10.
+
+  KEY INSIGHT: The attention matrix reveals musically meaningful behavior — the model has learned to refer back to key signature context and to model phrase-level structure.
+
+================================================================================
+PAGE 12
+================================================================================
+TITLE: The Polyphony Barrier
+CONTENT:
+  THE CHALLENGE:
+    "How do we represent simultaneous, interwoven voices as a single linear sequence without the vocabulary exploding?"
+
+  CONTEXT:
+    - LEFT: Monophonic Sequence (Bach Cello) — a single melodic line, easy to serialize.
+    - RIGHT: Polyphonic Ensembles (Bach Chorales) — multiple simultaneous voices, much harder to represent as a flat sequence.
+
+  VISUAL: A single blue line splits into 4 colored streams (blue, red, gold, green) that interweave, representing the explosion of simultaneous musical voices.
+
+  CORE PROBLEM: Standard sequential tokenization breaks down when multiple notes sound simultaneously — representing chords and multi-voice music requires either large vocabularies or special encoding strategies.
+
+================================================================================
+PAGE 13
+================================================================================
+TITLE: Tokenizing Polyphony: Sequence vs. Space
+CONTENT:
+
+  METHOD 1 - Event-Based Tokenization (The Script):
+    EXAMPLE TOKENS:
+      NOTE_ON<74>, TIME_SHIFT<1.0>, NOTE_OFF<74>
+      NOTE_ON<69>, TIME_SHIFT<0.5>, NOTE_OFF<69>
+      NOTE_ON<62>, TIME_SHIFT<0.5>, NOTE_OFF<62>
+      NOTE_ON<62>, TIME_SHIFT<0.5>, NOTE_OFF<62>
+      ...
+      NOTE_ON<74>, TIME_SHIFT<1.0>, NOTE_OFF<74>
+      NOTE_ON<69>, TIME_SHIFT<0.5>, NOTE_OFF<69>
+      NOTE_ON<62>, TIME_SHIFT<0.5>, NOTE_OFF<62>
+
+    PROS: Highly expressive. Easily incorporates dynamic/tempo changes. Produces a literal instruction manual.
+    CONS: Lacks rigid structural patterns. High variance makes temporal patterns complex to learn.
+
+  METHOD 2 - Grid Tokenization (The Piano Roll):
+    REPRESENTATION: 2D grid with Pitch (y-axis, range ~50–80) vs. Timesteps (x-axis, 0–30). Each cell = note on/off at that pitch/time.
+    VISUAL: Color-coded blocks (dark navy, blue, red, gold) representing different tracks/voices.
+
+    PROS: Extremely structured. Naturally handles simultaneous notes across multiple voices on a grid.
+    CONS: Requires rigid rhythmic discretization. Greatly bloats sequence lengths.
+
+================================================================================
+PAGE 14
+================================================================================
+TITLE: Music as Canvas: The MuseGAN Paradigm
+CONTENT:
+  THREE-STAGE PIPELINE:
+
+  STAGE 1 - Symbolic Notation:
+    Input: Standard sheet music (multiple staves/parts).
+
+  STAGE 2 - Grid Tokenization:
+    Output: Piano roll matrix — pitch (50–80) on y-axis, timesteps (0–30) on x-axis. Multiple colored tracks overlaid.
+
+  STAGE 3 - Multi-dimensional Image Tensor:
+    Shape: [Bars, Steps, Pitches, Tracks]
+    Visual: 3D layered tensor — each layer = one track, axes = bars/steps/pitches.
+
+  KEY INSIGHT:
+    "If grid tokenization produces a rigid matrix where coordinates dictate pitch and time, it is functionally identical to pixels in an image. We can abandon sequential prediction and deploy spatial Convolutional GANs."
+
+  IMPLICATION: Treating music as an image tensor enables use of convolutional architectures (like those used in image generation) for multi-track music synthesis.
+
+================================================================================
+PAGE 15
+================================================================================
+TITLE: Anatomy of the MuseGAN Generator
+CONTENT:
+  FOUR LATENT NOISE INPUTS → Generator → Generated Multi-Track Score
+
+  INPUT VECTORS:
+
+  1. Chords (Z_DIM):
+     - Role: Dictates harmonic progression.
+     - Scope: Shared across all tracks.
+     - Temporal: Changes per bar.
+
+  2. Style (Z_DIM):
+     - Role: Overall atmospheric/stylistic layer.
+     - Scope: Shared across all tracks.
+     - Temporal: Constant across all bars.
+
+  3. Melody (N_TRACKS, Z_DIM):
+     - Role: Track-specific melodic fine-tuning.
+     - Scope: Per track.
+     - Temporal: Changes per bar.
+
+  4. Groove (N_TRACKS, Z_DIM):
+     - Role: Rhythmic foundation.
+     - Scope: Track-specific.
+     - Temporal: Constant across all bars.
+
+  OUTPUT: Generated Multi-Track Score (multiple layered staves).
+
+  KEY DESIGN PRINCIPLE: Separating global (chords, style) from local (melody, groove) noise vectors gives structured, disentangled control over musical features.
+
+================================================================================
+PAGE 16
+================================================================================
+TITLE: From Latent Space to Polyphonic Tensor
+CONTENT:
+  TWO-STEP GENERATION PROCESS:
+
+  STEP 1 - The Temporal Network:
+    - Input: Initial Noise Vector (Z_DIM = 32)
+    - Architecture: 1D Convolutional Transpose layers
+    - Function: Expands the initial noise vectors (Z_DIM = 32) along the time axis to match the number of bars (N_BARS).
+    - Output: Temporal feature map across bars.
+
+  STEP 2 - The Bar Generator:
+    - Architecture: 2D Convolutional Transpose layers
+    - Function: Concatenates outputs and expands time/pitch dimensions to build a localized piano roll.
+    - Output: Per-bar piano roll tensors.
+
+  FINAL OUTPUT TENSOR SHAPE:
+    [BATCH_SIZE, N_BARS, N_STEPS_PER_BAR, N_PITCHES, N_TRACKS]
+
+  KEY CONCEPT: The two-step process first generates temporal structure (how bars relate over time) then spatial structure (what notes appear within each bar).
+
+================================================================================
+PAGE 17
+================================================================================
+TITLE: The 3D Convolutional Critic
+CONTENT:
+  INPUT: Multi-dimensional tensor of shape (n_bars, n_steps_per_bar, n_pitches, n_tracks)
+
+  ARCHITECTURE (funnel/downsampling):
+    Layer 1: Conv3D — Collapse along Bar axis
+    Layer 2: Conv3D — Collapse along Pitch axis
+    Layer 3: Conv3D — Collapse along Time axis
+
+  OUTPUT: WGAN-GP Validity Score (Real vs. Fake)
+    - Single scalar score indicating whether the input music is real or generated.
+
+  KEY STATEMENT:
+    "Unlike 2D image GANs, MuseGAN requires 3D convolutions to simultaneously evaluate patterns across time, pitch, and tracks, ensuring harmonically sound chorales."
+
+  TRAINING OBJECTIVE: Wasserstein GAN with Gradient Penalty (WGAN-GP) — more stable training than standard GAN loss; critic provides smoother gradient signal to generator.
+
+================================================================================
+PAGE 18
+================================================================================
+TITLE: High-Level Feature Control in Practice
+CONTENT:
+  CENTER: Baseline Generated Score (reference output)
+
+  FOUR MANIPULATION EXPERIMENTS:
+
+  1. Change Style Noise (top-left):
+     Effect: "Entire passage changes style consistently across all tracks and bars."
+     Observation: All voices shift character simultaneously.
+
+  2. Change Melody Noise (top-right):
+     Effect: "Only the top pitch line changes notes; underlying harmony is unaffected."
+     Observation: Inner voices/harmony remains intact; melody voice alone changes.
+
+  3. Change Chord Noise (bottom-left):
+     Effect: "The fundamental chord vector shifts; harmony adjusts while rhythm persists."
+     Observation: Chord progression changes but rhythmic pattern is preserved.
+
+  4. Change Groove Noise (bottom-right):
+     Effect: "Baseline notes remain similar, but rhythmic pacing and note density alter dramatically."
+     Observation: Pitch content similar; rhythmic density and articulation change significantly.
+
+  KEY INSIGHT: MuseGAN's disentangled latent space allows independent manipulation of style, melody, harmony, and rhythm — a key advantage for compositional control.
+
+================================================================================
+PAGE 19
+================================================================================
+TITLE: Synthesis: The Generator's Toolkit
+CONTENT: Comparison table of Transformers vs. MuseGAN
+
+  DIMENSION         | TRANSFORMERS                                      | MUSEGAN
+  ------------------|---------------------------------------------------|--------------------------------------------------
+  Philosophy        | Music as Language (Sequence).                     | Music as Canvas (Space).
+  Architecture      | Autoregressive Decoder, Attention Mechanism.      | WGAN-GP, 1D/2D/3D Convolutions.
+  Data Representation | Event-based tokens (MIDI scripts).              | Grid tokens (Piano Roll tensors).
+  Primary Strength  | Unmatched long-term structural coherence          | Simultaneous multi-track generation with
+                    | and evolving motifs.                              | granular feature control.
+  Best Used For     | Solo expressive instruments (Bach Cello Suites).  | Structurally rigid, polyphonic ensembles
+                    |                                                   | (Bach Chorales).
+
+================================================================================
+PAGE 20
+================================================================================
+TITLE: The Future of Symbolic Music Generation
+CONTENT:
+  CLOSING STATEMENT:
+    "The future of symbolic music generation lies at the intersection of sequence and space."
+
+  BACKGROUND ANNOTATIONS (event-based token examples):
+    Top right:
+      TIME_SHIFT 1, 2, 10
+      NOTE_ON, TIME_SHIFT 2, 23
+      VELOCITY 10, NK/PRCT 10
+      VELOCITY 0 DURATH 33
+      0 TOD[...] (partial)
+
+    Bottom center:
+      NOTE_ON, TIME_SHIFT, VELOCITY, DURATION, NOTE_ON, DU[...]
+      NOTE_ON_3, TIME_SHIFT, NOTE_ON_1, 100-0 23 21, HIGH_ON 1
+      NOTE_ON, DURATION 1, NS 14, 49 23,
+      NOTE_ON
+
+  KEY TAKEAWAY: Neither pure sequence models (Transformers) nor pure spatial models (MuseGAN) are sufficient alone. The frontier of music AI combines both paradigms.
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+METADATA SUMMARY:
+  Total Pages: 20
+  Course: Generative Artificial Intelligence
+  Week: 14
+  Topic: Music Generation
+  Primary Models Covered: Transformer (autoregressive), MuseGAN (GAN-based)
+  Key Libraries Referenced: music21, keras_nlp (SinePositionEncoding), WGAN-GP
+  Key Concepts: Symbolic music, MIDI parsing, dual vocabularies (notes + duration), 
+    sequence prediction, sliding window, positional encoding, dual-stream transformer, 
+    attention matrix, polyphony barrier, event-based tokenization, grid tokenization, 
+    piano roll, latent space disentanglement, 3D convolutions, WGAN-GP critic
+  Tool Used for Slide Generation: NotebookLM

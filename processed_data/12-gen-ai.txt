@@ -1,0 +1,429 @@
+================================================================================
+PAGE 1
+================================================================================
+Title: Generative Artificial Intelligence
+Subtitle: Generative AI
+Week 12: Diffusion Models
+Note: With the help of notebookml
+
+================================================================================
+PAGE 2
+================================================================================
+Title: Previous approaches to generative models
+
+General idea:
+- Learning: learn a probability distribution function of the data
+- Generating: sample from the distribution and generate the data
+
+Different methods to learn the distribution:
+1. Generative Adversarial Networks (GANs) — Type: Implicit / Adversarial
+2. Variational Autoencoders (VAEs) — Type: Approximate / Latent
+3. Normalizing Flows — Type: Explicit / Exact [p(x) = f^-1(p)]
+4. Energy Based Models (EBM) — The network acts as a topographical scanner;
+   instead of classifying what an image is, an Energy-Based Model E(x) calculates
+   how 'plausible' it is. It maps a high-dimensional space (1,024 pixels) down to
+   a single altitude: its Energy score. Architecture: 32x32 pixels -> Conv2D ->
+   Conv2D -> Conv2D -> E(x) [Energy Score]
+
+Today: Diffusion Models
+- Similar to autoencoders, energy based model
+- Different in how encoding and decoding are done
+
+================================================================================
+PAGE 3
+================================================================================
+Title: Diffusion Models: The Idea
+
+Visual: A bidirectional process shown with flower images transitioning from
+original to noise and back.
+
+- Top arrow (left direction): diffusion — the process of progressively adding
+  noise to the original image until it becomes pure noise.
+- Bottom arrow (right direction): restoration — the reverse process of recovering
+  the original image from pure noise.
+
+States shown (left to right):
+  [Pure Noise] -> [Partially noisy abstract shapes] -> [Emerging flower form] -> [Original clean flower]
+
+================================================================================
+PAGE 4
+================================================================================
+Title: (Untitled slide — Core Diffusion Training Concept)
+
+Left panel text:
+  "To build a system capable of creating pristine data, we first train it to
+   become a master of destruction."
+
+Three steps (right panel):
+
+1. Systematic Corruption
+   - Injecting strictly measured Gaussian noise over a predefined timeline.
+
+2. Noise Estimation
+   - Training a neural network to isolate and predict the exact noise signature
+     added at any given step.
+
+3. Iterative Denoising
+   - Reversing the timeline to synthesize novel data from pure static.
+
+================================================================================
+PAGE 5
+================================================================================
+Title: Reversing the Arrow of Entropy
+
+The Core Thesis:
+
+The Goal:
+  Train a deep learning model to denoise an image over a series of very small steps.
+
+The Method:
+  If we start with an image indistinguishable from standard Gaussian noise, we can
+  iteratively apply the model until we recover a sample that looks exactly like
+  the training distribution.
+
+Dataset Details:
+  Dataset: Oxford 102 Flower Dataset
+  Scale: Over 8,000 diverse color images, scaled to 64x64 pixels with values
+         scaled between [0, 1].
+
+================================================================================
+PAGE 6
+================================================================================
+Title: The Forward Process: Systematically Erasing Signal
+
+Formula:
+  q(x_t | x_{t-1}) = N(x_t; sqrt(1 - beta_t) * x_{t-1}, beta_t * I)
+
+Visual: Rose image progressively degraded from x_0 (clean) to x_T (pure noise)
+        through sequential noising steps.
+
+Three key concepts:
+
+1. Sequential Degradation
+   - At each step t, we inject a small amount of Gaussian noise with variance beta_t.
+
+2. Constant Variance
+   - We scale the input image by sqrt(1 - beta_t) to ensure the overall variance
+     remains constant over time.
+
+3. The End State
+   - By step T, x_T approximates a standard Gaussian distribution.
+
+================================================================================
+PAGE 7
+================================================================================
+Title: Normal Distribution (N(mu, sigma^2))
+
+Definition:
+  Continuous probability distribution for a real-valued random variable X.
+  - Function with the domain (-inf, +inf)
+  - mu: mean
+  - sigma^2: variance
+  - sigma: standard deviation
+
+Formulas:
+  Probability Density Function:
+    f_X(x) = (1 / sqrt(2 * pi * sigma^2)) * e^(-(x - mu)^2 / (2 * sigma^2))
+
+  Probability over interval:
+    Pr(a <= X <= b) = integral from a to b of f_X(x) dx
+
+Curves shown (mu, sigma^2):
+  - mu=0,  sigma^2=0.2  (blue  — tall, narrow)
+  - mu=0,  sigma^2=1.0  (red   — medium)
+  - mu=0,  sigma^2=5.0  (orange — wide, flat)
+  - mu=-2, sigma^2=0.5  (green — shifted left)
+
+Central Limit Theorem:
+  The average of many statistically independent samples (observations) of a random
+  variable with finite mean and variance is itself a random variable — whose
+  distribution converges to a normal distribution as the number of samples increases.
+
+================================================================================
+PAGE 8
+================================================================================
+Title: The Reparameterization Trick: Mathematical Teleportation
+
+The Slow Way (Sequential Bottleneck):
+  x_0 -> x_1 -> x_2 -> ... -> x_t
+  Requires t sequential matrix calculations. Computationally prohibitive for training.
+
+The Fast Way (The Shortcut):
+  Jump directly from x_0 to x_t.
+  Insight: The sum of independent Gaussian variables is also a Gaussian.
+  We define alpha_bar_t as the cumulative variance schedule.
+
+Closed-Form Formula:
+  x_t = sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon
+
+Where:
+  - alpha_bar_t = retained signal
+  - (1 - alpha_bar_t) = accumulated noise (epsilon)
+
+================================================================================
+PAGE 9
+================================================================================
+Title: Controlling the Decay: Linear vs. Cosine Schedules
+
+Comparison Table:
+
+| Aspect             | Linear Schedule (Original DDPM)                          | Cosine Schedule (Improved)                                              |
+|--------------------|----------------------------------------------------------|-------------------------------------------------------------------------|
+| The Math           | betas linearly increase                                  | alpha_bar_t = cos^2((t/T + s) / (1 + s) * pi/2)                        |
+| Signal/Noise       | Signal drops, noise rises in roughly linear S-curve      | Smoother transition; signal preserved longer into the schedule          |
+| Visual Impact      | Image degrades quickly to noise early in the process     | Image retains structure and detail much deeper into the schedule         |
+| The Verdict        | Destroys information too early, wasting training time    | Mandatory for efficiency: Preserves structural information deeper        |
+|                    | on pure noise.                                           | into the schedule.                                                      |
+
+================================================================================
+PAGE 10
+================================================================================
+Title: The Reverse Process: Predicting the Noise
+
+Formula: p_theta(x_{t-1} | x_t)
+
+Visual: Flower images denoising from x_T (pure noise) to x_0 (clean image),
+        stepping backward.
+
+Key Points:
+
+- The Goal: We need to approximate the reverse distribution q(x_{t-1} | x_t).
+- The Problem: Calculating this directly is mathematically intractable.
+- The Solution: We train a neural network p_theta(x_{t-1} | x_t) to learn it.
+
+The Paradigm Shift:
+  We don't predict the image. We predict the exact noise (epsilon) that was
+  added at timestep t.
+
+  Loss Function: Mean Absolute Error between the true noise epsilon and the
+  predicted noise epsilon_theta(x_t, t).
+
+================================================================================
+PAGE 11
+================================================================================
+Title: Architecture
+
+(Section header slide — no additional content text)
+
+================================================================================
+PAGE 12
+================================================================================
+Title: Architectural Choice: Why the U-Net?
+
+Comparison Table:
+
+| Aspect           | Variational Autoencoder (VAE)                                                                | The U-Net                                                                                                                         |
+|------------------|----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Structure        | Sequential pipeline. Images compress down to a tiny latent space, then expand back out.      | Symmetrical Hourglass with Downsampling and Upsampling halves.                                                                    |
+| Key Issue        | The Bottleneck: Deep layers destroy spatial resolution.                                      | The Superpower: Skip Connections.                                                                                                 |
+| Verdict          | Terrible for diffusion, which requires pixel-perfect spatial maps of noise.                  | Perfect for diffusion. Input and output are the exact same shape, preserving high-resolution spatial data while understanding deep contextual features. |
+
+================================================================================
+PAGE 13
+================================================================================
+Title: The Engine: U-Net Architecture Breakdown
+
+Inputs:
+  - Noisy Image
+  - Noise Variance: 0.1
+
+Architecture (top-down, encoder-decoder):
+
+Encoder (DownBlocks):
+  DownBlock 1: 32 -> 64 -> 96 channels
+  DownBlock 2: 64x64 -> 32x32 -> 16x16 spatial resolution
+  DownBlock 3: 32 -> 64 -> 96 channels
+
+Bottleneck:
+  ResidualBlock -> ResidualBlock (at 16x16x128)
+
+Decoder (UpBlocks — mirror of encoder with skip connections):
+  UpBlock 3: 16x16 -> 32x32 -> 64x64
+  UpBlock 2: 16x16 -> 32x32 -> 64x64
+  UpBlock 1: 64x64 -> 96 channels
+
+Skip Connections: Connect each DownBlock to its corresponding UpBlock.
+
+Output: Predicted Noise
+
+================================================================================
+PAGE 14
+================================================================================
+Title: Anatomy of the Layers: Preventing Degradation
+
+The ResidualBlock:
+  Components (in order):
+    Input -> Batchnorm -> Conv2D -> Conv2D -> Add (with identity shortcut) -> Output
+  Purpose: "The Highway" — Allows deep networks to learn complex patterns without
+  succumbing to the vanishing gradient problem by bypassing the identity mapping.
+
+DownBlocks:
+  Components:
+    ResidualBlock -> ResidualBlock -> AveragePooling2D
+  Each ResidualBlock output stored in Skips List.
+  AveragePooling2D output also stored in Skips List.
+  Effect: Shrinks spatial size while storing output tensors in a skips list.
+
+UpBlocks:
+  Components:
+    UpSampling2D -> Concatenate (with skip) -> ResidualBlock ->
+    Concatenate (with skip) -> ResidualBlock
+  Effect: Uses bilinear interpolation and Concatenate layers to merge stored skips.
+
+================================================================================
+PAGE 15
+================================================================================
+Title: Injecting Time: Sinusoidal Embeddings
+
+The Problem:
+  The U-Net looks at a noisy image, but it has no idea how far along the
+  1,000-step diffusion process it is. It needs a sense of time (the noise variance).
+
+The Solution:
+  Adapted from Transformer models, we convert the scalar time value t into a
+  high-dimensional positional vector. Unique, continuous scalar values translate
+  into distinct frequency patterns.
+
+The Formula:
+  gamma(x) = (
+    sin(2*pi*e^0 / x), ..., sin(2*pi*e^(L-1) / x),
+    cos(2*pi*e^0 / x), ..., cos(2*pi*e^(L-1) / x)
+  )
+
+Visual: Heatmap showing embedding dimension (y-axis, 0–6) vs. noise variance
+        (x-axis, -1.00 to 1.00), with distinct sinusoidal frequency patterns
+        visible across dimensions.
+
+================================================================================
+PAGE 16
+================================================================================
+Title: The Master Synthesis: The Complete Training Loop
+
+Five-step cyclic training loop:
+
+1. Sample Data
+   - Pull a batch of clean images x_0 from the Oxford dataset.
+
+2. Pick a Timestep
+   - Uniformly sample a random time t between 1 and T.
+
+3. Forward Process
+   - Sample random noise epsilon.
+   - Use the Reparameterization Trick to mathematically teleport to the noisy
+     image x_t.
+
+4. Reverse Process
+   - Feed x_t and the embedded time t into the U-Net to predict the noise:
+     epsilon_theta(x_t, t).
+   - Loss formula:
+     gradient_theta || epsilon - epsilon_theta(sqrt(alpha_bar_t)*x_0 + sqrt(1-alpha_bar_t)*epsilon, t) ||^2
+
+5. Calculate Loss & Optimize
+   - Compute Mean Absolute Error.
+   - Take gradient descent step using AdamW.
+
+Flow: Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5 -> back to Step 1
+
+================================================================================
+PAGE 17
+================================================================================
+Title: Code Blueprint: The Keras train_step
+
+Code:
+  def train_step(self, images):
+      noises = tf.random.normal(shape=tf.shape(images))
+      diffusion_times = tf.random.uniform(...)
+      noisy_images = signal_rates * images + noise_rates * noises   # Reparameterization Trick (Forward)
+
+      with tf.GradientTape() as tape:
+          pred_noises = self.network([noisy_images, noise_rates**2])  # U-Net Noise Prediction (Reverse)
+          noise_loss = self.loss(noises, pred_noises)
+
+      gradients = tape.gradient(...)
+      self.optimizer.apply_gradients(...)
+
+      # Exponential Moving Average (EMA)
+      ema_weight.assign(0.999 * ema_weight + (1 - 0.999) * weight)
+
+Annotations:
+  - Reparameterization Trick (Forward): handles the noisy_images line
+  - U-Net Noise Prediction (Reverse): handles pred_noises line
+  - EMA Weights: Critical for stability, preventing short-term generation spikes.
+
+================================================================================
+PAGE 18
+================================================================================
+Title: Generation: Sampling with DDIM
+
+Visual: Three states — x_T (pure Gaussian noise) -> x_{t-1} (partially denoised) -> x_0 (clean image)
+        with iterative loop at x_{t-1}: "Reapply predicted noise scaled to t-1 signal rate. Iterate."
+
+The Process (step-by-step):
+  1. Start with pure standard Gaussian noise (x_T).
+  2. Iterate backward: use the U-Net to predict the noise epsilon_t.
+  3. Calculate an estimate for the original image x_0.
+  4. Reapply the predicted noise, scaled to the t-1 signal rate, stepping backward
+     to x_{t-1}.
+
+DDIM Generation (Denoising Diffusion Implicit Models):
+  Unlike original DDPM, the generation process here is entirely deterministic.
+  The same random noise input will always map to the exact same output image.
+
+================================================================================
+PAGE 19
+================================================================================
+Title: The Trade-Off: Steps vs. Visual Fidelity
+
+Visual: Grid showing generated flower images at different diffusion step counts:
+  Steps: 1, 2, 3, 4, 5, 20, 100
+  Each row shows 7 different flower samples at that step count.
+
+Observations:
+  - The 1-Step Leap: Trying to jump from x_T to x_0 in a single step is
+    impossible; the model only yields hazy, blurry blobs of color.
+  - The Sweet Spot: Quality scales roughly linearly with steps. However, the
+    visual difference between 20 steps and 100 steps yields rapidly diminishing
+    returns.
+  - Practical Conclusion: 20 steps serves as a highly efficient, high-quality
+    compromise for this DDIM implementation.
+
+================================================================================
+PAGE 20
+================================================================================
+Title: Latent Space Interpolation
+
+Visual: 4-row x 11-column grid of flower images smoothly transitioning from
+        image A (orange flower) at t=0 to image B (white flower) at t=1.
+        Each row shows a different starting seed, all converging from orange/pink
+        to white along the interpolation axis.
+
+The Concept:
+  Because DDIM mapping is deterministic, we can pick two random Gaussian noise
+  tensors (a and b) and smoothly blend them together.
+
+Spherical Interpolation Formula:
+  a * sin(pi/2 * t) + b * cos(pi/2 * t)
+  where t ranges from 0 to 1.
+
+================================================================================
+PAGE 21
+================================================================================
+Title: The Architecture of Creation
+
+Three pillars summarizing the diffusion model design:
+
+1. Math as a Shortcut
+   - The forward process systematically destroys data.
+   - The reparameterization trick allows us to bypass sequence and jump directly
+     to any timestep.
+
+2. Symmetrical Context
+   - The U-Net is mandatory.
+   - Skip connections preserve vital high-resolution spatial maps while processing
+     deep latent features.
+
+3. Deterministic Generation
+   - Predicting noise (epsilon) rather than pixels gives us an iterative engine
+     capable of deterministic generation (DDIM) and smooth latent interpolation.
+
+================================================================================

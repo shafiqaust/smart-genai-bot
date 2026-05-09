@@ -1,0 +1,52 @@
+SOURCE: Music_Generation__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+COURSE: CSCI-4440-M01 / CSCI-5440-M01 - Generative AI (Spring 2026)
+TOTAL_PAGES: 2
+
+================================================================================
+PAGE 1
+================================================================================
+
+MODULE TITLE: Music Generation
+
+SECTION: Overview
+In this module, we will focus on generating music. We will learn how to create data and use the Transformer architecture to train a MuseGAN.
+
+SECTION: Learning Objectives
+By the end of this module, you should be able to:
+
+MLO 1: Understand how we can treat music generation as a sequence prediction problem, so we can apply autoregressive models such as Transformers.
+
+MLO 2: See how to parse and tokenize MIDI files using the music21 package to create a training set.
+
+MLO 3: Learn how to use sine positional encoding.
+
+MLO 4: Train a music-generating Transformer, with multiple inputs and outputs to handle note and duration.
+
+MLO 5: Understand how to handle polyphonic music, including grid tokenization and event-based tokenization.
+
+MLO 6: Train a MuseGAN model to generate multitrack music and use the MuseGAN to adjust different properties of the generated bars.
+
+SECTION: Content
+
+SECTION: Learning Materials
+Subsection: Presentations and videos
+
+================================================================================
+PAGE 2
+================================================================================
+
+SECTION: Learning Materials (continued)
+Subsection: Presentations and videos
+
+RESOURCE: Transformer - presentation
+URL: https://nmsu.instructure.com/courses/1731641/files/283215522?wrap=1
+DOWNLOAD_URL: https://nmsu.instructure.com/courses/1731641/files/283215522/download?download_frd=1
+READSPEAKER_URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2Fda8d3b8a-4297-4364-bc90-a9b00efc0f6b%2F15-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMTg3OTUsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzL2RhOGQzYjhhLTQyOTctNDM2NC1iYzkwLWE5YjAwZWZjMGY2Yi8xNS1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiYzFmMDk5MjQtYmI3Yi00MWY4LWE1MGQtYTM4ZjBjMThiZjhkIiwiZXhwIjoxNzc4NDA1MTk1fQ.4eqQr0TxTDsm0iHPm8My7wA_oGsosh9dgdTyDdofvlzkcGi9g0CbcsTA2IWhbOdsjUq3TSE1znPWreNyUpU-Q
+
+SECTION: Activities
+
+SECTION: Assignments
+Please train the MuseGAN/Transformer from the GitHub repository.
+
+SECTION: Reading Materials
+(No reading materials listed in this document.)

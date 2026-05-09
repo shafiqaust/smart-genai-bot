@@ -1,0 +1,47 @@
+SOURCE: Energy Based Models: 2026 Spring-CSCI-4440-M01/CSCI-5440-M01-GENERATIVE AI
+FILE: Energy_Based_Models__2026_Spring-CSCI-4440-M01_CSCI-5440-M01-GENERATIVE_AI.pdf
+TOTAL PAGES: 2
+CREATED: 2026-05-09
+PRODUCER: Skia/PDF m147 (Chrome 147 / Edge 147)
+
+================================================================================
+PAGE 1
+================================================================================
+
+MODULE TITLE: Energy Based Models
+
+--- SECTION: Overview ---
+In this module, we will learn about Energy Based Models (EBM), a different type of models for generative AI. We will discuss the motivation behind this type of models, its architecture, and an implementation of an EBM working with the MNIST dataset.
+
+--- SECTION: Learning Objectives ---
+By the end of this module, you should be able to:
+
+MLO 1: Understand how to formulate a deep energy-based model (EBM).
+MLO 2: See how to sample from an EBM using Langevin dynamics.
+MLO 3: Train your own EBM using contrastive divergence.
+MLO 4: Analyze the EBM, including viewing snapshots of the Langevin dynamics process.
+MLO 5: Learn about other type of EBM such as restricted Boltzmann machines.
+
+--- SECTION: Learning Materials ---
+
+Subsection: Presentations and Videos
+- Resource: Energy Based Models - presentation
+  URL: https://nmsu.instructure.com/courses/1731641/files/282509176?wrap=1
+  Download URL: https://nmsu.instructure.com/courses/1731641/files/282509176/download?download_frd=1
+  ReadSpeaker URL: https://docreader.readspeaker.com/docreader/?cid=13068&lang=en_us&url=https%3A%2F%2Finst-fs-iad-prod.inscloudgate.net%2Ffiles%2F5e3743c1-be5e-4c11-a6cf-57e239a41a2f%2F11-gen-ai.pdf%3Ftoken%3DeyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NzgzMTIyNjQsInVzZXJfaWQiOm51bGwsInJlc291cmNlIjoiL2ZpbGVzLzVlMzc0M2MxLWJlNWUtNGMxMS1hNmNmLTU3ZTIzOWE0MWEyZi8xMS1nZW4tYWkucGRmIiwiaG9zdCI6bnVsbCwianRpIjoiMzk3NjYzOGQtZmMwOC00YmUyLWJmM2YtMGMyNjliYzQyYTkxIiwiZXhwIjoxNzc4Mzk4NjY0fQ.P5QSlMSWO6EdSjF3kCRDErBHRKrgiMklYvjXBeTsxA24DrcvVs8vVirleSfRNx9z8nXQ5G_ZpQJuVlJRpaYTDQ
+
+================================================================================
+PAGE 2
+================================================================================
+
+--- SECTION: Activities ---
+
+Subsection: Assignments
+Please train the EBM network from the GitHub repository.
+
+--- SECTION: Reading Materials ---
+[No reading materials listed in this document.]
+
+================================================================================
+END OF DOCUMENT
+================================================================================

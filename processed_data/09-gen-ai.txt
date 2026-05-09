@@ -1,0 +1,312 @@
+SOURCE: 09-gen-ai.pdf
+COURSE: Generative Artificial Intelligence
+TOPIC: Week 9 - Autoregressive Models
+
+================================================================================
+PAGE 1 - Title Slide
+================================================================================
+Title: Generative AI
+Subtitle: Week 9: Autoregressive Models
+
+================================================================================
+PAGE 2 - What We Have Learned
+================================================================================
+Section: Review of Previous Models
+
+Previously covered generative model types:
+1. Variational Autoencoders (VAE)
+2. Generative Adversarial Networks (GANs)
+
+Key concept: In both VAE and GAN cases, a new variable is introduced with a distribution that is easy to sample from, and the model learns how to decode this variable back into the original domain.
+
+Limitation: These models process one piece of data at a time (e.g., one image). Text data may not work well with these approaches.
+
+VAE Architecture: Input Layer -> Encoder -> Latent Space -> Decoder -> Output (reconstructed X')
+
+GAN Architecture:
+- Discriminator training process: Random noise -> Generator -> Fake batch -> Discriminator -> Predictions/Loss; Real batch -> Discriminator -> Predictions/Loss
+- Generator training process: Random noise -> Generator -> Fake batch -> Discriminator -> Predictions/Loss
+
+================================================================================
+PAGE 3 - Recurrent Neural Network (RNN)
+================================================================================
+Section: RNN vs Feedforward Neural Networks
+
+Comparison Table:
+| Feature         | Feedforward Neural Network        | Recurrent Neural Network              |
+|----------------|-----------------------------------|---------------------------------------|
+| Data Flow       | One-way (Input to Output)         | Cycles/Loops (Internal Feedback)      |
+| Input Type      | Fixed-size (e.g., a single image) | Sequential (e.g., a sentence, video)  |
+| Memory          | None                              | Maintains a hidden state (Memory)     |
+| Complexity      | Generally lower                   | Higher (backpropagation through time) |
+
+This week covers:
+- Long Short-Term Memory Network (LSTM)
+- Gated Recurrent Units (GRU)
+
+================================================================================
+PAGE 4 - Text Data Characteristics
+================================================================================
+Section: Properties of Text Data (vs Image Data)
+
+1. Discrete units: Text is composed of discrete chunks (characters or words). Pixels are numbers within a spectrum — changing a pixel color is easy, but changing one word to another is not easy.
+
+2. Time dimension: Text has a time dimension but no spatial dimension. Image data has two spatial dimensions but no time dimension. The order of words is important.
+
+3. Sensitivity to changes: Text data is highly sensitive to small changes in individual units. Image data is generally less sensitive to changes in individual pixel units.
+
+4. Grammatical rules: Text data has a rules-based grammatical structure. Image data does not follow set rules about how pixel values should be assigned.
+
+================================================================================
+PAGE 5 - Tokenization
+================================================================================
+Section: First Step — Tokenization
+
+Definition: Tokenization is the process of splitting text up into individual units, such as words or characters. How to do this depends on what you are trying to achieve with your text generation model.
+
+Tokenization Methods:
+- Word tokenization
+- Lowercase word tokenization
+- Character tokenization
+- (others)
+
+================================================================================
+PAGE 6 - Lowercase Word Tokens
+================================================================================
+Section: Details on Lowercase Word Tokenization
+
+Key considerations:
+1. All text can be converted to lowercase to ensure capitalized words at the start of sentences are tokenized the same way as the same words appearing in the middle of a sentence. In some cases this may not be desirable (e.g., proper nouns).
+
+2. Vocabulary size: The text vocabulary (the set of distinct words in the training set) may be very large, with some words appearing very sparsely or perhaps only once. It may be wise to replace sparse words with a token for "unknown word" rather than including them as separate tokens, to reduce the number of weights the neural network needs to learn.
+
+3. Stemming: Words can be stemmed — reduced to their simplest form — so that different tenses of a verb remain tokenized together. Example: browse, browsing, browses, and browsed would all be stemmed to "brows."
+
+4. Punctuation: Need to either tokenize punctuation or remove it altogether.
+
+5. Vocabulary limit: Using word tokenization means the model will never be able to predict words outside of the training vocabulary.
+
+Reference: Example in lstm.py
+
+================================================================================
+PAGE 7 - Long Short-Term Memory Network (LSTM)
+================================================================================
+Section: LSTM Architecture
+
+Definition: LSTM is a special type of recurrent neural network (RNN).
+
+Architecture — Two new layers:
+1. Embedding Layer:
+   - Converts an integer (token ID) into a vector of embedding size
+   - Input shape: [batch_size, seq_length] -> Output shape: [batch_size, seq_length, embedding_size]
+
+2. LSTM Layer (described on next slide)
+
+Embedding Table Structure:
+- Vocabulary size: e.g., 10,000 tokens
+- Each token maps to an embedding vector (e.g., size 100)
+- Example row: Token 0 -> [-0.13, 0.45, ..., 0.13, -0.04]
+- Example row: Token 1 -> [0.22, 0.56, ..., 0.24, -0.63]
+- Example row: Token 9999 -> [-0.98, -0.45, ..., -0.15, -0.52]
+
+Input pipeline: Sequence of token IDs (e.g., [22, 2, 56, 3, 2, ..., 940, 941, 62, 5, 581]) -> Embedding layer -> Matrix of shape [sequence_length=200, embedding_size=100] -> LSTM
+
+================================================================================
+PAGE 8 - LSTM Layer — How RNN Works
+================================================================================
+Section: RNN Internal Mechanics
+
+Components:
+- Recurrent layer: processes the sequence x_1, ..., x_n sequentially
+- Hidden state: h_i — carried from one timestep to the next
+
+How it works:
+- Each cell receives two inputs: the current input x_t (embedded word vector) and the hidden state h_{t-1} from the previous timestep
+- The hidden state is initialized at the start (h_0)
+- Each cell outputs a hidden state h_i passed to the next cell
+- The final hidden state (after the last token in the sequence) is output by the LSTM layer
+- The hidden state vector length equals the number of units in the cell
+
+Example dimensions:
+- Initial hidden state: [0.34, -0.12, ..., 0.54, -0.23] — size 158 units
+- Final hidden state: [-0.93, -0.72, ..., 0.19, -0.61] — size 158 units
+
+================================================================================
+PAGE 9 - LSTM Cell
+================================================================================
+Section: LSTM Cell Gates and Computation
+
+LSTM cell computation steps (using input x_t and previous hidden state h_{t-1}):
+
+1. Forget Gate (f_t):
+   - Input: [h_{t-1}, x_t]
+   - Formula: f_t = sigma(W_f · [h_{t-1}, x_t] + b_f)
+   - Output: vector of length = number of cells
+   - Purpose: determines how much of the previous cell state C_{t-1} should be retained
+
+2. Input Gate (i_t):
+   - Input: [h_{t-1}, x_t]
+   - Formula: i_t = sigma(W_i · [h_{t-1}, x_t] + b_i)
+   - Output: vector of length = number of cells
+   - Purpose: determines how much new information will be added to C_{t-1}
+
+3. New Cell Candidate (C'_t):
+   - Input: [h_{t-1}, x_t]
+   - Formula: C'_t = tanh(W_C · [h_{t-1}, x_t] + b_C)
+   - Purpose: contains new information that the cell wants to keep
+
+4. Cell State Update (C_t):
+   - Formula: C_t = f_t * C_{t-1} + i_t * C'_t
+   - Combines forget gate applied to old state and input gate applied to new candidate
+
+5. Output Gate (o_t):
+   - Input: [h_{t-1}, x_t]
+   - Formula: o_t = sigma(W_o · [h_{t-1}, x_t] + b_o)
+
+6. Hidden State Update (h_t):
+   - Formula: h_t = o_t * tanh(C_t)
+   - This is the output hidden state passed to the next timestep
+
+================================================================================
+PAGE 10 - Training and Analysis LSTM
+================================================================================
+Section: Training LSTM for Text Generation
+
+Dataset: Recipe dataset
+
+Loss Function:
+- Sparse Categorical Cross-Entropy Loss
+- Same as Categorical Cross-Entropy Loss, but inputs are integers instead of one-hot encoded vectors
+
+Text Generation (Analysis) Process:
+1. Feed the network with an existing sequence of words
+2. Ask it to predict the following word
+3. Append the predicted word to the existing sequence
+4. Repeat steps 1-3 to generate text
+
+Temperature parameter:
+- Set between 0 and 1
+- Closer to 1: more non-deterministic (creative, varied output)
+- Closer to 0: more deterministic (conservative, repetitive output)
+
+Training curve: Loss decreases from ~4.5 at epoch 0 to ~1.5 at epoch 24 (standard convergence curve shown).
+
+================================================================================
+PAGE 11 - RNN Extensions
+================================================================================
+Section: Stacked Recurrent Networks and PixelCNN
+
+Extension 1 — Stacked Recurrent Networks:
+- Second RNN layer uses hidden state g_i of first RNN layer as input
+- Two RNN layers stacked: RNN Layer 1 outputs g_1...g_20, fed as inputs to RNN Layer 2 which outputs h_1...h_20
+
+Code example (Keras):
+  text_in = layers.Input(shape=(None,))
+  embedding = layers.Embedding(total_words, embedding_size)(text_in)
+  x = layers.LSTM(n_units, return_sequences=True)(x)
+  x = layers.LSTM(n_units, return_sequences=True)(x)   # <-- second LSTM layer (highlighted)
+  probabilities = layers.Dense(total_words, activation='softmax')(x)
+  model = models.Model(text_in, probabilities)
+
+Extension 2 — Masked Convolution Layers:
+- Create ordering among pixels to work with sequences
+- Left: convolutional filter mask
+- Right: mask applied to a set of pixels to predict the distribution of the central pixel value
+- Mask values: 1 where prior pixels are visible, 0 where current and future pixels are masked (A=0, B=1 notation)
+
+================================================================================
+PAGE 12 - Gated Recurrent Units (GRU)
+================================================================================
+Section: GRU Architecture
+
+Definition: GRU is a simplified alternative to LSTM that replaces the forget and input gates with reset and update gates.
+
+GRU cell computation steps:
+
+1. Reset Gate (r_t):
+   - Input: [h_{t-1}, x_t]
+   - Formula: r_t = sigma(W_r · [h_{t-1}, x_t])
+   - Output: vector of length = number of cells
+   - Purpose: determines how much of the previous cell state C_{t-1} should be carried forward
+
+2. New Belief / Candidate Hidden State (h'_t):
+   - Apply reset gate to h_{t-1} and concatenate with x_t
+   - Formula: h'_t = tanh(W · [r_t * h_{t-1}, x_t])
+   - Purpose: new beliefs of the cell
+
+3. Update Gate (z_t):
+   - Input: [h_{t-1}, x_t]
+   - Formula: z_t = sigma(W_z · [h_{t-1}, x_t])
+   - Purpose: determines how much of h'_t to blend into the current hidden state h_{t-1}
+
+4. Final Hidden State (h_t):
+   - Formula: h_t = (1 - z_t) * h_{t-1} + z_t * h'_t
+   - Combines previous hidden state and new candidate weighted by update gate
+
+Key difference from LSTM: GRU merges cell state and hidden state into a single hidden state; fewer parameters than LSTM.
+
+================================================================================
+PAGE 13 - Residual Blocks of PixelCNN
+================================================================================
+Section: PixelCNN Architecture
+
+Residual Block concept:
+- Input can go straight to output (skip connection) — bypasses intermediate layers
+- Uses the Type B masked convolutional layer inside the block
+
+Residual Block structure (from bottom to top):
+  input
+  -> Conv2D (1x1, 128 filters)
+  -> MaskedConv2D (3x3, 64 filters)
+  -> Conv2D (1x1, 128 filters)
+  -> (+) Add with skip connection from input
+  -> output (128 channels)
+
+Full PixelCNN Architecture:
+1. Type A Masked convolutional filter (first layer — masks current pixel)
+2. Five residual blocks (each using Type B masked conv)
+3. Type B Masked convolutional filter (allows current pixel, masks future pixels)
+4. Loss: Sparse Categorical Cross-Entropy
+
+Mask types:
+- Type A: masks the current pixel and all future pixels (used at input)
+- Type B: allows the current pixel, masks only future pixels (used in residual blocks)
+
+================================================================================
+PAGE 14 - Analysis (PixelCNN Results)
+================================================================================
+Section: PixelCNN Evaluation
+
+Results:
+- Strengths: Good job at capturing the shape and style of training images
+- Limitation: Slow to sample from (generation is sequential pixel-by-pixel)
+
+Visual results:
+- Training set images: Fashion-MNIST style items (boots, shirts, pants, dresses, shoes, bags)
+- Generated images: Visually similar style items — model successfully learned distribution of shapes and styles
+
+================================================================================
+PAGE 15 - Mixture Distributions
+================================================================================
+Section: PixelCNN with Mixture Distributions
+
+Problem with standard PixelCNN:
+- PixelCNN outputs pixel values at 4 discrete pixel levels (too coarse)
+
+Solution — Mixture Distribution:
+- A mixture distribution combines more than one probability distribution
+- Each component distribution has a weight (mixing coefficient)
+- Example: three components with weights 0.5 (blue), 0.3 (orange), 0.2 (green) summing to 1.0
+
+Implementation example:
+- PixelCNN with a mixture of five logistic distributions
+- Implemented in TensorFlow
+- Pixel values modeled over continuous range 0-255 instead of discrete bins
+
+Result: More realistic and detailed generated images compared to standard PixelCNN with discrete pixel levels.
+
+Visual results (Fashion-MNIST generated images): Shirts, boots, dresses, shoes, bags — improved quality over standard discrete PixelCNN output.
+
+================================================================================
+END OF DOCUMENT
+================================================================================
