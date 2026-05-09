@@ -1,7 +1,7 @@
 import base64
 import json
 import os
-from typing import Any, Dict, List, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 import requests
 from bs4 import BeautifulSoup
@@ -27,11 +27,16 @@ UPLOADS_DIR = "uploads"
 class ChatState(TypedDict):
     question: str
     route: str
+    conversation_concepts: List[str]
+    search_query: str
+    last_response_id: Optional[str]
+    response_id: str
     retrieved_chunks: List[str]
     citations: List[str]
     catalog_rules: Dict[str, Any]
     transcript_record: Dict[str, Any]
     calc_result: Dict[str, Any]
+    known_concepts: List[str]
     answer: str
 
 
@@ -404,11 +409,111 @@ def classify_intent(state: ChatState) -> ChatState:
     return {**state, "route": route}
 
 
+def extract_knowledge(state: ChatState) -> ChatState:
+    existing = state.get("known_concepts") or []
+
+    schema = {
+        "type": "object",
+        "properties": {
+            "known_concepts": {
+                "type": "array",
+                "items": {"type": "string"},
+            }
+        },
+        "required": ["known_concepts"],
+        "additionalProperties": False,
+    }
+
+    prompt = f"""You are analyzing a student's message to track what concepts they claim to know.
+
+Existing known concepts: {existing}
+
+Student message: {state["question"]}
+
+Instructions:
+- Extract concepts the student explicitly claims to know (e.g. "I know X", "I understand Y", "all I know is Z").
+- If the student says they do NOT know something, do not add it.
+- Merge new concepts with the existing list, no duplicates.
+- If no new knowledge claims are made, return the existing list unchanged.
+- Keep names concise (e.g. "neural networks", "backpropagation").
+
+Return the updated list."""
+
+    resp = client.responses.create(
+        model="gpt-4.1",
+        input=prompt,
+        text={
+            "format": {
+                "type": "json_schema",
+                "name": "knowledge_extraction",
+                "schema": schema,
+                "strict": True,
+            }
+        },
+    )
+
+    result = json.loads(resp.output_text)
+    return {**state, "known_concepts": result["known_concepts"]}
+
+
+def update_concepts(state: ChatState) -> ChatState:
+    existing = state.get("conversation_concepts") or []
+
+    schema = {
+        "type": "object",
+        "properties": {
+            "conversation_concepts": {
+                "type": "array",
+                "items": {"type": "string"},
+            },
+            "search_query": {"type": "string"},
+        },
+        "required": ["conversation_concepts", "search_query"],
+        "additionalProperties": False,
+    }
+
+    prompt = f"""You are tracking all concepts in a student-tutor conversation and deciding what to look up.
+
+Accumulated concepts so far: {existing}
+Student message: {state["question"]}
+
+Task 1 — Update concept list:
+- Extract any new academic concepts or topics from the student's message (what they are asking about, what they claim to know, what they mention).
+- Merge with the existing list, no duplicates, concise names (e.g. "GAN", "matrix multiplication", "backpropagation").
+
+Task 2 — Pick search query:
+- Determine the single best concept or phrase to search in a knowledge base to answer this message.
+- If the message is a clarification or confusion statement ("I don't understand", "I have no idea"), use the most relevant concept already in the accumulated list — do NOT use the confusion phrase itself.
+- If the message is about CGPA, credits, or graduation calculations, return an empty string for search_query.
+- Return only the concept name or short phrase (e.g. "GAN", "convolutional neural network")."""
+
+    resp = client.responses.create(
+        model="gpt-4.1",
+        input=prompt,
+        text={
+            "format": {
+                "type": "json_schema",
+                "name": "concept_update",
+                "schema": schema,
+                "strict": True,
+            }
+        },
+    )
+
+    result = json.loads(resp.output_text)
+    return {
+        **state,
+        "conversation_concepts": result["conversation_concepts"],
+        "search_query": result["search_query"],
+    }
+
+
 def retrieve_docs(state: ChatState) -> ChatState:
     if state["route"] == "calculation":
         return {**state, "retrieved_chunks": [], "citations": []}
 
-    response = query_engine.query(state["question"])
+    search_query = state.get("search_query") or state["question"]
+    response = query_engine.query(search_query)
     source_nodes = getattr(response, "source_nodes", []) or []
 
     chunks: List[str] = []
@@ -576,20 +681,32 @@ def build_answer_prompt(state: ChatState) -> str:
         f"[{i + 1}] {chunk}" for i, chunk in enumerate(state["retrieved_chunks"])
     )
 
+    known = state.get("known_concepts") or []
+    known_section = (
+        f"\nStudent's Stated Knowledge: {', '.join(known)}\n"
+        if known
+        else ""
+    )
+    adaptive_instruction = (
+        f"- The student knows: {', '.join(known)}. "
+        "Use this as background context to frame your explanation naturally — do NOT add a separate 'If you know X' section or paragraph. "
+        "Just write the answer so it connects to what they know, without labeling it. "
+        "If the student says they don't understand, re-explain the same topic more simply using only their known concepts. "
+        "Only introduce a new concept if it is the single minimum step needed to answer this specific question.\n"
+        if known
+        else ""
+    )
+
+    has_evidence = bool(evidence)
+
     return f"""
-You are a smart academic assistant.
-
-Use:
-- retrieved evidence for factual statements
-- transcript data for completed courses
-- catalog rules for requirements
-- tool results for calculations
-
+You are a smart academic assistant and adaptive tutor.
+{known_section}
 Question:
 {state["question"]}
 
 Retrieved Evidence:
-{evidence if evidence else "No retrieved evidence."}
+{evidence if has_evidence else "No retrieved evidence."}
 
 Catalog Rules:
 {json.dumps(state["catalog_rules"], indent=2)}
@@ -601,12 +718,14 @@ Calculation Result:
 {json.dumps(state["calc_result"], indent=2)}
 
 Instructions:
+- Always prioritise the Retrieved Evidence above. Base your answer on it whenever it is available.
+- Only use your own knowledge if no retrieved evidence is provided.
 - If the question is about credits, CGPA, or graduation, trust the tool result.
 - If the catalog has exceptions or caveats, mention them.
 - Use inline citations like [1], [2] when relying on retrieved evidence.
 - Do not invent missing values.
 - Be clear when more information is needed.
-"""
+{adaptive_instruction}"""
 
 
 def answer(state: ChatState) -> ChatState:
@@ -628,10 +747,31 @@ def answer(state: ChatState) -> ChatState:
 
     prompt = build_answer_prompt(state)
 
-    resp = client.responses.create(
-        model="gpt-4.1",
-        input=prompt,
+    system_prompt = (
+        "You are a smart academic assistant helping a student. "
+        "Follow these rules when responding to the student:\n"
+        "- Always disagree with the student if you think they are wrong.\n"
+        "- Always ask the student for additional information if you think it is needed.\n"
+        "- Avoid apologizing, avoid giving examples, and assume that if the student doesn't understand they will ask for clarification. "
+        "Keep responses to no more than two paragraphs.\n"
+        "- Always give good responses; avoid saying things you don't think are true.\n"
+        "- Good responses get to the point immediately and use short sentences that describe the answer.\n"
+        "- When re-explaining something the student did not understand, stay on the exact same topic. "
+        "Do not list unrelated prerequisites or pivot to a different subject. "
+        "Only introduce a new concept if it is the single minimum step needed to explain the current topic."
     )
+
+    last_response_id = state.get("last_response_id")
+
+    create_kwargs: Dict[str, Any] = {
+        "model": "gpt-4.1",
+        "instructions": system_prompt,
+        "input": prompt,
+    }
+    if last_response_id:
+        create_kwargs["previous_response_id"] = last_response_id
+
+    resp = client.responses.create(**create_kwargs)
 
     final_text = resp.output_text.strip()
 
@@ -640,19 +780,23 @@ def answer(state: ChatState) -> ChatState:
             f"[{i + 1}] {name}" for i, name in enumerate(state["citations"])
         )
 
-    return {**state, "answer": final_text}
+    return {**state, "answer": final_text, "response_id": resp.id}
 
 
 graph = StateGraph(ChatState)
 graph.add_node("load_context", load_context)
 graph.add_node("classify", classify_intent)
+graph.add_node("extract_knowledge", extract_knowledge)
+graph.add_node("update_concepts", update_concepts)
 graph.add_node("retrieve", retrieve_docs)
 graph.add_node("calculate", calculate_tools)
 graph.add_node("answer", answer)
 
 graph.set_entry_point("load_context")
 graph.add_edge("load_context", "classify")
-graph.add_edge("classify", "retrieve")
+graph.add_edge("classify", "extract_knowledge")
+graph.add_edge("extract_knowledge", "update_concepts")
+graph.add_edge("update_concepts", "retrieve")
 graph.add_edge("retrieve", "calculate")
 graph.add_edge("calculate", "answer")
 graph.add_edge("answer", END)

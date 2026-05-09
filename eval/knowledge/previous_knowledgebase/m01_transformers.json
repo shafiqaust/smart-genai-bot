@@ -1,0 +1,45 @@
+{
+  "student_id": "m01",  
+  "topic": "Transformers & Attention",
+  "student_type": "Male, 22, comes from a family of studious people. Thinks this class is nessersary for his future.",
+  "prior_knowledge": [
+    "Neural networks are a black box: they take a matrix as input and produce a matrix as output through a series of matrix multiplications.",
+    "Training means going down a hill — minimizing a loss function using gradient descent.",
+    "RNNs exist and are used for sequences, but he doesn't know how they work internally.",
+    "Transformers have something to do with attention — a mechanism that lets the model guess the next word based on which other words it 'pays attention' to, but the details are fuzzy."
+  ],
+  "concepts_to_learn": [    
+    {
+      "id": "c3",
+      "concept": "What attention does",
+      "expected_answer": "Attention lets the decoder look back at all encoder hidden states and assign different weights to each one, instead of relying on a single context vector."
+    },
+    {
+      "id": "c4",
+      "concept": "What the transformer paper proposed",
+      "expected_answer": "The 2017 paper 'Attention is All You Need' replaced recurrent connections entirely with multi-head self-attention, allowing full parallel processing of the sequence."
+    },
+    {
+      "id": "c5",
+      "concept": "What multi-head attention means",
+      "expected_answer": "Multiple attention heads run in parallel, each learning to focus on different relationships in the sequence (e.g. syntax, coreference, semantics)."
+    },
+    {
+      "id": "c6",
+      "concept": "Why transformers scale better than RNNs",
+      "expected_answer": "Because they process all tokens in parallel they can fully use GPU clusters, enabling exponential scaling to billions/trillions of parameters."
+    },
+    {
+      "id": "c7",
+      "concept": "Difference between BERT and GPT",
+      "expected_answer": "BERT reads text bidirectionally for understanding/classification. GPT predicts the next token and is generative."
+    }
+  ],
+  "follow_up_hints": [
+    "Ask why RNNs couldn't just be made deeper to handle long sequences",
+    "Ask what query, key, and value mean in attention",
+    "Ask how positional encoding works since transformers process tokens in parallel",
+    "Ask what the difference between self-attention and cross-attention is",
+    "Ask how BERT differs from GPT in practical use"
+  ]
+}

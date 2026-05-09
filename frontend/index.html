@@ -452,7 +452,7 @@
 
     function clearChat() {
       chatBox.innerHTML = `
-        <div id="welcome" class="welcome">
+        <div id=”welcome” class=”welcome”>
           <h1>How can I help with your academics?</h1>
           <p>
             Type a question, paste a program catalog URL, or upload a transcript file with the + button.
@@ -467,6 +467,7 @@
       setStatus("");
       messageInput.value = "";
       autoResizeTextarea();
+      fetch("/reset", { method: "POST" });
     }
 
     function handleFileSelected() {

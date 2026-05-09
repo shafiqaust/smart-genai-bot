@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 import traceback
 
 from fastapi import FastAPI, File, Form, UploadFile
@@ -14,6 +14,16 @@ from rag_bot import (
 
 server = FastAPI(title="Smart Academic Bot API")
 
+session_known_concepts: List[str] = []
+session_conversation_concepts: List[str] = []
+session_last_response_id: Optional[str] = None
+
+
+def _known_concepts_footer(concepts: List[str]) -> str:
+    body = ", ".join(concepts) if concepts else "Nothing recorded yet."
+    return "\n\n---\n**What the system knows you know:** " + body
+
+
 # Serve frontend files
 server.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
@@ -28,11 +38,22 @@ def health():
     return {"status": "ok"}
 
 
+@server.post("/reset")
+def reset():
+    global session_known_concepts, session_conversation_concepts, session_last_response_id
+    session_known_concepts = []
+    session_conversation_concepts = []
+    session_last_response_id = None
+    return {"status": "ok"}
+
+
 @server.post("/chat")
 async def chat(
     message: Optional[str] = Form(None),
     file: Optional[UploadFile] = File(None),
 ):
+    global session_known_concepts, session_conversation_concepts, session_last_response_id
+
     try:
         message = (message or "").strip()
 
@@ -54,15 +75,23 @@ async def chat(
                     {
                         "question": message,
                         "route": "",
+                        "conversation_concepts": session_conversation_concepts,
+                        "search_query": "",
+                        "last_response_id": session_last_response_id,
+                        "response_id": "",
                         "retrieved_chunks": [],
                         "citations": [],
                         "catalog_rules": {},
                         "transcript_record": {},
                         "calc_result": {},
+                        "known_concepts": session_known_concepts,
                         "answer": "",
                     }
                 )
-                return {"response": f"{file_msg}\n\n{chat_result['answer']}"}
+                session_known_concepts = chat_result.get("known_concepts", session_known_concepts)
+                session_conversation_concepts = chat_result.get("conversation_concepts", session_conversation_concepts)
+                session_last_response_id = chat_result.get("response_id") or session_last_response_id
+                return {"response": f"{file_msg}\n\n{chat_result['answer']}{_known_concepts_footer(session_known_concepts)}"}
 
             return {"response": file_msg}
 
@@ -90,19 +119,27 @@ async def chat(
             return {"response": result.get("message", "Transcript text processing failed.")}
 
         if message:
-            result = rag_app.invoke(
+            chat_result = rag_app.invoke(
                 {
                     "question": message,
                     "route": "",
+                    "conversation_concepts": session_conversation_concepts,
+                    "search_query": "",
+                    "last_response_id": session_last_response_id,
+                    "response_id": "",
                     "retrieved_chunks": [],
                     "citations": [],
                     "catalog_rules": {},
                     "transcript_record": {},
                     "calc_result": {},
+                    "known_concepts": session_known_concepts,
                     "answer": "",
                 }
             )
-            return {"response": result["answer"]}
+            session_known_concepts = chat_result.get("known_concepts", session_known_concepts)
+            session_conversation_concepts = chat_result.get("conversation_concepts", session_conversation_concepts)
+            session_last_response_id = chat_result.get("response_id") or session_last_response_id
+            return {"response": chat_result["answer"] + _known_concepts_footer(session_known_concepts)}
 
         return {"response": "Please type a message, paste a URL, or upload a file."}
 

@@ -1,0 +1,168 @@
+{
+  "student_id": "m02",
+  "topic": "Generative Adversarial Networks",
+  "student_type": "Male, 22, comes from a family of studious people. He wants to make them proud. Thinks this class is necessary for his future.",
+  "prior_knowledge": [
+    {
+      "knowledge": "Neural networks are a black box: they take a matrix as input and produce a matrix as output through a series of matrix multiplications.",
+      "reason": "He took an introductory machine learning course last semester where the professor briefly showed a diagram of a feedforward network. He retained the high-level picture — data goes in, numbers come out — but the class moved fast and he never fully understood what happens inside each layer beyond 'it's matrix math'."
+    },
+    {
+      "knowledge": "Training means going down a hill — minimizing a loss function using gradient descent.",
+      "reason": "The same ML course used the 'ball rolling down a hill' analogy for gradient descent. It clicked for him because it was visual and intuitive. He can explain the analogy confidently, but if pressed on learning rates, epochs, or what the loss surface actually looks like, he would struggle."
+    },
+    {
+      "knowledge": "CNNs are used for image classification — input an image, output a label. They have something to do with kernels, which is a type of matrix multiplication. He does not know the difference between this and the matrix multiplications in regular layers and suspects it is the same thing with a fancier name.",
+      "reason": "He watched a popular YouTube video on AlexNet after reading a news article about AI beating humans at image recognition. The video mentioned 'convolutional filters' and showed a kernel sliding over an image, but he glazed over the math and focused on the result — it classifies images. He never took a computer vision course and never questioned why kernels are different from dense layer weights."
+    },
+    {
+      "knowledge": "He has never heard of GANs or generative models. He believes neural networks can only classify or predict, not create.",
+      "reason": "Every example he has encountered in school involved supervised learning — spam detection, image labels, price prediction. No one in his circle has talked about generative models. He signed up for this Generative AI course precisely because he saw that companies like OpenAI were building things he could not explain, and he wants to close that gap."
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "question": "I keep hearing about GANs in this class but I don't really get it. From what I know, neural networks just do matrix multiplications — they take some input and spit out a prediction, like whether an image is a cat or not. But apparently GANs can generate images? How does a network even produce something new if all it does is multiply matrices?",
+      "what_student_knows": "Neural networks are black-box matrix multiplications that classify or predict. He has never seen a network produce something new.",
+      "what_student_needs_to_know": "A GAN uses two networks — a Generator that maps random noise to an image, and a Discriminator that classifies real vs fake. Generation is still matrix math, but the output is an image rather than a label.",
+      "full_answer": "A GAN consists of two neural networks. The Generator takes a vector of random noise as input and outputs an image — it is still just matrix multiplications, but the output shape matches an image rather than a class label. The Discriminator takes an image and outputs a single number representing how likely the image is real. The two networks are trained together in an adversarial loop: the Generator tries to fool the Discriminator, and the Discriminator tries not to be fooled.",
+      "ground_truth": [
+        {
+          "keyword": "Generator",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 2 — Generator: tries to produce fake pictures. PAGE 3 — Generator Pipeline: Input: Random noise → Process: Generator (neural network) → Output: Generated image."
+        },
+        {
+          "keyword": "Discriminator",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 2 — Discriminator: tries to detect fake pictures. PAGE 3 — Discriminator Pipeline: Input: Image (either real or fake) → Process: Discriminator (neural network) → Output: Prediction value (e.g., 0.1) representing how likely the image is to be real."
+        },
+        {
+          "keyword": "Adversarial relationship",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 2 — The generator and discriminator are in an adversarial relationship, each improving through competition with the other."
+        },
+        {
+          "keyword": "Generator and Discriminator — two networks",
+          "source_file": "module_5_output.txt",
+          "source_block": "[331.54s] The idea is that I also have two networks. One is called the generators and the other one is the discriminator. The generator had to try to create fake pictures. And then the discriminator trying to detect even an image of a picture, whether it is a fake product or a real one. So it kind of tug of war."
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "Wait so you said the network that creates images takes random noise as input. Why noise? That seems weird — wouldn't it make more sense to give it something structured, like a description of what to draw?",
+      "what_student_knows": "He just learned from the bot that one network creates images and takes noise as input. He knows inputs to networks are matrices and expects them to carry meaningful information.",
+      "what_student_needs_to_know": "Random noise is the seed of variation — different noise vectors produce different images. Controlling what gets generated with structured input is what conditional variants add later.",
+      "full_answer": "The random noise vector is the source of diversity — each different noise vector produces a different image. The network learns to map the noise space to the image space during training. If you want structured control, like always generating blond-haired faces, you need to add an extra label input alongside the noise — that is a more advanced variant covered later.",
+      "ground_truth": [
+        {
+          "keyword": "Random noise as generator input",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 3 — Generator Pipeline: Input: Random noise → Process: Generator (neural network) → Output: Generated image."
+        },
+        {
+          "keyword": "Structured control via label (CGAN preview)",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 15 — Generator input: Random noise vector + One-hot encoded label (e.g., blond / not blond) → Output: Generated image conditioned on the label. Key advantage: The CGAN allows steering generation toward specific attributes without changing the underlying noise."
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "So both of these networks are training at the same time, each trying to minimize their own loss? Doesn't that cause a conflict — like two people pulling the rope in opposite directions?",
+      "what_student_knows": "Training means going downhill on a loss function. He just learned there are two networks with competing goals and senses this could destabilize training.",
+      "what_student_needs_to_know": "The two networks have separate loss functions and are updated independently. The tension is intentional — it is the adversarial dynamic that drives both to improve.",
+      "full_answer": "Yes, both go down their own hill separately — their weights are updated independently, not simultaneously. The tension is by design: the creating network's loss pushes it to produce more convincing images, while the checking network's loss pushes it to get better at spotting fakes. When the balance is right, both improve together. When one overpowers the other, training breaks down.",
+      "ground_truth": [
+        {
+          "keyword": "Separate loss functions updated independently",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 5 — Key concept: The loss functions of the generator and discriminator are updated separately. Training process (Discriminator): Receives a batch of fake images → Discriminator → Predictions compared to labels (0 = fake) → Loss. Receives a batch of real images → Discriminator → Predictions compared to labels (1 = real) → Loss. Training process (Generator): Random noise → Generator → Fake training batch → Discriminator → Predictions compared to labels (1 = target for generator) → Loss."
+        },
+        {
+          "keyword": "Balance breakdown when one overpowers the other",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 8 — Problem 1: Discriminator overpowers the generator. Problem 2: Generator overpowers the discriminator. Solution: Do the reverse of the above (weaken the dominant network)."
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "question": "How do you know when the training is done? Like, what do you look at to decide it's good enough?",
+      "what_student_knows": "Training ends when the loss converges and flattens. He expects the same signal to work here.",
+      "what_student_needs_to_know": "GAN losses do not reliably signal convergence — the creating network's loss can rise while image quality improves. Progress is judged by visually inspecting generated samples.",
+      "full_answer": "Unlike a standard classifier, the creating network's loss does not reliably go down as quality improves — it can rise or oscillate even when images look better. This is one of the core difficulties of this type of training. In practice you monitor the generated image quality visually across epochs rather than relying on the loss curve.",
+      "ground_truth": [
+        {
+          "keyword": "Generator loss rises while quality improves",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 6 — epoch_g_loss (Generator Loss): Starts around 2.0, rises and stabilizes around 2.8-3.0. Shows high variance throughout training. epoch_g_acc (Generator Accuracy): Starts around 0.16-0.20, drops sharply toward 0 — Near-zero accuracy by epoch 80+, indicating discriminator successfully detects fakes."
+        },
+        {
+          "keyword": "Uninformative loss — visual inspection instead",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 8 — Problem 3: Uninformative loss (for generator) — Generator loss does not correlate well with output quality. PAGE 7 — Generator improves with the number of epochs: Epoch 1: noisy, unrecognizable outputs. Epoch 10: slight improvement, vague shapes. Epoch 175: visually coherent brick images."
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "question": "You mentioned these networks use convolutional layers to produce images. I've seen convolutions before — it's just a kernel sliding over the image, which I assumed was basically the same as the matrix multiplications in regular layers. What's actually different about using them here?",
+      "what_student_knows": "He has seen convolutions in the context of image classification and assumes they are the same as dense layer multiplications.",
+      "what_student_needs_to_know": "Convolutional layers preserve spatial structure. In the creating network, transposed convolutions and upsampling progressively build up image resolution from a small input, which dense layers cannot do naturally.",
+      "full_answer": "Convolutional layers are not the same as dense layers. A dense layer treats every input value independently with no notion of position. A convolutional filter slides over the input and detects local patterns like edges and textures. In the creating network, a transposed convolution works in reverse — it progressively expands a small feature map into a full image step by step. This spatial upsampling is what allows the network to produce sharp, coherent images rather than a blob of pixels.",
+      "ground_truth": [
+        {
+          "keyword": "Conv2DTranspose and Reshape layer in generator",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 4 — New elements introduced in DCGAN code: The Reshape Layer: transforms shape from 100x1 to 1x1x100, enabling use of Conv2DTranspose. UpSampling2D: increases spatial size of feature maps."
+        },
+        {
+          "keyword": "UpSampling2D — increasing spatial resolution",
+          "source_file": "module_5_output.txt",
+          "source_block": "[791s-1009s] — There are something mentioned here like upsampling... another technique that you could use to kind of like changing the size of the input is what they call upsampling. We can increase the size of the output with convolutional layers. By having the stride setting — when you do stride increasingly you make it smaller but in here in the upsampling you do the forward upsampling by two for example... so with upsampling you can basically increase the size of the image."
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "question": "You said the loss of the creating network doesn't actually reflect how good the images look. Is there a better loss function that actually tracks quality? And how would changing the loss even fix that?",
+      "what_student_knows": "He knows loss is what you minimize during training. He just learned the standard loss here is unreliable.",
+      "what_student_needs_to_know": "WGAN replaces binary cross-entropy with Wasserstein loss, which gives a meaningful score that correlates with image quality. The checking network output is no longer a probability but an unbounded score.",
+      "full_answer": "Yes — a variant called WGAN replaces the standard loss with the Wasserstein loss. Instead of outputting a probability between 0 and 1, the checking network outputs an unbounded real-valued score — the higher the score, the more real the image appears. This score correlates much better with actual image quality, so you can use it to track whether training is progressing. Because the output is no longer a probability, the checking network gets renamed 'critic' to reflect that change.",
+      "ground_truth": [
+        {
+          "keyword": "WGAN replaces binary cross-entropy with Wasserstein loss",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 10 — Motivation: Provides a meaningful loss metric that correlates with generator convergence and sample quality. Improves stability of the optimization process. Key innovation: Replaces binary cross-entropy with the Wasserstein loss function for both the discriminator and generator. Using Wasserstein loss instead of binary cross-entropy results in more stable GAN convergence."
+        },
+        {
+          "keyword": "Critic — unbounded real-valued score, not a probability",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 11 — In WGAN, the discriminator is renamed 'critic' because its output is no longer a probability but a real-valued score. Labels: yᵢ ∈ {-1 (fake), 1 (real)}. Output: pᵢ = critic score (unbounded, not a probability)."
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "question": "Is there a way to control what kind of image gets generated? Like if I want it to always produce images of a specific type, can I tell it that somehow, or does it just generate whatever it feels like?",
+      "what_student_knows": "He just learned the creating network takes noise as input. He is asking whether structured control over the output is possible.",
+      "what_student_needs_to_know": "A conditional variant adds a one-hot label as extra input to both networks, letting you steer the output toward specific attributes.",
+      "full_answer": "Yes — you can add a label as extra input to both networks. The creating network receives the noise vector plus a label indicating what to generate, and the checking network receives the image plus the same label. This lets you use the same noise vector with different labels to produce different outputs — for example, the same base image with or without a specific attribute. This variant is called a Conditional GAN.",
+      "ground_truth": [
+        {
+          "keyword": "Conditional GAN — one-hot label as extra input",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 15 — Purpose: Control the output of a GAN. Example: generate only images of people with blond hair. Architecture modification: Add a one-hot encoded label channel as additional input to both the generator and critic/discriminator. Generator input: Random noise vector + One-hot encoded label → Output: Generated image conditioned on the label. Critic input: Image (RGB) + One-hot encoded label channels → Output: Realness score."
+        },
+        {
+          "keyword": "Same noise vector, different labels → different outputs",
+          "source_file": "06-gen-ai.txt",
+          "source_block": "PAGE 15 — Example results: Same random noise vector + 'Not Blond' label vector → generated faces without blond hair. Same random noise vector + 'Blond' label vector → generated faces with blond hair. Key advantage: The CGAN allows steering generation toward specific attributes without changing the underlying noise, enabling controlled image synthesis."
+        }
+      ]
+    }
+  ]
+}
