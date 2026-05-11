@@ -31,7 +31,7 @@ From the repo root:
 ```bash
 uv run uvicorn server:server --host 127.0.0.1 --port 8000
 
-in another termial
+in another local termial
 ssh -L 8000:127.0.0.1:8000 <user>@<host>
 
 On first boot the server indexes every file under `processed_data/` (PDF, TXT, MD). When you see:
@@ -50,7 +50,7 @@ curl -X POST http://127.0.0.1:8000/chat \
 
 You should get back a JSON `{"response": "..."}` with inline `[1]`, `[2]` citations and a `Sources:` block.
 
-Then open http://127.0.0.1:5500 in your browser.
+Then open http://127.0.0.1:8000 in your browser.
 
 ## Project layout
 
