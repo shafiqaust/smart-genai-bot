@@ -50,24 +50,7 @@ curl -X POST http://127.0.0.1:8000/chat \
 
 You should get back a JSON `{"response": "..."}` with inline `[1]`, `[2]` citations and a `Sources:` block.
 
-## 4. Run the frontend
-
-The chat UI is a single self-contained file at `frontend/index.html`. It POSTs to `http://127.0.0.1:8000/chat`, so as long as the backend from step 3 is running, it just works.
-
-Serve it over HTTP in a second terminal:
-
-```bash
-cd frontend
-python3 -m http.server 5500
-```
-
 Then open http://127.0.0.1:5500 in your browser.
-
-You can also open `frontend/index.html` directly as a `file://` URL — the backend has `allow_origins=["*"]` so CORS is fine either way.
-
-## Pointing the frontend at a different backend
-
-If the backend is not on `127.0.0.1:8000`, edit the `fetch(...)` call in [frontend/index.html](frontend/index.html) and change the URL to wherever your backend is reachable.
 
 ## Project layout
 
