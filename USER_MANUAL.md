@@ -12,11 +12,6 @@ https://github.com/shafiqaust/smart-genai-bot
 The Smart Academic Assistant is an Agentic RAG-based academic advising system designed to assist students with:
 
 - Academic course descriptions
-- Academic policy understanding
-- Transcript analysis
-- CGPA calculations
-- Credit evaluation
-- Graduation eligibility checking
 
 The system uses:
 
@@ -321,7 +316,3 @@ conda activate smartbot
 uv sync
 uv run uvicorn server:server --host 127.0.0.1 --port 8000 --reload
 ```
-
----
-GitHub:  
-https://github.com/shafiqaust
