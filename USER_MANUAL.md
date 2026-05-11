@@ -323,12 +323,5 @@ uv run uvicorn server:server --host 127.0.0.1 --port 8000 --reload
 ```
 
 ---
-
-# 17. Author
-
-Md S Zaman  
-PhD Student, Computer Science  
-New Mexico State University
-
 GitHub:  
 https://github.com/shafiqaust
