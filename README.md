@@ -4,7 +4,7 @@ Citation-aware Agentic RAG chatbot (LangGraph + LlamaIndex + OpenAI Responses AP
 
 ## Requirements
 
-- Python 3.12
+- Python 3.11
 - [`uv`](https://github.com/astral-sh/uv)
 - An OpenAI API key
 
