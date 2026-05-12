@@ -1,15 +1,21 @@
-from typing import List, Optional
+import asyncio
+import os
+import shutil
+import tempfile
 import traceback
+from typing import List, Optional
 
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from extract_pdf import extract_document as _extract_document
 from rag_bot import (
     app as rag_app,
     ingest_catalog_url,
     ingest_transcript_file,
     ingest_transcript_text,
+    rebuild_index,
 )
 
 server = FastAPI(title="Smart Academic Bot API")
@@ -36,6 +42,33 @@ def root():
 @server.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@server.post("/ingest-pdf")
+async def ingest_pdf_endpoint(file: UploadFile = File(...)):
+    filename = file.filename or "upload"
+    ext = os.path.splitext(filename)[1].lower()
+    if ext not in {".pdf", ".pptx", ".txt"}:
+        return {"status": "error", "message": "Supported types: PDF, PPTX, TXT."}
+
+    content = await file.read()
+    tmp_dir = tempfile.mkdtemp()
+    tmp_path = os.path.join(tmp_dir, filename)
+
+    try:
+        with open(tmp_path, "wb") as f:
+            f.write(content)
+        await asyncio.to_thread(_extract_document, tmp_path)
+        await asyncio.to_thread(rebuild_index)
+        return {
+            "status": "success",
+            "message": f"'{filename}' extracted and added to the knowledge base. You can now ask questions about it.",
+        }
+    except Exception as e:
+        traceback.print_exc()
+        return {"status": "error", "message": f"Extraction failed: {str(e)}"}
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
 @server.post("/reset")

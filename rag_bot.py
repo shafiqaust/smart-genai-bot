@@ -362,6 +362,11 @@ def build_index():
 query_engine = build_index()
 
 
+def rebuild_index():
+    global query_engine
+    query_engine = build_index()
+
+
 def load_context(state: ChatState) -> ChatState:
     return {
         **state,

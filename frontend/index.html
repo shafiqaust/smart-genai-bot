@@ -312,6 +312,35 @@
     input[type="file"] {
       display: none;
     }
+
+    .upload-menu {
+      position: absolute;
+      bottom: 52px;
+      left: 0;
+      background: var(--composer);
+      border: 1px solid #4a4a52;
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 150px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    .upload-menu button {
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 14px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .upload-menu button:hover {
+      background: #3a3a3f;
+    }
   </style>
 </head>
 <body>
@@ -342,10 +371,15 @@
 
         <div class="composer">
           <div class="composer-inner">
-            <label class="icon-btn" title="Upload file">
-              +
+            <div class="upload-wrap" style="position:relative;">
+              <button class="icon-btn" onclick="toggleUploadMenu()" title="Upload file">+</button>
+              <div id="uploadMenu" class="upload-menu" style="display:none;">
+                <button onclick="toggleUploadMenu(); fileInput.click()">Transcript</button>
+                <button onclick="toggleUploadMenu(); kbFileInput.click()">Course material</button>
+              </div>
               <input type="file" id="fileInput" onchange="handleFileSelected()" />
-            </label>
+              <input type="file" id="kbFileInput" accept=".pdf,.pptx,.txt" onchange="handleKbFileSelected()" />
+            </div>
 
             <textarea
               id="messageInput"
@@ -367,11 +401,51 @@
     const chatBox = document.getElementById("chatBox");
     const messageInput = document.getElementById("messageInput");
     const fileInput = document.getElementById("fileInput");
+    const kbFileInput = document.getElementById("kbFileInput");
     const attachmentBar = document.getElementById("attachmentBar");
     const sendBtn = document.getElementById("sendBtn");
     const statusLine = document.getElementById("statusLine");
 
     let selectedFile = null;
+
+    function toggleUploadMenu() {
+      const menu = document.getElementById("uploadMenu");
+      menu.style.display = menu.style.display === "none" ? "block" : "none";
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".upload-wrap")) {
+        const menu = document.getElementById("uploadMenu");
+        if (menu) menu.style.display = "none";
+      }
+    });
+
+    async function handleKbFileSelected() {
+      const file = kbFileInput.files[0];
+      if (!file) return;
+      kbFileInput.value = "";
+
+      appendMessage("user", `[Adding to knowledge base: ${file.name}]`);
+      showTyping();
+      setSendingState(true);
+      setStatus(`Extracting ${file.name}... this may take a minute.`);
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch("/ingest-pdf", { method: "POST", body: formData });
+        const data = await response.json();
+        hideTyping();
+        appendMessage("assistant", data.message || "Done.");
+      } catch {
+        hideTyping();
+        appendMessage("assistant", "Error: Could not connect to the server.");
+      } finally {
+        setSendingState(false);
+        setStatus("");
+      }
+    }
 
     function autoResizeTextarea() {
       messageInput.style.height = "auto";
@@ -499,6 +573,7 @@
       sendBtn.disabled = isSending;
       messageInput.disabled = isSending;
       fileInput.disabled = isSending;
+      kbFileInput.disabled = isSending;
     }
 
     async function sendMessage() {
