@@ -64,3 +64,4 @@ smart-genai-bot/
 ├── .env                # OPENAI_API_KEY (not committed)
 └── pyproject.toml
 
+test
